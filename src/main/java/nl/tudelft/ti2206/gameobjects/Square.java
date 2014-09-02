@@ -1,29 +1,33 @@
 package nl.tudelft.ti2206.gameobjects;
 
 /**
- * The Square class represents the squares you move around while playing 2048.
+ * The Square class represents the Squares you move around while playing 2048.
  * 
  * Its instance variables contain the current value and its index into the Grid
  * array.
  * 
  * Checking for possible movements can be done simply by checking if the value
- * of the squares at index+1, index-1, index+4 or index-4 are 0 (since empty
- * squares have a value of 0).
+ * of the Squares at index+1, index-1, index+4 or index-4 are 0 (since empty
+ * Squares have a value of 0).
  * 
  * @author group-21
  *
  */
 public class Square {
 
+	/** The height of the Square */
 	public static final int WIDTH = 81;
+	/** The width of the Square */
 	public static final int HEIGHT = 81;
 
+	/** Base x coordinate */
 	private static final int BASE_X = 115;
+	/** Base y coordinate */
 	private static final int BASE_Y = 115;
+	/** Gap between Squares */
 	private static final int GAP = 15;
 
 	/** The value (e.g. 2,4,8,16... */
-
 	private int value;
 	/** The index into the Grid array. */
 	private int index;
@@ -42,7 +46,6 @@ public class Square {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Updates the Square at the rate of 1/delta times per second
 	 * 
 	 * @param delta
@@ -59,26 +62,28 @@ public class Square {
 	}
 
 	/**
-	 * Returns the value of the square
-=======
-	 * Returns the value of the square.
->>>>>>> 8348544171fb64662ffa8fa221b2a4ae3f46ae73
+	 * Returns the value of the Square
 	 * 
-	 * @return the value of the square
+	 * @return the value of the Square
 	 */
 	public int getValue() {
 		return value;
 	}
 
 	/**
-	 * Returns the index of the square.
+	 * Returns the index of the Square.
 	 * 
-	 * @return the index of the square
+	 * @return the index of the Square
 	 */
 	public int getIndex() {
 		return index;
 	}
 
+	/**
+	 * Returns the x coordinate of the Square
+	 * 
+	 * @return the x coordinate
+	 */
 	public float getX() {
 		switch (index) {
 		case 0:
@@ -109,6 +114,11 @@ public class Square {
 		}
 	}
 
+	/**
+	 * Returns the y coordinate of the Square
+	 * 
+	 * @return the y coordinate
+	 */
 	public float getY() {
 		switch (index) {
 		case 0:
@@ -140,17 +150,17 @@ public class Square {
 	}
 
 	/**
-	 * Sets the new index for the square.
+	 * Sets the new index for the Square.
 	 *
 	 * @param index
-	 *            the new index of the square
+	 *            the new index of the Square
 	 */
 	public void setIndex(int index) {
 		this.index = index;
 	}
 
 	/**
-	 * Doubles the value of the square.
+	 * Doubles the value of the Square.
 	 */
 	public void doubleValue() {
 		value *= 2;
