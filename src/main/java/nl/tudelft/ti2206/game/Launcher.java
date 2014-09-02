@@ -13,7 +13,7 @@ public class Launcher {
 		log.info("Starting game...");
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "Super Kermit";
+		config.title = "2048";
 		config.width = 1280;
 		config.height = 720;
 		new LwjglApplication(new TwentyFourtyGame(), config);
