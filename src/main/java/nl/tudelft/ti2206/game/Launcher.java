@@ -29,7 +29,9 @@ public class Launcher {
 
 		config.width = WIDTH;
 		config.height = HEIGHT;
-
+		
+		log.info("config.width = " + config.width + ", config.height = " + config.height);
+		
 		new LwjglApplication(new TwentyFourtyGame(), config);
 	}
 }
