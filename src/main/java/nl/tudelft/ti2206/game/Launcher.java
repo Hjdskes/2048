@@ -5,17 +5,29 @@ import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+/**
+ * This class launches an instance of 2048
+ * and sets up the logging facility.
+ * 
+ * @author group-21
+ */
 public class Launcher {
+	/** The width of the window. */
+	private static final int WIDTH = 400;
+	/** The height of the window. */
+	private static final int HEIGHT = 600;
+	/** The logging facility. */
 	private static final Logger log = LoggerFactory.getLogger(Launcher.class);
 	
 	public static void main(String[] args) {
 		// This main method is called when starting your game.
 		log.info("Starting game...");
 
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		LwjglApplicationConfiguration config =
+				new LwjglApplicationConfiguration();
 		config.title = "2048";
-		config.width = 1280;
-		config.height = 720;
+		config.width = WIDTH;
+		config.height = HEIGHT;
 		new LwjglApplication(new TwentyFourtyGame(), config);
 	}
 }

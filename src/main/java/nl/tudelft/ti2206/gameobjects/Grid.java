@@ -27,10 +27,13 @@ package nl.tudelft.ti2206.gameobjects;
  *
  */
 public class Grid {
+	/** The grid contains sixteen squares. */
+	private static final int NSQUARES = 16;
+	/** The array containing all sixteen squares. */
 	private Square[] grid;
 
 	public Grid() {
-		grid = new Square[16];
+		grid = new Square[NSQUARES];
 	}
 
 	public Square[] getGrid() {

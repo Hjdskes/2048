@@ -16,14 +16,14 @@ package nl.tudelft.ti2206.gameobjects;
  * @author group-21
  *
  */
-public abstract class Square {
-	/** The value (e.g. 2,4,8,16...*/
+public class Square {
+	/** The value (e.g. 2,4,8,16...).*/
 	private int value;
-	/** The index into the Grid array */
+	/** The index into the Grid array. */
 	private int index;
 
 	/**
-	 * Creates a new Square with a given value
+	 * Creates a new Square with a given value.
 	 * 
 	 * @param value
 	 *            the value of the Square
@@ -36,7 +36,7 @@ public abstract class Square {
 	}
 
 	/**
-	 * Returns the value of the square
+	 * Returns the value of the square.
 	 * 
 	 * @return the value of the square
 	 */
@@ -45,7 +45,7 @@ public abstract class Square {
 	}
 
 	/**
-	 * Returns the index of the square
+	 * Returns the index of the square.
 	 * 
 	 * @return the index of the square
 	 */
@@ -54,7 +54,7 @@ public abstract class Square {
 	}
 
 	/**
-	 * Sets the new index for the square
+	 * Sets the new index for the square.
 	 *
 	 * @param index
 	 * 			  the new index of the square
@@ -64,7 +64,7 @@ public abstract class Square {
 	}
 
 	/**
-	 * Doubles the value of the square
+	 * Doubles the value of the square.
 	 */
 	public void doubleValue() {
 		value *= 2;
