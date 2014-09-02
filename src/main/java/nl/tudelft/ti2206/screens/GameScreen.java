@@ -2,7 +2,9 @@ package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.game.GameRenderer;
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.helpers.InputHandler;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
@@ -14,6 +16,7 @@ public class GameScreen implements Screen {
 
 	public GameScreen() {
 		world = new GameWorld(GAME_WIDTH, GAME_HEIGHT);
+		Gdx.input.setInputProcessor(new InputHandler(world, Gdx.graphics.getWidth()));
 		renderer = new GameRenderer(world, GAME_WIDTH, GAME_HEIGHT);
 	}
 

@@ -8,7 +8,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 /**
  * This class launches an instance of 2048
  * and sets up the logging facility.
- * 
+ *
  * @author group-21
  */
 public class Launcher {

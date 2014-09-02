@@ -8,7 +8,7 @@ public class GameWorld {
 	private Grid grid;
 	
 	/**
-	 * Constructor for GameWorld object.
+	 * Constructor for GameWorld object, creating the grid.
 	 * @param gameWidth the width of the board
 	 * @param gameHeight the height of the board
 	 */
@@ -19,7 +19,7 @@ public class GameWorld {
 
 	/**
 	 * Update the game, should be called every frame.
-	 * @param delta time in miliseconds to update
+	 * @param delta time in milliseconds to update
 	 */
 	public void update(float delta) {	
 		// add delta cap so if the game takes too long to update,
