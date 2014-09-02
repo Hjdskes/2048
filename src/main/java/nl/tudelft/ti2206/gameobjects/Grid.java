@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.gameobjects;
 
+
 /**
  * This class represents the 4x4 grid you see when playing 2048.
  * 
@@ -27,13 +28,40 @@ package nl.tudelft.ti2206.gameobjects;
  *
  */
 public class Grid {
+	
+	public static final int WIDTH = 400;
+	public static final int HEIGHT = 400;
+	
 	private Square[] grid;
 
 	public Grid() {
 		grid = new Square[16];
+		for (int i = 0; i < grid.length; i++) {
+			grid[i] = new Square(0, i);
+		}
 	}
 
-	public Square[] getGrid() {
+	public void update(float delta) {
+		for (Square s : grid) {
+			s.update(delta);
+		}
+	}
+	
+	public void onRestart() {
+		for (Square s : grid) {
+			s.onRestart();
+		}
+	}
+
+	public int getX() {
+		return 100;
+	}
+	
+	public int getY() {
+		return 100;
+	}
+	
+	public Square[] getSquares() {
 		return grid;
 	}
 

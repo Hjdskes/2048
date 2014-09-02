@@ -14,8 +14,8 @@ public class Launcher {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "2048";
-		config.width = 1280;
-		config.height = 720;
+		config.width = 600;
+		config.height = 600;
 		new LwjglApplication(new TwentyFourtyGame(), config);
 	}
 }

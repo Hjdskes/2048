@@ -1,43 +1,76 @@
 package nl.tudelft.ti2206.game;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Square;
+import nl.tudelft.ti2206.helpers.AssetLoader;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameRenderer {
 	private GameWorld world;
 	private OrthographicCamera cam;
 	private ShapeRenderer r;
-	private int gameWidth, gameHeight;
+	private SpriteBatch batch;
+
+	// private int gameWidth, gameHeight;
 
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
-		this.gameWidth = gameWidth;
-		this.gameHeight = gameHeight;
+		// this.gameWidth = gameWidth;
+		// this.gameHeight = gameHeight;
 
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
 
 		r = new ShapeRenderer();
 		r.setProjectionMatrix(cam.combined);
+
+		batch = new SpriteBatch();
+		batch.setProjectionMatrix(cam.combined);
 	}
 
 	public void render(float delta, float runTime) {
 		// draw black screen to avoid flickering
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		// render shapes
 		renderShapes(delta);
+
+		// begin drawing sprites, strings, etc
+		batch.begin();
+		renderSpriteBatches(delta);
+		renderText(delta);
+		batch.end();
 	}
 
 	private void renderShapes(float delta) {
-		r.begin(ShapeType.Filled);
-		r.setColor(Color.CYAN);
-		// draw rectangle in the middle of the screen
-		r.rect(gameWidth / 2 - 25, gameHeight / 2 - 25, 50, 50);
-		r.end();
+
+	}
+
+	private void renderSpriteBatches(float delta) {
+		drawGrid();
+		drawSquares();
+	}
+	
+	private void drawGrid() {
+		batch.draw(AssetLoader.grid, world.getGrid().getX(), world.getGrid()
+				.getY(), Grid.WIDTH, Grid.HEIGHT);
+	}
+	
+	private void drawSquares() {
+		for (Square s : world.getGrid().getSquares()) {
+			batch.draw(AssetLoader.getTile(s.getValue()), s.getX(), s.getY(),
+					Square.WIDTH, Square.HEIGHT);
+		}
+	}
+
+	private void renderText(float delta) {
+		AssetLoader.font.draw(batch, Integer.toString(world.getScore()), 275,
+				20);
 	}
 }
