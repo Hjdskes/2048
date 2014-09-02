@@ -23,12 +23,13 @@ public class Square {
 	private static final int GAP = 15;
 
 	/** The value (e.g. 2,4,8,16... */
+
 	private int value;
-	/** The index into the Grid array */
+	/** The index into the Grid array. */
 	private int index;
 
 	/**
-	 * Creates a new Square with a given value
+	 * Creates a new Square with a given value.
 	 * 
 	 * @param value
 	 *            the value of the Square
@@ -41,6 +42,7 @@ public class Square {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Updates the Square at the rate of 1/delta times per second
 	 * 
 	 * @param delta
@@ -58,6 +60,9 @@ public class Square {
 
 	/**
 	 * Returns the value of the square
+=======
+	 * Returns the value of the square.
+>>>>>>> 8348544171fb64662ffa8fa221b2a4ae3f46ae73
 	 * 
 	 * @return the value of the square
 	 */
@@ -66,7 +71,7 @@ public class Square {
 	}
 
 	/**
-	 * Returns the index of the square
+	 * Returns the index of the square.
 	 * 
 	 * @return the index of the square
 	 */
@@ -135,7 +140,7 @@ public class Square {
 	}
 
 	/**
-	 * Sets the new index for the square
+	 * Sets the new index for the square.
 	 *
 	 * @param index
 	 *            the new index of the square
@@ -145,7 +150,7 @@ public class Square {
 	}
 
 	/**
-	 * Doubles the value of the square
+	 * Doubles the value of the square.
 	 */
 	public void doubleValue() {
 		value *= 2;
