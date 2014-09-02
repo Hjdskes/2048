@@ -13,11 +13,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class GameRenderer {
 	private GameWorld world;
 	private OrthographicCamera cam;
-	private ShapeRenderer r;
+	private ShapeRenderer renderer;
 	private SpriteBatch batch;
 
 	// private int gameWidth, gameHeight;
-
+	
+	/**
+	 * Constructor for GameRenderer object.
+	 * @param world the world
+	 * @param gameWidth the game's width
+	 * @param gameHeight the game's height
+	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
 		// this.gameWidth = gameWidth;
@@ -26,8 +32,8 @@ public class GameRenderer {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
 
-		r = new ShapeRenderer();
-		r.setProjectionMatrix(cam.combined);
+		renderer = new ShapeRenderer();
+		renderer.setProjectionMatrix(cam.combined);
 
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.combined);
@@ -61,7 +67,7 @@ public class GameRenderer {
 		batch.draw(AssetLoader.grid, world.getGrid().getX(), world.getGrid()
 				.getY(), Grid.WIDTH, Grid.HEIGHT);
 	}
-	
+
 	private void drawSquares() {
 		for (Square s : world.getGrid().getSquares()) {
 			batch.draw(AssetLoader.getTile(s.getValue()), s.getX(), s.getY(),

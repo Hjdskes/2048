@@ -6,12 +6,21 @@ public class GameWorld {
 
 	private int score;
 	private Grid grid;
-
+	
+	/**
+	 * Constructor for GameWorld object.
+	 * @param gameWidth the width of the board
+	 * @param gameHeight the height of the board
+	 */
 	public GameWorld(int gameWidth, int gameHeight) {
 		score = 0;
 		grid = new Grid();
 	}
 
+	/**
+	 * Update the game, should be called every frame.
+	 * @param delta time in miliseconds to update
+	 */
 	public void update(float delta) {	
 		// add delta cap so if the game takes too long to update,
 		// it will still work
@@ -21,23 +30,42 @@ public class GameWorld {
 		grid.update(delta);
 	}
 	
+	/**
+	 * Restart the game.
+	 */
 	public void restart() {
 		score = 0;
 		grid.onRestart();
 	}
 	
+	/**
+	 * Get current game score.
+	 * @return current score
+	 */
 	public int getScore() {
 		return score;
 	}
 	
+	/**
+	 * Get the game grid.
+	 * @return game grid
+	 */
 	public Grid getGrid() {
 		return grid;
 	}
 	
+	/**
+	 * Set current game's score to amount of points.
+	 * @param score the score to set
+	 */
 	public void setScore(int score) {
-		this.score += score;
+		this.score = score;
 	}
 	
+	/**
+	 * Add points to current game's score
+	 * @param increment
+	 */
 	public void addScore(int increment) {
 		score += increment;
 	}
