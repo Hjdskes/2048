@@ -2,11 +2,17 @@
 
 This team consists of the following students:
 
-* Piet van Agtmaal
-* Jochem Heijltjes
-* Arthur Hovanesyan
-* Paul Bakker
-* Jente Hidskes
+| Name                 | Student number |
+|----------------------|----------------|
+| Piet van Agtmaal     | 4321278        |
+| Jochem Heijltjes     |
+| Arthur Hovanesyan    |
+| Paul Bakker          |
+| Jente Hidskes        | 4335732        |
+
+## Todo:
+
+* Overleggen met SA (volgende week) over onze aanpak m.b.t Maven en LibGDX.
 
 ## How to start this game.
 
