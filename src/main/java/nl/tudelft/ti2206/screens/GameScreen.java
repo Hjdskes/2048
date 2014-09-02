@@ -8,15 +8,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
+	/** The width of the game */
 	private static final int GAME_WIDTH = 600;
+	/** The hieght of the game */
 	private static final int GAME_HEIGHT = 600;
+
 	private float runTime;
 	private GameWorld world;
 	private GameRenderer renderer;
 
+	/**
+	 * Constructs a GameScreen with a GameWorld, GameRenderer and an input
+	 * processor to handle input events.
+	 */
 	public GameScreen() {
 		world = new GameWorld(GAME_WIDTH, GAME_HEIGHT);
-		Gdx.input.setInputProcessor(new InputHandler(world, Gdx.graphics.getWidth()));
+		Gdx.input.setInputProcessor(new InputHandler(world, Gdx.graphics
+				.getWidth()));
 		renderer = new GameRenderer(world, GAME_WIDTH, GAME_HEIGHT);
 	}
 
@@ -32,6 +40,9 @@ public class GameScreen implements Screen {
 	public void pause() {
 	}
 
+	/**
+	 * The game loop. Renders and updates the game.
+	 */
 	@Override
 	public void render(float delta) {
 		runTime += delta;

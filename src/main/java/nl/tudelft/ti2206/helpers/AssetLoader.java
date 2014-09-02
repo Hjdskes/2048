@@ -7,12 +7,24 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class AssetLoader {
 
+	/**
+	 * The font used in the game (Tahoma).
+	 */
 	public static BitmapFont font;
+	/**
+	 * All sprites used in the game, should be publicly accessible.
+	 */
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
 			t1024, t2048, empty;
+	/**
+	 * All textures used to load the sprites.
+	 */
 	private static Texture gridTex, t2Tex, t4Tex, t8Tex, t16Tex, t32Tex,
 			t64Tex, t128Tex, t256Tex, t512Tex, t1024Tex, t2048Tex, emptyTex;
 
+	/**
+	 * Loads all assets needed for the game.
+	 */
 	public static void load() {
 		gridTex = new Texture(
 				Gdx.files.internal("src/main/resources/images/grid.png"));
@@ -61,6 +73,12 @@ public class AssetLoader {
 		font.setScale(.5f, -.5f);
 	}
 
+	/**
+	 * Gets the Sprite belonging to the provided value.
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static Sprite getTile(int val) {
 		switch (val) {
 		case 2:
@@ -90,6 +108,9 @@ public class AssetLoader {
 		}
 	}
 
+	/**
+	 * Dispose of all textures to decrease memory usage.
+	 */
 	public static void dispose() {
 		gridTex.dispose();
 		t2Tex.dispose();

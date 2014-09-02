@@ -17,12 +17,19 @@ public class GameRenderer {
 	private SpriteBatch batch;
 
 	// private int gameWidth, gameHeight;
-	
+
 	/**
-	 * Constructor for GameRenderer object.
-	 * @param world the world
-	 * @param gameWidth the game's width
-	 * @param gameHeight the game's height
+	 * Constructor for GameRenderer object, creating all objects needed for
+	 * drawing. It also sets the camera to Orthgraphic and orthogonal to the
+	 * scene, meaning that the game is drawn in a 3D scene swhich seems to be
+	 * 2D.
+	 * 
+	 * @param world
+	 *            the world
+	 * @param gameWidth
+	 *            the game's width
+	 * @param gameHeight
+	 *            the game's height
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
@@ -39,6 +46,14 @@ public class GameRenderer {
 		batch.setProjectionMatrix(cam.combined);
 	}
 
+	/**
+	 * Render all sprites, shapes and strings at the rate of 1000/delta times
+	 * per second. It also draws a black background to prevent flickering of the
+	 * screen.
+	 * 
+	 * @param delta
+	 * @param runTime
+	 */
 	public void render(float delta, float runTime) {
 		// draw black screen to avoid flickering
 		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
@@ -54,20 +69,35 @@ public class GameRenderer {
 		batch.end();
 	}
 
+	/**
+	 * 
+	 * @param delta
+	 */
 	private void renderShapes(float delta) {
 
 	}
 
+	/**
+	 * Render all sprites.
+	 * 
+	 * @param delta
+	 */
 	private void renderSpriteBatches(float delta) {
 		drawGrid();
 		drawSquares();
 	}
-	
+
+	/**
+	 * Render the grid.
+	 */
 	private void drawGrid() {
 		batch.draw(AssetLoader.grid, world.getGrid().getX(), world.getGrid()
 				.getY(), Grid.WIDTH, Grid.HEIGHT);
 	}
 
+	/**
+	 * Render the squares.
+	 */
 	private void drawSquares() {
 		for (Square s : world.getGrid().getSquares()) {
 			batch.draw(AssetLoader.getTile(s.getValue()), s.getX(), s.getY(),
@@ -75,7 +105,17 @@ public class GameRenderer {
 		}
 	}
 
+	/**
+	 * Render the strings using the specified font.
+	 */
 	private void renderText(float delta) {
+		drawScore();
+	}
+
+	/**
+	 * Render the score.
+	 */
+	private void drawScore() {
 		AssetLoader.font.draw(batch, Integer.toString(world.getScore()), 275,
 				20);
 	}

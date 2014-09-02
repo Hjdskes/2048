@@ -46,7 +46,7 @@ public class Square {
 	}
 
 	/**
-	 * Updates the Square at the rate of 1/delta times per second
+	 * Updates the Square at the rate of 1000/delta times per second
 	 * 
 	 * @param delta
 	 */

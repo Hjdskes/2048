@@ -55,7 +55,7 @@ public class Grid {
 	}
 
 	/**
-	 * Updates the grid at the rate of 1/delta times per second.
+	 * Updates the grid at the rate of delta/1000 times per second.
 	 *
 	 * @param delta
 	 */
