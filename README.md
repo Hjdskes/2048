@@ -13,6 +13,7 @@ This team consists of the following students:
 ## Todo:
 
 * Overleggen met SA (volgende week) over onze aanpak m.b.t Maven en LibGDX.
+* Iedereen CheckStyle installeren.
 
 ## How to start this game.
 

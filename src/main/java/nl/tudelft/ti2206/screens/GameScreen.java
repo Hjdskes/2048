@@ -6,17 +6,13 @@ import nl.tudelft.ti2206.game.GameWorld;
 import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
-
+	private static final int GAME_WIDTH = 600;
+	private static final int GAME_HEIGHT = 600;
 	private float runTime;
 	private GameWorld world;
 	private GameRenderer renderer;
-	
-	private static final int GAME_WIDTH = 600;
-	private static final int GAME_HEIGHT = 600;
-	
+
 	public GameScreen() {
-		
-		
 		world = new GameWorld(GAME_WIDTH, GAME_HEIGHT);
 		renderer = new GameRenderer(world, GAME_WIDTH, GAME_HEIGHT);
 	}

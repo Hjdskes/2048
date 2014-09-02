@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameRenderer {
-
 	private GameWorld world;
 	private OrthographicCamera cam;
 	private ShapeRenderer r;
@@ -24,7 +23,6 @@ public class GameRenderer {
 
 		r = new ShapeRenderer();
 		r.setProjectionMatrix(cam.combined);
-
 	}
 
 	public void render(float delta, float runTime) {
