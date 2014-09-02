@@ -1,12 +1,12 @@
-# TI2206 - Group X (Tetris)
+# TI2206 - Group 21 (2048)
 
 This team consists of the following students:
 
-* Student #1
-* Student #2
-* Student #3
-* Student #4
-* Student #5
+* Piet van Agtmaal
+* Jochem Heijltjes
+* Arthur Hovanesyan
+* Paul Bakker
+* Jente Hidskes
 
 ## How to start this game.
 
