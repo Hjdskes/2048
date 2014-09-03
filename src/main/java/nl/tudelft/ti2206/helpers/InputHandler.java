@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Square;
 
 import com.badlogic.gdx.Input.Keys;
@@ -32,10 +31,15 @@ public class InputHandler implements InputProcessor {
 			
 			grid = world.getGrid().getSquares();
 			
+			
+			
 			for (int i = 0; i < grid.length; i++) {
 				
 				if ((grid[i].getIndex() % 4) != 0)  {
-					grid[i].setIndex(grid[i].getIndex() - 1);
+					
+						// simply move to the left
+						grid[i].setIndex(grid[i].getIndex() - 1);
+				
 				}
 			}
 			
