@@ -78,6 +78,15 @@ public class Square {
 	public int getIndex() {
 		return index;
 	}
+	
+	public boolean setX() {
+		return false;
+		
+	}
+	
+	public boolean setY() {
+		return false;	
+	}
 
 	/**
 	 * Returns the x coordinate of the Square
