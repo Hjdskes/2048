@@ -16,7 +16,7 @@ public class GameRenderer {
 	private ShapeRenderer renderer;
 	private SpriteBatch batch;
 
-	// private int gameWidth, gameHeight;
+	private int gameWidth/* , gameHeight */;
 
 	/**
 	 * Constructor for GameRenderer object, creating all objects needed for
@@ -33,8 +33,8 @@ public class GameRenderer {
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
-		// this.gameWidth = gameWidth;
-		// this.gameHeight = gameHeight;
+		this.gameWidth = gameWidth;
+		/* this.gameHeight = gameHeight; */
 
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
@@ -99,9 +99,30 @@ public class GameRenderer {
 	 * Render the squares.
 	 */
 	private void drawSquares() {
+		AssetLoader.font.setScale(.25f, -.25f);
 		for (Square s : world.getGrid().getSquares()) {
 			batch.draw(AssetLoader.getTile(s.getValue()), s.getX(), s.getY(),
 					Square.WIDTH, Square.HEIGHT);
+			renderSquareValue(s.getCenterX(), s.getCenterY(), s.getValue());
+		}
+		AssetLoader.font.setScale(.5f, -.5f);
+	}
+
+	/**
+	 * Render the Square values, exactly in the middle of the Square
+	 * 
+	 * @param x
+	 *            center x coordinate of the Square
+	 * @param y
+	 *            center y coordinate of the Square
+	 * @param value
+	 *            value of the Square
+	 */
+	private void renderSquareValue(float x, float y, int value) {
+		if (value != 0) {
+			String val = Integer.toString(value);
+			AssetLoader.font.draw(batch, val, x - getTextCenterX(val), y
+					+ getTextCenterY(val));
 		}
 	}
 
@@ -116,7 +137,51 @@ public class GameRenderer {
 	 * Render the score.
 	 */
 	private void drawScore() {
-		AssetLoader.font.draw(batch, Integer.toString(world.getScore()), 275,
-				20);
+		AssetLoader.font.draw(batch, Integer.toString(world.getScore()),
+				gameWidth / 2 - getTextCenterX(world.getScore()), 20);
+	}
+
+	/**
+	 * Calculates the center x coordinate of a String.
+	 * 
+	 * @param text
+	 *            the text to be centered
+	 * @return the center x coordinate of the provided String
+	 */
+	private float getTextCenterX(String text) {
+		return AssetLoader.font.getBounds(text).width / 2;
+	}
+
+	/**
+	 * Calculates the center x coordinate of an integer.
+	 * 
+	 * @param value
+	 *            the integer to be centered
+	 * @return the center x coordinate of the provided integer
+	 */
+	private float getTextCenterX(int value) {
+		return AssetLoader.font.getBounds(Integer.toString(value)).width / 2;
+	}
+
+	/**
+	 * Calculates the center y coordinate of a String
+	 * 
+	 * @param text
+	 *            the text to be centered
+	 * @return the center y coordinate of the provided Strings
+	 */
+	private float getTextCenterY(String text) {
+		return AssetLoader.font.getBounds(text).height / 2;
+	}
+
+	/**
+	 * Calculates the center y coordinate of an integer.
+	 * 
+	 * @param value
+	 *            the integer to be centered
+	 * @return the center y coordinate of the provided integer
+	 */
+	private float getTextCenterY(int value) {
+		return AssetLoader.font.getBounds(Integer.toString(value)).height / 2;
 	}
 }

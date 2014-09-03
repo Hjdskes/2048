@@ -122,6 +122,14 @@ public class Square {
 			return BASE_X;
 		}
 	}
+	
+	/**
+	 * 
+	 * @return center x coordinate of the Square
+	 */
+	public float getCenterX() {
+		return getX() + WIDTH / 2;
+	}
 
 	/**
 	 * Returns the y coordinate of the Square
@@ -158,6 +166,14 @@ public class Square {
 		}
 	}
 
+	/**
+	 * 
+	 * @return center y coordinate of the Square
+	 */
+	public float getCenterY() {
+		return getY() + HEIGHT / 2;
+	}
+	
 	/**
 	 * Sets the new index for the Square.
 	 *
