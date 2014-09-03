@@ -7,16 +7,23 @@ import nl.tudelft.ti2206.helpers.AssetLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameRenderer {
+	private static final int GAP = 15;
+	private static final int BASE_X = 100;
+	private static final int BASE_Y = 100;
+	private static final int SCORE_HEIGHT = 50;
+
+	private static final BitmapFont BROWN_F = AssetLoader.font;
+	private static final BitmapFont WHITE_F = AssetLoader.whiteFont;
+
 	private GameWorld world;
 	private OrthographicCamera cam;
 	private ShapeRenderer renderer;
 	private SpriteBatch batch;
-
-	private int gameWidth/* , gameHeight */;
 
 	/**
 	 * Constructor for GameRenderer object, creating all objects needed for
@@ -33,8 +40,6 @@ public class GameRenderer {
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
-		this.gameWidth = gameWidth;
-		/* this.gameHeight = gameHeight; */
 
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
@@ -55,17 +60,17 @@ public class GameRenderer {
 	 * @param runTime
 	 */
 	public void render(float delta, float runTime) {
-		// draw black screen to avoid flickering
+		// draw beige screen to avoid flickering
 		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// render shapes
-		renderShapes(delta);
+		drawShapes(delta);
 
 		// begin drawing sprites, strings, etc
 		batch.begin();
-		renderSpriteBatches(delta);
-		renderText(delta);
+		drawSpriteBatches(delta);
+		drawText(delta);
 		batch.end();
 	}
 
@@ -73,7 +78,7 @@ public class GameRenderer {
 	 * 
 	 * @param delta
 	 */
-	private void renderShapes(float delta) {
+	private void drawShapes(float delta) {
 
 	}
 
@@ -82,9 +87,12 @@ public class GameRenderer {
 	 * 
 	 * @param delta
 	 */
-	private void renderSpriteBatches(float delta) {
+	private void drawSpriteBatches(float delta) {
 		drawGrid();
 		drawSquares();
+		drawScoreSquare();
+		drawHighscoreSquare();
+		drawHighestSquare();
 	}
 
 	/**
@@ -99,13 +107,11 @@ public class GameRenderer {
 	 * Render the squares.
 	 */
 	private void drawSquares() {
-		AssetLoader.font.setScale(.25f, -.25f);
 		for (Square s : world.getGrid().getSquares()) {
 			batch.draw(AssetLoader.getTile(s.getValue()), s.getX(), s.getY(),
 					Square.WIDTH, Square.HEIGHT);
-			renderSquareValue(s.getCenterX(), s.getCenterY(), s.getValue());
+			drawSquareValue(s.getCenterX(), s.getCenterY(), s.getValue());
 		}
-		AssetLoader.font.setScale(.5f, -.5f);
 	}
 
 	/**
@@ -118,27 +124,68 @@ public class GameRenderer {
 	 * @param value
 	 *            value of the Square
 	 */
-	private void renderSquareValue(float x, float y, int value) {
+	private void drawSquareValue(float x, float y, int value) {
 		if (value != 0) {
 			String val = Integer.toString(value);
-			AssetLoader.font.draw(batch, val, x - getTextCenterX(val), y
-					+ getTextCenterY(val));
+			BROWN_F.draw(batch, val, x - getTextCenterX(BROWN_F, val), y
+					+ getTextCenterY(BROWN_F, val));
 		}
+	}
+
+	private void drawScoreSquare() {
+		batch.draw(AssetLoader.score, BASE_Y, GAP,
+				AssetLoader.score.getWidth(), AssetLoader.score.getHeight());
+	}
+
+	private void drawHighscoreSquare() {
+		batch.draw(AssetLoader.highscore, AssetLoader.score.getWidth() + BASE_X
+				+ GAP, GAP, AssetLoader.highscore.getWidth(),
+				AssetLoader.highscore.getHeight());
+	}
+
+	private void drawHighestSquare() {
+		batch.draw(AssetLoader.highest, BASE_X + AssetLoader.score.getWidth()
+				* 2 + GAP * 2, GAP, AssetLoader.highest.getWidth(),
+				AssetLoader.highest.getHeight());
 	}
 
 	/**
 	 * Render the strings using the specified font.
 	 */
-	private void renderText(float delta) {
+	private void drawText(float delta) {
 		drawScore();
+		drawHighscore();
+		drawHighest();
 	}
 
 	/**
 	 * Render the score.
 	 */
 	private void drawScore() {
-		AssetLoader.font.draw(batch, Integer.toString(world.getScore()),
-				gameWidth / 2 - getTextCenterX(world.getScore()), 20);
+		AssetLoader.whiteFont.draw(
+				batch,
+				Integer.toString(world.getScore()),
+				BASE_X + AssetLoader.score.getWidth() / 2
+						- getTextCenterX(WHITE_F, world.getScore()),
+				SCORE_HEIGHT);
+	}
+
+	private void drawHighscore() {
+		WHITE_F.draw(batch, Integer.toString(AssetLoader.getHighscore()),
+				BASE_X + AssetLoader.score.getWidth() + GAP
+						+ AssetLoader.highscore.getWidth() / 2
+						- getTextCenterX(WHITE_F, AssetLoader.getHighscore()),
+				SCORE_HEIGHT);
+	}
+
+	private void drawHighest() {
+		WHITE_F.draw(
+				batch,
+				Integer.toString(AssetLoader.getHighest()),
+				BASE_X + AssetLoader.score.getWidth() * 2 + GAP * 2
+						+ AssetLoader.highest.getWidth() / 2
+						- getTextCenterX(WHITE_F, AssetLoader.getHighest()),
+				SCORE_HEIGHT);
 	}
 
 	/**
@@ -148,8 +195,8 @@ public class GameRenderer {
 	 *            the text to be centered
 	 * @return the center x coordinate of the provided String
 	 */
-	private float getTextCenterX(String text) {
-		return AssetLoader.font.getBounds(text).width / 2;
+	private float getTextCenterX(BitmapFont f, String text) {
+		return f.getBounds(text).width / 2;
 	}
 
 	/**
@@ -159,8 +206,8 @@ public class GameRenderer {
 	 *            the integer to be centered
 	 * @return the center x coordinate of the provided integer
 	 */
-	private float getTextCenterX(int value) {
-		return AssetLoader.font.getBounds(Integer.toString(value)).width / 2;
+	private float getTextCenterX(BitmapFont f, int value) {
+		return f.getBounds(Integer.toString(value)).width / 2;
 	}
 
 	/**
@@ -170,8 +217,8 @@ public class GameRenderer {
 	 *            the text to be centered
 	 * @return the center y coordinate of the provided Strings
 	 */
-	private float getTextCenterY(String text) {
-		return AssetLoader.font.getBounds(text).height / 2;
+	private float getTextCenterY(BitmapFont f, String text) {
+		return f.getBounds(text).height / 2;
 	}
 
 	/**
@@ -181,7 +228,7 @@ public class GameRenderer {
 	 *            the integer to be centered
 	 * @return the center y coordinate of the provided integer
 	 */
-	private float getTextCenterY(int value) {
-		return AssetLoader.font.getBounds(Integer.toString(value)).height / 2;
+	private float getTextCenterY(BitmapFont f, int value) {
+		return f.getBounds(Integer.toString(value)).height / 2;
 	}
 }
