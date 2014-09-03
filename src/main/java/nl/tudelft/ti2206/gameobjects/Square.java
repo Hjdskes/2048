@@ -79,16 +79,13 @@ public class Square {
 		return index;
 	}
 	
-	public boolean setX(int x) {
-		index = x;
+	public boolean setX() {
 		return false;
 		
 	}
 	
-	public boolean setY(int y) {
-		index = y;
-		return false;
-		
+	public boolean setY() {
+		return false;	
 	}
 
 	/**
@@ -185,6 +182,10 @@ public class Square {
 	 */
 	public void setIndex(int index) {
 		this.index = index;
+	}
+	
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	/**
