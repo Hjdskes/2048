@@ -31,7 +31,7 @@ public class Tile {
 		
 	}
 	
-	public void onRestart() {
+	public void restart() {
 		resetValue();
 	}
 	

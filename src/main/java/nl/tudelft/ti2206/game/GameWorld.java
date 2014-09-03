@@ -53,7 +53,7 @@ public class GameWorld {
 	 */
 	public void restart() {
 		score = 0;
-		grid.onRestart();
+		grid.restart();
 	}
 
 	/**

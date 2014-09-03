@@ -11,8 +11,14 @@ import java.util.Random;
  *
  * For example, imagine the grid being laid out like this:
  *
- * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
+ * +---+---+---+---+ 
+ * | 0 | 1 | 2 | 3 | 
+ * +---+---+---+---+ 
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ 
+ * | 8 | 9 | 10| 11| 
+ * +---+---+---+---+ 
+ * | 12| 13| 14| 15|
  * +---+---+---+---+
  *
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -59,6 +65,8 @@ public class Grid {
 	private void initGrid() {
 		int loc1 = initialLocation();
 		int loc2 = initialLocation();
+		while (loc2 == loc1) 
+			loc2 = initialLocation();
 
 		for (int i = 0; i < NTILES; i++) {
 			if (i == loc1) {
@@ -91,16 +99,16 @@ public class Grid {
 	 * @return a random value, either 2 or 4.
 	 */
 	private int initialValue() {
-		return random.nextInt(FOUR) < FOUR - 1 ? TWO : FOUR;
+		return random.nextInt(10) < 9 ? TWO : FOUR;
 	}
 
 	public void update(float delta) {
 
 	}
 
-	public void onRestart() {
+	public void restart() {
 		for (Tile t : grid) {
-			t.onRestart();
+			t.restart();
 		}
 	}
 
