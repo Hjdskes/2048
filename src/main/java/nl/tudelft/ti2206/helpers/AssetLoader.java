@@ -7,19 +7,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class AssetLoader {
-
-	/**
-	 * The font used in the game (Tahoma).
-	 */
+	/** The font used in the game (Tahoma). */
 	public static BitmapFont font, whiteFont;
-	/**
-	 * All sprites used in the game, should be publicly accessible.
-	 */
+	/** All sprites used in the game, should be publicly accessible. */
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
 			t1024, t2048, empty, score, highscore, highest;
-	/**
-	 * All textures used to load the sprites.
-	 */
+	/** All textures used to load the sprites. */
 	private static Texture gridTex, t2Tex, t4Tex, t8Tex, t16Tex, t32Tex,
 			t64Tex, t128Tex, t256Tex, t512Tex, t1024Tex, t2048Tex, emptyTex,
 			scoreTex, highscoreTex, highestTex;
@@ -84,7 +77,8 @@ public class AssetLoader {
 		// rotate 180 degrees about x axis
 		highscore.flip(false, true);
 
-		highestTex = new Texture(Gdx.files.internal("src/main/resources/images/highest.png"));
+		highestTex = new Texture(
+				Gdx.files.internal("src/main/resources/images/highest.png"));
 		highest = new Sprite(highestTex);
 		highest.flip(false, true);
 		
@@ -92,7 +86,8 @@ public class AssetLoader {
 				Gdx.files.internal("src/main/resources/fonts/tahoma.fnt"));
 		font.setScale(.25f, -.25f);
 		
-		whiteFont = new BitmapFont(Gdx.files.internal("src/main/resources/fonts/tahomaWhite.fnt"));
+		whiteFont = new BitmapFont(
+				Gdx.files.internal("src/main/resources/fonts/tahomaWhite.fnt"));
 		whiteFont.setScale(.6f, -.6f);
 		
 		prefs = Gdx.app.getPreferences("2048");

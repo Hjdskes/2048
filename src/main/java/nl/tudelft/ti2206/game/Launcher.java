@@ -16,21 +16,26 @@ public class Launcher {
 	/** The height of the window. */
 	private static final int HEIGHT = 600;
 	/** The logging facility. */
-	private static final Logger log = LoggerFactory.getLogger(Launcher.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Launcher.class);
 
-	public static void main(String[] args) {
+	/**
+	 * Main entry point for the game.
+	 * @param args
+	 *             command line arguments. These
+	 *             are ignored.
+	 */
+	public static void main(final String[] args) {
 		// This main method is called when starting your game.
-		log.info("Starting game...");
+		LOG.info("Starting game...");
 
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		LwjglApplicationConfiguration config =
+				new LwjglApplicationConfiguration();
 		config.title = "2048";
-
 		config.width = WIDTH;
 		config.height = HEIGHT;
 
-		log.info("config.width = " + config.width + ", config.height = "
-				+ config.height);
-
+		LOG.info("Window width and height: " + config.width
+				+ "x" + config.height);
 		new LwjglApplication(new TwentyFourtyGame(), config);
 	}
 }

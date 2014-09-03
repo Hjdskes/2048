@@ -5,180 +5,245 @@ import java.util.Random;
 /**
  * This class represents the 4x4 grid you see when playing 2048.
  *
- * The internal structure is a simple one-dimensional array. Considering we only
+ * The internal structure is a simple two-dimensional array. Considering we only
  * require simple operations, this is deemed fast enough, while being very
  * simple at the same time.
  *
  * For example, imagine the grid being laid out like this:
  *
  * +---+---+---+---+ 
- * | 1 | 2 | 3 | 4 | 
+ * | 0 | 1 | 2 | 3 | 
  * +---+---+---+---+ 
- * | 5 | 6 | 7 | 8 |
+ * | 4 | 5 | 6 | 7 |
  * +---+---+---+---+ 
- * | 9 | 10| 11| 12| 
+ * | 8 | 9 | 10| 11| 
  * +---+---+---+---+ 
- * | 13| 14| 15| 16|
+ * | 12| 13| 14| 15|
  * +---+---+---+---+
  *
- * Now, a square on field 11 can move left or right by adding or subtracting 1
- * from its index. Consequently, it can move up or down by adding or subtracting
+ * Now, a square on field 10 can move left or right by adding or subtracting 1
+ * from its index. It can move up or down by adding or subtracting
  * 4 from its index.
  *
  * @author group-21
  *
  */
 public class Grid {
-
 	/** The width of the grid. */
 	public static final int WIDTH = 400;
 	/** The height of the grid. */
 	public static final int HEIGHT = 400;
-
-	/** Base x coordinate. */
-	private static final int BASE_X = 100;
-	/** Base y coordinate. */
-	private static final int BASE_Y = 100;
-
-	/** The grid contains sixteen squares. */
-	private static final int NSQUARES = 16;
-	/** The array containing all sixteen squares. */
+	/** The grid contains sixteen tiles. */
+	private static final int NTILES = 16;
+	/** The lowest value to start with. */
+	private static final int TWO = 2;
+	/** The highest value to start with. */
+	private static final int FOUR = 4;
+	/** The array containing all sixteen tiles. */
 	private Tile[] grid;
-	/** Randomizer needed for filling squares */
-	Random random;
+	/** Randomizer needed for filling tiles. */
+	private Random random;
 
 	/**
-	 * Creates a new Grid with NSQUARES Tile objects.
+	 * Creates a new Grid with NTILES Tile objects.
 	 */
 	public Grid() {
-		random = new Random();
+		this.random = new Random();
+		this.grid = new Tile[NTILES];
 		initGrid();
 	}
 
 	/**
-	 * Initialize the grid with two filled squares and the others emptys
+	 * Initializes the grid, creating two tiles
+	 * with a value of 2 or 4 and setting the rest
+	 * empty.
 	 */
 	private void initGrid() {
-		grid = new Tile[NSQUARES];
-		// get initial locations for the two starting squares
-		int initialLoc1 = getInitialNumLocation();
-		int initialLoc2 = getInitialNumLocation();
-		// if both locations are the same, get a new location
-		while (initialLoc1 == initialLoc2) {
-			initialLoc2 = getInitialNumLocation();
-		}
+		int loc1 = initialLocation();
+		int loc2 = initialLocation();
 
-		// get initial values for the two starting squares
-		int initialVal1 = getInitialVal();
-		int initialVal2 = getInitialVal();
-		// if both values are the same, get a new value
-		while (initialVal1 == 4 && initialVal2 == 4) {
-			initialVal2 = getInitialVal();
-		}
-
-		for (int i = 0; i < grid.length; i++) {
-			if (i == initialLoc1)
-				grid[i] = new Tile(initialVal1, i);
-			else if (i == initialLoc2)
-				grid[i] = new Tile(initialVal2, i);
-			else {
-				grid[i] = new Tile(0, i);
+		for (int i = 0; i < NTILES; i++) {
+			if (i == loc1) {
+				grid[i] = new Tile(initialValue());
+			} else if (i == loc2) {
+				grid[i] = new Tile(initialValue());
+			} else {
+				grid[i] = new Tile(0);
 			}
 		}
 	}
-	
-	/**
-	 *
-	 * @return a random index on the grid
-	 */
-	private int getInitialNumLocation() {
-		return random.nextInt(NSQUARES);
-	}
 
 	/**
+	 * Returns a random value, smaller than 16,
+	 * indicating a location for a new Tile.
 	 * 
-	 * @return a random value, either 2 or 4, with a higher chance on a 2 than
-	 *         on a 4.
-	 */
-	private int getInitialVal() {
-		if (random.nextInt(4) < 3) {
-			return 2;
-		} else {
-			return 4;
-		}
-	}
-
-	/**
-	 * Updates the grid at the rate of delta/1000 times per second.
-	 *
-	 * @param delta
-	 */
-	public void update(float delta) {
-		for (Tile s : grid) {
-			s.update(delta);
-		}
-	}
-
-	/**
-	 * Restarts the grid.
-	 */
-	public void onRestart() {
-		for (Tile s : grid) {
-			s.onRestart();
-		}
-		addBlock();
-		addBlock();
-	}
-
-	/**
-	 *
-	 * @return x coordinate
-	 */
-	public int getX() {
-		return BASE_X;
-	}
-
-	/**
-	 *
-	 * @return y coordinate
-	 */
-	public int getY() {
-		return BASE_Y;
-	}
-
-	/**
-	 *
-	 * @return the grid containing all the squares
-	 */
-	public Tile[] getTiles() {
-		return grid;
-	}
-
-	/**
-	 * Lets a Tile occupy a spot on the grid, depending on its index.
+	 * This new location is always valid, i.e.
+	 * there is not already a tile there.
 	 * 
-	 * @param index
-	 * @param occupant
+	 * @return a new valid location.
 	 */
-	public void occupyTile(int index, Tile occupant) {
-		grid[index] = occupant;
-	}
-	
-	public void addBlock() {
-		int initialLoc1 = getInitialNumLocation();
-		while(grid[initialLoc1].getValue() != 0){
-			initialLoc1 = getInitialNumLocation();
+	private int initialLocation() {
+		int res = random.nextInt(NTILES);
+		while (grid[res].getValue() != 0) {
+			res = random.nextInt(NTILES);
 		}
-		grid[initialLoc1].setValue(2);
+		return res;
 	}
-	
-	public boolean isFull(){
-		for(int i = 0; i < NSQUARES; i++){
-			if(grid[i].getValue() == 0){
+
+	/**
+	 * Returns a random value, which is either 2 or 4.
+	 * The chances of getting 4 is significantly lower
+	 * than the change of getting 2.
+	 * 
+	 * @return a random value, either 2 or 4.
+	 */
+	private int initialValue() {
+		return random.nextInt(FOUR) < FOUR - 1 ? TWO : FOUR;
+	}
+
+	/**
+	 * This method is the one method used for moving tiles.
+	 * 
+	 * Its parameter shall indicate which direction is to be
+	 * moved in. The method will walk over all Tiles, checking
+	 * if a move is possible in the desired direction. If a 
+	 * valid move is possible, it will update the grid array.
+	 * 
+	 * @param direction the direction in which is to be moved.
+	 * 
+	 * @return true if a move has been made.
+	 */
+	public boolean move(int direction) {
+		/* TODO: enum for direction */
+		/* TODO: add a block after a valid move */
+		boolean res = false;
+
+		switch(direction) {
+			case -1: res = moveLeft();
+			case 1: res = moveRight();
+			case -FOUR: res = moveUp();
+			case FOUR: res = moveDown();
+			default: break;
+		}
+
+		/*if (res) {
+			Add block.
+		}*/
+		return res;
+	}
+
+	/**
+	 * Performs a move to the left.
+	 * 
+	 * @return true if a move has been made.
+	 */
+	public boolean moveLeft() {
+		boolean res = false;
+
+		for (int i = 0; i < NTILES; i++) {
+			/* Tile is in the leftmost row. */
+			if (i % FOUR == 1) {
+				continue;
+			}
+			if (grid[i].getValue() == grid[i - 1].getValue()) {
+				grid[i - 1].doubleValue();
+				grid[i].resetValue();
+				if (!res) {
+					res = true;
+				}
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Performs a move to the right.
+	 * 
+	 * @return true if a move has been made.
+	 */
+	public boolean moveRight() {
+		boolean res = false;
+
+		/* To have the tiles merge correctly, we need to revert
+		 * the order in which we walk through them. */
+		for (int i = NTILES; i > 0; i--) {
+			/* Tile is in the rightmost row. */
+			if (i % FOUR == FOUR - 1) {
+				continue;
+			}
+			if (grid[i].getValue() == grid[i - 1].getValue()) {
+				grid[i].doubleValue();
+				grid[i - 1].resetValue();
+				if (!res) {
+					res = true;
+				}
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Performs a move upwards.
+	 * 
+	 * @return true if a move has been made.
+	 */
+	public boolean moveUp() {
+		boolean res = false;
+
+		/* Skip the first four tiles. */
+		for (int i = FOUR; i < NTILES; i++) {
+			if (grid[i].getValue() == grid[i - FOUR].getValue()) {
+				grid[i - FOUR].doubleValue();
+				grid[i].resetValue();
+				if (!res) {
+					res = true;
+				}
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Performs a move downwards.
+	 * 
+	 * @return true if a move has been made.
+	 */
+	public boolean moveDown() {
+		boolean res = false;
+
+		/* Skip the last four tiles. */
+		for (int i = 0; i < NTILES - FOUR; i++) {
+			if (grid[i].getValue() == grid[i + 1].getValue()) {
+				grid[i + FOUR].doubleValue();
+				grid[i].resetValue();
+				if (!res) {
+					res = true;
+				}
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Returns true if the grid is full.
+	 * 
+	 * @return true if the grid is full.
+	 */
+	public boolean isFull() {
+		for (int i = 0; i < NTILES; i++) {
+			if (grid[i].getValue() == 0) {
 				return false;
 			}
 		}
 		return true;
 	}
 
+	/**
+	 * Returns the array containing all the tiles.
+	 * 
+	 * @return the array containing all the tiles.
+	 */
+	public Tile[] getTiles() {
+		return grid;
+	}
 }

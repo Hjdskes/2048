@@ -12,7 +12,7 @@ public class GameScreen implements Screen {
 	private static final int GAME_WIDTH = 600;
 	/** The height of the game. */
 	private static final int GAME_HEIGHT = 600;
-	
+
 	private float runTime;
 	private GameWorld world;
 	private GameRenderer renderer;
