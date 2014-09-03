@@ -1,7 +1,10 @@
 package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Square;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler implements InputProcessor {
@@ -17,6 +20,46 @@ public class InputHandler implements InputProcessor {
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		
+//		System.out.println("keyDown: keycode = " + keycode);
+		Square[] grid ;
+		switch (keycode)
+		{
+		
+		case Keys.DOWN: // arrow down
+			break;
+		case Keys.LEFT: // arrow left
+			
+			grid = world.getGrid().getSquares();
+			
+			for (int i = 0; i < grid.length; i++) {
+				
+				if ((grid[i].getIndex() % 4) != 0)  {
+					grid[i].setIndex(grid[i].getIndex() - 1);
+				}
+			}
+			
+			
+			
+			break;
+		case Keys.RIGHT: // arrow right
+			
+			grid = world.getGrid().getSquares();
+			
+			for (int i = 0; i < grid.length; i++) {
+				
+				if ((grid[i].getIndex() % 4) != 3) {
+					grid[i].setIndex(grid[i].getIndex() + 1);
+			
+				}
+			}
+			
+			break;
+			
+		default:
+				break;
+		}
+		
 		return false;
 	}
 

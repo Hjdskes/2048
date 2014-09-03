@@ -88,7 +88,7 @@ public class Grid {
 	}
 
 	/**
-	 *
+	 * Get a random index on the grid.
 	 * @return a random index on the grid
 	 */
 	private int getInitialNumLocation() {
@@ -96,7 +96,7 @@ public class Grid {
 	}
 
 	/**
-	 * 
+	 * Get initial value, either 2 or 4.
 	 * @return a random value, either 2 or 4, with a higher chance on a 2 than
 	 *         on a 4.
 	 */
