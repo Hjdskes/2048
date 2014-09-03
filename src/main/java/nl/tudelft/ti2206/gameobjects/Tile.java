@@ -1,30 +1,30 @@
 package nl.tudelft.ti2206.gameobjects;
 
 /**
- * The Square class represents the Squares you move around while playing 2048.
+ * The Tile class represents the Tiles you move around while playing 2048.
  * 
  * Its instance variables contain the current value and its index into the Grid
  * array.
  * 
  * Checking for possible movements can be done simply by checking if the value
- * of the Squares at index+1, index-1, index+4 or index-4 are 0 (since empty
- * Squares have a value of 0).
+ * of the Tiles at index+1, index-1, index+4 or index-4 are 0 (since empty
+ * Tiles have a value of 0).
  * 
  * @author group-21
  *
  */
-public class Square {
+public class Tile {
 
-	/** The height of the Square */
+	/** The height of the Tile */
 	public static final int WIDTH = 81;
-	/** The width of the Square */
+	/** The width of the Tile */
 	public static final int HEIGHT = 81;
 
 	/** Base x coordinate */
 	private static final int BASE_X = 115;
 	/** Base y coordinate */
 	private static final int BASE_Y = 115;
-	/** Gap between Squares */
+	/** Gap between Tiles */
 	private static final int GAP = 15;
 
 	/** The value (e.g. 2,4,8,16... */
@@ -33,20 +33,20 @@ public class Square {
 	private int index;
 
 	/**
-	 * Creates a new Square with a given value.
+	 * Creates a new Tile with a given value.
 	 * 
 	 * @param value
-	 *            the value of the Square
+	 *            the value of the Tile
 	 * @param index
 	 *            the index into the Grid array
 	 */
-	public Square(int value, int index) {
+	public Tile(int value, int index) {
 		this.value = value;
 		this.index = index;
 	}
 
 	/**
-	 * Updates the Square at the rate of 1000/delta times per second
+	 * Updates the Tile at the rate of 1000/delta times per second
 	 * 
 	 * @param delta
 	 */
@@ -55,25 +55,25 @@ public class Square {
 	}
 
 	/**
-	 * Restarts the Square
+	 * Restarts the Tile
 	 */
 	public void onRestart() {
 		value = 0;	
 	}
 
 	/**
-	 * Returns the value of the Square
+	 * Returns the value of the Tile
 	 * 
-	 * @return the value of the Square
+	 * @return the value of the Tile
 	 */
 	public int getValue() {
 		return value;
 	}
 
 	/**
-	 * Returns the index of the Square.
+	 * Returns the index of the Tile.
 	 * 
-	 * @return the index of the Square
+	 * @return the index of the Tile
 	 */
 	public int getIndex() {
 		return index;
@@ -89,7 +89,7 @@ public class Square {
 	}
 
 	/**
-	 * Returns the x coordinate of the Square
+	 * Returns the x coordinate of the Tile
 	 * 
 	 * @return the x coordinate
 	 */
@@ -125,14 +125,14 @@ public class Square {
 	
 	/**
 	 * 
-	 * @return center x coordinate of the Square
+	 * @return center x coordinate of the Tile
 	 */
 	public float getCenterX() {
 		return getX() + WIDTH / 2;
 	}
 
 	/**
-	 * Returns the y coordinate of the Square
+	 * Returns the y coordinate of the Tile
 	 * 
 	 * @return the y coordinate
 	 */
@@ -168,17 +168,17 @@ public class Square {
 
 	/**
 	 * 
-	 * @return center y coordinate of the Square
+	 * @return center y coordinate of the Tile
 	 */
 	public float getCenterY() {
 		return getY() + HEIGHT / 2;
 	}
 	
 	/**
-	 * Sets the new index for the Square.
+	 * Sets the new index for the Tile.
 	 *
 	 * @param index
-	 *            the new index of the Square
+	 *            the new index of the Tile
 	 */
 	public void setIndex(int index) {
 		this.index = index;
@@ -189,7 +189,7 @@ public class Square {
 	}
 
 	/**
-	 * Doubles the value of the Square.
+	 * Doubles the value of the Tile.
 	 */
 	public void doubleValue() {
 		value *= 2;

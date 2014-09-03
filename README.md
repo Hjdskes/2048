@@ -5,7 +5,7 @@ This team consists of the following students:
 | Name                 | Student number |
 |----------------------|----------------|
 | Piet van Agtmaal     | 4321278        |
-| Jochem Heijltjes     |
+| Jochem Heijltjes     | 1534041        |
 | Arthur Hovanesyan    |
 | Paul Bakker          |
 | Jente Hidskes        | 4335732        |

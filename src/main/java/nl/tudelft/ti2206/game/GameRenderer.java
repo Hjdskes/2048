@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Square;
+import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.helpers.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
@@ -90,10 +90,10 @@ public class GameRenderer {
 	 */
 	private void drawSpriteBatches(float delta) {
 		drawGrid();
-		drawSquares();
-		drawScoreSquare();
-		drawHighscoreSquare();
-		drawHighestSquare();
+		drawTiles();
+		drawScoreTile();
+		drawHighscoreTile();
+		drawHighestTile();
 	}
 
 	/**
@@ -107,25 +107,25 @@ public class GameRenderer {
 	/**
 	 * Render the squares.
 	 */
-	private void drawSquares() {
-		for (Square s : world.getGrid().getSquares()) {
+	private void drawTiles() {
+		for (Tile s : world.getGrid().getTiles()) {
 			batch.draw(AssetLoader.getTile(s.getValue()), s.getX(), s.getY(),
-					Square.WIDTH, Square.HEIGHT);
-			drawSquareValue(s.getCenterX(), s.getCenterY(), s.getValue());
+					Tile.WIDTH, Tile.HEIGHT);
+			drawTileValue(s.getCenterX(), s.getCenterY(), s.getValue());
 		}
 	}
 
 	/**
-	 * Render the Square values, exactly in the middle of the Square
+	 * Render the Tile values, exactly in the middle of the Tile
 	 * 
 	 * @param x
-	 *            center x coordinate of the Square
+	 *            center x coordinate of the Tile
 	 * @param y
-	 *            center y coordinate of the Square
+	 *            center y coordinate of the Tile
 	 * @param value
-	 *            value of the Square
+	 *            value of the Tile
 	 */
-	private void drawSquareValue(float x, float y, int value) {
+	private void drawTileValue(float x, float y, int value) {
 		if (value != 0) {
 			String val = Integer.toString(value);
 			BROWN_F.draw(batch, val, x - getTextCenterX(BROWN_F, val), y
@@ -136,7 +136,7 @@ public class GameRenderer {
 	/**
 	 * Render the square in which the current score should appear.
 	 */
-	private void drawScoreSquare() {
+	private void drawScoreTile() {
 		batch.draw(AssetLoader.score, BASE_Y, GAP,
 				AssetLoader.score.getWidth(), AssetLoader.score.getHeight());
 	}
@@ -144,7 +144,7 @@ public class GameRenderer {
 	/**
 	 * Render the square in which the highscore should appear.
 	 */
-	private void drawHighscoreSquare() {
+	private void drawHighscoreTile() {
 		batch.draw(AssetLoader.highscore, AssetLoader.score.getWidth() + BASE_X
 				+ GAP, GAP, AssetLoader.highscore.getWidth(),
 				AssetLoader.highscore.getHeight());
@@ -154,7 +154,7 @@ public class GameRenderer {
 	 * Render the square in which the highest tile number achieved should
 	 * appear.
 	 */
-	private void drawHighestSquare() {
+	private void drawHighestTile() {
 		batch.draw(AssetLoader.highest, BASE_X + AssetLoader.score.getWidth()
 				* 2 + GAP * 2, GAP, AssetLoader.highest.getWidth(),
 				AssetLoader.highest.getHeight());

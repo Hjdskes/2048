@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.gameobjects.Square;
+import nl.tudelft.ti2206.gameobjects.Tile;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -19,32 +19,32 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.DPAD_DOWN) {
-			Square[] square = world.getGrid().getSquares();
+			Tile[] square = world.getGrid().getTiles();
 			updateMove(square);
 			return true;
 		}
 
 		if (keycode == Keys.DPAD_UP) {
-			Square[] orginSquare = world.getGrid().getSquares();
-			Square[] square = new Square[16];
+			Tile[] orginTile = world.getGrid().getTiles();
+			Tile[] square = new Tile[16];
 			for (int i = 0; i < 16; i++) {
-				square[i] = orginSquare[15 - i];
+				square[i] = orginTile[15 - i];
 			}
 			updateMove(square);
 			return true;
 		}
 
 		if (keycode == Keys.DPAD_LEFT) {
-			Square[] square = sideGrid(world.getGrid().getSquares());
+			Tile[] square = sideGrid(world.getGrid().getTiles());
 			updateMove(square);
 			return true;
 		}
 
 		if (keycode == Keys.DPAD_RIGHT) {
-			Square[] orginSquare = sideGrid(world.getGrid().getSquares());
-			Square[] square = new Square[16];
+			Tile[] orginTile = sideGrid(world.getGrid().getTiles());
+			Tile[] square = new Tile[16];
 			for (int i = 0; i < 16; i++) {
-				square[i] = orginSquare[15 - i];
+				square[i] = orginTile[15 - i];
 			}
 			updateMove(square);
 			return true;
@@ -92,7 +92,7 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-	public void updateMove(Square[] square) {
+	public void updateMove(Tile[] square) {
 		for (int i = 0; i < 12; i++) {
 			if (square[i].getValue() > 0 && square[i + 4].getValue() == 0) {
 				square[i + 4].setValue(square[i].getValue());
@@ -116,8 +116,8 @@ public class InputHandler implements InputProcessor {
 	 * @param square
 	 * @return
 	 */
-	public Square[] sideGrid(Square[] square) {
-		Square[] result = new Square[16];
+	public Tile[] sideGrid(Tile[] square) {
+		Tile[] result = new Tile[16];
 		result[0] = square[3];
 		result[1] = square[7];
 		result[2] = square[11];

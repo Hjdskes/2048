@@ -43,12 +43,12 @@ public class Grid {
 	/** The grid contains sixteen squares. */
 	private static final int NSQUARES = 16;
 	/** The array containing all sixteen squares. */
-	private Square[] grid;
+	private Tile[] grid;
 	/** Randomizer needed for filling squares */
 	Random random;
 
 	/**
-	 * Creates a new Grid with NSQUARES Square objects.
+	 * Creates a new Grid with NSQUARES Tile objects.
 	 */
 	public Grid() {
 		random = new Random();
@@ -59,7 +59,7 @@ public class Grid {
 	 * Initialize the grid with two filled squares and the others emptys
 	 */
 	private void initGrid() {
-		grid = new Square[NSQUARES];
+		grid = new Tile[NSQUARES];
 		// get initial locations for the two starting squares
 		int initialLoc1 = getInitialNumLocation();
 		int initialLoc2 = getInitialNumLocation();
@@ -78,11 +78,11 @@ public class Grid {
 
 		for (int i = 0; i < grid.length; i++) {
 			if (i == initialLoc1)
-				grid[i] = new Square(initialVal1, i);
+				grid[i] = new Tile(initialVal1, i);
 			else if (i == initialLoc2)
-				grid[i] = new Square(initialVal2, i);
+				grid[i] = new Tile(initialVal2, i);
 			else {
-				grid[i] = new Square(0, i);
+				grid[i] = new Tile(0, i);
 			}
 		}
 	}
@@ -114,7 +114,7 @@ public class Grid {
 	 * @param delta
 	 */
 	public void update(float delta) {
-		for (Square s : grid) {
+		for (Tile s : grid) {
 			s.update(delta);
 		}
 	}
@@ -123,7 +123,7 @@ public class Grid {
 	 * Restarts the grid.
 	 */
 	public void onRestart() {
-		for (Square s : grid) {
+		for (Tile s : grid) {
 			s.onRestart();
 		}
 		addBlock();
@@ -150,17 +150,17 @@ public class Grid {
 	 *
 	 * @return the grid containing all the squares
 	 */
-	public Square[] getSquares() {
+	public Tile[] getTiles() {
 		return grid;
 	}
 
 	/**
-	 * Lets a Square occupy a spot on the grid, depending on its index.
+	 * Lets a Tile occupy a spot on the grid, depending on its index.
 	 * 
 	 * @param index
 	 * @param occupant
 	 */
-	public void occupySquare(int index, Square occupant) {
+	public void occupyTile(int index, Tile occupant) {
 		grid[index] = occupant;
 	}
 	
