@@ -132,17 +132,27 @@ public class GameRenderer {
 		}
 	}
 
+	/**
+	 * Render the square in which the current score should appear.
+	 */
 	private void drawScoreSquare() {
 		batch.draw(AssetLoader.score, BASE_Y, GAP,
 				AssetLoader.score.getWidth(), AssetLoader.score.getHeight());
 	}
 
+	/**
+	 * Render the square in which the highscore should appear.
+	 */
 	private void drawHighscoreSquare() {
 		batch.draw(AssetLoader.highscore, AssetLoader.score.getWidth() + BASE_X
 				+ GAP, GAP, AssetLoader.highscore.getWidth(),
 				AssetLoader.highscore.getHeight());
 	}
 
+	/**
+	 * Render the square in which the highest tile number achieved should
+	 * appear.
+	 */
 	private void drawHighestSquare() {
 		batch.draw(AssetLoader.highest, BASE_X + AssetLoader.score.getWidth()
 				* 2 + GAP * 2, GAP, AssetLoader.highest.getWidth(),
@@ -159,7 +169,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the score.
+	 * Render the score in its square.
 	 */
 	private void drawScore() {
 		AssetLoader.whiteFont.draw(
@@ -170,6 +180,9 @@ public class GameRenderer {
 				SCORE_HEIGHT);
 	}
 
+	/**
+	 * Render highscore in its square.
+	 */
 	private void drawHighscore() {
 		WHITE_F.draw(batch, Integer.toString(AssetLoader.getHighscore()),
 				BASE_X + AssetLoader.score.getWidth() + GAP
@@ -178,6 +191,9 @@ public class GameRenderer {
 				SCORE_HEIGHT);
 	}
 
+	/**
+	 * Render highest tile ever scored in its square.
+	 */
 	private void drawHighest() {
 		WHITE_F.draw(
 				batch,
