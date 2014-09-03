@@ -10,7 +10,7 @@ import com.badlogic.gdx.Screen;
 public class GameScreen implements Screen {
 	/** The width of the game */
 	private static final int GAME_WIDTH = 600;
-	/** The hieght of the game */
+	/** The height of the game */
 	private static final int GAME_HEIGHT = 600;
 
 	private float runTime;
@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
 	}
 
 	/**
-	 * The game loop. Renders and updates the game.
+	 * The game loop. Renders and updates the game 1000/delta times per second.
 	 */
 	@Override
 	public void render(float delta) {

@@ -78,14 +78,14 @@ public class Square {
 	public int getIndex() {
 		return index;
 	}
-	
+
 	public boolean setX() {
 		return false;
-		
+
 	}
-	
+
 	public boolean setY() {
-		return false;	
+		return false;
 	}
 
 	/**
@@ -94,35 +94,20 @@ public class Square {
 	 * @return the x coordinate
 	 */
 	public float getX() {
-		switch (index) {
+		switch (index % 4) {
 		case 0:
-		case 4:
-		case 8:
-		case 12:
 			return BASE_X;
-
 		case 1:
-		case 5:
-		case 9:
-		case 13:
 			return BASE_X + WIDTH + GAP;
-
 		case 2:
-		case 6:
-		case 10:
-		case 14:
 			return BASE_X + 2 * (WIDTH + GAP);
-
 		case 3:
-		case 7:
-		case 11:
-		case 15:
 			return BASE_X + 3 * (WIDTH + GAP);
 		default:
 			return BASE_X;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return center x coordinate of the Square
@@ -137,31 +122,15 @@ public class Square {
 	 * @return the y coordinate
 	 */
 	public float getY() {
-		switch (index) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
+		if (index < 4) {
 			return BASE_Y;
-
-		case 4:
-		case 5:
-		case 6:
-		case 7:
+		} else if (index < 8) {
 			return BASE_Y + HEIGHT + GAP;
-
-		case 8:
-		case 9:
-		case 10:
-		case 11:
+		} else if (index < 12) {
 			return BASE_Y + 2 * (HEIGHT + GAP);
-
-		case 12:
-		case 13:
-		case 14:
-		case 15:
+		} else if (index < 16) {
 			return BASE_Y + 3 * (HEIGHT + GAP);
-		default:
+		} else {
 			return BASE_Y;
 		}
 	}
@@ -173,7 +142,7 @@ public class Square {
 	public float getCenterY() {
 		return getY() + HEIGHT / 2;
 	}
-	
+
 	/**
 	 * Sets the new index for the Square.
 	 *
