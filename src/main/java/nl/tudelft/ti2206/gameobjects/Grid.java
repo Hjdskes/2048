@@ -11,13 +11,13 @@ import java.util.Random;
  *
  * For example, imagine the grid being laid out like this:
  *
- * +---+---+---+---+ 
- * | 0 | 1 | 2 | 3 | 
- * +---+---+---+---+ 
+ * +---+---+---+---+
+ * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+
  * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
+ * +---+---+---+---+
+ * | 8 | 9 | 10| 11|
+ * +---+---+---+---+
  * | 12| 13| 14| 15|
  * +---+---+---+---+
  *
@@ -30,8 +30,19 @@ import java.util.Random;
  */
 public class Grid {
 
+	/**
+	 * This enum is used to indicate
+	 * the direction of movement.
+	 */
 	public enum Direction {
-		UP, DOWN, LEFT, RIGHT;
+		/** Upwards. */
+		UP,
+		/** Downwards. */
+		DOWN,
+		/** Left. */
+		LEFT,
+		/** Right. */
+		RIGHT;
 	}
 
 	/** The width of the grid. */
@@ -63,20 +74,18 @@ public class Grid {
 	 * setting the rest empty.
 	 */
 	private void initGrid() {
-		int loc1 = initialLocation();
-		int loc2 = initialLocation();
-		while (loc2 == loc1) 
-			loc2 = initialLocation();
-
 		for (int i = 0; i < NTILES; i++) {
-			if (i == loc1) {
-				grid[i] = new Tile(initialValue());
-			} else if (i == loc2) {
-				grid[i] = new Tile(initialValue());
-			} else {
-				grid[i] = new Tile(0);
-			}
+			grid[i] = new Tile(0);			
 		}
+
+		int loc1 = getRandomEmptyLocation();
+		int loc2 = getRandomEmptyLocation();
+		while (loc2 == loc1) {
+			loc2 = getRandomEmptyLocation();
+		}
+
+		grid[loc1].setValue(initialValue());
+		grid[loc2].setValue(initialValue());
 	}
 
 	/**
@@ -88,8 +97,12 @@ public class Grid {
 	 * 
 	 * @return a new valid location.
 	 */
-	private int initialLocation() {
-		return random.nextInt(NTILES);
+	private int getRandomEmptyLocation() {
+		int index = random.nextInt(grid.length);
+		while (!grid[index].isEmpty()) {
+			index = random.nextInt(grid.length);
+		}
+		return index;
 	}
 
 	/**
@@ -103,7 +116,6 @@ public class Grid {
 	}
 
 	public void update(float delta) {
-
 	}
 
 	public void restart() {
@@ -127,6 +139,7 @@ public class Grid {
 	 */
 	public boolean move(Direction direction) {
 		/* TODO: add a block after a valid move */
+		/* TODO: move a tile multiple times if valid */
 		boolean res = false;
 
 		switch (direction) {
@@ -150,14 +163,6 @@ public class Grid {
 			grid[getRandomEmptyLocation()].setValue(initialValue());
 		}
 		return res;
-	}
-
-	private int getRandomEmptyLocation() {
-		int index = random.nextInt(grid.length);
-		while (!grid[index].isEmpty()) {
-			index = random.nextInt(grid.length);
-		}
-		return index;
 	}
 
 	/**
