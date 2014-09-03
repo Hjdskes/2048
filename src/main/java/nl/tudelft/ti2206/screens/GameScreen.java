@@ -8,11 +8,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
-	/** The width of the game */
+	/** The width of the game. */
 	private static final int GAME_WIDTH = 600;
-	/** The height of the game */
+	/** The height of the game. */
 	private static final int GAME_HEIGHT = 600;
-
+	
 	private float runTime;
 	private GameWorld world;
 	private GameRenderer renderer;

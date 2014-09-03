@@ -126,6 +126,8 @@ public class Grid {
 		for (Square s : grid) {
 			s.onRestart();
 		}
+		addBlock();
+		addBlock();
 	}
 
 	/**

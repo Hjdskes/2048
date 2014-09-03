@@ -111,7 +111,7 @@ public class InputHandler implements InputProcessor {
 	}
 
 	/**
-	 * Moves the grid on it's side. Can be made more efficient
+	 * Moves the grid on it's side. Can be made more efficient.
 	 * 
 	 * @param square
 	 * @return

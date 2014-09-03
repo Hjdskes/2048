@@ -58,7 +58,7 @@ public class Square {
 	 * Restarts the Square
 	 */
 	public void onRestart() {
-
+		value = 0;	
 	}
 
 	/**
