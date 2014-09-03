@@ -27,6 +27,14 @@ public class Tile {
 		this.value = value;
 	}
 
+	public void update(float delta) {
+		
+	}
+	
+	public void onRestart() {
+		resetValue();
+	}
+	
 	/**
 	 * Returns the value of the Tile.
 	 * 
@@ -36,6 +44,10 @@ public class Tile {
 		return value;
 	}
 
+	public boolean isEmpty() {
+		return value == 0;
+	}
+	
 	/**
 	 * Resets the value of the Tile.
 	 */
@@ -43,6 +55,10 @@ public class Tile {
 		this.value = 0;
 	}
 
+	public void setValue(int value) {
+		this.value = value;
+	}
+	
 	/**
 	 * Doubles the value of the Tile.
 	 */

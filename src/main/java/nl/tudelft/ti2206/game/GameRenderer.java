@@ -1,8 +1,7 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.helpers.AssetLoader;
+import nl.tudelft.ti2206.helpers.XYCalculator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameRenderer {
-	
+
 	private static final int GAP = 15;
 	private static final int BASE_X = 100;
 	private static final int BASE_Y = 100;
@@ -100,18 +99,23 @@ public class GameRenderer {
 	 * Render the grid.
 	 */
 	private void drawGrid() {
-		batch.draw(AssetLoader.grid, world.getGrid().getX(), world.getGrid()
-				.getY(), Grid.WIDTH, Grid.HEIGHT);
+		batch.draw(AssetLoader.grid, XYCalculator.getGridX(),
+				XYCalculator.getGridY(), XYCalculator.getGridWidth(),
+				XYCalculator.getGridWidth());
 	}
 
 	/**
 	 * Render the squares.
 	 */
 	private void drawTiles() {
-		for (Tile s : world.getGrid().getTiles()) {
-			batch.draw(AssetLoader.getTile(s.getValue()), s.getX(), s.getY(),
-					Tile.WIDTH, Tile.HEIGHT);
-			drawTileValue(s.getCenterX(), s.getCenterY(), s.getValue());
+		for (int i = 0; i < world.getGrid().getTiles().length; i++) {
+			batch.draw(AssetLoader.getTile(world.getGrid().getTiles()[i]
+					.getValue()), XYCalculator.getTileX(i), XYCalculator
+					.getTileY(i), XYCalculator.getTileWidth(), XYCalculator
+					.getTileHeight());
+			drawTileValue(XYCalculator.getCenterTileX(i),
+					XYCalculator.getCenterTileY(i),
+					world.getGrid().getTiles()[i].getValue());
 		}
 	}
 

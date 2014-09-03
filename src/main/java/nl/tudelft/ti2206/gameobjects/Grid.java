@@ -11,24 +11,23 @@ import java.util.Random;
  *
  * For example, imagine the grid being laid out like this:
  *
- * +---+---+---+---+ 
- * | 0 | 1 | 2 | 3 | 
- * +---+---+---+---+ 
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
- * | 12| 13| 14| 15|
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
  *
  * Now, a square on field 10 can move left or right by adding or subtracting 1
- * from its index. It can move up or down by adding or subtracting
- * 4 from its index.
+ * from its index. It can move up or down by adding or subtracting 4 from its
+ * index.
  *
  * @author group-21
  *
  */
 public class Grid {
+
+	public enum Direction {
+		UP, DOWN, LEFT, RIGHT;
+	}
+
 	/** The width of the grid. */
 	public static final int WIDTH = 400;
 	/** The height of the grid. */
@@ -54,9 +53,8 @@ public class Grid {
 	}
 
 	/**
-	 * Initializes the grid, creating two tiles
-	 * with a value of 2 or 4 and setting the rest
-	 * empty.
+	 * Initializes the grid, creating two tiles with a value of 2 or 4 and
+	 * setting the rest empty.
 	 */
 	private void initGrid() {
 		int loc1 = initialLocation();
@@ -74,26 +72,21 @@ public class Grid {
 	}
 
 	/**
-	 * Returns a random value, smaller than 16,
-	 * indicating a location for a new Tile.
+	 * Returns a random value, smaller than 16, indicating a location for a new
+	 * Tile.
 	 * 
-	 * This new location is always valid, i.e.
-	 * there is not already a tile there.
+	 * This new location is always valid, i.e. there is not already a tile
+	 * there.
 	 * 
 	 * @return a new valid location.
 	 */
 	private int initialLocation() {
-		int res = random.nextInt(NTILES);
-		while (grid[res].getValue() != 0) {
-			res = random.nextInt(NTILES);
-		}
-		return res;
+		return random.nextInt(NTILES);
 	}
 
 	/**
-	 * Returns a random value, which is either 2 or 4.
-	 * The chances of getting 4 is significantly lower
-	 * than the change of getting 2.
+	 * Returns a random value, which is either 2 or 4. The chances of getting 4
+	 * is significantly lower than the change of getting 2.
 	 * 
 	 * @return a random value, either 2 or 4.
 	 */
@@ -101,35 +94,62 @@ public class Grid {
 		return random.nextInt(FOUR) < FOUR - 1 ? TWO : FOUR;
 	}
 
+	public void update(float delta) {
+
+	}
+
+	public void onRestart() {
+		for (Tile t : grid) {
+			t.onRestart();
+		}
+	}
+
 	/**
 	 * This method is the one method used for moving tiles.
 	 * 
-	 * Its parameter shall indicate which direction is to be
-	 * moved in. The method will walk over all Tiles, checking
-	 * if a move is possible in the desired direction. If a 
-	 * valid move is possible, it will update the grid array.
+	 * Its parameter shall indicate which direction is to be moved in. The
+	 * method will walk over all Tiles, checking if a move is possible in the
+	 * desired direction. If a valid move is possible, it will update the grid
+	 * array.
 	 * 
-	 * @param direction the direction in which is to be moved.
+	 * @param direction
+	 *            the direction in which is to be moved.
 	 * 
 	 * @return true if a move has been made.
 	 */
-	public boolean move(int direction) {
-		/* TODO: enum for direction */
+	public boolean move(Direction direction) {
 		/* TODO: add a block after a valid move */
 		boolean res = false;
 
-		switch(direction) {
-			case -1: res = moveLeft();
-			case 1: res = moveRight();
-			case -FOUR: res = moveUp();
-			case FOUR: res = moveDown();
-			default: break;
+		switch (direction) {
+		case LEFT:
+			res = moveLeft();
+			break;
+		case RIGHT:
+			res = moveRight();
+			break;
+		case UP:
+			res = moveUp();
+			break;
+		case DOWN:
+			res = moveDown();
+			break;
+		default:
+			break;
 		}
 
-		/*if (res) {
-			Add block.
-		}*/
+		if (res) {
+			grid[getRandomEmptyLocation()].setValue(initialValue());
+		}
 		return res;
+	}
+
+	private int getRandomEmptyLocation() {
+		int index = random.nextInt(grid.length);
+		while (!grid[index].isEmpty()) {
+			index = random.nextInt(grid.length);
+		}
+		return index;
 	}
 
 	/**
@@ -164,8 +184,10 @@ public class Grid {
 	public boolean moveRight() {
 		boolean res = false;
 
-		/* To have the tiles merge correctly, we need to revert
-		 * the order in which we walk through them. */
+		/*
+		 * To have the tiles merge correctly, we need to revert the order in
+		 * which we walk through them.
+		 */
 		for (int i = NTILES; i > 0; i--) {
 			/* Tile is in the rightmost row. */
 			if (i % FOUR == FOUR - 1) {

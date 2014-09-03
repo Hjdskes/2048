@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -9,51 +9,33 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor {
 
 	private GameWorld world;
-	private float scale;
+
+	// private float scale;
 
 	public InputHandler(GameWorld world, int screenWidth) {
 		this.world = world;
-		scale = 600f / screenWidth;
+		// scale = 600f / screenWidth;
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.DPAD_DOWN) {
-			Tile[] square = world.getGrid().getTiles();
-			updateMove(square);
+			world.getGrid().move(Direction.DOWN);
 			return true;
-		}
-
-		if (keycode == Keys.DPAD_UP) {
-			Tile[] orginTile = world.getGrid().getTiles();
-			Tile[] square = new Tile[16];
-			for (int i = 0; i < 16; i++) {
-				square[i] = orginTile[15 - i];
-			}
-			updateMove(square);
+		} else if (keycode == Keys.DPAD_UP) {
+			world.getGrid().move(Direction.UP);
 			return true;
-		}
-
-		if (keycode == Keys.DPAD_LEFT) {
-			Tile[] square = sideGrid(world.getGrid().getTiles());
-			updateMove(square);
+		} else if (keycode == Keys.DPAD_LEFT) {
+			world.getGrid().move(Direction.LEFT);
 			return true;
-		}
-
-		if (keycode == Keys.DPAD_RIGHT) {
-			Tile[] orginTile = sideGrid(world.getGrid().getTiles());
-			Tile[] square = new Tile[16];
-			for (int i = 0; i < 16; i++) {
-				square[i] = orginTile[15 - i];
-			}
-			updateMove(square);
+		} else if (keycode == Keys.DPAD_RIGHT) {
+			world.getGrid().move(Direction.RIGHT);
 			return true;
-
 		}
 
 		if (keycode == Keys.ESCAPE)
 			world.restart();
-		
+
 		return false;
 	}
 
@@ -91,50 +73,4 @@ public class InputHandler implements InputProcessor {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		return false;
 	}
-
-	public void updateMove(Tile[] square) {
-		for (int i = 0; i < 12; i++) {
-			if (square[i].getValue() > 0 && square[i + 4].getValue() == 0) {
-				square[i + 4].setValue(square[i].getValue());
-				square[i].setValue(0);
-			}
-			if (square[i].getValue() == square[i + 4].getValue()) {
-				square[i].setValue(0);
-				square[i + 4].doubleValue();
-			}
-
-		}
-		if (!world.getGrid().isFull()) {
-			world.getGrid().addBlock();
-		}
-
-	}
-
-	/**
-	 * Moves the grid on it's side. Can be made more efficient.
-	 * 
-	 * @param square
-	 * @return
-	 */
-	public Tile[] sideGrid(Tile[] square) {
-		Tile[] result = new Tile[16];
-		result[0] = square[3];
-		result[1] = square[7];
-		result[2] = square[11];
-		result[3] = square[15];
-		result[4] = square[2];
-		result[5] = square[6];
-		result[6] = square[10];
-		result[7] = square[14];
-		result[8] = square[1];
-		result[9] = square[5];
-		result[10] = square[9];
-		result[11] = square[13];
-		result[12] = square[0];
-		result[13] = square[4];
-		result[14] = square[8];
-		result[15] = square[12];
-		return result;
-	}
-
 }
