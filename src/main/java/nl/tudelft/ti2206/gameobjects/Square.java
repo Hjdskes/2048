@@ -78,14 +78,13 @@ public class Square {
 	public int getIndex() {
 		return index;
 	}
-
-	public boolean setX() {
-		return false;
-
+	
+	public void setX(int x) {
+		index = x;
 	}
 
-	public boolean setY() {
-		return false;
+	public void setY(int y) {
+		index = y;
 	}
 
 	/**
