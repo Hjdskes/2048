@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameRenderer {
+	
 	private static final int GAP = 15;
 	private static final int BASE_X = 100;
 	private static final int BASE_Y = 100;
@@ -227,7 +228,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Calculates the center y coordinate of a String
+	 * Calculates the center y coordinate of a String.
 	 * 
 	 * @param text
 	 *            the text to be centered

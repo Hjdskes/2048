@@ -51,6 +51,9 @@ public class InputHandler implements InputProcessor {
 
 		}
 
+		if (keycode == Keys.ESCAPE)
+			world.restart();
+		
 		return false;
 	}
 
