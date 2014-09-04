@@ -61,10 +61,12 @@ public class Grid {
 	private Tile[] grid;
 	/** Randomizer needed for filling tiles. */
 	private Random random;
+	/** TileMover is used to move the tiles. */
 	private TileMover mover;
-	
-	/* Keeps track of the highest tile value in game */
+	/** Keeps track of the highest tile value in game. */
 	private int highest;
+	/** The game world. */
+	private GameWorld world;
 	
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
@@ -72,8 +74,9 @@ public class Grid {
 	public Grid(GameWorld world) {
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
+		this.mover = new TileMover(this);
+		this.world = world;
 		initGrid();
-		mover = new TileMover(world, this);
 	}
 
 	/**
@@ -146,29 +149,29 @@ public class Grid {
 	 * 
 	 * @param direction
 	 *            the direction in which is to be moved.
-	 * 
-	 * @return true if a move has been made.
 	 */
 	public void move(Direction direction) {
+		int score = 0;
 
 		switch (direction) {
 		case LEFT:
-			mover.moveLeft();
+			score = mover.moveLeft();
 			break;
 		case RIGHT:
-			mover.moveRight();
+			score = mover.moveRight();
 			break;
 		case UP:
-			mover.moveUp();
+			score = mover.moveUp();
 			break;
 		case DOWN:
-			mover.moveDown();
+			score = mover.moveDown();
 			break;
 		default:
 			break;
 		}
 
 		if (mover.isMoveMade()) {
+			world.addScore(score);
 			grid[getRandomEmptyLocation()].setValue(initialValue());
 		}
 	}
@@ -179,7 +182,7 @@ public class Grid {
 	 * @return true if the grid is full.
 	 */
 	public boolean isFull() {
-		for (int i = 0; i < NTILES; i++) {
+		for (int i = 0; i < grid.length; i++) {
 			if (grid[i].getValue() == 0) {
 				return false;
 			}
