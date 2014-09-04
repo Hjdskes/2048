@@ -16,6 +16,8 @@ package nl.tudelft.ti2206.gameobjects;
 public class Tile {
 	/** The value (e.g. 2,4,8,16... */
 	private int value;
+	/** Indicates whether or not this Tile
+        has merged into another. */
 	private boolean isMerged;
 
 	/**
@@ -29,34 +31,42 @@ public class Tile {
 		this.isMerged = false;
 	}
 
-	public void update(float delta) {
-
-	}
-
-	/**
-	 * Restarts all tiles to their default state
-	 */
-	public void restart() {
-		resetValue();
-	}
-
 	/**
 	 * Returns the value of the Tile.
 	 * 
 	 * @return the value of the Tile
 	 */
 	public final int getValue() {
-		return value;
+		return this.value;
+	}
+
+	/** Sets the value of the Tile.
+	 * 
+	 * @param value the new value.
+	 */
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	public boolean isEmpty() {
-		return value == 0;
+		return this.value == 0;
 	}
 
+	/**
+	 * Returns true if this Tile has been
+	 * merged.
+	 * @return true if this Tile has been
+	 *         merged.
+	 */
 	public boolean isMerged() {
 		return this.isMerged;
 	}
 
+	/**
+	 * Sets the merged state of this Tile.
+	 * 
+	 * @param isMerged the new merged state.
+	 */
 	public void setMerged(boolean isMerged) {
 		this.isMerged = isMerged;
 	}
@@ -68,18 +78,25 @@ public class Tile {
 		this.value = 0;
 	}
 
-	/** Sets the value of the Tile.
-	 * 
-	 * @param value
+	/**
+	 * Doubles the value of the Tile,
+	 * or sets it to 2 if the current Tile
+	 * is empty.
 	 */
-	public void setValue(int value) {
-		this.value = value;
+	public final void doubleValue() {
+		if (this.isEmpty()) {
+			value = 2;
+		} else {
+			value *= 2;
+		}
 	}
 
 	/**
-	 * Doubles the value of the Tile.
+	 * Resets all tiles to their default state.
 	 */
-	public final void doubleValue() {
-		value *= 2;
+	public void restart() {
+		resetValue();
 	}
+
+	public void update(float delta) {}
 }

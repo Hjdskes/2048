@@ -157,23 +157,23 @@ public class TileMover {
 	 *            the index of the tile
 	 * @param dir
 	 *            the direction to move to
+	 * @return the value to add to the score.
 	 */
 	private int moveTile(int i, Direction dir) {
 		int res = 0;
 
 		if (grid[i].isEmpty()) {
 			return res;
-		} else if (grid[i + offset].getValue() == grid[i].getValue()) {
+		} else {
 			grid[i + offset].doubleValue();
-			// update score
-			res += grid[i + offset].getValue();
-			grid[i + offset].setMerged(true);
 			grid[i].resetValue();
 			isMoveMade = true;
-		} else if (grid[i + offset].isEmpty()) {
-			grid[i + offset].setValue(grid[i].getValue());
-			grid[i].resetValue();
-			isMoveMade = true;
+			if (grid[i + offset].getValue() == grid[i].getValue()) {
+				/* Update score and set merged state only if two
+				 * Tiles merged. */
+				res += grid[i + offset].getValue();
+				grid[i + offset].setMerged(true);
+			}
 		}
 		return res;
 	}
