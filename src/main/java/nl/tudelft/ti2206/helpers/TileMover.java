@@ -142,7 +142,7 @@ public class TileMover {
 				|| isNeighbourFree(i + 2 * offset, dir)) {
 			for (int k = 0; k < 3; k++) {
 				if (isNeighbourFree(i + k * offset, dir)) {
-					res += moveTile(i + k * offset, dir);
+					res += moveTile(i + k * offset);
 				}
 			}
 		}
@@ -155,11 +155,9 @@ public class TileMover {
 	 * 
 	 * @param i
 	 *            the index of the tile
-	 * @param dir
-	 *            the direction to move to
 	 * @return the value to add to the score.
 	 */
-	private int moveTile(int i, Direction dir) {
+	private int moveTile(int i) {
 		int res = 0;
 
 		if (grid[i].isEmpty()) {
