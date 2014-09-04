@@ -75,7 +75,7 @@ public class Grid {
 	 */
 	private void initGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile(0);			
+			grid[i] = new Tile(0);
 		}
 
 		int loc1 = getRandomEmptyLocation();
@@ -138,7 +138,6 @@ public class Grid {
 	 * @return true if a move has been made.
 	 */
 	public boolean move(Direction direction) {
-		/* TODO: add a block after a valid move */
 		/* TODO: move a tile multiple times if valid */
 		boolean res = false;
 
@@ -162,7 +161,29 @@ public class Grid {
 		if (res) {
 			grid[getRandomEmptyLocation()].setValue(initialValue());
 		}
+
+		/* For debugging purposes. */
+		System.out.println("+---+---+---+---+");
+		for (int i = 0; i < grid.length; i += 4) {
+			System.out.println("| " + grid[i].getValue() + " | "
+					+ grid[i+1].getValue()
+					+ " | " + grid[i+2].getValue()
+					+ " | " + grid[i+3].getValue() + " |");
+		}
+		System.out.println("+---+---+---+---+\n\n");
+ 
 		return res;
+	}
+
+	/**
+	 * Merges two tiles: collider merges into collidee.
+	 * 
+	 * @param collidee the tile that is being bumped into.
+	 * @param collider the bumping tile.
+	 */
+	private void collide(Tile collidee, Tile collider) {
+		collidee.doubleValue();
+		collider.resetValue();
 	}
 
 	/**
@@ -173,16 +194,23 @@ public class Grid {
 	public boolean moveLeft() {
 		boolean res = false;
 
-		for (int i = 0; i < NTILES; i++) {
-			/* Tile is in the leftmost row. */
-			if (i % FOUR == 1) {
+		for (int i = 0; i < grid.length; i++) {
+			/* Skip empty tiles and tiles in the leftmost row. */
+			if (grid[i].isEmpty() || (i % FOUR == 0)) {
 				continue;
 			}
-			if (grid[i].getValue() == grid[i - 1].getValue()) {
-				grid[i - 1].doubleValue();
-				grid[i].resetValue();
+			/* While our left neighbour is empty or has the same value, move left. */
+			while (grid[i - 1].isEmpty() || grid[i - 1].getValue() == grid[i].getValue()) {
+				collide(grid[i - 1], grid[i]);
 				if (!res) {
 					res = true;
+				}
+				/* We moved left once, so if we are in the third or fourth
+				 * column, we have to move back one place in the array again
+				 * to check if we can move again.
+				 */
+				if (i % 4 == 2 || i % 4 == 3) {
+					i--;
 				}
 			}
 		}
@@ -201,16 +229,23 @@ public class Grid {
 		 * To have the tiles merge correctly, we need to revert the order in
 		 * which we walk through them.
 		 */
-		for (int i = NTILES; i > 0; i--) {
-			/* Tile is in the rightmost row. */
-			if (i % FOUR == FOUR - 1) {
+		for (int i = grid.length - 1; i > 0; i--) {
+			/* Skip empty tiles and tiles in the rightmost row. */
+			if (grid[i].isEmpty() || (i % FOUR == 3)) {
 				continue;
 			}
-			if (grid[i].getValue() == grid[i - 1].getValue()) {
-				grid[i].doubleValue();
-				grid[i - 1].resetValue();
+			/* While our right neighbour is empty or has the same value, move right. */
+			while (grid[i + 1].isEmpty() || grid[i + 1].getValue() == grid[i].getValue()) {
+				collide(grid[i + 1], grid[i]);
 				if (!res) {
 					res = true;
+				}
+				/* We moved right once, so if we are in the first or second
+				 * column, we have to move forward one place in the array
+				 * to check if we can move again.
+				 */
+				if (i % 4 == 0 || i % 4 == 1) {
+					i++;
 				}
 			}
 		}
@@ -226,12 +261,23 @@ public class Grid {
 		boolean res = false;
 
 		/* Skip the first four tiles. */
-		for (int i = FOUR; i < NTILES; i++) {
-			if (grid[i].getValue() == grid[i - FOUR].getValue()) {
-				grid[i - FOUR].doubleValue();
-				grid[i].resetValue();
+		for (int i = FOUR; i < grid.length; i++) {
+			/* Skip empty tiles. */
+			if (grid[i].isEmpty()) {
+				continue;
+			}
+			/* While our up neighbor is empty or has the same value, move up. */
+			while (grid[i - 4].isEmpty() || grid[i - 4].getValue() == grid[i].getValue()) {
+				collide(grid[i - 4], grid[i]);
 				if (!res) {
 					res = true;
+				}
+				/* We moved up once, so if we are in the third or fourth
+				 * row, we have to move back four places in the array
+				 * to check if we can move again.
+				 */
+				if (i > 7) {
+					i -= 4;
 				}
 			}
 		}
@@ -247,12 +293,23 @@ public class Grid {
 		boolean res = false;
 
 		/* Skip the last four tiles. */
-		for (int i = 0; i < NTILES - FOUR; i++) {
-			if (grid[i].getValue() == grid[i + 1].getValue()) {
-				grid[i + FOUR].doubleValue();
-				grid[i].resetValue();
+		for (int i = 0; i < grid.length - FOUR; i++) {
+			/* Skip empty tiles. */
+			if (grid[i].isEmpty()) {
+				continue;
+			}
+			/* While our down neighbor is empty or has the same value, move down. */
+			while (grid[i + 4].isEmpty() || grid[i + 4].getValue() == grid[i].getValue()) {
+				collide(grid[i + 4], grid[i]);
 				if (!res) {
 					res = true;
+				}
+				/* We moved up once, so if we are in the third or fourth
+				 * row, we have to move back four places in the array
+				 * to check if we can move again.
+				 */
+				if (i < 8) {
+					i += 4;
 				}
 			}
 		}
@@ -265,7 +322,7 @@ public class Grid {
 	 * @return true if the grid is full.
 	 */
 	public boolean isFull() {
-		for (int i = 0; i < NTILES; i++) {
+		for (int i = 0; i < grid.length; i++) {
 			if (grid[i].getValue() == 0) {
 				return false;
 			}

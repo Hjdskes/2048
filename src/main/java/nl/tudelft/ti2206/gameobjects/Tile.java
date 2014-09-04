@@ -30,7 +30,7 @@ public class Tile {
 	public void update(float delta) {
 		
 	}
-	
+
 	public void restart() {
 		resetValue();
 	}
@@ -44,8 +44,22 @@ public class Tile {
 		return value;
 	}
 
-	public boolean isEmpty() {
-		return value == 0;
+	/**
+	 * Sets the value of the Tile.
+	 *
+	 * @param value the new value.
+	 */
+	public final void setValue(int value) {
+		this.value = value;
+	}
+
+	/**
+	 * Returns true of this Tile is empty.
+	 * 
+	 * @return true if this Tile is empty.
+	 */
+	public final boolean isEmpty() {
+		return this.value == 0;
 	}
 	
 	/**
@@ -55,14 +69,16 @@ public class Tile {
 		this.value = 0;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
-	}
-	
 	/**
-	 * Doubles the value of the Tile.
+	 * Doubles the value of the Tile, or
+	 * sets it to two in case the Tile
+	 * was empty.
 	 */
 	public final void doubleValue() {
-		value *= 2;
+		if (isEmpty()) {
+			this.value = 2;
+		} else {
+			this.value *= 2;
+		}
 	}
 }
