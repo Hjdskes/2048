@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.helpers;
 
-import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
@@ -88,36 +87,36 @@ public class TileMover {
 	 * Checks if a tile can move to the neighboring tile in the specified
 	 * direction.
 	 * 
-	 * @param i
+	 * @param index
 	 *            index of the tile
 	 * @param dir
 	 *            direction to move to.
 	 * @return true if a move can be made, false otherwise.
 	 */
-	private boolean isNeighbourFree(int i, Direction dir) {
+	private boolean isNeighbourFree(int index, Direction dir) {
 		/* If the tile is empty, no move can be made. */
-		if (grid[i].isEmpty()) {
+		if (grid[index].isEmpty()) {
 			return false;
 		/* If the tile is at the edge of that direction, it cannot move. For
 		 * example, in | T - - - |, T cannot move to the left as it is already
 		 * in the leftmost spot. */
-		} else if (dir == Direction.LEFT && i % ROW_LENGTH == 0) {
+		} else if (dir == Direction.LEFT && index % ROW_LENGTH == 0) {
 			return false;
-		} else if (dir == Direction.RIGHT && i % ROW_LENGTH == 3) {
+		} else if (dir == Direction.RIGHT && index % ROW_LENGTH == 3) {
 			return false;
-		} else if (dir == Direction.UP && i < COL_LENGTH) {
+		} else if (dir == Direction.UP && index < COL_LENGTH) {
 			return false;
-		} else if (dir == Direction.DOWN && i >= 3 * COL_LENGTH) {
+		} else if (dir == Direction.DOWN && index >= 3 * COL_LENGTH) {
 			return false;
 		}
 
 		/* If the destination and the tile to be moved have not already merged
 		 * with another tile... */
-		if (!grid[i + offset].isMerged() && !grid[i].isMerged()) {
+		if (!grid[index + offset].isMerged() && !grid[index].isMerged()) {
 			/*...and either their values are equal or the destination tile is
 			 * empty, the move can be made. */
-			if (grid[i + offset].getValue() == grid[i].getValue()
-					|| grid[i + offset].isEmpty()) {
+			if (grid[index + offset].getValue() == grid[index].getValue()
+					|| grid[index + offset].isEmpty()) {
 				return true;
 			}
 		}
@@ -153,24 +152,24 @@ public class TileMover {
 	/**
 	 * Moves a tile into the specified direction.
 	 * 
-	 * @param i
+	 * @param index
 	 *            the index of the tile
 	 * @return the value to add to the score.
 	 */
-	private int moveTile(int i) {
+	private int moveTile(int index) {
 		int res = 0;
 
-		if (grid[i].isEmpty()) {
+		if (grid[index].isEmpty()) {
 			return res;
 		} else {
-			grid[i + offset].doubleValue();
-			grid[i].resetValue();
+			grid[index + offset].doubleValue();
+			grid[index].resetValue();
 			isMoveMade = true;
-			if (grid[i + offset].getValue() == grid[i].getValue()) {
+			if (grid[index + offset].getValue() == grid[index].getValue()) {
 				/* Update score and set merged state only if two
 				 * Tiles merged. */
-				res += grid[i + offset].getValue();
-				grid[i + offset].setMerged(true);
+				res += grid[index + offset].getValue();
+				grid[index + offset].setMerged(true);
 			}
 		}
 		return res;
