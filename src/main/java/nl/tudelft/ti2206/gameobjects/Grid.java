@@ -133,6 +133,7 @@ public class Grid {
 		for (Tile t : grid) {
 			t.restart();
 		}
+		initGrid();
 	}
 
 	/**

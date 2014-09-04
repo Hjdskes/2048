@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.helpers;
 
+import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
@@ -9,12 +10,21 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor {
 
 	private GameWorld world;
+	private RestartButton restartButton;
 
 	// private float scale;
 
 	public InputHandler(GameWorld world, int screenWidth) {
 		this.world = world;
+		initRestartButton();
 		// scale = 600f / screenWidth;
+	}
+
+	private void initRestartButton() {
+		restartButton = new RestartButton(AssetLoader.newgame.getX(),
+				AssetLoader.newgame.getY(), AssetLoader.newgame.getWidth(),
+				AssetLoader.newgame.getHeight(), AssetLoader.newgame,
+				AssetLoader.newgame, world);
 	}
 
 	@Override
@@ -26,9 +36,7 @@ public class InputHandler implements InputProcessor {
 			world.getGrid().move(Direction.UP);
 			return true;
 		} else if (keycode == Keys.DPAD_LEFT) {
-			System.out.println(System.nanoTime());
 			world.getGrid().move(Direction.LEFT);
-			System.out.println(System.nanoTime());
 			return true;
 		} else if (keycode == Keys.DPAD_RIGHT) {
 			world.getGrid().move(Direction.RIGHT);
@@ -65,6 +73,10 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (restartButton.isTouchDown(screenX, screenY)) {
+			restartButton.onClick();
+			return true;
+		}
 		return false;
 	}
 
@@ -76,5 +88,9 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		return false;
+	}
+	
+	public RestartButton getRestartButton() {
+		return this.restartButton;
 	}
 }

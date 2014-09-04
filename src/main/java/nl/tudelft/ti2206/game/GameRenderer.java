@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.game;
 
+import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.helpers.AssetLoader;
+import nl.tudelft.ti2206.helpers.InputHandler;
 import nl.tudelft.ti2206.helpers.XYCalculator;
 
 import com.badlogic.gdx.Gdx;
@@ -24,6 +26,7 @@ public class GameRenderer {
 	private OrthographicCamera cam;
 	private ShapeRenderer renderer;
 	private SpriteBatch batch;
+	private RestartButton restartButton;
 
 	/**
 	 * Constructor for GameRenderer object, creating all objects needed for
@@ -41,6 +44,7 @@ public class GameRenderer {
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
 
+		restartButton = ((InputHandler) Gdx.input.getInputProcessor()).getRestartButton();
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
 
@@ -93,6 +97,7 @@ public class GameRenderer {
 		drawScoreTile();
 		drawHighscoreTile();
 		drawHighestTile();
+		drawNewGameTile();
 	}
 
 	/**
@@ -162,6 +167,10 @@ public class GameRenderer {
 		batch.draw(AssetLoader.highest, BASE_X + AssetLoader.score.getWidth()
 				* 2 + GAP * 2, GAP, AssetLoader.highest.getWidth(),
 				AssetLoader.highest.getHeight());
+	}
+
+	private void drawNewGameTile() {
+		restartButton.draw(batch);
 	}
 
 	/**
