@@ -94,8 +94,9 @@ public class Tile {
 	/**
 	 * Resets all tiles to their default state.
 	 */
-	public void restart() {
+	public void reset() {
 		resetValue();
+		isMerged = false;
 	}
 
 	public void update(float delta) {}

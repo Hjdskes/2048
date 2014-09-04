@@ -92,14 +92,18 @@ public class TileMover {
 	 */
 	private boolean isNeighbourFree(int index, Direction dir) {
 		/* If the tile is empty, no move can be made. */
-		if (grid[index].isEmpty()) {
+		if (grid[index].isEmpty())
 			return false;
-			/*
-			 * If the tile is at the edge of that direction, it cannot move. For
-			 * example, in | T - - - |, T cannot move to the left as it is
-			 * already in the leftmost spot.
-			 */
-		} else if (dir == Direction.LEFT && index % ROW_LENGTH == 0) {
+
+		/* If the tile next to this tile is empty, it can move */
+		if (grid[index + offset].isEmpty())
+			return true;
+		/*
+		 * If the tile is at the edge of that direction, it cannot move. For
+		 * example, in | T - - - |, T cannot move to the left as it is already
+		 * in the leftmost spot.
+		 */
+		if (dir == Direction.LEFT && index % ROW_LENGTH == 0) {
 			return false;
 		} else if (dir == Direction.RIGHT && index % ROW_LENGTH == 3) {
 			return false;
@@ -165,7 +169,7 @@ public class TileMover {
 			grid[index + offset].doubleValue();
 			scoreIncrement += grid[index + offset].getValue();
 			grid[index + offset].setMerged(true);
-			grid[index].resetValue();
+			grid[index].reset();
 			isMoveMade = true;
 		} else if (grid[index + offset].isEmpty()) {
 			grid[index + offset].setValue(grid[index].getValue());

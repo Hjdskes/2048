@@ -134,7 +134,7 @@ public class Grid {
 
 	public void restart() {
 		for (Tile t : grid) {
-			t.restart();
+			t.reset();
 		}
 		initGrid();
 	}
