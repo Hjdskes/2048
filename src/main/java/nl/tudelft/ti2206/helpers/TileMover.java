@@ -173,6 +173,8 @@ public class TileMover {
 			isMoveMade = true;
 		} else if (grid[index + offset].isEmpty()) {
 			grid[index + offset].setValue(grid[index].getValue());
+			if (grid[index].isMerged())
+				grid[index + offset].setMerged(true);
 			grid[index].resetValue();
 			isMoveMade = true;
 		}
