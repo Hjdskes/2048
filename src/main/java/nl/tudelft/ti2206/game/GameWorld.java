@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.helpers.AssetLoader;
 
 /**
  * GameWorld object.
@@ -30,7 +31,7 @@ public class GameWorld {
 	 */
 	public GameWorld(final int gameWidth, final int gameHeight) {
 		score = 0;
-		grid = new Grid();
+		grid = new Grid(this);
 	}
 
 	/**
@@ -46,6 +47,11 @@ public class GameWorld {
 			delta = .15f;
 
 		grid.update(delta);
+		
+		if (AssetLoader.getHighscore() < getScore())
+			AssetLoader.setHighscore(getScore());
+		if (AssetLoader.getHighest() < grid.getHighest())
+			AssetLoader.setHighest(grid.getHighest());
 	}
 
 	/**

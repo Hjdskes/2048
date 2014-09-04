@@ -7,8 +7,8 @@ package nl.tudelft.ti2206.gameobjects;
  * array.
  * 
  * Checking for possible movements can be done simply by checking if the value
- * of the Tiles at index+1, index-1, index+4 or index-4 are 0 (since empty
- * Tiles have a value of 0).
+ * of the Tiles at index+1, index-1, index+4 or index-4 are 0 (since empty Tiles
+ * have a value of 0).
  * 
  * @author group-21
  *
@@ -16,6 +16,7 @@ package nl.tudelft.ti2206.gameobjects;
 public class Tile {
 	/** The value (e.g. 2,4,8,16... */
 	private int value;
+	private boolean isMerged;
 
 	/**
 	 * Creates a new Tile with a given value.
@@ -25,16 +26,20 @@ public class Tile {
 	 */
 	public Tile(final int value) {
 		this.value = value;
+		this.isMerged = false;
 	}
 
 	public void update(float delta) {
-		
+
 	}
-	
+
+	/**
+	 * Restarts all tiles to their default state
+	 */
 	public void restart() {
 		resetValue();
 	}
-	
+
 	/**
 	 * Returns the value of the Tile.
 	 * 
@@ -47,7 +52,15 @@ public class Tile {
 	public boolean isEmpty() {
 		return value == 0;
 	}
-	
+
+	public boolean isMerged() {
+		return this.isMerged;
+	}
+
+	public void setMerged(boolean isMerged) {
+		this.isMerged = isMerged;
+	}
+
 	/**
 	 * Resets the value of the Tile.
 	 */
@@ -55,10 +68,14 @@ public class Tile {
 		this.value = 0;
 	}
 
+	/** Sets the value of the Tile.
+	 * 
+	 * @param value
+	 */
 	public void setValue(int value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * Doubles the value of the Tile.
 	 */

@@ -26,7 +26,9 @@ public class InputHandler implements InputProcessor {
 			world.getGrid().move(Direction.UP);
 			return true;
 		} else if (keycode == Keys.DPAD_LEFT) {
+			System.out.println(System.nanoTime());
 			world.getGrid().move(Direction.LEFT);
+			System.out.println(System.nanoTime());
 			return true;
 		} else if (keycode == Keys.DPAD_RIGHT) {
 			world.getGrid().move(Direction.RIGHT);

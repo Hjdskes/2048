@@ -2,6 +2,9 @@ package nl.tudelft.ti2206.gameobjects;
 
 import java.util.Random;
 
+import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.helpers.TileMover;
+
 /**
  * This class represents the 4x4 grid you see when playing 2048.
  *
@@ -11,13 +14,13 @@ import java.util.Random;
  *
  * For example, imagine the grid being laid out like this:
  *
- * +---+---+---+---+
- * | 0 | 1 | 2 | 3 |
- * +---+---+---+---+
+ * +---+---+---+---+ 
+ * | 0 | 1 | 2 | 3 | 
+ * +---+---+---+---+ 
  * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+
- * | 8 | 9 | 10| 11|
- * +---+---+---+---+
+ * +---+---+---+---+ 
+ * | 8 | 9 | 10| 11| 
+ * +---+---+---+---+ 
  * | 12| 13| 14| 15|
  * +---+---+---+---+
  *
@@ -31,8 +34,7 @@ import java.util.Random;
 public class Grid {
 
 	/**
-	 * This enum is used to indicate
-	 * the direction of movement.
+	 * This enum is used to indicate the direction of movement.
 	 */
 	public enum Direction {
 		/** Upwards. */
@@ -59,14 +61,19 @@ public class Grid {
 	private Tile[] grid;
 	/** Randomizer needed for filling tiles. */
 	private Random random;
-
+	private TileMover mover;
+	
+	/* Keeps track of the highest tile value in game */
+	private int highest;
+	
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
 	 */
-	public Grid() {
+	public Grid(GameWorld world) {
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
 		initGrid();
+		mover = new TileMover(world, this);
 	}
 
 	/**
@@ -75,7 +82,7 @@ public class Grid {
 	 */
 	private void initGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile(0);			
+			grid[i] = new Tile(0);
 		}
 
 		int loc1 = getRandomEmptyLocation();
@@ -116,6 +123,10 @@ public class Grid {
 	}
 
 	public void update(float delta) {
+		for (Tile t : grid) {
+			t.update(delta);
+		}
+		updateHighest();
 	}
 
 	public void restart() {
@@ -137,126 +148,28 @@ public class Grid {
 	 * 
 	 * @return true if a move has been made.
 	 */
-	public boolean move(Direction direction) {
-		/* TODO: add a block after a valid move */
-		/* TODO: move a tile multiple times if valid */
-		boolean res = false;
+	public void move(Direction direction) {
 
 		switch (direction) {
 		case LEFT:
-			res = moveLeft();
+			mover.moveLeft();
 			break;
 		case RIGHT:
-			res = moveRight();
+			mover.moveRight();
 			break;
 		case UP:
-			res = moveUp();
+			mover.moveUp();
 			break;
 		case DOWN:
-			res = moveDown();
+			mover.moveDown();
 			break;
 		default:
 			break;
 		}
 
-		if (res) {
+		if (mover.isMoveMade()) {
 			grid[getRandomEmptyLocation()].setValue(initialValue());
 		}
-		return res;
-	}
-
-	/**
-	 * Performs a move to the left.
-	 * 
-	 * @return true if a move has been made.
-	 */
-	public boolean moveLeft() {
-		boolean res = false;
-
-		for (int i = 0; i < NTILES; i++) {
-			/* Tile is in the leftmost row. */
-			if (i % FOUR == 1) {
-				continue;
-			}
-			if (grid[i].getValue() == grid[i - 1].getValue()) {
-				grid[i - 1].doubleValue();
-				grid[i].resetValue();
-				if (!res) {
-					res = true;
-				}
-			}
-		}
-		return res;
-	}
-
-	/**
-	 * Performs a move to the right.
-	 * 
-	 * @return true if a move has been made.
-	 */
-	public boolean moveRight() {
-		boolean res = false;
-
-		/*
-		 * To have the tiles merge correctly, we need to revert the order in
-		 * which we walk through them.
-		 */
-		for (int i = NTILES; i > 0; i--) {
-			/* Tile is in the rightmost row. */
-			if (i % FOUR == FOUR - 1) {
-				continue;
-			}
-			if (grid[i].getValue() == grid[i - 1].getValue()) {
-				grid[i].doubleValue();
-				grid[i - 1].resetValue();
-				if (!res) {
-					res = true;
-				}
-			}
-		}
-		return res;
-	}
-
-	/**
-	 * Performs a move upwards.
-	 * 
-	 * @return true if a move has been made.
-	 */
-	public boolean moveUp() {
-		boolean res = false;
-
-		/* Skip the first four tiles. */
-		for (int i = FOUR; i < NTILES; i++) {
-			if (grid[i].getValue() == grid[i - FOUR].getValue()) {
-				grid[i - FOUR].doubleValue();
-				grid[i].resetValue();
-				if (!res) {
-					res = true;
-				}
-			}
-		}
-		return res;
-	}
-
-	/**
-	 * Performs a move downwards.
-	 * 
-	 * @return true if a move has been made.
-	 */
-	public boolean moveDown() {
-		boolean res = false;
-
-		/* Skip the last four tiles. */
-		for (int i = 0; i < NTILES - FOUR; i++) {
-			if (grid[i].getValue() == grid[i + 1].getValue()) {
-				grid[i + FOUR].doubleValue();
-				grid[i].resetValue();
-				if (!res) {
-					res = true;
-				}
-			}
-		}
-		return res;
 	}
 
 	/**
@@ -280,5 +193,16 @@ public class Grid {
 	 */
 	public Tile[] getTiles() {
 		return grid;
+	}
+	
+	public void updateHighest() {
+		for (Tile t : grid) {
+			if (t.getValue() > highest)
+				highest = t.getValue();
+		}
+	}
+	
+	public int getHighest() {
+		return highest;
 	}
 }
