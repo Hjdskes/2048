@@ -19,12 +19,17 @@ public class TileMover {
 	private Tile[] grid;
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
-	/** The difference between the indices of the tile to be moved and the tile
-	 *  to move to. */
+	/**
+	 * The difference between the indices of the tile to be moved and the tile
+	 * to move to.
+	 */
 	private int offset;
+	/** The points to be awarded to the player */
+	private int scoreIncrement;
 
 	public TileMover(Grid grid) {
 		this.grid = grid.getTiles();
+		scoreIncrement = 0;
 	}
 
 	/**
@@ -32,13 +37,11 @@ public class TileMover {
 	 * 
 	 * @return the value to add to the score.
 	 */
-	public int moveLeft() {
-		int res = 0;
+	public void moveLeft() {
 		offset = -1;
 		for (int i = grid.length - 1; i >= 0; i = i - ROW_LENGTH) {
-			res += moveAffected(i, Direction.LEFT);
+			moveAffected(i, Direction.LEFT);
 		}
-		return res;
 	}
 
 	/**
@@ -46,13 +49,11 @@ public class TileMover {
 	 * 
 	 * @return the value to add to the score.
 	 */
-	public int moveRight() {
-		int res = 0;
+	public void moveRight() {
 		offset = 1;
 		for (int i = 0; i < grid.length; i = i + ROW_LENGTH) {
-			res += moveAffected(i, Direction.RIGHT);
+			moveAffected(i, Direction.RIGHT);
 		}
-		return res;
 	}
 
 	/**
@@ -60,13 +61,11 @@ public class TileMover {
 	 * 
 	 * @return the value to add to the score.
 	 */
-	public int moveUp() {
-		int res = 0;
+	public void moveUp() {
 		offset = -4;
 		for (int i = 3 * ROW_LENGTH; i < grid.length; i++) {
-			res += moveAffected(i, Direction.UP);
+			moveAffected(i, Direction.UP);
 		}
-		return res;
 	}
 
 	/**
@@ -74,13 +73,11 @@ public class TileMover {
 	 * 
 	 * @return the value to add to the score.
 	 */
-	public int moveDown() {
-		int res = 0;
+	public void moveDown() {
 		offset = 4;
 		for (int i = 0; i < ROW_LENGTH; i++) {
-			res += moveAffected(i, Direction.DOWN);
+			moveAffected(i, Direction.DOWN);
 		}
-		return res;
 	}
 
 	/**
@@ -97,9 +94,11 @@ public class TileMover {
 		/* If the tile is empty, no move can be made. */
 		if (grid[index].isEmpty()) {
 			return false;
-		/* If the tile is at the edge of that direction, it cannot move. For
-		 * example, in | T - - - |, T cannot move to the left as it is already
-		 * in the leftmost spot. */
+			/*
+			 * If the tile is at the edge of that direction, it cannot move. For
+			 * example, in | T - - - |, T cannot move to the left as it is
+			 * already in the leftmost spot.
+			 */
 		} else if (dir == Direction.LEFT && index % ROW_LENGTH == 0) {
 			return false;
 		} else if (dir == Direction.RIGHT && index % ROW_LENGTH == 3) {
@@ -110,11 +109,15 @@ public class TileMover {
 			return false;
 		}
 
-		/* If the destination and the tile to be moved have not already merged
-		 * with another tile... */
+		/*
+		 * If the destination and the tile to be moved have not already merged
+		 * with another tile...
+		 */
 		if (!grid[index + offset].isMerged() && !grid[index].isMerged()) {
-			/*...and either their values are equal or the destination tile is
-			 * empty, the move can be made. */
+			/*
+			 * ...and either their values are equal or the destination tile is
+			 * empty, the move can be made.
+			 */
 			if (grid[index + offset].getValue() == grid[index].getValue()
 					|| grid[index + offset].isEmpty()) {
 				return true;
@@ -132,21 +135,20 @@ public class TileMover {
 	 * @param dir
 	 *            the direction to move to.
 	 */
-	private int moveAffected(int i, Direction dir) {
-		int res = 0;
-
-		/* While moves can be made in the row or column, move each tile in that
-		 * row or column. */
+	private void moveAffected(int i, Direction dir) {
+		/*
+		 * While moves can be made in the row or column, move each tile in that
+		 * row or column.
+		 */
 		while (isNeighbourFree(i, dir) || isNeighbourFree(i + offset, dir)
 				|| isNeighbourFree(i + 2 * offset, dir)) {
 			for (int k = 0; k < 3; k++) {
 				if (isNeighbourFree(i + k * offset, dir)) {
-					res += moveTile(i + k * offset);
+					moveTile(i + k * offset);
 				}
 			}
 		}
 		resetMergedTiles(i, dir);
-		return res;
 	}
 
 	/**
@@ -156,23 +158,20 @@ public class TileMover {
 	 *            the index of the tile
 	 * @return the value to add to the score.
 	 */
-	private int moveTile(int index) {
-		int res = 0;
-
+	private void moveTile(int index) {
 		if (grid[index].isEmpty()) {
-			return res;
-		} else {
+			return;
+		} else if (grid[index + offset].getValue() == grid[index].getValue()) {
 			grid[index + offset].doubleValue();
+			scoreIncrement += grid[index + offset].getValue();
+			grid[index + offset].setMerged(true);
 			grid[index].resetValue();
 			isMoveMade = true;
-			if (grid[index + offset].getValue() == grid[index].getValue()) {
-				/* Update score and set merged state only if two
-				 * Tiles merged. */
-				res += grid[index + offset].getValue();
-				grid[index + offset].setMerged(true);
-			}
+		} else if (grid[index + offset].isEmpty()) {
+			grid[index + offset].setValue(grid[index].getValue());
+			grid[index].resetValue();
+			isMoveMade = true;
 		}
-		return res;
 	}
 
 	/**
@@ -211,5 +210,14 @@ public class TileMover {
 	 */
 	public boolean isMoveMade() {
 		return this.isMoveMade;
+	}
+
+	public int getScoreIncrement() {
+		return scoreIncrement;
+	}
+
+	public void reset() {
+		scoreIncrement = 0;
+		isMoveMade = false;
 	}
 }

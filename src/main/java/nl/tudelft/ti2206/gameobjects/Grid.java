@@ -151,29 +151,30 @@ public class Grid {
 	 *            the direction in which is to be moved.
 	 */
 	public void move(Direction direction) {
-		int score = 0;
 
 		switch (direction) {
 		case LEFT:
-			score = mover.moveLeft();
+			mover.moveLeft();
 			break;
 		case RIGHT:
-			score = mover.moveRight();
+			mover.moveRight();
 			break;
 		case UP:
-			score = mover.moveUp();
+			mover.moveUp();
 			break;
 		case DOWN:
-			score = mover.moveDown();
+			mover.moveDown();
 			break;
 		default:
 			break;
 		}
 
 		if (mover.isMoveMade()) {
-			world.addScore(score);
+			world.addScore(mover.getScoreIncrement());
 			grid[getRandomEmptyLocation()].setValue(initialValue());
 		}
+		
+		mover.reset();
 	}
 
 	/**
