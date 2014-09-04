@@ -12,14 +12,14 @@ public class InputHandler implements InputProcessor {
 	private GameWorld world;
 	private RestartButton restartButton;
 
-	// private float scale;
-
 	public InputHandler(GameWorld world, int screenWidth) {
 		this.world = world;
 		initRestartButton();
-		// scale = 600f / screenWidth;
 	}
 
+	/**
+	 * Initialize a restart button at its designated location.
+	 */
 	private void initRestartButton() {
 		restartButton = new RestartButton(AssetLoader.newgame.getX(),
 				AssetLoader.newgame.getY(), AssetLoader.newgame.getWidth(),
@@ -29,21 +29,20 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.DPAD_DOWN) {
+		switch (keycode) {
+		case Keys.DPAD_DOWN:
 			world.getGrid().move(Direction.DOWN);
 			return true;
-		} else if (keycode == Keys.DPAD_UP) {
+		case Keys.DPAD_UP:
 			world.getGrid().move(Direction.UP);
 			return true;
-		} else if (keycode == Keys.DPAD_LEFT) {
+		case Keys.DPAD_LEFT:
 			world.getGrid().move(Direction.LEFT);
 			return true;
-		} else if (keycode == Keys.DPAD_RIGHT) {
+		case Keys.DPAD_RIGHT:
 			world.getGrid().move(Direction.RIGHT);
 			return true;
-		}
-
-		if (keycode == Keys.ESCAPE) {
+		case Keys.ESCAPE:
 			world.restart();
 			return true;
 		}
@@ -89,7 +88,11 @@ public class InputHandler implements InputProcessor {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		return false;
 	}
-	
+
+	/**
+	 * 
+	 * @return the restart button.
+	 */
 	public RestartButton getRestartButton() {
 		return this.restartButton;
 	}

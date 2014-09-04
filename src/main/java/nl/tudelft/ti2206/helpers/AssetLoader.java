@@ -20,13 +20,30 @@ public class AssetLoader {
 	private static final int GAME_WIDTH = 600;
 	private static final int GAME_HEIGHT = 600;
 	private static final int GAP = 15;
-	
+	private static final int BASE_X = 100;
+	private static final int BASE_Y = 100;
+
 	private static Preferences prefs;
 
 	/**
 	 * Loads all assets needed for the game.
 	 */
 	public static void load() {
+		loadTiles();
+
+		loadScoreTiles();
+
+		loadNewGameTile();
+
+		loadFonts();
+
+		setPrefs();
+	}
+
+	/**
+	 * Load the number tiles.
+	 */
+	private static void loadTiles() {
 		gridTex = new Texture(
 				Gdx.files.internal("src/main/resources/images/grid.png"));
 		grid = new Sprite(gridTex);
@@ -68,31 +85,45 @@ public class AssetLoader {
 		t1024 = new Sprite(t1024Tex);
 		t2048 = new Sprite(t2048Tex);
 		empty = new Sprite(emptyTex);
+	}
 
+	/**
+	 * Load the score and highscore tiles.
+	 */
+	private static void loadScoreTiles() {
 		scoreTex = new Texture(
 				Gdx.files.internal("src/main/resources/images/score.png"));
 		score = new Sprite(scoreTex);
-		// rotate 180 degrees about y axis
-		score.flip(false, true);
+		setAssetLocation(score, BASE_Y, GAP, false, true);
 
 		highscoreTex = new Texture(
 				Gdx.files.internal("src/main/resources/images/highscore.png"));
 		highscore = new Sprite(highscoreTex);
-		// rotate 180 degrees about x axis
-		highscore.flip(false, true);
+		setAssetLocation(highscore,
+				AssetLoader.score.getWidth() + BASE_X + GAP, GAP, false, true);
 
 		highestTex = new Texture(
 				Gdx.files.internal("src/main/resources/images/highest.png"));
 		highest = new Sprite(highestTex);
-		highest.flip(false, true);
+		setAssetLocation(highest, BASE_X + AssetLoader.score.getWidth() * 2
+				+ GAP * 2, GAP, false, true);
+	}
 
+	/**
+	 * Load the new game tile.
+	 */
+	public static void loadNewGameTile() {
 		newgameTex = new Texture(
 				Gdx.files.internal("src/main/resources/images/newgame.png"));
 		newgame = new Sprite(newgameTex);
-		newgame.flip(false, true);
-		newgame.setX(GAME_WIDTH / 2 - newgame.getWidth() / 2);
-		newgame.setY(GAME_HEIGHT - GAP - newgame.getHeight());
+		setAssetLocation(newgame, GAME_WIDTH / 2 - newgame.getWidth() / 2,
+				GAME_HEIGHT - GAP - newgame.getHeight(), false, true);
+	}
 
+	/**
+	 * Load all fonts.
+	 */
+	private static void loadFonts() {
 		font = new BitmapFont(
 				Gdx.files.internal("src/main/resources/fonts/tahoma.fnt"));
 		font.setScale(.25f, -.25f);
@@ -100,7 +131,12 @@ public class AssetLoader {
 		whiteFont = new BitmapFont(
 				Gdx.files.internal("src/main/resources/fonts/tahomaWhite.fnt"));
 		whiteFont.setScale(.6f, -.6f);
+	}
 
+	/**
+	 * Set default values for high scores.
+	 */
+	private static void setPrefs() {
 		prefs = Gdx.app.getPreferences("2048");
 		if (!prefs.contains("highscore")) {
 			prefs.putInteger("highscore", 0);
@@ -110,6 +146,22 @@ public class AssetLoader {
 			prefs.putInteger("highest", 0);
 			prefs.flush();
 		}
+	}
+
+	/**
+	 * Sets the sprite location and whether it is has a X or Y flip or not.s
+	 * 
+	 * @param sprite
+	 * @param x
+	 * @param y
+	 * @param isXFlipped
+	 * @param isYFlipped
+	 */
+	private static void setAssetLocation(Sprite sprite, float x, float y,
+			boolean isXFlip, boolean isYFlip) {
+		sprite.setX(x);
+		sprite.setY(y);
+		sprite.setFlip(isXFlip, isYFlip);
 	}
 
 	/**

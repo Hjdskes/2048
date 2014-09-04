@@ -14,13 +14,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameRenderer {
 
-	private static final int GAP = 15;
-	private static final int BASE_X = 100;
-	private static final int BASE_Y = 100;
-	private static final int SCORE_HEIGHT = 50;
-
 	private static final BitmapFont BROWN_F = AssetLoader.font;
 	private static final BitmapFont WHITE_F = AssetLoader.whiteFont;
+
+	private static final int SCORE_HEIGHT = 50;
 
 	private GameWorld world;
 	private OrthographicCamera cam;
@@ -44,7 +41,8 @@ public class GameRenderer {
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
 
-		restartButton = ((InputHandler) Gdx.input.getInputProcessor()).getRestartButton();
+		restartButton = ((InputHandler) Gdx.input.getInputProcessor())
+				.getRestartButton();
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
 
@@ -146,16 +144,17 @@ public class GameRenderer {
 	 * Render the square in which the current score should appear.
 	 */
 	private void drawScoreTile() {
-		batch.draw(AssetLoader.score, BASE_Y, GAP,
-				AssetLoader.score.getWidth(), AssetLoader.score.getHeight());
+		batch.draw(AssetLoader.score, AssetLoader.score.getX(),
+				AssetLoader.score.getY(), AssetLoader.score.getWidth(),
+				AssetLoader.score.getHeight());
 	}
 
 	/**
 	 * Render the square in which the highscore should appear.
 	 */
 	private void drawHighscoreTile() {
-		batch.draw(AssetLoader.highscore, AssetLoader.score.getWidth() + BASE_X
-				+ GAP, GAP, AssetLoader.highscore.getWidth(),
+		batch.draw(AssetLoader.highscore, AssetLoader.highscore.getX(),
+				AssetLoader.highscore.getY(), AssetLoader.highscore.getWidth(),
 				AssetLoader.highscore.getHeight());
 	}
 
@@ -164,8 +163,8 @@ public class GameRenderer {
 	 * appear.
 	 */
 	private void drawHighestTile() {
-		batch.draw(AssetLoader.highest, BASE_X + AssetLoader.score.getWidth()
-				* 2 + GAP * 2, GAP, AssetLoader.highest.getWidth(),
+		batch.draw(AssetLoader.highest, AssetLoader.highest.getX(),
+				AssetLoader.highest.getY(), AssetLoader.highest.getWidth(),
 				AssetLoader.highest.getHeight());
 	}
 
@@ -186,10 +185,8 @@ public class GameRenderer {
 	 * Render the score in its square.
 	 */
 	private void drawScore() {
-		AssetLoader.whiteFont.draw(
-				batch,
-				Integer.toString(world.getScore()),
-				BASE_X + AssetLoader.score.getWidth() / 2
+		AssetLoader.whiteFont.draw(batch, Integer.toString(world.getScore()),
+				AssetLoader.score.getX() + AssetLoader.score.getWidth() / 2
 						- getTextCenterX(WHITE_F, world.getScore()),
 				SCORE_HEIGHT);
 	}
@@ -198,9 +195,11 @@ public class GameRenderer {
 	 * Render highscore in its square.
 	 */
 	private void drawHighscore() {
-		WHITE_F.draw(batch, Integer.toString(AssetLoader.getHighscore()),
-				BASE_X + AssetLoader.score.getWidth() + GAP
-						+ AssetLoader.highscore.getWidth() / 2
+		WHITE_F.draw(
+				batch,
+				Integer.toString(AssetLoader.getHighscore()),
+				AssetLoader.highscore.getX() + AssetLoader.highscore.getWidth()
+						/ 2
 						- getTextCenterX(WHITE_F, AssetLoader.getHighscore()),
 				SCORE_HEIGHT);
 	}
@@ -209,11 +208,8 @@ public class GameRenderer {
 	 * Render highest tile ever scored in its square.
 	 */
 	private void drawHighest() {
-		WHITE_F.draw(
-				batch,
-				Integer.toString(AssetLoader.getHighest()),
-				BASE_X + AssetLoader.score.getWidth() * 2 + GAP * 2
-						+ AssetLoader.highest.getWidth() / 2
+		WHITE_F.draw(batch, Integer.toString(AssetLoader.getHighest()),
+				AssetLoader.highest.getX() + AssetLoader.highest.getWidth() / 2
 						- getTextCenterX(WHITE_F, AssetLoader.getHighest()),
 				SCORE_HEIGHT);
 	}
@@ -258,7 +254,7 @@ public class GameRenderer {
 	 *            the integer to be centered
 	 * @return the center y coordinate of the provided integer
 	 */
-	private float getTextCenterY(BitmapFont f, int value) {
-		return f.getBounds(Integer.toString(value)).height / 2;
-	}
+//	private float getTextCenterY(BitmapFont f, int value) {
+//		return f.getBounds(Integer.toString(value)).height / 2;
+//	}
 }
