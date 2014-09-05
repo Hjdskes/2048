@@ -26,8 +26,8 @@ public class Tile {
 	 * @param value
 	 *            the value of the Tile
 	 */
-	public Tile(final int value) {
-		this.value = value;
+	public Tile() {
+		this.value = 0;
 		this.isMerged = false;
 	}
 
@@ -92,7 +92,7 @@ public class Tile {
 	}
 
 	/**
-	 * Resets all tiles to their default state.
+	 * Resets the Tile to its default state.
 	 */
 	public void reset() {
 		resetValue();
