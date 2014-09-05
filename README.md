@@ -62,14 +62,14 @@ To add the new GitHub repository, first rename the current remote:
 
 Now add the new repository:
 
-`git remote add origin https://github.com/Unia/2048.git`
+`git remote add origin git@github.com:Unia/2048.git`
 
 Since our new repository is only a mirror, we still have to push to both
 (otherwise, there would be no continuous integration!). To help with this,
 you can add multiple remotes under the same command:
 
 `git config --add remote.all.url ssh://git@devhub.ewi.tudelft.nl/courses/ti2206/group-21.git`
-`git config --add remote.all.url ssh://github.com/Unia/2048.git`
+`git config --add remote.all.url git@github.com:Unia/2048.git`
 
 Now use `git push all` to push to both remotes simultaneously.
 
