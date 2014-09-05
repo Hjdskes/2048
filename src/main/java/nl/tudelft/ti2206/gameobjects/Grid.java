@@ -85,7 +85,7 @@ public class Grid {
 	 */
 	private void initGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile(0);
+			grid[i] = new Tile();
 		}
 
 		int loc1 = getRandomEmptyLocation();
