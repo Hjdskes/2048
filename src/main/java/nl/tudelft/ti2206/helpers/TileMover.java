@@ -39,7 +39,7 @@ public class TileMover {
 	 */
 	public void moveLeft() {
 		offset = -1;
-		for (int i = grid.length - 1; i >= 0; i = i - ROW_LENGTH) {
+		for (int i = 0; i < grid.length; i = i + ROW_LENGTH) {
 			moveAffected(i, Direction.LEFT);
 		}
 	}
@@ -51,7 +51,7 @@ public class TileMover {
 	 */
 	public void moveRight() {
 		offset = 1;
-		for (int i = 0; i < grid.length; i = i + ROW_LENGTH) {
+		for (int i = grid.length - 1; i >= 0; i = i - ROW_LENGTH) {
 			moveAffected(i, Direction.RIGHT);
 		}
 	}
@@ -63,7 +63,7 @@ public class TileMover {
 	 */
 	public void moveUp() {
 		offset = -4;
-		for (int i = 3 * ROW_LENGTH; i < grid.length; i++) {
+		for (int i = 0; i < ROW_LENGTH; i++) {
 			moveAffected(i, Direction.UP);
 		}
 	}
@@ -75,7 +75,7 @@ public class TileMover {
 	 */
 	public void moveDown() {
 		offset = 4;
-		for (int i = 0; i < ROW_LENGTH; i++) {
+		for (int i = 3 * ROW_LENGTH; i < grid.length; i++) {
 			moveAffected(i, Direction.DOWN);
 		}
 	}
@@ -144,11 +144,11 @@ public class TileMover {
 		 * While moves can be made in the row or column, move each tile in that
 		 * row or column.
 		 */
-		while (isNeighbourFree(i, dir) || isNeighbourFree(i + offset, dir)
-				|| isNeighbourFree(i + 2 * offset, dir)) {
-			for (int k = 0; k < 3; k++) {
-				if (isNeighbourFree(i + k * offset, dir)) {
-					moveTile(i + k * offset);
+		while (isNeighbourFree(i - offset, dir) || isNeighbourFree(i - 2 * offset, dir)
+				|| isNeighbourFree(i - 3 * offset, dir)) {
+			for (int k = 1; k < ROW_LENGTH; k++) {
+				if (isNeighbourFree(i - k * offset, dir)) {
+					moveTile(i - k * offset);
 				}
 			}
 		}
@@ -175,7 +175,7 @@ public class TileMover {
 			grid[index + offset].setValue(grid[index].getValue());
 			if (grid[index].isMerged())
 				grid[index + offset].setMerged(true);
-			grid[index].resetValue();
+			grid[index].reset();
 			isMoveMade = true;
 		}
 	}
@@ -192,19 +192,19 @@ public class TileMover {
 	private void resetMergedTiles(int index, Direction dir) {
 		if (dir == Direction.LEFT) {
 			for (int i = 0; i < ROW_LENGTH; i++) {
-				grid[index - i].setMerged(false);
+				grid[index + i].setMerged(false);
 			}
 		} else if (dir == Direction.RIGHT) {
 			for (int i = 0; i < ROW_LENGTH; i++) {
-				grid[index + i].setMerged(false);
+				grid[index - i].setMerged(false);
 			}
 		} else if (dir == Direction.UP) {
 			for (int i = 0; i < COL_LENGTH; i++) {
-				grid[index - i * COL_LENGTH].setMerged(false);
+				grid[index + i * COL_LENGTH].setMerged(false);
 			}
 		} else if (dir == Direction.DOWN) {
 			for (int i = 0; i < COL_LENGTH; i++) {
-				grid[index + i * COL_LENGTH].setMerged(false);
+				grid[index - i * COL_LENGTH].setMerged(false);
 			}
 		}
 	}
