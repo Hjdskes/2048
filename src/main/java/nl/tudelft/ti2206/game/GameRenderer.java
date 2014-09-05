@@ -104,7 +104,7 @@ public class GameRenderer {
 	private void drawGrid() {
 		batch.draw(AssetLoader.grid, XYCalculator.getGridX(),
 				XYCalculator.getGridY(), XYCalculator.getGridWidth(),
-				XYCalculator.getGridHeight());
+				XYCalculator.getGridWidth());
 	}
 
 	/**
