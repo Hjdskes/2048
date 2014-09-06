@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.helpers;
 
+import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.gameobjects.Grid;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
@@ -152,6 +155,10 @@ public class AssetLoader {
 	 */
 	private static void setPrefs() {
 		prefs = Gdx.app.getPreferences("2048");
+		if (!prefs.contains("score")) {
+			prefs.putInteger("score", 0);
+			prefs.flush();
+		}
 		if (!prefs.contains("highscore")) {
 			prefs.putInteger("highscore", 0);
 			prefs.flush();
@@ -210,6 +217,64 @@ public class AssetLoader {
 			return t2048;
 		default:
 			return empty;
+		}
+	}
+
+	public static void saveGame(GameWorld world) {
+		saveGrid(world.getGrid());
+		prefs.putInteger("score", world.getScore());
+		prefs.flush();
+	}
+
+	private static void saveGrid(Grid grid) {
+		String state = "";
+
+		for (int i = 0; i < grid.getTiles().length; i++) {
+			if (!grid.getTiles()[i].isEmpty())
+				if (state.equals(""))
+					state += i + "," + grid.getTiles()[i].getValue() + ","
+							+ grid.getTiles()[i].isMerged();
+				else
+					state += "\n" + i + "," + grid.getTiles()[i].getValue()
+							+ "," + grid.getTiles()[i].isMerged();
+		}
+
+		prefs.putString("grid", state);
+	}
+
+	/**
+	 * Loads the saved grid and score.
+	 * @param world
+	 */
+	public static void loadGame(GameWorld world) {
+		world.setScore(prefs.getInteger("score"));
+		world.setGrid(loadGrid(world));
+	}
+
+	/**
+	 * Loads the saved grid. If no grid is saved, returns a default grid.
+	 * 
+	 * @param world
+	 * @return the loaded grid.
+	 */
+	private static Grid loadGrid(GameWorld world) {
+		String filledTiles = prefs.getString("grid");
+		// If no grid is saved, return a default one.
+		if (filledTiles == "")
+			return new Grid(world, false);
+		// Else, fill the grid with the saved tiles.
+		else {
+			Grid grid = new Grid(world, true);
+
+			String[] split = filledTiles.split("\n");
+
+			for (String tile : split) {
+				String[] tileInfo = tile.split(",");
+				grid.setTile(Integer.parseInt(tileInfo[0]),
+						Integer.parseInt(tileInfo[1]),
+						Boolean.getBoolean(tileInfo[2]));
+			}
+			return grid;
 		}
 	}
 

@@ -15,6 +15,7 @@ public class TwentyFourtyGame extends Game {
 	@Override
 	public void dispose() {
 		super.dispose();
+		getScreen().dispose();
 		AssetLoader.dispose();
 	}
 }

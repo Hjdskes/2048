@@ -73,12 +73,15 @@ public class Grid {
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
 	 */
-	public Grid(GameWorld world) {
+	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
 		this.mover = new TileMover(this);
 		this.world = world;
-		initGrid();
+		if (!isEmpty)
+			initGrid();
+		else
+			initEmptyGrid();
 	}
 
 	/**
@@ -86,9 +89,7 @@ public class Grid {
 	 * setting the rest empty.
 	 */
 	private void initGrid() {
-		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile();
-		}
+		initEmptyGrid();
 
 		int loc1 = getRandomEmptyLocation();
 		int loc2 = getRandomEmptyLocation();
@@ -100,6 +101,12 @@ public class Grid {
 		grid[loc2].setValue(initialValue());
 	}
 
+	private void initEmptyGrid() {
+		for (int i = 0; i < NTILES; i++) {
+			grid[i] = new Tile(0);
+		}
+	}
+	
 	/**
 	 * Returns a random value, smaller than 16, indicating a location for a new
 	 * Tile.
@@ -116,7 +123,7 @@ public class Grid {
 		}
 		return index;
 	}
-
+	
 	/**
 	 * Returns a random value, which is either 2 or 4. The chances of getting 4
 	 * is significantly lower than the change of getting 2.
@@ -126,7 +133,12 @@ public class Grid {
 	private int initialValue() {
 		return random.nextInt(10) < 9 ? TWO : FOUR;
 	}
-
+	
+	public void setTile(int index, int value, boolean isMerged) {
+		grid[index].setValue(value);
+		grid[index].setMerged(isMerged);
+	}
+	
 	public void update(float delta) {
 		for (Tile t : grid) {
 			t.update(delta);

@@ -39,8 +39,8 @@ public class GameWorld {
 	 *            the height of the board
 	 */
 	public GameWorld(final int gameWidth, final int gameHeight) {
-		score = 0;
-		grid = new Grid(this);
+		// set the grid and score.
+		AssetLoader.loadGame(this);
 	}
 
 	/**
@@ -126,6 +126,10 @@ public class GameWorld {
 		return grid;
 	}
 
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+	
 	/**
 	 * Set current game's score to amount of points.
 	 * 

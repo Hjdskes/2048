@@ -26,8 +26,8 @@ public class Tile {
 	 * @param value
 	 *            the value of the Tile
 	 */
-	public Tile() {
-		this.value = 0;
+	public Tile(int value) {
+		this.value = value;
 		this.isMerged = false;
 	}
 
