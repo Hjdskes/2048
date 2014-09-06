@@ -22,7 +22,7 @@ public class GridTest {
 
 	@Before
 	public void setup() {
-		grid = new Grid(world);
+		grid = new Grid(world, false);
 		random = new Random();
 	}
 
