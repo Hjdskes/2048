@@ -17,7 +17,7 @@ public class TileTest {
 
 	@Before
 	public void setup() {
-		tile = new Tile();
+		tile = new Tile(0);
 	}
 
 	@Test
