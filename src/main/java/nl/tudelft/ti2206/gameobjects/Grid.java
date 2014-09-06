@@ -72,16 +72,18 @@ public class Grid {
 
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
+	 * @param isEmpty true if grid should be empty
 	 */
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
 		this.mover = new TileMover(this);
 		this.world = world;
-		if (!isEmpty)
+		if (!isEmpty) {
 			initGrid();
-		else
+		} else {
 			initEmptyGrid();
+		}
 	}
 
 	/**
@@ -101,12 +103,15 @@ public class Grid {
 		grid[loc2].setValue(initialValue());
 	}
 
+	/**
+	 * Initialize grid with empty tiles (value 0).
+	 */
 	private void initEmptyGrid() {
 		for (int i = 0; i < NTILES; i++) {
 			grid[i] = new Tile(0);
 		}
 	}
-	
+
 	/**
 	 * Returns a random value, smaller than 16, indicating a location for a new
 	 * Tile.
@@ -123,7 +128,7 @@ public class Grid {
 		}
 		return index;
 	}
-	
+
 	/**
 	 * Returns a random value, which is either 2 or 4. The chances of getting 4
 	 * is significantly lower than the change of getting 2.
@@ -133,19 +138,36 @@ public class Grid {
 	private int initialValue() {
 		return random.nextInt(10) < 9 ? TWO : FOUR;
 	}
-	
+
+	/**
+	 * Set a tile's parameters by index.
+	 * 
+	 * @param index
+	 *            the tile's index on the grid
+	 * @param value
+	 *            the tile's value (should be a multiple of 2)
+	 * @param isMerged
+	 *            true if the tile is merged
+	 */
 	public void setTile(int index, int value, boolean isMerged) {
 		grid[index].setValue(value);
 		grid[index].setMerged(isMerged);
 	}
 	
+	/**
+	 * Update the grid.
+	 * @param delta
+	 */
 	public void update(float delta) {
 		for (Tile t : grid) {
 			t.update(delta);
 		}
 		updateHighest();
 	}
-
+	
+	/**
+	 * Reset the grid.
+	 */
 	public void restart() {
 		for (Tile t : grid) {
 			t.reset();

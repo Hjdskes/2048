@@ -77,7 +77,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * 
+	 * Draws all shapes.
 	 * @param delta
 	 */
 	private void drawShapes(float delta) {
@@ -86,7 +86,7 @@ public class GameRenderer {
 
 	/**
 	 * Render all sprites.
-	 * 
+	 *
 	 * @param delta
 	 */
 	private void drawSpriteBatches(float delta) {
@@ -97,17 +97,24 @@ public class GameRenderer {
 		drawHighestTile();
 		drawNewGameTile();
 
-		if (world.isLost())
+		if (world.isLost()) {
 			drawLostOverlay();
-		else if (world.isWon())
+		} else if (world.isWon()) {
 			drawWonOverlay();
+		}
 	}
 
+	/**
+	 * Draw the lost overlay to show to user.
+	 */
 	private void drawLostOverlay() {
 		batch.draw(AssetLoader.lost, 0, 0);
 		drawNewGameTile();
 	}
 
+	/**
+	 * Draw the won overlay to show to user.
+	 */
 	private void drawWonOverlay() {
 		batch.draw(AssetLoader.won, 0, 0);
 		drawNewGameTile();
@@ -118,12 +125,13 @@ public class GameRenderer {
 	 */
 	private void drawGrid() {
 		batch.draw(AssetLoader.grid, XYCalculator.getGridX(),
-				XYCalculator.getGridY(), XYCalculator.getGridWidth(),
+				XYCalculator.getGridY(),
+				XYCalculator.getGridWidth(),
 				XYCalculator.getGridHeight());
 	}
 
 	/**
-	 * Render the squares.
+	 * Render the tiles.
 	 */
 	private void drawTiles() {
 		for (int i = 0; i < world.getGrid().getTiles().length; i++) {
