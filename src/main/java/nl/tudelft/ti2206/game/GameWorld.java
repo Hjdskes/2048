@@ -11,6 +11,8 @@ import nl.tudelft.ti2206.helpers.AssetLoader;
  */
 public class GameWorld {
 
+	public enum GameState { RUNNING, WON, LOST }
+	
 	/**
 	 * Current game score.
 	 */
@@ -20,6 +22,8 @@ public class GameWorld {
 	 * Current game grid.
 	 */
 	private Grid grid;
+
+	private GameState state;
 
 	/**
 	 * Constructor for GameWorld object, creating the grid.
@@ -48,12 +52,46 @@ public class GameWorld {
 
 		grid.update(delta);
 		
+		
+		
 		if (AssetLoader.getHighscore() < getScore())
 			AssetLoader.setHighscore(getScore());
+		
+		// save highscore
 		if (AssetLoader.getHighest() < grid.getHighest())
 			AssetLoader.setHighest(grid.getHighest());
+		
+		if (grid.getHighest() == 2048) // player wins
+			setGameState(GameState.WON);
+		else if (grid.isFull()) // player loses
+			setGameState(GameState.LOST);
 	}
 
+	
+	public void setGameState(GameState state)
+	{
+		this.state = state;
+	}
+	
+	public GameState getGameState()
+	{
+		return state;
+	}
+	
+	public boolean isRunning()
+	{
+		return (state == GameState.RUNNING);
+	}
+	
+	public boolean isLost()
+	{
+		return (state == GameState.LOST);
+	}
+	
+	public boolean isWon()
+	{
+		return (state == GameState.WON);
+	}
 	/**
 	 * Restart the game.
 	 */

@@ -96,6 +96,21 @@ public class GameRenderer {
 		drawHighscoreTile();
 		drawHighestTile();
 		drawNewGameTile();
+		
+		if (world.isLost())
+			drawLostOverlay();
+		else if (world.isWon())
+			drawWonOverlay();
+	}
+	
+	private void drawLostOverlay()
+	{
+	//	draw lost overlay here
+	}
+	
+	private void drawWonOverlay()
+	{
+	//	draw won overlay here
 	}
 
 	/**

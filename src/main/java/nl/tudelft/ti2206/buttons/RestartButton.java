@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.buttons;
+ package nl.tudelft.ti2206.buttons;
 
 import nl.tudelft.ti2206.game.GameWorld;
 
