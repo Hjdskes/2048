@@ -1,6 +1,9 @@
 package nl.tudelft.ti2206.game;
 
+import java.util.List;
+
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.helpers.AssetLoader;
 
 /**
@@ -61,16 +64,20 @@ public class GameWorld {
 		if (AssetLoader.getHighest() < grid.getHighest())
 			AssetLoader.setHighest(grid.getHighest());
 
-		if (grid.getHighest() == 2048) // 2048 reached: player wins
+		// check if 2048 has been reached (player wins)
+		if (grid.getHighest() == 2048)
 			setGameState(GameState.WON);
-		else if (grid.isFull() && grid.getPossibleMoves() == 0) // grid is full
-																// and no more
-																// moves
-																// possible:
-																// player loses
+		// check if grid is full and if no more moves are possible (player loses)
+		else if (grid.isFull() && grid.getPossibleMoves() == 0)
 			setGameState(GameState.LOST);
+		
+		System.out.println("DEBUG: moves possible = " + grid.getPossibleMoves());
 
-		// System.out.println("moves possible = " + grid.getPossibleMoves());
+		List<Tile> neighbours = grid.getTileNeighbours(12);
+		for (Tile neighbour : neighbours) {
+			System.out.println("neighbour value = " + neighbour.getValue());
+		}
+
 	}
 
 	public void setGameState(GameState state) {

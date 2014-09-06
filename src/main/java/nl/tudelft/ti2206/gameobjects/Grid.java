@@ -9,29 +9,23 @@ import nl.tudelft.ti2206.helpers.TileMover;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
- *
+ * 
  * The internal structure is a simple two-dimensional array. Considering we only
  * require simple operations, this is deemed fast enough, while being very
  * simple at the same time.
- *
+ * 
  * For example, imagine the grid being laid out like this:
- *
- * +---+---+---+---+ 
- * | 0 | 1 | 2 | 3 | 
- * +---+---+---+---+ 
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
- * | 12| 13| 14| 15|
+ * 
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
- *
+ * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
  * from its index. It can move up or down by adding or subtracting 4 from its
  * index.
- *
+ * 
  * @author group-21
- *
+ * 
  */
 public class Grid {
 
@@ -69,7 +63,7 @@ public class Grid {
 	private int highest;
 	/** The game world. */
 	private GameWorld world;
-	
+
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
 	 */
@@ -175,7 +169,7 @@ public class Grid {
 			world.addScore(mover.getScoreIncrement());
 			grid[getRandomEmptyLocation()].setValue(initialValue());
 		}
-		
+
 		mover.reset();
 	}
 
@@ -192,50 +186,67 @@ public class Grid {
 		}
 		return true;
 	}
-	
-	
+
+	/**
+	 * Get the amount of possible moves on the grid.
+	 * @return moves the amount of possible moves
+	 */
 	public int getPossibleMoves() {
-		//return mover.movesPossible();
-		// untested - Jochem
-		
 		int moves = 0;
-		
-		for (int index = 0; index < grid.length; index += 1)
-		{
+
+		for (int index = 0; index < grid.length; index += 1) {
+			
 			// get current tile value
 			int value = grid[index].getValue();
-			
+
 			// get all Tile's neighbours
 			List<Tile> neighbours = getTileNeighbours(index);
-			
-			for (Tile neighbour : neighbours)
-			{
+
+			for (Tile neighbour : neighbours) {
+				
+				// compare tile values
 				if (neighbour.getValue() == value || 
 						neighbour.getValue() == 0)
 					moves += 1;
 			}
 		}
-		
+
 		return moves;
 	}
-	
-	public List<Tile> getTileNeighbours(int index)
-	{
+
+	/**
+	 * Get a list of neighbouring Tiles by index.
+	 * 
+	 * @param index
+	 *            the tile index
+	 * @return list of tiles
+	 */
+	public List<Tile> getTileNeighbours(int index) {
 		List<Tile> neighbours = new ArrayList<Tile>();
-		
-		if (index + 1 < grid.length)
+
+		// right neighbour:
+		// check if the index we're checking is not the right edge of the grid
+		// by making sure index + 1 is a not a multiple of 4
+		if ((index + 1) % 4 != 0 && index + 1 < grid.length)
 			neighbours.add(grid[index + 1]);
-		if (index - 1 > 0)
+
+		// left neighbour:
+		// check if the index we're checking is not the left edge of the grid 
+		// by making sure index is a not a multiple of 4
+		if (index % 4 != 0 && index - 1 >= 0)
 			neighbours.add(grid[index - 1]);
-		
+
+		// upper neighbour:
 		if (index + 4 < grid.length)
 			neighbours.add(grid[index + 4]);
-		if (index - 4 > 0)
+
+		// lower neighbour:
+		if (index - 4 >= 0)
 			neighbours.add(grid[index - 4]);
-		
+
 		return neighbours;
 	}
-	
+
 	/**
 	 * Returns the array containing all the tiles.
 	 * 
@@ -244,14 +255,14 @@ public class Grid {
 	public Tile[] getTiles() {
 		return grid;
 	}
-	
+
 	public void updateHighest() {
 		for (Tile t : grid) {
 			if (t.getValue() > highest)
 				highest = t.getValue();
 		}
 	}
-	
+
 	public int getHighest() {
 		return highest;
 	}
