@@ -36,11 +36,10 @@ public class Launcher {
 
 		config.width = WIDTH;
 		config.height = HEIGHT;
-		
+
 		// check if we're running on Mac OS and load the appropriate icon
 		if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0)
-			config.addIcon(
-					"src/main/resources/images/icons/2048_mac.png",
+			config.addIcon("src/main/resources/images/icons/2048_mac.png",
 					FileType.Internal);
 		// otherwise load icon for windows/linux
 		else

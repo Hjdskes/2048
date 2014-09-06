@@ -11,11 +11,11 @@ public class AssetLoader {
 	public static BitmapFont font, whiteFont;
 	/** All sprites used in the game, should be publicly accessible. */
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
-			t1024, t2048, empty, score, highscore, highest, newgame;
+			t1024, t2048, empty, score, highscore, highest, newgame, lost, won;
 	/** All textures used to load the sprites. */
 	private static Texture gridTex, t2Tex, t4Tex, t8Tex, t16Tex, t32Tex,
 			t64Tex, t128Tex, t256Tex, t512Tex, t1024Tex, t2048Tex, emptyTex,
-			scoreTex, highscoreTex, highestTex, newgameTex;
+			scoreTex, highscoreTex, highestTex, newgameTex, lostTex, wonTex;
 
 	private static final int GAME_WIDTH = 600;
 	private static final int GAME_HEIGHT = 600;
@@ -36,8 +36,22 @@ public class AssetLoader {
 		loadNewGameTile();
 
 		loadFonts();
+		
+		loadOverlays();
 
 		setPrefs();
+	}
+
+	private static void loadOverlays() {
+		lostTex = new Texture(
+				Gdx.files.internal("src/main/resources/images/lostoverlay.png"));
+		lost = new Sprite(lostTex);
+		lost.flip(false, true);
+		
+		wonTex = new Texture(
+				Gdx.files.internal("src/main/resources/images/wonoverlay.png"));
+		won = new Sprite(wonTex);
+		won.flip(false, true);
 	}
 
 	/**

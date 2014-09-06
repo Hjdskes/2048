@@ -96,21 +96,21 @@ public class GameRenderer {
 		drawHighscoreTile();
 		drawHighestTile();
 		drawNewGameTile();
-		
+
 		if (world.isLost())
 			drawLostOverlay();
 		else if (world.isWon())
 			drawWonOverlay();
 	}
-	
-	private void drawLostOverlay()
-	{
-	//	draw lost overlay here
+
+	private void drawLostOverlay() {
+		batch.draw(AssetLoader.lost, 0, 0);
+		drawNewGameTile();
 	}
-	
-	private void drawWonOverlay()
-	{
-	//	draw won overlay here
+
+	private void drawWonOverlay() {
+		batch.draw(AssetLoader.won, 0, 0);
+		drawNewGameTile();
 	}
 
 	/**
@@ -269,7 +269,7 @@ public class GameRenderer {
 	 *            the integer to be centered
 	 * @return the center y coordinate of the provided integer
 	 */
-//	private float getTextCenterY(BitmapFont f, int value) {
-//		return f.getBounds(Integer.toString(value)).height / 2;
-//	}
+	// private float getTextCenterY(BitmapFont f, int value) {
+	// return f.getBounds(Integer.toString(value)).height / 2;
+	// }
 }

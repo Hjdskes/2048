@@ -5,14 +5,16 @@ import nl.tudelft.ti2206.helpers.AssetLoader;
 
 /**
  * GameWorld object.
- *
+ * 
  * @author group-21
- *
+ * 
  */
 public class GameWorld {
 
-	public enum GameState { RUNNING, WON, LOST }
-	
+	public enum GameState {
+		RUNNING, WON, LOST
+	}
+
 	/**
 	 * Current game score.
 	 */
@@ -27,7 +29,7 @@ public class GameWorld {
 
 	/**
 	 * Constructor for GameWorld object, creating the grid.
-	 *
+	 * 
 	 * @param gameWidth
 	 *            the width of the board
 	 * @param gameHeight
@@ -40,7 +42,7 @@ public class GameWorld {
 
 	/**
 	 * Update the game, should be called every frame.
-	 *
+	 * 
 	 * @param delta
 	 *            time in milliseconds to update
 	 */
@@ -51,47 +53,46 @@ public class GameWorld {
 			delta = .15f;
 
 		grid.update(delta);
-		
-		
-		
+
 		if (AssetLoader.getHighscore() < getScore())
 			AssetLoader.setHighscore(getScore());
-		
+
 		// save highscore
 		if (AssetLoader.getHighest() < grid.getHighest())
 			AssetLoader.setHighest(grid.getHighest());
-		
-		if (grid.getHighest() == 2048) // player wins
+
+		if (grid.getHighest() == 2048) // 2048 reached: player wins
 			setGameState(GameState.WON);
-		else if (grid.isFull()) // player loses
+		else if (grid.isFull() && grid.getPossibleMoves() == 0) // grid is full
+																// and no more
+																// moves
+																// possible:
+																// player loses
 			setGameState(GameState.LOST);
+
+		// System.out.println("moves possible = " + grid.getPossibleMoves());
 	}
 
-	
-	public void setGameState(GameState state)
-	{
+	public void setGameState(GameState state) {
 		this.state = state;
 	}
-	
-	public GameState getGameState()
-	{
+
+	public GameState getGameState() {
 		return state;
 	}
-	
-	public boolean isRunning()
-	{
+
+	public boolean isRunning() {
 		return (state == GameState.RUNNING);
 	}
-	
-	public boolean isLost()
-	{
+
+	public boolean isLost() {
 		return (state == GameState.LOST);
 	}
-	
-	public boolean isWon()
-	{
+
+	public boolean isWon() {
 		return (state == GameState.WON);
 	}
+
 	/**
 	 * Restart the game.
 	 */
@@ -102,7 +103,7 @@ public class GameWorld {
 
 	/**
 	 * Get current game score.
-	 *
+	 * 
 	 * @return current score
 	 */
 	public int getScore() {
