@@ -15,6 +15,7 @@ import org.mockito.Mock;
 
 public class GridTest {
 
+	
 	Grid grid;
 	Random random;
 	@Mock

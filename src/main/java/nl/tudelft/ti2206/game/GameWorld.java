@@ -70,14 +70,6 @@ public class GameWorld {
 		// check if grid is full and if no more moves are possible (player loses)
 		else if (grid.isFull() && grid.getPossibleMoves() == 0)
 			setGameState(GameState.LOST);
-		
-		System.out.println("DEBUG: moves possible = " + grid.getPossibleMoves());
-
-		List<Tile> neighbours = grid.getTileNeighbours(12);
-		for (Tile neighbour : neighbours) {
-			System.out.println("neighbour value = " + neighbour.getValue());
-		}
-
 	}
 
 	public void setGameState(GameState state) {
