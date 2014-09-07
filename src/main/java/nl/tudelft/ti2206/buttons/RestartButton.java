@@ -1,6 +1,7 @@
  package nl.tudelft.ti2206.buttons;
 
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.game.GameWorld.GameState;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -15,6 +16,7 @@ public class RestartButton extends SimpleButton {
 	}
 
 	public void onClick() {
+		world.setGameState(GameState.RUNNING);
 		world.restart();
 	}
 }

@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.game.GameWorld.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import com.badlogic.gdx.Input.Keys;
@@ -43,7 +44,8 @@ public class InputHandler implements InputProcessor {
 			world.getGrid().move(Direction.RIGHT);
 			return true;
 		case Keys.ESCAPE:
-			world.restart();
+			// forward to restart button
+			restartButton.onClick();
 			return true;
 		}
 
