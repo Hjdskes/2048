@@ -1,9 +1,6 @@
 package nl.tudelft.ti2206.game;
 
-import java.util.List;
-
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.helpers.AssetLoader;
 
 /**
@@ -33,12 +30,8 @@ public class GameWorld {
 	/**
 	 * Constructor for GameWorld object, creating the grid.
 	 * 
-	 * @param gameWidth
-	 *            the width of the board
-	 * @param gameHeight
-	 *            the height of the board
 	 */
-	public GameWorld(final int gameWidth, final int gameHeight) {
+	public GameWorld() {
 		// set the grid and score.
 		AssetLoader.loadGame(this);
 	}
@@ -67,7 +60,8 @@ public class GameWorld {
 		// check if 2048 has been reached (player wins)
 		if (grid.getHighest() == 2048)
 			setGameState(GameState.WON);
-		// check if grid is full and if no more moves are possible (player loses)
+		// check if grid is full and if no more moves are possible (player
+		// loses)
 		else if (grid.isFull() && grid.getPossibleMoves() == 0)
 			setGameState(GameState.LOST);
 	}
@@ -121,7 +115,7 @@ public class GameWorld {
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
-	
+
 	/**
 	 * Set current game's score to amount of points.
 	 * 

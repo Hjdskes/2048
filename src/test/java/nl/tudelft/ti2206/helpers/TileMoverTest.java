@@ -13,7 +13,7 @@ public class TileMoverTest {
 
 	private Grid grid;
 	private TileMover tileMover;
-	GameWorld world;
+	private GameWorld world;
 
 	/**
 	 * Setting up the needed variables for testing. To test the methods the
