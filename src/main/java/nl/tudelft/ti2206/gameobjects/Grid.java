@@ -170,6 +170,7 @@ public class Grid {
 			t.reset();
 		}
 		initGrid();
+		updateHighest();
 	}
 
 	/**
@@ -299,6 +300,7 @@ public class Grid {
 	}
 
 	public void updateHighest() {
+		highest = 0;
 		for (Tile t : grid) {
 			if (t.getValue() > highest)
 				highest = t.getValue();

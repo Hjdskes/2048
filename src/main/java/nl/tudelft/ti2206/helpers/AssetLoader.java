@@ -29,6 +29,15 @@ public class AssetLoader {
 	private static Preferences prefs;
 
 	/**
+	 * Checks if LibGDX is initialized correctly.
+	 * 
+	 * @return true if the app reference exists, false otherwise.
+	 */
+	public static boolean isLibraryInitialized() {
+		return Gdx.app != null;
+	}
+
+	/**
 	 * Loads all assets needed for the game.
 	 */
 	public static void load() {
@@ -39,7 +48,7 @@ public class AssetLoader {
 		loadNewGameTile();
 
 		loadFonts();
-		
+
 		loadOverlays();
 
 		setPrefs();
@@ -50,7 +59,7 @@ public class AssetLoader {
 				Gdx.files.internal("src/main/resources/images/lostoverlay.png"));
 		lost = new Sprite(lostTex);
 		lost.flip(false, true);
-		
+
 		wonTex = new Texture(
 				Gdx.files.internal("src/main/resources/images/wonoverlay.png"));
 		won = new Sprite(wonTex);
@@ -244,6 +253,7 @@ public class AssetLoader {
 
 	/**
 	 * Loads the saved grid and score.
+	 * 
 	 * @param world
 	 */
 	public static void loadGame(GameWorld world) {
@@ -285,7 +295,7 @@ public class AssetLoader {
 	public static int getHighest() {
 		return prefs.getInteger("highest");
 	}
-	
+
 	public static Preferences getPrefs() {
 		return prefs;
 	}
@@ -299,7 +309,6 @@ public class AssetLoader {
 		prefs.putInteger("highest", highest);
 		prefs.flush();
 	}
-	
 
 	/**
 	 * Dispose of all textures to decrease memory usage.

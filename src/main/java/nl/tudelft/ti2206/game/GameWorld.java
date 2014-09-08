@@ -32,8 +32,14 @@ public class GameWorld {
 	 * 
 	 */
 	public GameWorld() {
-		// set the grid and score.
-		AssetLoader.loadGame(this);
+		if (AssetLoader.isLibraryInitialized()) {
+			// set the grid and score.
+			AssetLoader.loadGame(this);
+		} else {
+			grid = new Grid(this, false);
+			score = 0;
+			state = GameState.RUNNING;
+		}
 	}
 
 	/**
@@ -50,12 +56,14 @@ public class GameWorld {
 
 		grid.update(delta);
 
-		if (AssetLoader.getHighscore() < getScore())
-			AssetLoader.setHighscore(getScore());
+		if (AssetLoader.isLibraryInitialized()) {
+			if (AssetLoader.getHighscore() < getScore())
+				AssetLoader.setHighscore(getScore());
 
-		// save highscore
-		if (AssetLoader.getHighest() < grid.getHighest())
-			AssetLoader.setHighest(grid.getHighest());
+			// save highscore
+			if (AssetLoader.getHighest() < grid.getHighest())
+				AssetLoader.setHighest(grid.getHighest());
+		}
 
 		// check if 2048 has been reached (player wins)
 		if (grid.getHighest() == 2048)
