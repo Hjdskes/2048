@@ -38,12 +38,18 @@ public class GridTest {
 	@Test
 	public void testConstructor2() {
 		int filledTiles = 0;
+		int wrongTiles = 0;
 		for (int i = 0; i < 16; i++) {
 			if (!grid.getTiles()[i].isEmpty()) {
+				// make sure the grid only contains 2's and/or 4's and empty tiles
+				if (grid.getTiles()[i].getValue() != 2)
+					if (grid.getTiles()[i].getValue() != 4)
+						wrongTiles++;
 				filledTiles++;
 			}
 		}
 		assertEquals(filledTiles, 2);
+		assertEquals(wrongTiles, 0);
 	}
 
 	@Test
