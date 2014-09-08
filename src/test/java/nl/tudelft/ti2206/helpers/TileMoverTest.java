@@ -94,11 +94,9 @@ public class TileMoverTest {
 	@Test
 	public void testMergingNoOtherAffected() {
 		tileMover.moveUp();
-		// test if the new merged tile is in the expected location.
-		assertTrue(grid.getTiles()[3].getValue() == 16);
-		// test if the other tiles have disappeared.
-		assertFalse(grid.getTiles()[3].getValue() == 8);
-		assertFalse(grid.getTiles()[15].getValue() == 8);
+		// test if the new merged tile is in the expected location and
+		// if the other tiles have disappeared.
+		assertEquals(toString(grid), "88416.0080.0000.0000"); 
 	}
 
 	/**
@@ -124,9 +122,7 @@ public class TileMoverTest {
 	public void testNonMergableTiles2() {
 		tileMover.moveRight();
 		// test if the tiles are in expected locations.
-		assertTrue(grid.getTiles()[2].getValue() == 4);
-		assertTrue(grid.getTiles()[1].getValue() == 8);
-		assertTrue(grid.getTiles()[3].getValue() == 8);
+		assertEquals(toString(grid), "0848.0008.0008.0008"); 
 	}
 	
 	/**
@@ -139,6 +135,39 @@ public class TileMoverTest {
 		tileMover.moveLeft();
 		tileMover.moveDown();
 		assertEquals(toString(grid), "0000.0000.16000.16480");
+	}
+	
+	/**
+	 * Test the order of merging blocks.
+	 * Moving a row of three tiles of the same type should firstly merge
+	 * the tiles from the direction the tiles are being moved.
+	 * For example: 
+	 * | 8 | 8 | 8 | 0 | ===> | 16| 8 | 0 | 0 |
+	 * and not:
+	 * | 8 | 8 | 8 | 0 | ===> | 8 | 16| 0 | 0 |
+	 */
+	@Test
+	public void testMergeOrder() {
+		tileMover.moveDown();
+		tileMover.moveLeft();
+		assertEquals(toString(grid), "0000.0000.4000.168160");
+	}
+	
+	/**
+	 * Test the isMoveMade method when a move is made.
+	 */
+	@Test
+	public void testMoveMade() {
+		tileMover.moveUp();
+		assertTrue(tileMover.isMoveMade());
+	}
+	
+	/**
+	 * Test the isMoveMade method when a move has NOT been made.
+	 */
+	@Test
+	public void testMoveNotMade() {
+		assertFalse(tileMover.isMoveMade());
 	}
 	
 
