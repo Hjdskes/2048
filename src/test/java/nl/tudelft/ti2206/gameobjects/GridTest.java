@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 
 public class GridTest {
 
@@ -21,11 +22,11 @@ public class GridTest {
 	
 	Grid grid;
 	Random random;
-	@Mock
 	GameWorld world;
 
 	@Before
 	public void setup() {
+		world = Mockito.mock(GameWorld.class);
 		grid = new Grid(world, false);
 		random = new Random();
 	}
@@ -81,6 +82,14 @@ public class GridTest {
 		}
 		assertFalse(grid.isFull());
 	}
+	
+	// TODO: How to test this?
+//	@Test
+//	public void testTileAddedOnMove() {
+//		grid.move(Direction.LEFT);
+//		if (!grid.getTileMover().isMoveMade())
+//			grid.move(Direction.RIGHT);
+//	}
 
 	@Test
 	public void testNoPossibleMoves() {

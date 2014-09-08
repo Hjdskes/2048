@@ -40,9 +40,9 @@ See doc/xx-Sprint-Backlog.md (where xx is the current sprint number) for task ex
 | 17 |       |         |   X  |
 | 18 |       |         |   X  |
 | 19 |       |         |   X  |
-| 20 |       |    X    |      |
-| 21 |       |    X    |      |
-| 22 |       |    X    |      |
+| 20 |   X   |         |      |
+| 21 |   X   |         |      |
+| 22 |   X   |         |      |
 | 23 |       |         |   X  |
 | 24 |       |         |   X  |
 | 25 |       |         |   X  |

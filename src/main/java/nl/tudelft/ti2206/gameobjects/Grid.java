@@ -310,4 +310,8 @@ public class Grid {
 	public int getHighest() {
 		return highest;
 	}
+	
+	public TileMover getTileMover() {
+		return mover;
+	}
 }
