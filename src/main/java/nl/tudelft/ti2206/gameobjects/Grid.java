@@ -16,14 +16,8 @@ import nl.tudelft.ti2206.helpers.TileMover;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ 
- * | 0 | 1 | 2 | 3 | 
- * +---+---+---+---+ 
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
- * | 12| 13| 14| 15|
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -72,7 +66,9 @@ public class Grid {
 
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
-	 * @param isEmpty true if grid should be empty
+	 * 
+	 * @param isEmpty
+	 *            true if grid should be empty
 	 */
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
@@ -153,9 +149,10 @@ public class Grid {
 		grid[index].setValue(value);
 		grid[index].setMerged(isMerged);
 	}
-	
+
 	/**
 	 * Update the grid.
+	 * 
 	 * @param delta
 	 */
 	public void update(float delta) {
@@ -164,7 +161,7 @@ public class Grid {
 		}
 		updateHighest();
 	}
-	
+
 	/**
 	 * Reset the grid.
 	 */
@@ -229,25 +226,30 @@ public class Grid {
 
 	/**
 	 * Get the amount of possible moves on the grid.
+	 * 
 	 * @return moves the amount of possible moves
 	 */
 	public int getPossibleMoves() {
 		int moves = 0;
 
-		for (int index = 0; index < grid.length; index += 1) {
-			
-			// get current tile value
-			int value = grid[index].getValue();
+		for (int index = 0; index < grid.length; index++) {
 
-			// get all Tile's neighbours
-			List<Tile> neighbours = getTileNeighbours(index);
+			// an empty tile cannot move
+			if (!grid[index].isEmpty()) {
 
-			for (Tile neighbour : neighbours) {
-				
-				// compare tile values
-				if (neighbour.getValue() == value || 
-						neighbour.getValue() == 0)
-					moves += 1;
+				// get current tile value
+				int value = grid[index].getValue();
+
+				// get all Tile's neighbours
+				List<Tile> neighbours = getTileNeighbours(index);
+
+				for (Tile neighbour : neighbours) {
+
+					// compare tile values
+					if (neighbour.getValue() == value
+							|| neighbour.getValue() == 0)
+						moves++;
+				}
 			}
 		}
 
@@ -271,7 +273,7 @@ public class Grid {
 			neighbours.add(grid[index + 1]);
 
 		// left neighbour:
-		// check if the index we're checking is not the left edge of the grid 
+		// check if the index we're checking is not the left edge of the grid
 		// by making sure index is a not a multiple of 4
 		if (index % 4 != 0 && index - 1 >= 0)
 			neighbours.add(grid[index - 1]);
