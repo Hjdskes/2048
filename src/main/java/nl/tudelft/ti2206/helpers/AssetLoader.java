@@ -285,6 +285,10 @@ public class AssetLoader {
 	public static int getHighest() {
 		return prefs.getInteger("highest");
 	}
+	
+	public static Preferences getPrefs() {
+		return prefs;
+	}
 
 	public static void setHighscore(int highscore) {
 		prefs.putInteger("highscore", highscore);
@@ -295,6 +299,7 @@ public class AssetLoader {
 		prefs.putInteger("highest", highest);
 		prefs.flush();
 	}
+	
 
 	/**
 	 * Dispose of all textures to decrease memory usage.
