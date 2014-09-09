@@ -314,4 +314,8 @@ public class Grid {
 	public TileMover getTileMover() {
 		return mover;
 	}
+	
+	public void setTileMover(TileMover mover) {
+		this.mover = mover;
+	}
 }
