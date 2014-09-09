@@ -9,6 +9,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+
+/**
+ * This class is used for loading all assets by the game 2048.
+ * 
+ * @author group-21
+ */
+
 public class AssetLoader {
 	/** The font used in the game (Tahoma). */
 	public static BitmapFont font, whiteFont;

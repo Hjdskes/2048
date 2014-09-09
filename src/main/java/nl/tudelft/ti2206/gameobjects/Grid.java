@@ -16,8 +16,14 @@ import nl.tudelft.ti2206.helpers.TileMover;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
+ * +---+---+---+---+
+ * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ 
+ * | 8 | 9 | 10| 11| 
+ * +---+---+---+---+ 
+ * | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -244,11 +250,11 @@ public class Grid {
 				// get all Tile's neighbours
 				List<Tile> neighbours = getTileNeighbours(index);
 
+				// check all neighbouring tiles for equal values
 				for (Tile neighbour : neighbours) {
 
 					// compare tile values
-					if (neighbour.getValue() == value
-							|| neighbour.getValue() == 0)
+					if (neighbour.getValue() == value || neighbour.isEmpty())
 						moves++;
 				}
 			}
@@ -279,11 +285,11 @@ public class Grid {
 		if (index % 4 != 0 && index - 1 >= 0)
 			neighbours.add(grid[index - 1]);
 
-		// upper neighbour:
+		// lower neighbour (index + 4):
 		if (index + 4 < grid.length)
 			neighbours.add(grid[index + 4]);
 
-		// lower neighbour:
+		// upper neighbour (index - 4):
 		if (index - 4 >= 0)
 			neighbours.add(grid[index - 4]);
 
@@ -299,6 +305,9 @@ public class Grid {
 		return grid;
 	}
 
+	/**
+	 * Update the highest tile value present in the grid.
+	 */
 	public void updateHighest() {
 		highest = 0;
 		for (Tile t : grid) {
@@ -307,14 +316,30 @@ public class Grid {
 		}
 	}
 
+	/**
+	 * Get the highest Tile value present in the grid.
+	 * 
+	 * @return the highest tile value
+	 */
 	public int getHighest() {
 		return highest;
 	}
-	
+
+	/**
+	 * Get the TileMover object used by the grid.
+	 * 
+	 * @return mover the TileMover object
+	 */
 	public TileMover getTileMover() {
 		return mover;
 	}
-	
+
+	/**
+	 * Set the TileMover object used by the grid.
+	 * 
+	 * @param mover
+	 *            the TileMover object to set
+	 */
 	public void setTileMover(TileMover mover) {
 		this.mover = mover;
 	}
