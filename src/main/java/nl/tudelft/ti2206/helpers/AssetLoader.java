@@ -351,6 +351,10 @@ public class AssetLoader {
 		highestTex.dispose();
 		newgameTex.dispose();
 
+		wonTex.dispose();
+		lostTex.dispose();
+		
+		
 		font.dispose();
 		whiteFont.dispose();
 	}
