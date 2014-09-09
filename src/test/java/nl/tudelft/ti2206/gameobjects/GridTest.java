@@ -126,7 +126,7 @@ public class GridTest {
 			grid.setTile(i, grid_noMoves[i], false);
 
 		// get neighbours for tile at index 5 (should be 4 in total)
-		List<Tile> neighbours = grid.getTileNeighbours(5);
+		List<Tile> neighbours = grid.getTileNeighbors(5);
 
 		int found = 0;
 

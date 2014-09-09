@@ -223,8 +223,11 @@ public class Grid {
 	 * @return true if the grid is full.
 	 */
 	public boolean isFull() {
-		for (int i = 0; i < grid.length; i++) {
-			if (grid[i].getValue() == 0) {
+		// check each tile on the grid
+		for (int index = 0; index < grid.length; index++) {
+			
+			// if any tile on the grid is empty, the grid is not full
+			if (grid[index].isEmpty()) {
 				return false;
 			}
 		}
@@ -239,7 +242,8 @@ public class Grid {
 	public int getPossibleMoves() {
 		int moves = 0;
 
-		for (int index = 0; index < grid.length; index++) {
+		// check each tile on the grid
+		for (int index = 0; index < grid.length; index += 1) {
 
 			// an empty tile cannot move
 			if (!grid[index].isEmpty()) {
@@ -247,15 +251,15 @@ public class Grid {
 				// get current tile value
 				int value = grid[index].getValue();
 
-				// get all Tile's neighbours
-				List<Tile> neighbours = getTileNeighbours(index);
+				// get all Tile's neighbors
+				List<Tile> neighbors = getTileNeighbors(index);
 
-				// check all neighbouring tiles for equal values
-				for (Tile neighbour : neighbours) {
+				// check all neighboring tiles for equal values
+				for (Tile neighbor : neighbors) {
 
 					// compare tile values
-					if (neighbour.getValue() == value || neighbour.isEmpty())
-						moves++;
+					if (neighbor.getValue() == value || neighbor.isEmpty())
+						moves += 1;
 				}
 			}
 		}
@@ -264,36 +268,38 @@ public class Grid {
 	}
 
 	/**
-	 * Get a list of neighbouring Tiles by index.
+	 * Get a list of neighboring Tiles by index.
 	 * 
 	 * @param index
 	 *            the tile index
 	 * @return list of tiles
 	 */
-	public List<Tile> getTileNeighbours(int index) {
-		List<Tile> neighbours = new ArrayList<Tile>();
+	public List<Tile> getTileNeighbors(int index) {
+		List<Tile> neighbors = new ArrayList<Tile>();
 
-		// right neighbour:
+		// right neighbor:
 		// check if the index we're checking is not the right edge of the grid
 		// by making sure index + 1 is a not a multiple of 4
+		// (if index + 1 mod 4 equals 0, this means we are at the right edge of the grid) 
 		if ((index + 1) % 4 != 0 && index + 1 < grid.length)
-			neighbours.add(grid[index + 1]);
+			neighbors.add(grid[index + 1]);
 
-		// left neighbour:
+		// left neighbor:
 		// check if the index we're checking is not the left edge of the grid
 		// by making sure index is a not a multiple of 4
+		// (if index mod 4 equals 0, this means we are at the left edge of the grid) 
 		if (index % 4 != 0 && index - 1 >= 0)
-			neighbours.add(grid[index - 1]);
+			neighbors.add(grid[index - 1]);
 
-		// lower neighbour (index + 4):
+		// lower neighbor (index + 4):
 		if (index + 4 < grid.length)
-			neighbours.add(grid[index + 4]);
+			neighbors.add(grid[index + 4]);
 
-		// upper neighbour (index - 4):
+		// upper neighbor (index - 4):
 		if (index - 4 >= 0)
-			neighbours.add(grid[index - 4]);
+			neighbors.add(grid[index - 4]);
 
-		return neighbours;
+		return neighbors;
 	}
 
 	/**

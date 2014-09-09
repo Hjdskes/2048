@@ -66,30 +66,58 @@ public class GameWorld {
 		}
 
 		// check if 2048 has been reached (player wins)
-		if (grid.getHighest() == 2048)
+		if (grid.getHighest() == 2048) {
 			setGameState(GameState.WON);
+		}
 		// check if grid is full and if no more moves are possible (player
 		// loses)
-		else if (grid.isFull() && grid.getPossibleMoves() == 0)
+		else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			setGameState(GameState.LOST);
+		}
 	}
 
+	/**
+	 * Set the game's current state.
+	 * 
+	 * @param state
+	 *            the game's state to be set
+	 */
 	public void setGameState(GameState state) {
 		this.state = state;
 	}
 
+	/**
+	 * Get the game's current state.
+	 * 
+	 * @return the game's current state
+	 */
 	public GameState getGameState() {
 		return state;
 	}
 
+	/**
+	 * Check if game is in running state.
+	 * 
+	 * @return true if game is in running state
+	 */
 	public boolean isRunning() {
 		return (state == GameState.RUNNING);
 	}
 
+	/**
+	 * Check if game is in lost state.
+	 * 
+	 * @return true if game is in lost state
+	 */
 	public boolean isLost() {
 		return (state == GameState.LOST);
 	}
 
+	/**
+	 * Check if game is in won state.
+	 * 
+	 * @return true if game is in won state
+	 */
 	public boolean isWon() {
 		return (state == GameState.WON);
 	}
@@ -120,6 +148,12 @@ public class GameWorld {
 		return grid;
 	}
 
+	/**
+	 * Set the game grid.
+	 * 
+	 * @param grid
+	 *            the game grid
+	 */
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
@@ -135,7 +169,7 @@ public class GameWorld {
 	}
 
 	/**
-	 * Add points to current game's score
+	 * Add points to current game's score.
 	 * 
 	 * @param increment
 	 */

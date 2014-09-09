@@ -5,6 +5,12 @@ import nl.tudelft.ti2206.screens.GameScreen;
 
 import com.badlogic.gdx.Game;
 
+/**
+ * 
+ * @author group-21
+ *
+ */
+
 public class TwentyFourtyGame extends Game {
 	@Override
 	public void create() {
