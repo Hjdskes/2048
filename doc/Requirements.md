@@ -55,6 +55,7 @@ to low priority):
 * When the game is won, a dialog will pop up telling the player he/she won and asking whether or not to continue.
 * When moving tiles, there should be a visual indication of this movement.
 * When a tile spawns, it should do so with a "jojo" animation.
+* When two tiles merge, there should be a bounce animation
 
 Other functional requirements are (sorted from high to low priority):
 * The game should be able to be both started and restarted by the user.
