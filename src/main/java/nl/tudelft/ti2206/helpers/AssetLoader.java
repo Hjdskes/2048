@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Tile;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -186,7 +187,7 @@ public class AssetLoader {
 	}
 
 	/**
-	 * Sets the sprite location and whether it is has a X or Y flip or not.s
+	 * Sets the sprite location and whether it is has a X or Y flip or not.
 	 * 
 	 * @param sprite
 	 * @param x
@@ -235,24 +236,35 @@ public class AssetLoader {
 			return empty;
 		}
 	}
-
+	
+	/**
+	 * Save the game.
+	 * @param world
+	 */
 	public static void saveGame(GameWorld world) {
 		saveGrid(world.getGrid());
 		prefs.putInteger("score", world.getScore());
 		prefs.flush();
 	}
-
+	
+	/**
+	 * Save the grid.
+	 * @param grid
+	 */
 	private static void saveGrid(Grid grid) {
 		String state = "";
+		
+		Tile[] tiles = grid.getTiles();
 
-		for (int i = 0; i < grid.getTiles().length; i++) {
-			if (!grid.getTiles()[i].isEmpty())
+		for (int index = 0; index < tiles.length; index++) {
+			
+			if (!tiles[index].isEmpty())
 				if (state.equals(""))
-					state += i + "," + grid.getTiles()[i].getValue() + ","
-							+ grid.getTiles()[i].isMerged();
+					state += index + "," + tiles[index].getValue() + ","
+							+ tiles[index].isMerged();
 				else
-					state += "\n" + i + "," + grid.getTiles()[i].getValue()
-							+ "," + grid.getTiles()[i].isMerged();
+					state += "\n" + index + "," + tiles[index].getValue()
+							+ "," + tiles[index].isMerged();
 		}
 
 		prefs.putString("grid", state);
