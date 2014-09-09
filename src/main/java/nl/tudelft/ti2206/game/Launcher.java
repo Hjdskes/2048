@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.game;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -14,6 +17,8 @@ public class Launcher {
 	private static final int WIDTH = 600;
 	/** The height of the window. */
 	private static final int HEIGHT = 600;
+	/** The logging facility. */
+	private static final Logger LOG = LoggerFactory.getLogger(Launcher.class);
 
 	/**
 	 * Main entry point for the game.
@@ -21,29 +26,29 @@ public class Launcher {
 	 * @param args
 	 *            command line arguments. These are ignored.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
+		// This main method is called when starting your game.
+		LOG.info("Starting game...");
+
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "2048";
+
 		config.width = WIDTH;
 		config.height = HEIGHT;
-		config.resizable = false;
-		/** Allows software OpenGL rendering if hardware acceleration was not available. */
-		if (args.length > 0 && args[0].indexOf("software-mode") >= 0) {
-			config.allowSoftwareMode = true;
-		}
 
-		/* Check if we're running on Mac OS or other, since these
-		 * require different icons. */
-		if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
+		// check if we're running on Mac OS and load the appropriate icon
+		if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0)
 			config.addIcon("src/main/resources/images/icons/2048_mac.png",
 					FileType.Internal);
-		} else {
+		// otherwise load icon for windows/linux
+		else
 			config.addIcon(
 					"src/main/resources/images/icons/2048_linux_windows.png",
 					FileType.Internal);
-		}
 
+		LOG.info("Window width and height: " + config.width + "x"
+				+ config.height);
 		new LwjglApplication(new TwentyFourtyGame(), config);
 	}
 }
