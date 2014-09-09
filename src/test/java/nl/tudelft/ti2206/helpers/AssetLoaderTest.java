@@ -19,7 +19,7 @@ public class AssetLoaderTest {
 	@BeforeClass
 	public static void setup() throws InterruptedException {
 		Launcher.main(null);
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 		world = new GameWorld();
 	}
 
