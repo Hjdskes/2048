@@ -6,14 +6,10 @@ This team consists of the following students:
 |----------------------|----------------|
 | Piet van Agtmaal     | 4321278        |
 | Jochem Heijltjes     | 1534041        |
-| Arthur Hovanesyan    |
-| Paul Bakker          |
+| Arthur Hovanesyan    | 4322711		|
+| Paul Bakker          | 4326091		|
 | Jente Hidskes        | 4335732        |
 
-## Todo
-
-* Overleggen met SA (volgende week) over onze aanpak m.b.t Maven en LibGDX.
-* Iedereen CheckStyle installeren.
 
 ## Sprint backlog
 
