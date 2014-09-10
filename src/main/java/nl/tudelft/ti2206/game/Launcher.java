@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
- * This class launches an instance of 2048 and sets up the logging facility.
+ * This class launches an instance of TwentyFourtyGame.
  * 
  * @author group-21
  */
@@ -14,31 +14,55 @@ public class Launcher {
 	private static final int WIDTH = 600;
 	/** The height of the window. */
 	private static final int HEIGHT = 600;
+	/** The configuration for the game window. */
+	LwjglApplicationConfiguration config;
 
 	/**
 	 * Main entry point for the game.
 	 * 
 	 * @param args
-	 *            command line arguments. These are ignored.
+	 *            The command line arguments. These are ignored.
 	 */
 	public static void main(final String[] args) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		Launcher launcher = new Launcher();
+		launcher.launch();
+	}
 
+	/**
+	 * Creates a new Launcher object. This object is automatically configured.
+	 */
+	public Launcher() {
+		config = new LwjglApplicationConfiguration();
+		configure();
+	}
+
+	/**
+	 * Configures the application window.
+	 */
+	private void configure() {
 		config.title = "2048";
 		config.resizable = false;
 		config.width = WIDTH;
 		config.height = HEIGHT;
 
-		// check if we're running on Mac OS and load the appropriate icon
-		if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0)
+		/*
+		 * Check if we're running on Mac OS or other, since Mac OS requires a
+		 * different icon.
+		 */
+		if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
 			config.addIcon("src/main/resources/images/icons/2048_mac.png",
 					FileType.Internal);
-		// otherwise load icon for windows/linux
-		else
+		} else {
 			config.addIcon(
 					"src/main/resources/images/icons/2048_linux_windows.png",
 					FileType.Internal);
+		}
+	}
 
+	/**
+	 * Launches a new LwjglApplication, containing the game.
+	 */
+	public void launch() {
 		new LwjglApplication(new TwentyFourtyGame(), config);
 	}
 }
