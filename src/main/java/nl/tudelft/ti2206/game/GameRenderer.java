@@ -13,31 +13,41 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * The GameRenderer is responsible for rendering all our game objects. It
+ * creates all objects needed for drawing. It also sets the camera to
+ * orthographic, meaning that the game is drawn in a 3D scene which appears to
+ * be 2D.
+ * 
+ * @author group-21
+ */
 public class GameRenderer {
-
+	/** */
 	private static final BitmapFont BROWN_F = AssetHandler.font;
+	/** */
 	private static final BitmapFont WHITE_F = AssetHandler.whiteFont;
-
+	/** */
 	private static final int SCORE_HEIGHT = 50;
-
+	/** A reference to the GameWorld, which is used to interact with the game. */
 	private GameWorld world;
+	/** The orthographic camera, to make the scene appear 2D. */
 	private OrthographicCamera cam;
+	/** The ShapeRenderer is required for drawing shapes and lines. */
 	private ShapeRenderer renderer;
+	/** */
 	private SpriteBatch batch;
+	/** The button used to initiate a restart. */
 	private RestartButton restartButton;
 
 	/**
-	 * Constructor for GameRenderer object, creating all objects needed for
-	 * drawing. It also sets the camera to Orthgraphic and orthogonal to the
-	 * scene, meaning that the game is drawn in a 3D scene swhich seems to be
-	 * 2D.
+	 * Constructs a GameRenderer object.
 	 * 
 	 * @param world
-	 *            the world
+	 *            The world.
 	 * @param gameWidth
-	 *            the game's width
+	 *            The game's width.
 	 * @param gameHeight
-	 *            the game's height
+	 *            The game's height.
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
@@ -58,40 +68,23 @@ public class GameRenderer {
 	 * Render all sprites, shapes and strings at the rate of 1000/delta times
 	 * per second. It also draws a black background to prevent flickering of the
 	 * screen.
-	 * 
-	 * @param delta
-	 * @param runTime
 	 */
-	public void render(float delta, float runTime) {
-		// draw beige screen to avoid flickering
+	public void render() {
+		/* Draw beige background in the screen. */
 		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		// render shapes
-		drawShapes(delta);
-
-		// begin drawing sprites, strings, etc
+		/* Draw all the sprites and strings. */
 		batch.begin();
-		drawSpriteBatches(delta);
-		drawText(delta);
+		drawSpriteBatches();
+		drawText();
 		batch.end();
 	}
 
 	/**
-	 * Draws all shapes.
-	 * 
-	 * @param delta
+	 * Render all our sprites.
 	 */
-	private void drawShapes(float delta) {
-
-	}
-
-	/**
-	 * Render all sprites.
-	 *
-	 * @param delta
-	 */
-	private void drawSpriteBatches(float delta) {
+	private void drawSpriteBatches() {
 		drawGrid();
 		drawTiles();
 		drawScoreTile();
@@ -104,22 +97,6 @@ public class GameRenderer {
 		} else if (world.isWon()) {
 			drawWonOverlay();
 		}
-	}
-
-	/**
-	 * Draw the lost overlay to show to user.
-	 */
-	private void drawLostOverlay() {
-		batch.draw(AssetHandler.lost, 0, 0);
-		drawNewGameTile();
-	}
-
-	/**
-	 * Draw the won overlay to show to user.
-	 */
-	private void drawWonOverlay() {
-		batch.draw(AssetHandler.won, 0, 0);
-		drawNewGameTile();
 	}
 
 	/**
@@ -147,14 +124,14 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the Tile values, exactly in the middle of the Tile
+	 * Render the Tile values, exactly in the middle of the Tile.
 	 * 
 	 * @param x
-	 *            center x coordinate of the Tile
+	 *            The center x-coordinate of the Tile.
 	 * @param y
-	 *            center y coordinate of the Tile
+	 *            The center y-coordinate of the Tile.
 	 * @param value
-	 *            value of the Tile
+	 *            The value of the Tile.
 	 */
 	private void drawTileValue(float x, float y, int value) {
 		if (value != 0) {
@@ -193,14 +170,33 @@ public class GameRenderer {
 				AssetHandler.highest.getHeight());
 	}
 
+	/**
+	 * Render the button that will initiate a restart of the game.
+	 */
 	private void drawNewGameTile() {
 		restartButton.draw(batch);
 	}
 
 	/**
+	 * Draw the lost overlay to show to the user it lost.
+	 */
+	private void drawLostOverlay() {
+		batch.draw(AssetHandler.lost, 0, 0);
+		drawNewGameTile();
+	}
+
+	/**
+	 * Draw the won overlay to show to the user it won.
+	 */
+	private void drawWonOverlay() {
+		batch.draw(AssetHandler.won, 0, 0);
+		drawNewGameTile();
+	}
+
+	/**
 	 * Render the strings using the specified font.
 	 */
-	private void drawText(float delta) {
+	private void drawText() {
 		drawScore();
 		drawHighscore();
 		drawHighest();
@@ -217,7 +213,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render highscore in its square.
+	 * Render the highscore in its square.
 	 */
 	private void drawHighscore() {
 		WHITE_F.draw(
@@ -231,7 +227,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render highest tile ever scored in its square.
+	 * Render the highest tile ever scored in its square.
 	 */
 	private void drawHighest() {
 		WHITE_F.draw(
@@ -245,46 +241,35 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Calculates the center x coordinate of a String.
+	 * Calculates the center x-coordinate of a String.
 	 * 
 	 * @param text
-	 *            the text to be centered
-	 * @return the center x coordinate of the provided String
+	 *            The text to be centered.
+	 * @return The center x-coordinate of the provided String.
 	 */
 	private float getTextCenterX(BitmapFont f, String text) {
 		return f.getBounds(text).width / 2;
 	}
 
 	/**
-	 * Calculates the center x coordinate of an integer.
+	 * Calculates the center x-coordinate of an integer.
 	 * 
 	 * @param value
-	 *            the integer to be centered
-	 * @return the center x coordinate of the provided integer
+	 *            The integer to be centered.
+	 * @return The center x-coordinate of the provided integer.
 	 */
 	private float getTextCenterX(BitmapFont f, int value) {
 		return f.getBounds(Integer.toString(value)).width / 2;
 	}
 
 	/**
-	 * Calculates the center y coordinate of a String.
+	 * Calculates the center y-coordinate of a String.
 	 * 
 	 * @param text
-	 *            the text to be centered
-	 * @return the center y coordinate of the provided Strings
+	 *            The text to be centered.
+	 * @return The center y-coordinate of the provided Strings.
 	 */
 	private float getTextCenterY(BitmapFont f, String text) {
 		return f.getBounds(text).height / 2;
 	}
-
-	/**
-	 * Calculates the center y coordinate of an integer.
-	 * 
-	 * @param value
-	 *            the integer to be centered
-	 * @return the center y coordinate of the provided integer
-	 */
-	// private float getTextCenterY(BitmapFont f, int value) {
-	// return f.getBounds(Integer.toString(value)).height / 2;
-	// }
 }
