@@ -34,8 +34,8 @@ public class GameWorld {
 			/* Create a new game. */
 			grid = new Grid(this, false);
 			score = 0;
-			state = GameState.RUNNING;
 		}
+		state = GameState.RUNNING;
 	}
 
 	/**
