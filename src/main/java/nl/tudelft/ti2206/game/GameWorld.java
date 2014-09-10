@@ -6,38 +6,32 @@ import nl.tudelft.ti2206.helpers.PreferenceHandler;
 import nl.tudelft.ti2206.helpers.ProgressHandler;
 
 /**
- * GameWorld object.
+ * This is simply a helper class to update our game objects.
+ * 
+ * It is created and called from GameScreen, in its render method which is
+ * actually the game loop.
  * 
  * @author group-21
- * 
  */
 public class GameWorld {
-
-	public enum GameState {
-		RUNNING, WON, LOST
-	}
-
-	/**
-	 * Current game score.
-	 */
+	/** Enumeration indicating what state the game is currently in. */
+	public enum GameState { RUNNING, WON, LOST }
+	/** The current game score. */
 	private int score;
-
-	/**
-	 * Current game grid.
-	 */
+	/** The current grid in the game. */
 	private Grid grid;
-
+	/** The state the game is currently in. */
 	private GameState state;
 
 	/**
 	 * Constructor for GameWorld object, creating the grid.
-	 * 
 	 */
 	public GameWorld() {
 		if (AssetHandler.isLibraryInitialized()) {
-			// set the grid and score.
+			/* Set the old, saved grid and score. */
 			ProgressHandler.loadGame(this);
 		} else {
+			/* Create a new game. */
 			grid = new Grid(this, false);
 			score = 0;
 			state = GameState.RUNNING;
@@ -45,59 +39,91 @@ public class GameWorld {
 	}
 
 	/**
-	 * Update the game, should be called every frame.
+	 * Update the game objects. This method will be called every frame.
 	 * 
 	 * @param delta
-	 *            time in milliseconds to update
+	 *            Time in milliseconds to update.
 	 */
 	public void update(float delta) {
-		// add delta cap so if the game takes too long to update,
-		// it will still work
-		if (delta > .15f)
+		/* Add delta cap so if the game takes too long to update, it will still
+		 * work. */
+		if (delta > .15f) {
 			delta = .15f;
-
-		grid.update(delta);
-
-		if (AssetHandler.isLibraryInitialized()) {
-			if (PreferenceHandler.getHighscore() < getScore())
-				PreferenceHandler.setHighscore(getScore());
-
-			// save highscore
-			if (PreferenceHandler.getHighest() < grid.getHighest())
-				PreferenceHandler.setHighest(grid.getHighest());
 		}
 
-		// check if 2048 has been reached (player wins)
-		if (grid.getHighest() == 2048)
+		/* Tell the grid to update its objects. */
+		grid.update(delta);
+
+		/* Update the highscore, but only if the new score is higher than
+		 * the old. */
+		if (PreferenceHandler.getHighscore() < getScore()) {
+			PreferenceHandler.setHighscore(getScore());
+		}
+
+		/* Update the highest value, but only if the new value is higher
+		 * than the old. */
+		if (PreferenceHandler.getHighest() < grid.getHighest()) {
+			PreferenceHandler.setHighest(grid.getHighest());
+		}
+
+		/* Check if 2048 has been reached, in which case the player wins, or if
+		 * the grid is full and no more moves are possible, in which case the
+		 * player loses. */
+		if (grid.getHighest() == 2048) {
 			setGameState(GameState.WON);
-		// check if grid is full and if no more moves are possible (player
-		// loses)
-		else if (grid.isFull() && grid.getPossibleMoves() == 0)
+		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			setGameState(GameState.LOST);
+		}
 	}
 
+	/**
+	 * Sets the current game state.
+	 * 
+	 * @param state
+	 *            The new game state.
+	 */
 	public void setGameState(GameState state) {
 		this.state = state;
 	}
 
+	/**
+	 * Returns the current game state.
+	 * 
+	 * @return The current game state.
+	 */
 	public GameState getGameState() {
 		return state;
 	}
 
+	/**
+	 * Returns true if the game is currently running.
+	 * 
+	 * @return True if the game is currently running.
+	 */
 	public boolean isRunning() {
 		return (state == GameState.RUNNING);
 	}
 
+	/**
+	 * Returns true if the current game is lost.
+	 * 
+	 * @return True if the current game is lost.
+	 */
 	public boolean isLost() {
 		return (state == GameState.LOST);
 	}
 
+	/**
+	 * Returns true if the current game is won.
+	 * 
+	 * @return True if the current game is won.
+	 */
 	public boolean isWon() {
 		return (state == GameState.WON);
 	}
 
 	/**
-	 * Restart the game.
+	 * Restarts the game.
 	 */
 	public void restart() {
 		score = 0;
@@ -105,41 +131,48 @@ public class GameWorld {
 	}
 
 	/**
-	 * Get current game score.
+	 * Returns the current game score.
 	 * 
-	 * @return current score
+	 * @return The current score.
 	 */
 	public int getScore() {
 		return score;
 	}
 
 	/**
-	 * Get the game grid.
+	 * Returns the current game grid.
 	 * 
-	 * @return game grid
+	 * @return The current game grid.
 	 */
 	public Grid getGrid() {
 		return grid;
 	}
 
+	/**
+	 * Sets the current game grid.
+	 * 
+	 * @param grid
+	 *            The new grid.
+	 */
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
 
 	/**
-	 * Set current game's score to amount of points.
+	 * Sets the current game's score.
 	 * 
 	 * @param score
-	 *            the score to set
+	 *            The score to set.
 	 */
 	public void setScore(int score) {
 		this.score = score;
 	}
 
 	/**
-	 * Add points to current game's score
+	 * Adds points to current game's score
 	 * 
 	 * @param increment
+	 *            The value to add.
 	 */
 	public void addScore(int increment) {
 		score += increment;
