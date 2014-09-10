@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
  * The GameRenderer is responsible for rendering all our game objects. It
@@ -32,8 +31,6 @@ public class GameRenderer {
 	private GameWorld world;
 	/** The orthographic camera, to make the scene appear 2D. */
 	private OrthographicCamera cam;
-	/** The ShapeRenderer is required for drawing shapes and lines. */
-	private ShapeRenderer renderer;
 	/** */
 	private SpriteBatch batch;
 	/** The button used to initiate a restart. */
@@ -56,9 +53,6 @@ public class GameRenderer {
 				.getRestartButton();
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
-
-		renderer = new ShapeRenderer();
-		renderer.setProjectionMatrix(cam.combined);
 
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.combined);
