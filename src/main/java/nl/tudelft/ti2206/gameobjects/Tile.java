@@ -16,15 +16,16 @@ package nl.tudelft.ti2206.gameobjects;
 public class Tile {
 	/** The value (e.g. 2,4,8,16... */
 	private int value;
-	/** Indicates whether or not this Tile
-        has merged into another. */
+	/**
+	 * Indicates whether or not this Tile has merged into another.
+	 */
 	private boolean isMerged;
 
 	/**
 	 * Creates a new Tile with a given value.
 	 * 
 	 * @param value
-	 *            the value of the Tile
+	 *            The value of the Tile.
 	 */
 	public Tile(int value) {
 		this.value = value;
@@ -34,7 +35,7 @@ public class Tile {
 	/**
 	 * Returns the value of the Tile.
 	 * 
-	 * @return the value of the Tile
+	 * @return The value of the Tile.
 	 */
 	public final int getValue() {
 		return this.value;
@@ -44,25 +45,25 @@ public class Tile {
 	 * Sets the value of the Tile.
 	 * 
 	 * @param value
-	 *            the new value.
+	 *            The new value.
 	 */
 	public void setValue(int value) {
 		this.value = value;
 	}
+
 	/**
-	 * Check whether the tile is empty (value 0).
+	 * Checks whether the tile is empty (value 0).
 	 * 
-	 * @return true if tile is empty (value 0)
+	 * @return True if tile is empty (value 0).
 	 */
 	public boolean isEmpty() {
 		return this.value == 0;
 	}
 
 	/**
-	 * Returns true if this Tile has been
-	 * merged.
-	 * @return true if this Tile has been
-	 *         merged.
+	 * Returns true if this Tile has been merged.
+	 * 
+	 * @return True if this Tile has been merged.
 	 */
 	public boolean isMerged() {
 		return this.isMerged;
@@ -71,7 +72,8 @@ public class Tile {
 	/**
 	 * Sets the merged state of this Tile.
 	 * 
-	 * @param isMerged the new merged state.
+	 * @param isMerged 
+	 *            The new merged state.
 	 */
 	public void setMerged(boolean isMerged) {
 		this.isMerged = isMerged;
@@ -85,9 +87,8 @@ public class Tile {
 	}
 
 	/**
-	 * Doubles the value of the Tile,
-	 * or sets it to 2 if the current Tile
-	 * is empty.
+	 * Doubles the value of the Tile, or sets it to 2 if the current Tile is
+	 * empty.
 	 */
 	public final void doubleValue() {
 		if (this.isEmpty()) {
@@ -105,5 +106,9 @@ public class Tile {
 		isMerged = false;
 	}
 
-	public void update(float delta) {}
+	/**
+	 * Updates the Tile.
+	 */
+	public void update() {
+	}
 }
