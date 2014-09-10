@@ -12,7 +12,7 @@ public class InputHandler implements InputProcessor {
 	private GameWorld world;
 	private RestartButton restartButton;
 
-	public InputHandler(GameWorld world, int screenWidth) {
+	public InputHandler(GameWorld world) {
 		this.world = world;
 		initRestartButton();
 	}

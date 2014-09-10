@@ -243,4 +243,14 @@ public class TileMoverTest {
 	public void testToStringEmpty() {
 		assertEquals(toString(emptyGrid), "0000.0000.0000.0000");
 	}
+	
+	/**
+	 * Test for the reset method.
+	 */
+	@Test
+	public void testReset() {
+		tileMover.reset();
+		assertEquals(tileMover.getScoreIncrement(), 0);
+		assertFalse(tileMover.isMoveMade());
+	}
 }

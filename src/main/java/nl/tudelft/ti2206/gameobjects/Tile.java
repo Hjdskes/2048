@@ -40,14 +40,20 @@ public class Tile {
 		return this.value;
 	}
 
-	/** Sets the value of the Tile.
+	/**
+	 * Sets the value of the Tile.
 	 * 
-	 * @param value the new value.
+	 * @param value
+	 *            the new value.
 	 */
 	public void setValue(int value) {
 		this.value = value;
 	}
-
+	/**
+	 * Check whether the tile is empty (value 0).
+	 * 
+	 * @return true if tile is empty (value 0)
+	 */
 	public boolean isEmpty() {
 		return this.value == 0;
 	}

@@ -52,7 +52,7 @@ public class GameWorld {
 		}
 
 		/* Tell the grid to update its objects. */
-		grid.update(delta);
+		grid.update();
 
 		/* Update the highscore, but only if the new score is higher than
 		 * the old. */

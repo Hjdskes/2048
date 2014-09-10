@@ -10,6 +10,7 @@ import java.util.Random;
 
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.helpers.TileMover;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,12 +24,15 @@ public class GridTest {
 	Grid grid;
 	Random random;
 	GameWorld world;
+	TileMover mover;
 
 	@Before
 	public void setup() {
 		world = Mockito.mock(GameWorld.class);
+		mover = Mockito.mock(TileMover.class);
 		grid = new Grid(world, false);
 		random = new Random();
+		grid.setTileMover(mover);
 	}
 
 	@Test
@@ -122,7 +126,7 @@ public class GridTest {
 			grid.setTile(i, grid_noMoves[i], false);
 
 		// get neighbours for tile at index 5 (should be 4 in total)
-		List<Tile> neighbours = grid.getTileNeighbours(5);
+		List<Tile> neighbours = grid.getTileNeighbors(5);
 
 		int found = 0;
 
@@ -131,6 +135,21 @@ public class GridTest {
 				found++;
 		}
 		assertEquals(found, 4);
+	}
+	
+	/**
+	 * Testing the move method.
+	 */
+	@Test
+	public void testMove() { 
+		grid.move(Direction.DOWN);
+		Mockito.verify(mover).moveDown();
+		grid.move(Direction.LEFT);
+		Mockito.verify(mover).moveLeft();
+		grid.move(Direction.RIGHT);
+		Mockito.verify(mover).moveRight();
+		grid.move(Direction.UP);
+		Mockito.verify(mover).moveUp();
 	}
 
 	/*

@@ -16,8 +16,14 @@ import nl.tudelft.ti2206.helpers.TileMover;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
+ * +---+---+---+---+
+ * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ 
+ * | 8 | 9 | 10| 11| 
+ * +---+---+---+---+ 
+ * | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -28,10 +34,7 @@ import nl.tudelft.ti2206.helpers.TileMover;
  */
 public class Grid {
 	/** This enum is used to indicate the direction of movement. */
-	public enum Direction {
-		UP, DOWN, LEFT, RIGHT;
-	}
-
+	public enum Direction { UP, DOWN, LEFT, RIGHT; }
 	/** The width of the grid. */
 	public static final int WIDTH = 400;
 	/** The height of the grid. */
@@ -57,7 +60,7 @@ public class Grid {
 	 * Creates a new Grid with NTILES Tile objects.
 	 * 
 	 * @param isEmpty
-	 *            True if grid should be empty.
+	 *            True if the grid should be empty.
 	 */
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
@@ -138,19 +141,19 @@ public class Grid {
 	}
 
 	/**
-	 * Updates the grid.
-	 * 
-	 * @param delta
+	 * Updates the grid, by updating all the Tiles it contains and checking for a
+	 * new highest value.
 	 */
-	public void update(float delta) {
+	public void update() {
 		for (Tile t : grid) {
-			t.update(delta);
+			t.update();
 		}
 		updateHighest();
 	}
 
 	/**
-	 * Resets the grid.
+	 * Resets the grid, by calling reset on all the Tiles it contains and reinitializing
+	 * itself and checking for a new highest value.
 	 */
 	public void restart() {
 		for (Tile t : grid) {
@@ -200,11 +203,13 @@ public class Grid {
 	/**
 	 * Returns true if the grid is full.
 	 * 
-	 * @return true if the grid is full.
+	 * @return True if the grid is full.
 	 */
 	public boolean isFull() {
-		for (int i = 0; i < grid.length; i++) {
-			if (grid[i].getValue() == 0) {
+		/* Check each tile on the grid. */
+		for (int index = 0; index < grid.length; index++) {
+			/* If any tile on the grid is empty, the grid is not full. */
+			if (grid[index].isEmpty()) {
 				return false;
 			}
 		}
@@ -212,9 +217,9 @@ public class Grid {
 	}
 
 	/**
-	 * Get the amount of possible moves on the grid.
+	 * Return the amount of possible moves on the grid.
 	 * 
-	 * @return moves the amount of possible moves
+	 * @return The amount of possible moves.
 	 */
 	public int getPossibleMoves() {
 		int moves = 0;
@@ -224,13 +229,13 @@ public class Grid {
 			if (!grid[index].isEmpty()) {
 				/* Get current tile value. */
 				int value = grid[index].getValue();
-				/* Get all Tile's neighbours. */
-				List<Tile> neighbours = getTileNeighbours(index);
+				/* Get all Tile's neighbors. */
+				List<Tile> neighbors = getTileNeighbors(index);
 
-				/* For all neighbours, compare the values. */
-				for (Tile neighbour : neighbours) {
-					if (neighbour.getValue() == value
-							|| neighbour.getValue() == 0)
+				/* For all neighboring tiles, compare the values. */
+				for (Tile neighbor : neighbors) {
+					if (neighbor.getValue() == value
+							|| neighbor.getValue() == 0)
 						moves++;
 				}
 			}
@@ -240,36 +245,38 @@ public class Grid {
 	}
 
 	/**
-	 * Get a list of neighbouring Tiles by index.
+	 * Get a list of neighboring Tiles by index.
 	 * 
 	 * @param index
 	 *            The tile index.
 	 * @return A list of tiles.
 	 */
-	public List<Tile> getTileNeighbours(int index) {
-		List<Tile> neighbours = new ArrayList<Tile>();
+	public List<Tile> getTileNeighbors(int index) {
+		List<Tile> neighbors = new ArrayList<Tile>();
 
-		// right neighbour:
+		// right neighbor:
 		// check if the index we're checking is not the right edge of the grid
 		// by making sure index + 1 is a not a multiple of 4
+		// (if index + 1 mod 4 equals 0, this means we are at the right edge of the grid) 
 		if ((index + 1) % 4 != 0 && index + 1 < grid.length)
-			neighbours.add(grid[index + 1]);
+			neighbors.add(grid[index + 1]);
 
-		// left neighbour:
+		// left neighbor:
 		// check if the index we're checking is not the left edge of the grid
 		// by making sure index is a not a multiple of 4
+		// (if index mod 4 equals 0, this means we are at the left edge of the grid) 
 		if (index % 4 != 0 && index - 1 >= 0)
-			neighbours.add(grid[index - 1]);
+			neighbors.add(grid[index - 1]);
 
-		// upper neighbour:
+		// lower neighbor (index + 4):
 		if (index + 4 < grid.length)
-			neighbours.add(grid[index + 4]);
+			neighbors.add(grid[index + 4]);
 
-		// lower neighbour:
+		// upper neighbor (index - 4):
 		if (index - 4 >= 0)
-			neighbours.add(grid[index - 4]);
+			neighbors.add(grid[index - 4]);
 
-		return neighbours;
+		return neighbors;
 	}
 
 	/**
@@ -282,7 +289,7 @@ public class Grid {
 	}
 
 	/**
-	 * 
+	 * Updates the highest Tile value present in the grid.
 	 */
 	public void updateHighest() {
 		highest = 0;
@@ -293,18 +300,30 @@ public class Grid {
 	}
 
 	/**
+	 * Returns the highest Tile value present in the grid.
 	 * 
-	 * @return
+	 * @return The highest tile value.
 	 */
 	public int getHighest() {
 		return highest;
 	}
 
 	/**
+	 * Returns the TileMover object used by the grid.
 	 * 
-	 * @return
+	 * @return The TileMover object.
 	 */
 	public TileMover getTileMover() {
 		return mover;
+	}
+
+	/**
+	 * Sets the TileMover object used by the grid.
+	 * 
+	 * @param mover
+	 *            The TileMover object to set.
+	 */
+	public void setTileMover(TileMover mover) {
+		this.mover = mover;
 	}
 }
