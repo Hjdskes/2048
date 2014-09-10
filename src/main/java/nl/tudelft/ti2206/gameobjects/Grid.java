@@ -25,22 +25,11 @@ import nl.tudelft.ti2206.helpers.TileMover;
  * index.
  * 
  * @author group-21
- * 
  */
 public class Grid {
-
-	/**
-	 * This enum is used to indicate the direction of movement.
-	 */
+	/** This enum is used to indicate the direction of movement. */
 	public enum Direction {
-		/** Upwards. */
-		UP,
-		/** Downwards. */
-		DOWN,
-		/** Left. */
-		LEFT,
-		/** Right. */
-		RIGHT;
+		UP, DOWN, LEFT, RIGHT;
 	}
 
 	/** The width of the grid. */
@@ -68,7 +57,7 @@ public class Grid {
 	 * Creates a new Grid with NTILES Tile objects.
 	 * 
 	 * @param isEmpty
-	 *            true if grid should be empty
+	 *            True if grid should be empty.
 	 */
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
@@ -110,12 +99,10 @@ public class Grid {
 
 	/**
 	 * Returns a random value, smaller than 16, indicating a location for a new
-	 * Tile.
-	 * 
-	 * This new location is always valid, i.e. there is not already a tile
+	 * Tile. This new location is always valid, i.e. there is not already a tile
 	 * there.
 	 * 
-	 * @return a new valid location.
+	 * @return A new valid location.
 	 */
 	private int getRandomEmptyLocation() {
 		int index = random.nextInt(grid.length);
@@ -129,21 +116,21 @@ public class Grid {
 	 * Returns a random value, which is either 2 or 4. The chances of getting 4
 	 * is significantly lower than the change of getting 2.
 	 * 
-	 * @return a random value, either 2 or 4.
+	 * @return A random value, being either 2 or 4.
 	 */
 	private int initialValue() {
 		return random.nextInt(10) < 9 ? TWO : FOUR;
 	}
 
 	/**
-	 * Set a tile's parameters by index.
+	 * Sets a tile's parameters by index.
 	 * 
 	 * @param index
-	 *            the tile's index on the grid
+	 *            The tile's index on the grid.
 	 * @param value
-	 *            the tile's value (should be a multiple of 2)
+	 *            The tile's value (should be a multiple of 2).
 	 * @param isMerged
-	 *            true if the tile is merged
+	 *            True if the tile is merged.
 	 */
 	public void setTile(int index, int value, boolean isMerged) {
 		grid[index].setValue(value);
@@ -151,7 +138,7 @@ public class Grid {
 	}
 
 	/**
-	 * Update the grid.
+	 * Updates the grid.
 	 * 
 	 * @param delta
 	 */
@@ -163,7 +150,7 @@ public class Grid {
 	}
 
 	/**
-	 * Reset the grid.
+	 * Resets the grid.
 	 */
 	public void restart() {
 		for (Tile t : grid) {
@@ -182,10 +169,9 @@ public class Grid {
 	 * array.
 	 * 
 	 * @param direction
-	 *            the direction in which is to be moved.
+	 *            The direction in which is to be moved.
 	 */
 	public void move(Direction direction) {
-
 		switch (direction) {
 		case LEFT:
 			mover.moveLeft();
@@ -234,19 +220,15 @@ public class Grid {
 		int moves = 0;
 
 		for (int index = 0; index < grid.length; index++) {
-
-			// an empty tile cannot move
+			/* An empty tile cannot move. */
 			if (!grid[index].isEmpty()) {
-
-				// get current tile value
+				/* Get current tile value. */
 				int value = grid[index].getValue();
-
-				// get all Tile's neighbours
+				/* Get all Tile's neighbours. */
 				List<Tile> neighbours = getTileNeighbours(index);
 
+				/* For all neighbours, compare the values. */
 				for (Tile neighbour : neighbours) {
-
-					// compare tile values
 					if (neighbour.getValue() == value
 							|| neighbour.getValue() == 0)
 						moves++;
@@ -261,8 +243,8 @@ public class Grid {
 	 * Get a list of neighbouring Tiles by index.
 	 * 
 	 * @param index
-	 *            the tile index
-	 * @return list of tiles
+	 *            The tile index.
+	 * @return A list of tiles.
 	 */
 	public List<Tile> getTileNeighbours(int index) {
 		List<Tile> neighbours = new ArrayList<Tile>();
@@ -293,12 +275,15 @@ public class Grid {
 	/**
 	 * Returns the array containing all the tiles.
 	 * 
-	 * @return the array containing all the tiles.
+	 * @return The array containing all the tiles.
 	 */
 	public Tile[] getTiles() {
 		return grid;
 	}
 
+	/**
+	 * 
+	 */
 	public void updateHighest() {
 		highest = 0;
 		for (Tile t : grid) {
@@ -307,10 +292,18 @@ public class Grid {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getHighest() {
 		return highest;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public TileMover getTileMover() {
 		return mover;
 	}
