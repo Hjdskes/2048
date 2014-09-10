@@ -1,7 +1,5 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.game.GameRenderer;
-import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.helpers.AssetLoader;
 import nl.tudelft.ti2206.helpers.InputHandler;
 
