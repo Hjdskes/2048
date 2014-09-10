@@ -49,18 +49,26 @@
 			<version>1.3.1</version>
 			<classifier>natives-desktop</classifier>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-freetype</artifactId>
 			<version>1.3.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-freetype-platform</artifactId>
 			<version>1.3.1</version>
 			<classifier>natives-desktop</classifier>
+		</dependency>
+
+		<!-- headless-specific dependencies, used for testing on a headless server 
+			such as DevHub -->
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-backend-headless</artifactId>
+			<version>1.2.0</version>
 		</dependency>
 
 		<!-- Logging -->
