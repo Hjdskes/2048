@@ -1,13 +1,15 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.helpers.AssetLoader;
+import nl.tudelft.ti2206.helpers.AssetHandler;
+import nl.tudelft.ti2206.helpers.PreferenceHandler;
 
 import com.badlogic.gdx.Game;
 
 public class TwentyFourtyGame extends Game {
 	@Override
 	public void create() {
-		AssetLoader.load();
+		AssetHandler.load();
+		PreferenceHandler.initScores();
 		setScreen(new GameScreen());
 	}
 	
@@ -15,6 +17,6 @@ public class TwentyFourtyGame extends Game {
 	public void dispose() {
 		super.dispose();
 		getScreen().dispose();
-		AssetLoader.dispose();
+		AssetHandler.dispose();
 	}
 }

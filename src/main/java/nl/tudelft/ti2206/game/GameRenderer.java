@@ -1,8 +1,9 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.helpers.AssetLoader;
+import nl.tudelft.ti2206.helpers.AssetHandler;
 import nl.tudelft.ti2206.helpers.InputHandler;
+import nl.tudelft.ti2206.helpers.PreferenceHandler;
 import nl.tudelft.ti2206.helpers.XYCalculator;
 
 import com.badlogic.gdx.Gdx;
@@ -14,8 +15,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameRenderer {
 
-	private static final BitmapFont BROWN_F = AssetLoader.font;
-	private static final BitmapFont WHITE_F = AssetLoader.whiteFont;
+	private static final BitmapFont BROWN_F = AssetHandler.font;
+	private static final BitmapFont WHITE_F = AssetHandler.whiteFont;
 
 	private static final int SCORE_HEIGHT = 50;
 
@@ -78,6 +79,7 @@ public class GameRenderer {
 
 	/**
 	 * Draws all shapes.
+	 * 
 	 * @param delta
 	 */
 	private void drawShapes(float delta) {
@@ -108,7 +110,7 @@ public class GameRenderer {
 	 * Draw the lost overlay to show to user.
 	 */
 	private void drawLostOverlay() {
-		batch.draw(AssetLoader.lost, 0, 0);
+		batch.draw(AssetHandler.lost, 0, 0);
 		drawNewGameTile();
 	}
 
@@ -116,7 +118,7 @@ public class GameRenderer {
 	 * Draw the won overlay to show to user.
 	 */
 	private void drawWonOverlay() {
-		batch.draw(AssetLoader.won, 0, 0);
+		batch.draw(AssetHandler.won, 0, 0);
 		drawNewGameTile();
 	}
 
@@ -124,9 +126,8 @@ public class GameRenderer {
 	 * Render the grid.
 	 */
 	private void drawGrid() {
-		batch.draw(AssetLoader.grid, XYCalculator.getGridX(),
-				XYCalculator.getGridY(),
-				XYCalculator.getGridWidth(),
+		batch.draw(AssetHandler.grid, XYCalculator.getGridX(),
+				XYCalculator.getGridY(), XYCalculator.getGridWidth(),
 				XYCalculator.getGridHeight());
 	}
 
@@ -135,7 +136,7 @@ public class GameRenderer {
 	 */
 	private void drawTiles() {
 		for (int i = 0; i < world.getGrid().getTiles().length; i++) {
-			batch.draw(AssetLoader.getTile(world.getGrid().getTiles()[i]
+			batch.draw(AssetHandler.getTile(world.getGrid().getTiles()[i]
 					.getValue()), XYCalculator.getTileX(i), XYCalculator
 					.getTileY(i), XYCalculator.getTileWidth(), XYCalculator
 					.getTileHeight());
@@ -167,18 +168,19 @@ public class GameRenderer {
 	 * Render the square in which the current score should appear.
 	 */
 	private void drawScoreTile() {
-		batch.draw(AssetLoader.score, AssetLoader.score.getX(),
-				AssetLoader.score.getY(), AssetLoader.score.getWidth(),
-				AssetLoader.score.getHeight());
+		batch.draw(AssetHandler.score, AssetHandler.score.getX(),
+				AssetHandler.score.getY(), AssetHandler.score.getWidth(),
+				AssetHandler.score.getHeight());
 	}
 
 	/**
 	 * Render the square in which the highscore should appear.
 	 */
 	private void drawHighscoreTile() {
-		batch.draw(AssetLoader.highscore, AssetLoader.highscore.getX(),
-				AssetLoader.highscore.getY(), AssetLoader.highscore.getWidth(),
-				AssetLoader.highscore.getHeight());
+		batch.draw(AssetHandler.highscore, AssetHandler.highscore.getX(),
+				AssetHandler.highscore.getY(),
+				AssetHandler.highscore.getWidth(),
+				AssetHandler.highscore.getHeight());
 	}
 
 	/**
@@ -186,9 +188,9 @@ public class GameRenderer {
 	 * appear.
 	 */
 	private void drawHighestTile() {
-		batch.draw(AssetLoader.highest, AssetLoader.highest.getX(),
-				AssetLoader.highest.getY(), AssetLoader.highest.getWidth(),
-				AssetLoader.highest.getHeight());
+		batch.draw(AssetHandler.highest, AssetHandler.highest.getX(),
+				AssetHandler.highest.getY(), AssetHandler.highest.getWidth(),
+				AssetHandler.highest.getHeight());
 	}
 
 	private void drawNewGameTile() {
@@ -208,8 +210,8 @@ public class GameRenderer {
 	 * Render the score in its square.
 	 */
 	private void drawScore() {
-		AssetLoader.whiteFont.draw(batch, Integer.toString(world.getScore()),
-				AssetLoader.score.getX() + AssetLoader.score.getWidth() / 2
+		AssetHandler.whiteFont.draw(batch, Integer.toString(world.getScore()),
+				AssetHandler.score.getX() + AssetHandler.score.getWidth() / 2
 						- getTextCenterX(WHITE_F, world.getScore()),
 				SCORE_HEIGHT);
 	}
@@ -220,21 +222,26 @@ public class GameRenderer {
 	private void drawHighscore() {
 		WHITE_F.draw(
 				batch,
-				Integer.toString(AssetLoader.getHighscore()),
-				AssetLoader.highscore.getX() + AssetLoader.highscore.getWidth()
+				Integer.toString(PreferenceHandler.getHighscore()),
+				AssetHandler.highscore.getX()
+						+ AssetHandler.highscore.getWidth()
 						/ 2
-						- getTextCenterX(WHITE_F, AssetLoader.getHighscore()),
-				SCORE_HEIGHT);
+						- getTextCenterX(WHITE_F,
+								PreferenceHandler.getHighscore()), SCORE_HEIGHT);
 	}
 
 	/**
 	 * Render highest tile ever scored in its square.
 	 */
 	private void drawHighest() {
-		WHITE_F.draw(batch, Integer.toString(AssetLoader.getHighest()),
-				AssetLoader.highest.getX() + AssetLoader.highest.getWidth() / 2
-						- getTextCenterX(WHITE_F, AssetLoader.getHighest()),
-				SCORE_HEIGHT);
+		WHITE_F.draw(
+				batch,
+				Integer.toString(PreferenceHandler.getHighest()),
+				AssetHandler.highest.getX()
+						+ AssetHandler.highest.getWidth()
+						/ 2
+						- getTextCenterX(WHITE_F,
+								PreferenceHandler.getHighest()), SCORE_HEIGHT);
 	}
 
 	/**

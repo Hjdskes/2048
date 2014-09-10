@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.helpers.AssetLoader;
 import nl.tudelft.ti2206.helpers.InputHandler;
+import nl.tudelft.ti2206.helpers.ProgressHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		AssetLoader.saveGame(world);
+		ProgressHandler.saveGame(world);
 	}
 
 	@Override

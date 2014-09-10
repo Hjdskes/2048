@@ -1,7 +1,9 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.helpers.AssetLoader;
+import nl.tudelft.ti2206.helpers.AssetHandler;
+import nl.tudelft.ti2206.helpers.PreferenceHandler;
+import nl.tudelft.ti2206.helpers.ProgressHandler;
 
 /**
  * GameWorld object.
@@ -32,9 +34,9 @@ public class GameWorld {
 	 * 
 	 */
 	public GameWorld() {
-		if (AssetLoader.isLibraryInitialized()) {
+		if (AssetHandler.isLibraryInitialized()) {
 			// set the grid and score.
-			AssetLoader.loadGame(this);
+			ProgressHandler.loadGame(this);
 		} else {
 			grid = new Grid(this, false);
 			score = 0;
@@ -56,13 +58,13 @@ public class GameWorld {
 
 		grid.update(delta);
 
-		if (AssetLoader.isLibraryInitialized()) {
-			if (AssetLoader.getHighscore() < getScore())
-				AssetLoader.setHighscore(getScore());
+		if (AssetHandler.isLibraryInitialized()) {
+			if (PreferenceHandler.getHighscore() < getScore())
+				PreferenceHandler.setHighscore(getScore());
 
 			// save highscore
-			if (AssetLoader.getHighest() < grid.getHighest())
-				AssetLoader.setHighest(grid.getHighest());
+			if (PreferenceHandler.getHighest() < grid.getHighest())
+				PreferenceHandler.setHighest(grid.getHighest());
 		}
 
 		// check if 2048 has been reached (player wins)

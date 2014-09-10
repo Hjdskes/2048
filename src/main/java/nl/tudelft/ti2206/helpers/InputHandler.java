@@ -21,10 +21,10 @@ public class InputHandler implements InputProcessor {
 	 * Initialize a restart button at its designated location.
 	 */
 	private void initRestartButton() {
-		restartButton = new RestartButton(AssetLoader.newgame.getX(),
-				AssetLoader.newgame.getY(), AssetLoader.newgame.getWidth(),
-				AssetLoader.newgame.getHeight(), AssetLoader.newgame,
-				AssetLoader.newgame, world);
+		restartButton = new RestartButton(AssetHandler.newgame.getX(),
+				AssetHandler.newgame.getY(), AssetHandler.newgame.getWidth(),
+				AssetHandler.newgame.getHeight(), AssetHandler.newgame,
+				AssetHandler.newgame, world);
 	}
 
 	@Override
