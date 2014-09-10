@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.helpers.AssetHandler;
-import nl.tudelft.ti2206.helpers.PreferenceHandler;
 import nl.tudelft.ti2206.helpers.ProgressHandler;
 
 /**
@@ -18,6 +17,10 @@ public class GameWorld {
 	public enum GameState { RUNNING, WON, LOST }
 	/** The current game score. */
 	private int score;
+	/** The highscore at the time of launching the game. */
+	private int oldHighscore;
+	/** The highest value at the time of launching the game. */
+	private int oldHighest;
 	/** The current grid in the game. */
 	private Grid grid;
 	/** The state the game is currently in. */
@@ -54,21 +57,6 @@ public class GameWorld {
 		/* Tell the grid to update its objects. */
 		grid.update();
 
-		/* Update the highscore, but only if the new score is higher than
-		 * the old. */
-		if (PreferenceHandler.getHighscore() < getScore()) {
-			PreferenceHandler.setHighscore(getScore());
-		}
-
-		/* Update the highest value, but only if the new value is higher
-		 * than the old. */
-		if (PreferenceHandler.getHighest() < grid.getHighest()) {
-			PreferenceHandler.setHighest(grid.getHighest());
-		}
-
-		/* Check if 2048 has been reached, in which case the player wins, or if
-		 * the grid is full and no more moves are possible, in which case the
-		 * player loses. */
 		if (grid.getHighest() == 2048) {
 			setGameState(GameState.WON);
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
@@ -140,6 +128,21 @@ public class GameWorld {
 	}
 
 	/**
+	 * Returns the current highscore.
+	 * @return The current highscore.
+	 */
+	public int getHighscore() {
+		return oldHighscore > score ? oldHighscore : score;
+	}
+
+	/**
+	 * Returns the currently highest value.
+	 * @return The currently highest value.
+	 */
+	public int getHighest() {
+		return oldHighest > grid.getHighest() ? oldHighest : grid.getHighest(); 
+	}
+	/**
 	 * Returns the current game grid.
 	 * 
 	 * @return The current game grid.
@@ -166,6 +169,22 @@ public class GameWorld {
 	 */
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	/**
+	 * Sets the highest value at the time of launch.
+	 * @param oldHighest The highest value at the time of launch.
+	 */
+	public void setOldHighest(int oldHighest) {
+		this.oldHighest = oldHighest;
+	}
+
+	/**
+	 * Sets the highscore at the time of launch.
+	 * @param oldHighest The highscore at the time of launch.
+	 */
+	public void setOldHighscore(int oldHighscore) {
+		this.oldHighscore = oldHighscore;
 	}
 
 	/**

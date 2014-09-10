@@ -7,14 +7,37 @@ import nl.tudelft.ti2206.gameobjects.Tile;
 public class ProgressHandler {
 	/**
 	 * Calls saveGrid to save the current grid and uses the PreferenceHandler to
-	 * save the current score.
+	 * save the current score, highscore and highest value.
 	 * 
 	 * @param world
 	 *            The GameWorld to save.
 	 */
 	public static void saveGame(GameWorld world) {
-		saveGrid(world.getGrid());
-		PreferenceHandler.setScore(world.getScore());
+		Grid grid = world.getGrid();
+		int highest = world.getHighest();
+		int score = world.getScore();
+
+		saveGrid(grid);
+		PreferenceHandler.setScore(score);
+		if (highest > PreferenceHandler.getHighest()) {
+			PreferenceHandler.setHighest(highest);
+		}
+		if (score > PreferenceHandler.getHighscore()) {
+			PreferenceHandler.setHighscore(highest);
+		}
+	}
+
+	/**
+	 * Loads the saved grid, score, highscore and highest value.
+	 * 
+	 * @param world
+	 *            The world to load all the values into.
+	 */
+	public static void loadGame(GameWorld world) {
+		world.setScore(PreferenceHandler.getScore());
+		world.setOldHighest(PreferenceHandler.getHighest());
+		world.setOldHighscore(PreferenceHandler.getHighscore());
+		world.setGrid(loadGrid(world));
 	}
 
 	/**
@@ -38,20 +61,10 @@ public class ProgressHandler {
 	}
 
 	/**
-	 * Loads the saved grid and score.
-	 * 
-	 * @param world
-	 */
-	public static void loadGame(GameWorld world) {
-		world.setScore(PreferenceHandler.getScore());
-		world.setGrid(loadGrid(world));
-	}
-
-	/**
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 * 
-	 * @param world
-	 * @return the loaded grid.
+	 * @param world The World to load the Grid into.
+	 * @return The loaded grid.
 	 */
 	private static Grid loadGrid(GameWorld world) {
 		String filledTiles = PreferenceHandler.getGrid();

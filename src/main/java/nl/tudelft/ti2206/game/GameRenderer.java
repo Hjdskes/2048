@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.helpers.AssetHandler;
 import nl.tudelft.ti2206.helpers.InputHandler;
-import nl.tudelft.ti2206.helpers.PreferenceHandler;
 import nl.tudelft.ti2206.helpers.XYCalculator;
 
 import com.badlogic.gdx.Gdx;
@@ -210,28 +209,23 @@ public class GameRenderer {
 	 * Render the highscore in its square.
 	 */
 	private void drawHighscore() {
+		int highscore = world.getHighscore(); 
 		WHITE_F.draw(
 				batch,
-				Integer.toString(PreferenceHandler.getHighscore()),
+				Integer.toString(highscore),
 				AssetHandler.highscore.getX()
-						+ AssetHandler.highscore.getWidth()
-						/ 2
-						- getTextCenterX(WHITE_F,
-								PreferenceHandler.getHighscore()), SCORE_HEIGHT);
+						+ AssetHandler.highscore.getWidth() / 2
+						- getTextCenterX(WHITE_F, highscore), SCORE_HEIGHT);
 	}
 
 	/**
 	 * Render the highest tile ever scored in its square.
 	 */
 	private void drawHighest() {
-		WHITE_F.draw(
-				batch,
-				Integer.toString(PreferenceHandler.getHighest()),
-				AssetHandler.highest.getX()
-						+ AssetHandler.highest.getWidth()
-						/ 2
-						- getTextCenterX(WHITE_F,
-								PreferenceHandler.getHighest()), SCORE_HEIGHT);
+		int highest = world.getHighest();
+		WHITE_F.draw(batch, Integer.toString(highest),
+				AssetHandler.highest.getX() + AssetHandler.highest.getWidth()
+						/ 2 - getTextCenterX(WHITE_F, highest), SCORE_HEIGHT);
 	}
 
 	/**
