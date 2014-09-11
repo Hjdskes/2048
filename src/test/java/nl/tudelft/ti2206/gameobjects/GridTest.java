@@ -46,19 +46,21 @@ public class GridTest {
 		int wrongTiles = 0;
 		for (int i = 0; i < 16; i++) {
 			if (!grid.getTiles()[i].isEmpty()) {
-				// make sure the grid only contains 2's and/or 4's and empty tiles
-				if (grid.getTiles()[i].getValue() != 2)
-					if (grid.getTiles()[i].getValue() != 4)
-						wrongTiles++;
+				// make sure the grid only contains 2's and/or 4's and empty
+				// tiles
+				if (grid.getTiles()[i].getValue() != 2
+						&& grid.getTiles()[i].getValue() != 4)
+					wrongTiles++;
+				
 				filledTiles++;
 			}
 		}
-		assertEquals(filledTiles, 2);
-		assertEquals(wrongTiles, 0);
+		assertEquals(2, filledTiles);
+		assertEquals(0, wrongTiles);
 	}
 
 	@Test
-	public void testHighest() {
+	public void testHighestTile() {
 		int empty = getRandomEmptyLocation();
 		grid.getTiles()[empty].setValue(1024);
 		
@@ -67,11 +69,11 @@ public class GridTest {
 		
 		grid.updateHighestTile();
 		
-		assertEquals(grid.getHighestTile(), 2048);
+		assertEquals(2048, grid.getHighestTile());
 	}
 
 	@Test
-	public void testIsFull() {
+	public void testFullGrid() {
 		for (int i = 0; i < 16; i++) {
 			grid.getTiles()[i].setValue(2);
 		}
@@ -105,7 +107,7 @@ public class GridTest {
 
 		int moves = grid.getPossibleMoves();
 
-		assertEquals(moves, 0);
+		assertEquals(0, moves);
 	}
 
 	@Test
@@ -113,7 +115,7 @@ public class GridTest {
 		// create an empty grid
 		grid = new Grid(world, true);
 		
-		assertEquals(grid.getPossibleMoves(), 0);
+		assertEquals(0, grid.getPossibleMoves());
 	}
 	
 	@Test
@@ -134,7 +136,7 @@ public class GridTest {
 			if (neighbour.getValue() == FOUR)
 				found++;
 		}
-		assertEquals(found, 4);
+		assertEquals(4, found);
 	}
 	
 	/**
