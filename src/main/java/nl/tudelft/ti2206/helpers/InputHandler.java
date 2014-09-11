@@ -14,18 +14,8 @@ public class InputHandler implements InputProcessor {
 
 	public InputHandler(GameWorld world) {
 		this.world = world;
-		initRestartButton();
 	}
 
-	/**
-	 * Initialize a restart button at its designated location.
-	 */
-	private void initRestartButton() {
-		restartButton = new RestartButton(AssetHandler.newgame.getX(),
-				AssetHandler.newgame.getY(), AssetHandler.newgame.getWidth(),
-				AssetHandler.newgame.getHeight(), AssetHandler.newgame,
-				AssetHandler.newgame, world);
-	}
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -44,7 +34,7 @@ public class InputHandler implements InputProcessor {
 			return true;
 		case Keys.ESCAPE:
 			// forward to restart button
-			restartButton.onClick();
+			restartButton.onClick(world);
 			return true;
 		}
 
@@ -74,7 +64,7 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (restartButton.isTouchDown(screenX, screenY)) {
-			restartButton.onClick();
+			restartButton.onClick(world);
 			return true;
 		}
 		return false;
@@ -94,7 +84,7 @@ public class InputHandler implements InputProcessor {
 	 * 
 	 * @return the restart button.
 	 */
-	public RestartButton getRestartButton() {
-		return this.restartButton;
+	public void setRestartButton(RestartButton restartButton) {
+		this.restartButton = restartButton;
 	}
 }
