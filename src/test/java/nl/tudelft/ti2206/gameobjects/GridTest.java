@@ -64,7 +64,7 @@ public class GridTest {
 	@Test
 	public void testRandomEmptyLocation() {
 		int wrongValue = 0;
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			int empty = getRandomEmptyLocation();
 			grid.getTiles()[empty].setValue(2);
 			if (!(empty >= 0 && empty < 16))
