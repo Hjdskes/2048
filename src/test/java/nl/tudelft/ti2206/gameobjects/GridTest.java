@@ -65,9 +65,9 @@ public class GridTest {
 		int empty2 = getRandomEmptyLocation();
 		grid.getTiles()[empty2].setValue(2048);
 		
-		grid.updateHighest();
+		grid.updateHighestTile();
 		
-		assertEquals(grid.getHighest(), 2048);
+		assertEquals(grid.getHighestTile(), 2048);
 	}
 
 	@Test
