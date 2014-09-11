@@ -134,8 +134,7 @@ public class AssetHandler {
 				"src/main/resources/images/newgame.png", Texture.class));
 		setAssetLocation(newgame, GAME_WIDTH / 2 - newgame.getWidth() / 2,
 				GAME_HEIGHT - GAP - newgame.getHeight(), false, true);
-		
-		
+
 		continuebutton = new Sprite(manager.get(
 				"src/main/resources/images/continue.png", Texture.class));
 		setAssetLocation(continuebutton, GAME_WIDTH / 2 - continuebutton.getWidth() / 2,

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * @author group-21
  */
 public class ContinueButton extends SimpleButton {
-
 	/**
 	 * 
 	 * @param x
