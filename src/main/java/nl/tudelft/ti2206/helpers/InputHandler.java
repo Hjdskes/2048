@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.helpers;
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.game.GameWorld.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import com.badlogic.gdx.Input.Keys;
@@ -17,16 +16,12 @@ public class InputHandler implements InputProcessor {
 
 	public InputHandler(GameWorld world) {
 		this.world = world;
-		//this.restartButton = ButtonHandler.getRestartButton();
-		//this.continueButton = ButtonHandler.getContinueButton();
 		setRestartButton(ButtonHandler.getRestartButton());
 		setContinueButton(ButtonHandler.getContinueButton());
 	}
 
-
 	@Override
 	public boolean keyDown(int keycode) {
-
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			world.getGrid().move(Direction.DOWN);
@@ -41,7 +36,7 @@ public class InputHandler implements InputProcessor {
 			world.getGrid().move(Direction.RIGHT);
 			return true;
 		case Keys.ESCAPE:
-			// forward to restart button
+			/* Forward to restart button. */
 			restartButton.onClick(world);
 			return true;
 		}

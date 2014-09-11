@@ -33,10 +33,8 @@ public class GameRenderer {
 	private OrthographicCamera cam;
 	/** */
 	private SpriteBatch batch;
-	
 	/** The button used to initiate a restart. */
 	private RestartButton restartButton;
-	
 	/** The button used to continue the game after winning. */
 	private ContinueButton continueButton;
 
@@ -175,6 +173,9 @@ public class GameRenderer {
 		restartButton.draw(batch);
 	}
 
+	/**
+	 * Render the button that will allow to continue playing after winning.
+	 */
 	private void drawContinueButton() {
 		continueButton.draw(batch);
 	}

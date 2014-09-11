@@ -3,9 +3,15 @@ package nl.tudelft.ti2206.helpers;
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 
+/**
+ * The ButtonHandler is responsible of managing the buttons.
+ *
+ * @author group-21
+ */
 public class ButtonHandler {
-
+	/** The restart button. */
 	private static RestartButton restartButton;
+	/** The continue button. */
 	private static ContinueButton continueButton;
 
 	/**
@@ -24,13 +30,17 @@ public class ButtonHandler {
 	}
 
 	/**
-	 * 
-	 * @return the RestartButton object
+	 * Gets the button used to initiate a restart.
+	 * @return The RestartButton object.
 	 */
 	public static RestartButton getRestartButton() {
 		return restartButton;
 	}
-	
+
+	/**
+	 * Gets the button used to continue playing after winning.
+	 * @return The ContinueButton object.
+	 */
 	public static ContinueButton getContinueButton() {
 		return continueButton;
 	}
