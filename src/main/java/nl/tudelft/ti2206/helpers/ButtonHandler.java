@@ -5,15 +5,22 @@ import nl.tudelft.ti2206.buttons.RestartButton;
 public class ButtonHandler {
 
 	private static RestartButton restartButton;
-	
+
+	/**
+	 * Initializes all buttons.
+	 */
 	public static void load() {
 		restartButton = initRestartButton();
 	}
-	
+
+	/**
+	 * 
+	 * @return the RestartButton object
+	 */
 	public static RestartButton getRestartButton() {
 		return restartButton;
 	}
-	
+
 	/**
 	 * Initialize a restart button at its designated location.
 	 */

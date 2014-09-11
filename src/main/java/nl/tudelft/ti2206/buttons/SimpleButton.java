@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * The SimpleButton class represents a basic button, from which
- * other buttons can be derived.
+ * The SimpleButton class represents a basic button, from which other buttons
+ * can be derived.
+ * 
  * @author group-21
  */
 public abstract class SimpleButton {
@@ -95,6 +96,13 @@ public abstract class SimpleButton {
 		isPressed = false;
 		return false;
 	}
-	
-	public abstract void onClick(GameWorld word);
+
+	/**
+	 * Each button should override this method to ensure specific behavior when
+	 * the button is clicked. Parameter world is provided to allow access to the
+	 * game objects.
+	 * 
+	 * @param world
+	 */
+	public abstract void onClick(GameWorld world);
 }
