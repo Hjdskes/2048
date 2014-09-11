@@ -10,7 +10,7 @@ public class AssetHandler {
 	public static BitmapFont font, whiteFont;
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
-			t1024, t2048, empty, score, highscore, highest, newgame, lost, won;
+			t1024, t2048, empty, score, highscore, highest, newgame, continuebutton, lost, won;
 	/** The width of the game. */
 	private static final int GAME_WIDTH = 600;
 	/** The height of the game. */
@@ -66,7 +66,8 @@ public class AssetHandler {
 		manager.load("src/main/resources/fonts/tahomaWhite.fnt",
 				BitmapFont.class);
 		manager.load("src/main/resources/images/newgame.png", Texture.class);
-
+		manager.load("src/main/resources/images/continue.png", Texture.class);
+		
 		/*
 		 * Instruct the asset manager to load everything in its queue, block
 		 * until this is done.
@@ -133,6 +134,12 @@ public class AssetHandler {
 				"src/main/resources/images/newgame.png", Texture.class));
 		setAssetLocation(newgame, GAME_WIDTH / 2 - newgame.getWidth() / 2,
 				GAME_HEIGHT - GAP - newgame.getHeight(), false, true);
+		
+		
+		continuebutton = new Sprite(manager.get(
+				"src/main/resources/images/continue.png", Texture.class));
+		setAssetLocation(continuebutton, GAME_WIDTH / 2 - continuebutton.getWidth() / 2,
+				GAME_HEIGHT - GAP * 3 - continuebutton.getHeight() * 2, false, true);
 	}
 
 	private static void getFonts() {

@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.game;
 
+import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.helpers.AssetHandler;
 import nl.tudelft.ti2206.helpers.ButtonHandler;
@@ -32,8 +33,12 @@ public class GameRenderer {
 	private OrthographicCamera cam;
 	/** */
 	private SpriteBatch batch;
+	
 	/** The button used to initiate a restart. */
 	private RestartButton restartButton;
+	
+	/** The button used to continue the game after winning. */
+	private ContinueButton continueButton;
 
 	/**
 	 * Constructs a GameRenderer object.
@@ -49,6 +54,7 @@ public class GameRenderer {
 		this.world = world;
 
 		restartButton = ButtonHandler.getRestartButton();
+		continueButton = ButtonHandler.getContinueButton();
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
 
@@ -82,7 +88,7 @@ public class GameRenderer {
 		drawScoreTile();
 		drawHighscoreTile();
 		drawHighestTile();
-		drawNewGameTile();
+		drawRestartButton();
 
 		if (world.isLost()) {
 			drawLostOverlay();
@@ -165,16 +171,20 @@ public class GameRenderer {
 	/**
 	 * Render the button that will initiate a restart of the game.
 	 */
-	private void drawNewGameTile() {
+	private void drawRestartButton() {
 		restartButton.draw(batch);
 	}
 
+	private void drawContinueButton() {
+		continueButton.draw(batch);
+	}
+	
 	/**
 	 * Draw the lost overlay to show to the user it lost.
 	 */
 	private void drawLostOverlay() {
 		batch.draw(AssetHandler.lost, 0, 0);
-		drawNewGameTile();
+		drawRestartButton();
 	}
 
 	/**
@@ -182,7 +192,8 @@ public class GameRenderer {
 	 */
 	private void drawWonOverlay() {
 		batch.draw(AssetHandler.won, 0, 0);
-		drawNewGameTile();
+		drawRestartButton();
+		drawContinueButton();
 	}
 
 	/**

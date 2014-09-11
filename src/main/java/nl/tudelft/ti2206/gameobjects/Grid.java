@@ -86,9 +86,10 @@ public class Grid {
 		while (loc2 == loc1) {
 			loc2 = getRandomEmptyLocation();
 		}
-
-		grid[loc1].setValue(initialValue());
-		grid[loc2].setValue(initialValue());
+			grid[loc1].setValue(1024);
+			grid[loc2].setValue(1024);
+	//	grid[loc1].setValue(initialValue());
+	//	grid[loc2].setValue(initialValue());
 	}
 
 	/**

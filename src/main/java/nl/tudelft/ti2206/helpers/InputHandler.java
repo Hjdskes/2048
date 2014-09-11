@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.helpers;
 
+import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
@@ -11,10 +12,14 @@ public class InputHandler implements InputProcessor {
 
 	private GameWorld world;
 	private RestartButton restartButton;
+	private ContinueButton continueButton;
 
 	public InputHandler(GameWorld world) {
 		this.world = world;
-		this.restartButton = ButtonHandler.getRestartButton();
+		//this.restartButton = ButtonHandler.getRestartButton();
+		//this.continueButton = ButtonHandler.getContinueButton();
+		setRestartButton(ButtonHandler.getRestartButton());
+		setContinueButton(ButtonHandler.getContinueButton());
 	}
 
 
@@ -68,6 +73,12 @@ public class InputHandler implements InputProcessor {
 			restartButton.onClick(world);
 			return true;
 		}
+		
+		if (continueButton.isTouchDown(screenX, screenY)) {
+			continueButton.onClick(world);
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -81,11 +92,11 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-	/**
-	 * 
-	 * @return the restart button.
-	 */
 	public void setRestartButton(RestartButton restartButton) {
 		this.restartButton = restartButton;
+	}
+	
+	public void setContinueButton(ContinueButton continueButton) {
+		this.continueButton = continueButton;
 	}
 }
