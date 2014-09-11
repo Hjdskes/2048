@@ -14,6 +14,7 @@ public class InputHandler implements InputProcessor {
 
 	public InputHandler(GameWorld world) {
 		this.world = world;
+		this.restartButton = ButtonHandler.getRestartButton();
 	}
 
 

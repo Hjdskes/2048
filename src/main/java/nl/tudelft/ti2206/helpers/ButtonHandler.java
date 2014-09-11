@@ -10,7 +10,10 @@ public class ButtonHandler {
 	 * Initializes all buttons.
 	 */
 	public static void load() {
-		restartButton = initRestartButton();
+		restartButton = new RestartButton(AssetHandler.newgame.getX(),
+				AssetHandler.newgame.getY(), AssetHandler.newgame.getWidth(),
+				AssetHandler.newgame.getHeight(), AssetHandler.newgame,
+				AssetHandler.newgame);
 	}
 
 	/**
@@ -19,15 +22,5 @@ public class ButtonHandler {
 	 */
 	public static RestartButton getRestartButton() {
 		return restartButton;
-	}
-
-	/**
-	 * Initialize a restart button at its designated location.
-	 */
-	private static RestartButton initRestartButton() {
-		return new RestartButton(AssetHandler.newgame.getX(),
-				AssetHandler.newgame.getY(), AssetHandler.newgame.getWidth(),
-				AssetHandler.newgame.getHeight(), AssetHandler.newgame,
-				AssetHandler.newgame);
 	}
 }
