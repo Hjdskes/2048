@@ -29,20 +29,22 @@ public class XYCalculator {
 	 */
 	public static float getTileX(int index) {
 		switch (index % 4) {
-		case 0:
-			return TILE_X;
+//		case 0:
+//			return TILE_X;
 		case 1:
 			return TILE_X + TILE_WIDTH + GAP;
 		case 2:
 			return TILE_X + 2 * (TILE_WIDTH + GAP);
 		case 3:
 			return TILE_X + 3 * (TILE_WIDTH + GAP);
+		case 0:
 		default:
 			return TILE_X;
 		}
 	}
 
 	/**
+	 * Get the center x coordinate of a Tile.
 	 * 
 	 * @return center x coordinate of the Tile
 	 */
@@ -51,7 +53,7 @@ public class XYCalculator {
 	}
 
 	/**
-	 * Returns the y coordinate of the Tile
+	 * Get the Y coordinate of a Tile.
 	 * 
 	 * @return the y coordinate
 	 */
@@ -70,6 +72,7 @@ public class XYCalculator {
 	}
 
 	/**
+	 * Get the center Y coordinate of a Tile.
 	 * 
 	 * @return center y coordinate of the Tile
 	 */
@@ -78,7 +81,8 @@ public class XYCalculator {
 	}
 
 	/**
-	 *
+	 * Get the X coordinate of the Grid.
+	 * 
 	 * @return x coordinate
 	 */
 	public static int getGridX() {
@@ -86,25 +90,46 @@ public class XYCalculator {
 	}
 
 	/**
-	 *
+	 * Get the Y coordinate of the Grid.
+	 * 
 	 * @return y coordinate
 	 */
 	public static int getGridY() {
 		return GRID_Y;
 	}
 
+	/**
+	 * Get the width of a tile in pixels.
+	 * 
+	 * @return the width of a tile in pixels
+	 */
 	public static int getTileWidth() {
 		return TILE_WIDTH;
 	}
 
+	/**
+	 * Get the height of a tile in pixels.
+	 * 
+	 * @return the height of a tile in pixels
+	 */
 	public static int getTileHeight() {
 		return TILE_HEIGHT;
 	}
 
+	/**
+	 * Get the width of the grid in pixels.
+	 * 
+	 * @return width in pixels
+	 */
 	public static int getGridWidth() {
 		return GRID_WIDTH;
 	}
 
+	/**
+	 * Get the height of the grid in pixels.
+	 * 
+	 * @return height in pixels
+	 */
 	public static int getGridHeight() {
 		return GRID_HEIGHT;
 	}
