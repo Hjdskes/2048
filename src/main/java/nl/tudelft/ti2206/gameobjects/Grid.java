@@ -109,7 +109,7 @@ public class Grid {
 	 */
 	private int getRandomEmptyLocation() {
 		int index = random.nextInt(grid.length);
-		while (!grid[index].isEmpty()) {
+		while (!grid[index].isEmpty() && !isFull()) {
 			index = random.nextInt(grid.length);
 		}
 		return index;

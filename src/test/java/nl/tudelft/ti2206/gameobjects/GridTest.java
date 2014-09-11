@@ -34,7 +34,7 @@ public class GridTest {
 		grid = new Grid(world, false);
 		random = new Random();
 		grid.setTileMover(mover);
-		world.setGameState(GameState.RUNNING);
+	//	world.setGameState(GameState.RUNNING);
 	}
 
 	@Test
@@ -50,8 +50,8 @@ public class GridTest {
 			if (!grid.getTiles()[i].isEmpty()) {
 				// make sure the grid only contains 2's and/or 4's and empty
 				// tiles
-				if (grid.getTiles()[i].getValue() != 2
-						&& grid.getTiles()[i].getValue() != 4)
+				if (grid.getTiles()[i].getValue() != TWO
+						&& grid.getTiles()[i].getValue() != FOUR)
 					wrongTiles++;
 				
 				filledTiles++;
@@ -59,6 +59,18 @@ public class GridTest {
 		}
 		assertEquals(2, filledTiles);
 		assertEquals(0, wrongTiles);
+	}
+	
+	@Test
+	public void testRandomEmptyLocation() {
+		int wrongValue = 0;
+		for (int i = 0; i < 100; i++) {
+			int empty = getRandomEmptyLocation();
+			grid.getTiles()[empty].setValue(2);
+			if (!(empty >= 0 && empty < 16))
+				wrongValue += 1;
+		}
+		assertEquals(0, wrongValue);
 	}
 
 	@Test
@@ -161,7 +173,7 @@ public class GridTest {
 	 */
 	public int getRandomEmptyLocation() {
 		int index = random.nextInt(grid.getTiles().length);
-		while (!grid.getTiles()[index].isEmpty()) {
+		while (!grid.getTiles()[index].isEmpty() && !grid.isFull()) {
 			index = random.nextInt(grid.getTiles().length);
 		}
 		return index;

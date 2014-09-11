@@ -49,10 +49,8 @@ public class GameWorld {
 	 */
 	public void update(float delta) {
 		/* Add delta cap so if the game takes too long to update, it will still
-		 * work. */
-		if (delta > .15f) {
-			delta = .15f;
-		}
+		 * work. */		
+		delta = Math.max(delta, .15f);
 
 		/* Tell the grid to update its objects. */
 		grid.update();
