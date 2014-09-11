@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.buttons;
 
+import nl.tudelft.ti2206.game.GameWorld;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -93,6 +95,6 @@ public abstract class SimpleButton {
 		isPressed = false;
 		return false;
 	}
-
-	public abstract void onClick();
+	
+	public abstract void onClick(GameWorld word);
 }

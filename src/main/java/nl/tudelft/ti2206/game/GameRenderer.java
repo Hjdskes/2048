@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.helpers.AssetHandler;
-import nl.tudelft.ti2206.helpers.InputHandler;
+import nl.tudelft.ti2206.helpers.ButtonHandler;
 import nl.tudelft.ti2206.helpers.XYCalculator;
 
 import com.badlogic.gdx.Gdx;
@@ -48,8 +48,7 @@ public class GameRenderer {
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
 
-		restartButton = ((InputHandler) Gdx.input.getInputProcessor())
-				.getRestartButton();
+		restartButton = ButtonHandler.getRestartButton();
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
 
@@ -209,7 +208,7 @@ public class GameRenderer {
 	 * Render the highscore in its square.
 	 */
 	private void drawHighscore() {
-		int highscore = world.getHighscore(); 
+		int highscore = world.getHighscore();
 		WHITE_F.draw(
 				batch,
 				Integer.toString(highscore),
