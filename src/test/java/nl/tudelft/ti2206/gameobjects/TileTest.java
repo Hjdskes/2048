@@ -27,51 +27,51 @@ public class TileTest {
 
 	@Test
 	public void testGetValue() {
-		assertEquals(tile.getValue(), 0);
+		assertEquals(0, tile.getValue());
 	}
 
 	@Test
 	public void testSetValue() {
 		tile.setValue(10);
-		assertEquals(tile.getValue(), 10);
+		assertEquals(10, tile.getValue());
 	}
 
 	@Test
 	public void testIsEmptyTrue() {
-		assertEquals(tile.isEmpty(), true);
+		assertEquals(true, tile.isEmpty());
 	}
 
 	@Test
 	public void testIsEmptyFalse() {
 		tile.setValue(10);
-		assertEquals(tile.isEmpty(), false);
+		assertEquals(false, tile.isEmpty());
 	}
 
 	@Test
 	public void testIsMerged() {
-		assertEquals(tile.isMerged(), false);
+		assertEquals(false, tile.isMerged());
 	}
 
 	@Test
 	public void testSetMerged() {
 		tile.setMerged(true);
-		assertEquals(tile.isMerged(), true);
+		assertEquals(true, tile.isMerged());
 	}
 
 	@Test
 	public void testResetValue() {
 		tile.setValue(10);
-		assertEquals(tile.getValue(), 10);
+		assertEquals(10, tile.getValue());
 		tile.resetValue();
-		assertEquals(tile.getValue(), 0);
+		assertEquals(0, tile.getValue());
 	}
 
 	@Test
 	public void testDoubleValue() {
 		tile.doubleValue();
-		assertEquals(tile.getValue(), 2);
+		assertEquals(2, tile.getValue());
 		tile.doubleValue();
-		assertEquals(tile.getValue(), 4);
+		assertEquals(4, tile.getValue());
 	}
 
 	@Test
@@ -79,7 +79,7 @@ public class TileTest {
 		tile.doubleValue();
 		tile.setMerged(true);
 		tile.reset();
-		assertEquals(tile.getValue(), 0);
-		assertEquals(tile.isMerged(), false);
+		assertEquals(0, tile.getValue());
+		assertEquals(false, tile.isMerged());
 	}
 }
