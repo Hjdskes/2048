@@ -14,7 +14,7 @@ import nl.tudelft.ti2206.helpers.ProgressHandler;
  */
 public class GameWorld {
 	/** Enumeration indicating what state the game is currently in. */
-	public enum GameState { RUNNING, WON, LOST }
+	public enum GameState { RUNNING, WON, LOST, CONTINUING }
 	/** The current game score. */
 	private int score;
 	/** The highscore at the time of launching the game. */
@@ -57,7 +57,7 @@ public class GameWorld {
 		/* Tell the grid to update its objects. */
 		grid.update();
 
-		if (grid.getHighestTile() == 2048) {
+		if (grid.getHighestTile() == 2048 && !isContinuing() && !isLost()) {
 			setGameState(GameState.WON);
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			setGameState(GameState.LOST);
@@ -108,6 +108,15 @@ public class GameWorld {
 	 */
 	public boolean isWon() {
 		return (state == GameState.WON);
+	}
+
+	/**
+	 * Returns true if the current game is in continuing state.
+	 * 
+	 * @return True if game is in continuing state.
+	 */
+	public boolean isContinuing() {
+		return (state == GameState.CONTINUING);
 	}
 
 	/**

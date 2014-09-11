@@ -27,6 +27,6 @@ public class ContinueButton extends SimpleButton {
 
 	@Override
 	public void onClick(GameWorld world) {
-		world.setGameState(GameState.RUNNING);
+		world.setGameState(GameState.CONTINUING);
 	}
 }
