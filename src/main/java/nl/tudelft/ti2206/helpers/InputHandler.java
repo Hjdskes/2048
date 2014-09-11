@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.helpers;
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.game.GameWorld.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import com.badlogic.gdx.Input.Keys;
@@ -25,6 +26,7 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			world.getGrid().move(Direction.DOWN);

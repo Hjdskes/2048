@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.game.GameWorld.GameState;
 import nl.tudelft.ti2206.helpers.TileMover;
 
 /**
@@ -174,29 +175,34 @@ public class Grid {
 	 *            The direction in which is to be moved.
 	 */
 	public void move(Direction direction) {
-		switch (direction) {
-		case LEFT:
-			mover.moveLeft();
-			break;
-		case RIGHT:
-			mover.moveRight();
-			break;
-		case UP:
-			mover.moveUp();
-			break;
-		case DOWN:
-			mover.moveDown();
-			break;
-		default:
-			break;
-		}
+		// handle moves if game is running or continuing,
+		// ignore moves otherwise
+		//if (world.isRunning() || world.isContinuing()) {
+		if (!world.isLost() && !world.isWon()) {
+			switch (direction) {
+			case LEFT:
+				mover.moveLeft();
+				break;
+			case RIGHT:
+				mover.moveRight();
+				break;
+			case UP:
+				mover.moveUp();
+				break;
+			case DOWN:
+				mover.moveDown();
+				break;
+			default:
+				break;
+			}
 
-		if (mover.isMoveMade()) {
-			world.addScore(mover.getScoreIncrement());
-			grid[getRandomEmptyLocation()].setValue(initialValue());
-		}
+			if (mover.isMoveMade()) {
+				world.addScore(mover.getScoreIncrement());
+				grid[getRandomEmptyLocation()].setValue(initialValue());
+			}
 
-		mover.reset();
+			mover.reset();
+		}
 	}
 
 	/**

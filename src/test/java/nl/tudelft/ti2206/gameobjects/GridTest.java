@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.game.GameWorld.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.helpers.TileMover;
 
@@ -33,6 +34,7 @@ public class GridTest {
 		grid = new Grid(world, false);
 		random = new Random();
 		grid.setTileMover(mover);
+		world.setGameState(GameState.RUNNING);
 	}
 
 	@Test
