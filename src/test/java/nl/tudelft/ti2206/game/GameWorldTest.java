@@ -93,7 +93,7 @@ public class GameWorldTest {
 		assertTrue(world.isWon());
 		world.restart();
 		assertEquals(world.getScore(), 0);
-		assertFalse(world.getGrid().getHighest() == 2048);
+		assertFalse(world.getGrid().getHighestTile() == 2048);
 	}
 
 	/**

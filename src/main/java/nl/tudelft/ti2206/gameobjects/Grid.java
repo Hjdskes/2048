@@ -52,7 +52,7 @@ public class Grid {
 	/** TileMover is used to move the tiles. */
 	private TileMover mover;
 	/** Keeps track of the highest tile value in game. */
-	private int highest;
+	private int highestTile;
 	/** The game world. */
 	private GameWorld world;
 
@@ -148,7 +148,7 @@ public class Grid {
 		for (Tile t : grid) {
 			t.update();
 		}
-		updateHighest();
+		updateHighestTile();
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class Grid {
 			t.reset();
 		}
 		initGrid();
-		updateHighest();
+		updateHighestTile();
 	}
 
 	/**
@@ -291,11 +291,11 @@ public class Grid {
 	/**
 	 * Updates the highest Tile value present in the grid.
 	 */
-	public void updateHighest() {
-		highest = 0;
+	public void updateHighestTile() {
+		highestTile = 0;
 		for (Tile t : grid) {
-			if (t.getValue() > highest)
-				highest = t.getValue();
+			if (t.getValue() > highestTile)
+				highestTile = t.getValue();
 		}
 	}
 
@@ -304,8 +304,8 @@ public class Grid {
 	 * 
 	 * @return The highest tile value.
 	 */
-	public int getHighest() {
-		return highest;
+	public int getHighestTile() {
+		return highestTile;
 	}
 
 	/**

@@ -57,7 +57,7 @@ public class GameWorld {
 		/* Tell the grid to update its objects. */
 		grid.update();
 
-		if (grid.getHighest() == 2048) {
+		if (grid.getHighestTile() == 2048) {
 			setGameState(GameState.WON);
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			setGameState(GameState.LOST);
@@ -140,7 +140,7 @@ public class GameWorld {
 	 * @return The currently highest value.
 	 */
 	public int getHighest() {
-		return oldHighest > grid.getHighest() ? oldHighest : grid.getHighest(); 
+		return oldHighest > grid.getHighestTile() ? oldHighest : grid.getHighestTile(); 
 	}
 	/**
 	 * Returns the current game grid.
