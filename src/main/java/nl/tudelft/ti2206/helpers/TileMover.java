@@ -130,30 +130,6 @@ public class TileMover {
 		return false;
 	}
 
-	/*
-	 * Messy code by Jochem, just to see if this works Cleaning this up and
-	 * making neater versions public int movesPossible() { int moves = 0;
-	 * 
-	 * for (int index = 0; index < grid.length; index += 1) { int value =
-	 * grid[index].getValue();
-	 * 
-	 * int offset = 1;
-	 * 
-	 * if (index + offset < grid.length && (grid[index + offset].getValue() ==
-	 * value || grid[index + offset].getValue() == 0)) moves++; if (index -
-	 * offset > 0 && (grid[index - offset].getValue() == value || grid[index -
-	 * offset].getValue() == 0)) moves++;
-	 * 
-	 * offset = 4;
-	 * 
-	 * if (index + offset < grid.length && (grid[index + offset].getValue() ==
-	 * value || grid[index + offset].getValue() == 0)) moves++; if (index -
-	 * offset > 0 && (grid[index - offset].getValue() == value || grid[index -
-	 * offset].getValue() == 0)) moves++; }
-	 * 
-	 * return moves; }
-	 */
-
 	/**
 	 * Moves a row or column of tiles into the specified direction.
 	 * 

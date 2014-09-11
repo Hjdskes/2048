@@ -29,14 +29,15 @@ public class XYCalculator {
 	 */
 	public static float getTileX(int index) {
 		switch (index % 4) {
-		case 0:
-			return TILE_X;
+//		case 0:
+//			return TILE_X;
 		case 1:
 			return TILE_X + TILE_WIDTH + GAP;
 		case 2:
 			return TILE_X + 2 * (TILE_WIDTH + GAP);
 		case 3:
 			return TILE_X + 3 * (TILE_WIDTH + GAP);
+		case 0:
 		default:
 			return TILE_X;
 		}

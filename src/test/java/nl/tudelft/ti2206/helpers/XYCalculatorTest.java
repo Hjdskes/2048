@@ -198,7 +198,6 @@ public class XYCalculatorTest {
 	 */
 	@Test
 	public void testGetGridHeight() {
-
 		assertEquals(GRID_HEIGHT, XYCalculator.getGridHeight());
 	}
 
