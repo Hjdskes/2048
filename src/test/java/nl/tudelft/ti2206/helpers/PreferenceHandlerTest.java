@@ -44,7 +44,7 @@ public class PreferenceHandlerTest {
 	@Test
 	public void highestTest() {
 		PreferenceHandler.setHighest(1024);
-		assertEquals(PreferenceHandler.getHighest(), 1024);
+		assertEquals(PreferenceHandler.getHighestTile(), 1024);
 	}
 
 	/**

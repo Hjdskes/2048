@@ -44,7 +44,7 @@ public class PreferenceHandler {
 		prefs.flush();
 	}
 
-	public static int getHighest() {
+	public static int getHighestTile() {
 		return prefs.getInteger("highest");
 	}
 

@@ -14,12 +14,12 @@ public class ProgressHandler {
 	 */
 	public static void saveGame(GameWorld world) {
 		Grid grid = world.getGrid();
-		int highest = world.getHighest();
+		int highest = world.getHighestTile();
 		int score = world.getScore();
 
 		saveGrid(grid);
 		PreferenceHandler.setScore(score);
-		if (highest > PreferenceHandler.getHighest()) {
+		if (highest > PreferenceHandler.getHighestTile()) {
 			PreferenceHandler.setHighest(highest);
 		}
 		if (score > PreferenceHandler.getHighscore()) {
@@ -35,7 +35,7 @@ public class ProgressHandler {
 	 */
 	public static void loadGame(GameWorld world) {
 		world.setScore(PreferenceHandler.getScore());
-		world.setOldHighest(PreferenceHandler.getHighest());
+		world.setOldHighest(PreferenceHandler.getHighestTile());
 		world.setOldHighscore(PreferenceHandler.getHighscore());
 		world.setGrid(loadGrid(world));
 	}

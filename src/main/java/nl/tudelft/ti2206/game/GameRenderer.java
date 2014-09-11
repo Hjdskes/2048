@@ -233,7 +233,7 @@ public class GameRenderer {
 	 * Render the highest tile ever scored in its square.
 	 */
 	private void drawHighest() {
-		int highest = world.getHighest();
+		int highest = world.getHighestTile();
 		WHITE_F.draw(batch, Integer.toString(highest),
 				AssetHandler.highest.getX() + AssetHandler.highest.getWidth()
 						/ 2 - getTextCenterX(WHITE_F, highest), SCORE_HEIGHT);

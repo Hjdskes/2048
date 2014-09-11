@@ -14,7 +14,10 @@ import nl.tudelft.ti2206.helpers.ProgressHandler;
  */
 public class GameWorld {
 	/** Enumeration indicating what state the game is currently in. */
-	public enum GameState { RUNNING, WON, LOST, CONTINUING }
+	public enum GameState {
+		RUNNING, WON, LOST, CONTINUING
+	}
+
 	/** The current game score. */
 	private int score;
 	/** The highscore at the time of launching the game. */
@@ -48,8 +51,10 @@ public class GameWorld {
 	 *            Time in milliseconds to update.
 	 */
 	public void update(float delta) {
-		/* Add delta cap so if the game takes too long to update, it will still
-		 * work. */		
+		/*
+		 * Add delta cap so if the game takes too long to update, it will still
+		 * work.
+		 */
 		delta = Math.max(delta, .15f);
 
 		/* Tell the grid to update its objects. */
@@ -136,6 +141,7 @@ public class GameWorld {
 
 	/**
 	 * Returns the current highscore.
+	 * 
 	 * @return The current highscore.
 	 */
 	public int getHighscore() {
@@ -144,11 +150,14 @@ public class GameWorld {
 
 	/**
 	 * Returns the currently highest value.
+	 * 
 	 * @return The currently highest value.
 	 */
-	public int getHighest() {
-		return oldHighest > grid.getHighestTile() ? oldHighest : grid.getHighestTile(); 
+	public int getHighestTile() {
+		return oldHighest > grid.getHighestTile() ? oldHighest : grid
+				.getHighestTile();
 	}
+
 	/**
 	 * Returns the current game grid.
 	 * 
@@ -180,7 +189,9 @@ public class GameWorld {
 
 	/**
 	 * Sets the highest value at the time of launch.
-	 * @param oldHighest The highest value at the time of launch.
+	 * 
+	 * @param oldHighest
+	 *            The highest value at the time of launch.
 	 */
 	public void setOldHighest(int oldHighest) {
 		this.oldHighest = oldHighest;
@@ -188,7 +199,9 @@ public class GameWorld {
 
 	/**
 	 * Sets the highscore at the time of launch.
-	 * @param oldHighest The highscore at the time of launch.
+	 * 
+	 * @param oldHighest
+	 *            The highscore at the time of launch.
 	 */
 	public void setOldHighscore(int oldHighscore) {
 		this.oldHighscore = oldHighscore;

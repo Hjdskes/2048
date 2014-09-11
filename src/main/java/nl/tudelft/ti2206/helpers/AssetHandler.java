@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.helpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -30,7 +31,7 @@ public class AssetHandler {
 	 * @return true If the manager is done, false otherwise.
 	 */
 	public static boolean isLibraryInitialized() {
-		return manager.update();
+		return Gdx.app != null && manager.update();
 	}
 
 	/**
