@@ -4,12 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 /**
- * The PreferenceHandler is used to control the Preferences. These
- * are used to save the highscore and highest value ever reached. 
+ * The PreferenceHandler is used to control the Preferences. These are used to
+ * save the highscore and highest value ever reached.
+ * 
  * @author group-21
  */
 public class PreferenceHandler {
 	private static Preferences prefs = Gdx.app.getPreferences("2048");
+
+	public static Preferences getPrefs() {
+		return prefs;
+	}
 
 	public static void initScores() {
 		if (!prefs.contains("score")) {
