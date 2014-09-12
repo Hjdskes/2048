@@ -13,23 +13,30 @@ import com.badlogic.gdx.math.Rectangle;
  * @author group-21
  */
 public abstract class SimpleButton {
-	/** */
+	/** The coordinates and dimension. */
 	private float x, y, width, height;
-	/** */
+	/** The Sprites to be shown. */
 	private Sprite buttonUp, buttonDown;
-	/** */
+	/** The boundaries of the SimpleButton */
 	private Rectangle bounds;
-	/** */
+	/** Determines whether the button has been pressed or not */
 	protected boolean isPressed = false;
 
 	/**
+	 * Creates a new SimpleButton object with specified parameters.
 	 * 
 	 * @param x
+	 *            The x coordinate
 	 * @param y
+	 *            The y coordinate
 	 * @param width
+	 *            The width
 	 * @param height
+	 *            The height
 	 * @param buttonUp
+	 *            The Sprite when the button has not been pressed
 	 * @param buttonDown
+	 *            The Sprite when the bustton is pressed
 	 */
 	public SimpleButton(float x, float y, float width, float height,
 			Sprite buttonUp, Sprite buttonDown) {
@@ -44,9 +51,12 @@ public abstract class SimpleButton {
 	}
 
 	/**
+	 * Determines if the button is clicked.
 	 * 
 	 * @param screenX
+	 *            The x coordinate clicked
 	 * @param screenY
+	 *            The y coordinate clicked
 	 * @return
 	 */
 	private boolean isClicked(int screenX, int screenY) {
@@ -54,8 +64,10 @@ public abstract class SimpleButton {
 	}
 
 	/**
+	 * Draws the button, depending on whether it is pressed or not.
 	 * 
 	 * @param batcher
+	 *            The SpriteBatcher that draws the button.
 	 */
 	public void draw(SpriteBatch batcher) {
 		if (isPressed) {
@@ -66,9 +78,12 @@ public abstract class SimpleButton {
 	}
 
 	/**
+	 * Checks if the button is touched/clicked.
 	 * 
 	 * @param screenX
+	 *            The x coordinate
 	 * @param screenY
+	 *            The y coordinate
 	 * @return
 	 */
 	public boolean isTouchDown(int screenX, int screenY) {
@@ -80,20 +95,20 @@ public abstract class SimpleButton {
 	}
 
 	/**
+	 * Resets isPressed if the button is pressed when it has been pressed
+	 * before.
 	 * 
 	 * @param screenX
+	 *            The x coordinate
 	 * @param screenY
+	 *            The y coordinate
 	 * @return
 	 */
 	public boolean isTouchUp(int screenX, int screenY) {
-		/* It only counts as a touchUp if the button is in a pressed state. */
-		if (bounds.contains(screenX, screenY) && isPressed) {
+		if (isClicked(screenX, screenY)) {
 			isPressed = false;
 			return true;
 		}
-
-		/* Whenever a finger is released, we will cancel any presses. */
-		isPressed = false;
 		return false;
 	}
 
@@ -103,6 +118,7 @@ public abstract class SimpleButton {
 	 * game objects.
 	 * 
 	 * @param world
+	 *            The GameWorld
 	 */
 	public abstract void onClick(GameWorld world);
 }
