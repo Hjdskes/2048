@@ -10,9 +10,9 @@
     the highscore, and is thus playing in endless mode.~~
 06. ~~In endless mode, the player can still lose the game for the above mentioned
     criteria.~~
-07. Animate spawning of tile with a yo-yo animation.
+07. ~~Animate spawning of tile with a yo-yo animation.~~
 08. Animate tile movement (let tiles glide to their new location)
-09. Animate tile merging with a bounce animation.
+09. ~~Animate tile merging with a bounce animation.~~
 10. ~~Allow mocking of graphical elements for testing purposes.~~
 11. ~~Refactor/redesign AssetLoader in order to make it work even when testing (by creating a headless launcher for example).~~
 12. Make use of .ttf instead of .fnt for drawing strings to fix uggly text drawing.
