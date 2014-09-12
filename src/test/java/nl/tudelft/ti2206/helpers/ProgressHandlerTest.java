@@ -28,6 +28,9 @@ public class ProgressHandlerTest {
 	 */
 	@Before
 	public void reinitGrid() {
+		// clear the saved data to make sure the test case can use its own grid,
+		// score, etc.
+		PreferenceHandler.getPrefs().clear();
 		grid = new Grid(world, true);
 		world.setGrid(grid);
 	}
@@ -72,11 +75,11 @@ public class ProgressHandlerTest {
 		Grid grid = new Grid(world, true);
 		grid.setTile(0, 2, true);
 		grid.setTile(1, 4, true);
-		
+
 		// set the grid and save the game
 		world.setGrid(grid);
 		ProgressHandler.saveGame(world);
-		
+
 		// copy current scores
 		int score = world.getScore();
 		int highestTile = world.getHighestTile();
