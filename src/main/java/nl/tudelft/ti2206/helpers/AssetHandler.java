@@ -11,7 +11,8 @@ public class AssetHandler {
 	public static BitmapFont font, whiteFont;
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
-			t1024, t2048, empty, score, highscore, highest, newgame, continuebutton, lost, won;
+			t1024, t2048, empty, score, highscore, highest, newgame,
+			continuebutton, lost, won;
 	/** The width of the game. */
 	private static final int GAME_WIDTH = 600;
 	/** The height of the game. */
@@ -68,7 +69,7 @@ public class AssetHandler {
 				BitmapFont.class);
 		manager.load("src/main/resources/images/newgame.png", Texture.class);
 		manager.load("src/main/resources/images/continue.png", Texture.class);
-		
+
 		/*
 		 * Instruct the asset manager to load everything in its queue, block
 		 * until this is done.
@@ -138,8 +139,9 @@ public class AssetHandler {
 
 		continuebutton = new Sprite(manager.get(
 				"src/main/resources/images/continue.png", Texture.class));
-		setAssetLocation(continuebutton, GAME_WIDTH / 2 - continuebutton.getWidth() / 2,
-				GAME_HEIGHT - GAP * 3 - continuebutton.getHeight() * 2, false, true);
+		setAssetLocation(continuebutton,
+				GAME_WIDTH / 2 - continuebutton.getWidth() / 2, GAME_HEIGHT
+						- GAP * 3 - continuebutton.getHeight() * 2, false, true);
 	}
 
 	private static void getFonts() {
@@ -219,10 +221,19 @@ public class AssetHandler {
 		}
 	}
 
+	/**
+	 * Sets the AssetManager to be used by the AssetHandler. Needed for the
+	 * headless application which is used for DevHub. Since DevHub cannot make
+	 * use of GL related classes, it is necessary to test the AssetHandler in a
+	 * very specific way. See {@link AssetHandlerTest}.
+	 * 
+	 * @param assetManager
+	 *            The manager to be used by the AssetHandler.
+	 */
 	public static void setAssetManager(AssetManager assetManager) {
 		manager = assetManager;
 	}
-	
+
 	/**
 	 * Dispose of all the textures, the font and the AssetManager.
 	 */
