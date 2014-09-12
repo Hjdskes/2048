@@ -68,16 +68,21 @@ public class ProgressHandlerTest {
 	 */
 	@Test
 	public void testLoadGame() {
-		// construct the grid as saved
-		Grid savedGrid = new Grid(world, true);
-		savedGrid.setTile(0, 2, true);
-		savedGrid.setTile(1, 4, false);
-
+		// construct the grid
+		Grid grid = new Grid(world, true);
+		grid.setTile(0, 2, true);
+		grid.setTile(1, 4, true);
+		
+		// set the grid and save the game
+		world.setGrid(grid);
+		ProgressHandler.saveGame(world);
+		
 		// copy current scores
 		int score = world.getScore();
 		int highestTile = world.getHighestTile();
 
-		// reset scores
+		// reset world
+		world.setGrid(new Grid(world, true));
 		world.setScore(0);
 		world.setOldHighest(0);
 
@@ -86,7 +91,7 @@ public class ProgressHandlerTest {
 		// make sure the grid is loaded in correctly
 		assertEquals(score, world.getScore());
 		assertEquals(highestTile, world.getHighestTile());
-		assertEquals(savedGrid.getPossibleMoves(), world.getGrid()
+		assertEquals(grid.getPossibleMoves(), world.getGrid()
 				.getPossibleMoves());
 	}
 }
