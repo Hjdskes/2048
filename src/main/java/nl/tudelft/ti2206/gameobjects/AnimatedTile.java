@@ -7,24 +7,24 @@ public class AnimatedTile extends Tile {
 
 	private float size;
 	private boolean isSpawning;
+	private boolean isMerging;
 
 	/**
 	 * Creates a new AnimatedTile with the specified parameters.
 	 * 
 	 * @param value
 	 *            The value of the Tile.
-	 * @param isSpawning
-	 *            True if the tile shown show its spawning animation, false
-	 *            otherwise.
 	 */
-	public AnimatedTile(int value, boolean isSpawning) {
+	public AnimatedTile(int value) {
 		super(value);
 		size = 1;
-		this.isSpawning = false;
+		isSpawning = false;
+		isMerging = false;
 	}
 
 	/**
-	 * Updates the Tile, if it is spawning its size increases each frame.
+	 * Updates the Tile. If it is spawning its size increases each frame. If it
+	 * is merging, reduce its size each frame.
 	 */
 	public void update() {
 		if (isSpawning) {
@@ -32,6 +32,11 @@ public class AnimatedTile extends Tile {
 				size += .04;
 			else
 				isSpawning = false;
+		} else if (isMerging) {
+			if (size > 1)
+				size -= .015;
+			else
+				isMerging = false;
 		}
 	}
 
@@ -42,6 +47,15 @@ public class AnimatedTile extends Tile {
 	public void reset() {
 		super.reset();
 		size = 1;
+		isSpawning = false;
+		isMerging = false;
+	}
+
+	@Override
+	public void setMerged(boolean isMerged) {
+		super.setMerged(isMerged);
+		if (isMerged)
+			merge();
 	}
 
 	/**
@@ -61,24 +75,35 @@ public class AnimatedTile extends Tile {
 	}
 
 	/**
-	 * The offset that should be taken into account when determining the x and y
-	 * coordinates for drawing.
+	 * Calculates the offset that should be taken into account when determining
+	 * the x and y coordinates for drawing.
 	 * 
 	 * @return The offset.
 	 */
 	public float getXYOffset() {
 		if (isSpawning)
 			return (1 - size) * DIMENSION / 2;
+		else if (isMerging)
+			return (DIMENSION - size * DIMENSION) / 2;
 		else
 			return 0;
 	}
 
 	/**
 	 * Starts a new spawning animation by setting isSpawning to true and setting
-	 * the size to s0.5.
+	 * the size to 0.5.
 	 */
 	public void spawn() {
 		isSpawning = true;
 		size = .5f;
+	}
+
+	/**
+	 * Starts a new merging animation by setting isMerging to true and setting
+	 * the size to 1.2.
+	 */
+	public void merge() {
+		isMerging = true;
+		size = 1.2f;
 	}
 }

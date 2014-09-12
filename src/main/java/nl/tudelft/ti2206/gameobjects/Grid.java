@@ -95,7 +95,7 @@ public class Grid {
 	 */
 	private void initEmptyGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new AnimatedTile(0, false);
+			grid[i] = new AnimatedTile(0);
 		}
 	}
 
