@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.helpers;
 
 public class XYCalculator {
-
 	/** The TILE_HEIGHT of the Tile */
 	private static final int TILE_WIDTH = 81;
 	/** The width of the Tile */
@@ -29,8 +28,6 @@ public class XYCalculator {
 	 */
 	public static float getTileX(int index) {
 		switch (index % 4) {
-//		case 0:
-//			return TILE_X;
 		case 1:
 			return TILE_X + TILE_WIDTH + GAP;
 		case 2:

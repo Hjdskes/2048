@@ -220,7 +220,7 @@ public class AssetHandler {
 			return empty;
 		}
 	}
-
+	
 	/**
 	 * Sets the AssetManager to be used by the AssetHandler. Needed for the
 	 * headless application which is used for DevHub. Since DevHub cannot make
