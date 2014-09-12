@@ -84,7 +84,7 @@ public class GridTest {
 
 		grid.updateHighestTile();
 
-		assertEquals(2048, grid.getHighestTile());
+		assertEquals(2048, grid.getCurrentHighestTile());
 	}
 
 	@Test

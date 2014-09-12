@@ -309,7 +309,7 @@ public class Grid {
 	 * 
 	 * @return The highest tile value.
 	 */
-	public int getHighestTile() {
+	public int getCurrentHighestTile() {
 		return highestTile;
 	}
 

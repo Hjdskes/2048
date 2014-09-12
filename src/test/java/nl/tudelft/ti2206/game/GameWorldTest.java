@@ -93,7 +93,7 @@ public class GameWorldTest {
 		assertTrue(world.isWon());
 		world.restart();
 		assertEquals(world.getScore(), 0);
-		assertFalse(world.getGrid().getHighestTile() == 2048);
+		assertFalse(world.getGrid().getCurrentHighestTile() == 2048);
 	}
 
 	/**
@@ -106,4 +106,14 @@ public class GameWorldTest {
 		world.addScore(increment);
 		assertEquals(world.getScore(), score + increment);
 	}
+	
+//	@Test
+//	public void testGetHighestTile() {
+//		Grid grid = Mockito.mock(Grid.class);
+//		world.setGrid(grid);
+//		
+//		stub(grid.getCurrentHighestTile()).toReturn(4096);
+//		
+//		world.getHighestTile();
+//	}
 }
