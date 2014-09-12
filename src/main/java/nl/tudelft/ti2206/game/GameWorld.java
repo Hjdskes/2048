@@ -23,7 +23,7 @@ public class GameWorld {
 	/** The highscore at the time of launching the game. */
 	private int oldHighscore;
 	/** The highest value at the time of launching the game. */
-	private int oldHighest;
+	private int oldHighestTile;
 	/** The current grid in the game. */
 	private Grid grid;
 	/** The state the game is currently in. */
@@ -126,7 +126,9 @@ public class GameWorld {
 	 * Restarts the game.
 	 */
 	public void restart() {
+		state = GameState.RUNNING;
 		score = 0;
+		oldHighestTile = 0;
 		grid.restart();
 	}
 
@@ -154,7 +156,7 @@ public class GameWorld {
 	 * @return The currently highest value.
 	 */
 	public int getHighestTile() {
-		return oldHighest > grid.getHighestTile() ? oldHighest : grid
+		return oldHighestTile > grid.getHighestTile() ? oldHighestTile : grid
 				.getHighestTile();
 	}
 
@@ -194,13 +196,13 @@ public class GameWorld {
 	 *            The highest value at the time of launch.
 	 */
 	public void setOldHighest(int oldHighest) {
-		this.oldHighest = oldHighest;
+		this.oldHighestTile = oldHighest;
 	}
 
 	/**
 	 * Sets the highscore at the time of launch.
 	 * 
-	 * @param oldHighest
+	 * @param oldHighestTile
 	 *            The highscore at the time of launch.
 	 */
 	public void setOldHighscore(int oldHighscore) {
