@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 import nl.tudelft.ti2206.helpers.AssetHandler;
 import nl.tudelft.ti2206.helpers.ProgressHandler;
 
@@ -25,7 +25,7 @@ public class GameWorld {
 	/** The highest value at the time of launching the game. */
 	private int oldHighestTile;
 	/** The current grid in the game. */
-	private Grid grid;
+	private AnimatedGrid grid;
 	/** The state the game is currently in. */
 	private GameState state;
 
@@ -38,7 +38,7 @@ public class GameWorld {
 			ProgressHandler.loadGame(this);
 		} else {
 			/* Create a new game. */
-			grid = new Grid(this, false);
+			grid = new AnimatedGrid(this, false);
 			score = 0;
 		}
 		state = GameState.RUNNING;
@@ -166,7 +166,7 @@ public class GameWorld {
 	 * 
 	 * @return The current game grid.
 	 */
-	public Grid getGrid() {
+	public AnimatedGrid getGrid() {
 		return grid;
 	}
 
@@ -176,7 +176,7 @@ public class GameWorld {
 	 * @param grid
 	 *            The new grid.
 	 */
-	public void setGrid(Grid grid) {
+	public void setGrid(AnimatedGrid grid) {
 		this.grid = grid;
 	}
 

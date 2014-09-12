@@ -1,8 +1,8 @@
 package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
+import nl.tudelft.ti2206.gameobjects.AnimatedTile;
 
 public class ProgressHandler {
 	/**
@@ -13,7 +13,7 @@ public class ProgressHandler {
 	 *            The GameWorld to save.
 	 */
 	public static void saveGame(GameWorld world) {
-		Grid grid = world.getGrid();
+		AnimatedGrid grid = world.getGrid();
 		int highest = world.getHighestTile();
 		int score = world.getScore();
 
@@ -46,10 +46,10 @@ public class ProgressHandler {
 	 * @param grid
 	 *            The grid to store.
 	 */
-	private static void saveGrid(Grid grid) {
+	private static void saveGrid(AnimatedGrid grid) {
 		String state = "";
 
-		Tile[] tiles = grid.getTiles();
+		AnimatedTile[] tiles = grid.getTiles();
 		for (int index = 0; index < tiles.length; index++) {
 			if (!tiles[index].isEmpty()) {
 				state += index + "," + tiles[index].getValue() + ","
@@ -63,19 +63,19 @@ public class ProgressHandler {
 	/**
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 * 
-	 * @param world The World to load the Grid into.
+	 * @param world The World to load the AnimatedGrid into.
 	 * @return The loaded grid.
 	 */
-	private static Grid loadGrid(GameWorld world) {
+	private static AnimatedGrid loadGrid(GameWorld world) {
 		String filledTiles = PreferenceHandler.getGrid();
 		/*
 		 * If no grid is saved, return a default one. Else, fill the grid with
 		 * the saved tiles.
 		 */
 		if (filledTiles == "") {
-			return new Grid(world, false);
+			return new AnimatedGrid(world, false);
 		} else {
-			Grid grid = new Grid(world, true);
+			AnimatedGrid grid = new AnimatedGrid(world, true);
 			String[] split = filledTiles.split("\n");
 
 			for (String tile : split) {

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.game.GameWorld.GameState;
-import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class GameWorldTest {
 
 	/**
 	 * Tests the constructor of GameWorld: after creation, there should be a
-	 * Grid and the game should be running.
+	 * AnimatedGrid and the game should be running.
 	 * 
 	 * Testing for the score is impossible, since the game might be restarted
 	 * from an earlier session in which the score is unknown.
@@ -86,7 +86,7 @@ public class GameWorldTest {
 	 */
 	@Test
 	public void testRestart() {
-		world.setGrid(new Grid(world, true));
+		world.setGrid(new AnimatedGrid(world, true));
 		world.setScore(8);
 		world.getGrid().setTile(0, 2048, true);
 		world.update(.15f);
@@ -109,7 +109,7 @@ public class GameWorldTest {
 	
 //	@Test
 //	public void testGetHighestTile() {
-//		Grid grid = Mockito.mock(Grid.class);
+//		AnimatedGrid grid = Mockito.mock(AnimatedGrid.class);
 //		world.setGrid(grid);
 //		
 //		stub(grid.getCurrentHighestTile()).toReturn(4096);

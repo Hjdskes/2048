@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import org.junit.BeforeClass;
@@ -24,7 +24,7 @@ public class InputHandlerTest {
 
 	private static InputHandler handler;
 	private static GameWorld world;
-	private static Grid grid;
+	private static AnimatedGrid grid;
 	private static RestartButton restartButton;
 
 	/**
@@ -38,7 +38,7 @@ public class InputHandlerTest {
 		launcher.launch();
 		world = new GameWorld();
 
-		grid = Mockito.mock(Grid.class);
+		grid = Mockito.mock(AnimatedGrid.class);
 		world.setGrid(grid);
 
 		restartButton = Mockito.mock(RestartButton.class);

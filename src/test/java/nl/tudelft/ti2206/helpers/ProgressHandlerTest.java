@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.helpers;
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -12,7 +12,7 @@ import org.junit.Test;
 public class ProgressHandlerTest {
 
 	private static GameWorld world;
-	private Grid grid;
+	private AnimatedGrid grid;
 
 	/**
 	 * Launch a headless game to enable file IO and create a new GameWorld
@@ -31,7 +31,7 @@ public class ProgressHandlerTest {
 		// clear the saved data to make sure the test case can use its own grid,
 		// score, etc.
 		PreferenceHandler.getPrefs().clear();
-		grid = new Grid(world, true);
+		grid = new AnimatedGrid(world, true);
 		world.setGrid(grid);
 	}
 
@@ -72,7 +72,7 @@ public class ProgressHandlerTest {
 	@Test
 	public void testLoadGame() {
 		// construct the grid
-		Grid grid = new Grid(world, true);
+		AnimatedGrid grid = new AnimatedGrid(world, true);
 		grid.setTile(0, 2, true);
 		grid.setTile(1, 4, true);
 
@@ -85,7 +85,7 @@ public class ProgressHandlerTest {
 		int highestTile = world.getHighestTile();
 
 		// reset world
-		world.setGrid(new Grid(world, true));
+		world.setGrid(new AnimatedGrid(world, true));
 		world.setScore(0);
 		world.setOldHighest(0);
 

@@ -46,25 +46,25 @@ public class Grid {
 	/** The highest value to start with. */
 	private static final int FOUR = 4;
 	/** The array containing all sixteen tiles. */
-	private Tile[] grid;
+	protected AnimatedTile[] grid;
 	/** Randomizer needed for filling tiles. */
 	private Random random;
 	/** TileMover is used to move the tiles. */
 	private TileMover mover;
-	/** Keeps track of the highest tile value in game. */
+	/** Keeps track of the highest AnimatedTile value in game. */
 	private int highestTile;
 	/** The game world. */
 	private GameWorld world;
 
 	/**
-	 * Creates a new Grid with NTILES Tile objects.
+	 * Creates a new Grid with NTILES AnimatedTile objects.
 	 * 
 	 * @param isEmpty
 	 *            True if the grid should be empty.
 	 */
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
-		this.grid = new Tile[NTILES];
+		this.grid = new AnimatedTile[NTILES];
 		this.mover = new TileMover(this);
 		this.world = world;
 		if (!isEmpty) {
@@ -95,13 +95,13 @@ public class Grid {
 	 */
 	private void initEmptyGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile(0);
+			grid[i] = new AnimatedTile(0, false);
 		}
 	}
 
 	/**
 	 * Returns a random value, smaller than 16, indicating a location for a new
-	 * Tile. This new location is always valid, i.e. there is not already a tile
+	 * AnimatedTile. This new location is always valid, i.e. there is not already a AnimatedTile
 	 * there.
 	 * 
 	 * @return A new valid location.
@@ -125,14 +125,14 @@ public class Grid {
 	}
 
 	/**
-	 * Sets a tile's parameters by index.
+	 * Sets a AnimatedTile's parameters by index.
 	 * 
 	 * @param index
-	 *            The tile's index on the grid.
+	 *            The AnimatedTile's index on the grid.
 	 * @param value
-	 *            The tile's value (should be a multiple of 2).
+	 *            The AnimatedTile's value (should be a multiple of 2).
 	 * @param isMerged
-	 *            True if the tile is merged.
+	 *            True if the AnimatedTile is merged.
 	 */
 	public void setTile(int index, int value, boolean isMerged) {
 		grid[index].setValue(value);
@@ -144,7 +144,7 @@ public class Grid {
 	 * new highest value.
 	 */
 	public void update() {
-		for (Tile t : grid) {
+		for (AnimatedTile t : grid) {
 			t.update();
 		}
 		updateHighestTile();
@@ -155,7 +155,7 @@ public class Grid {
 	 * itself and checking for a new highest value.
 	 */
 	public void restart() {
-		for (Tile t : grid) {
+		for (AnimatedTile t : grid) {
 			t.reset();
 		}
 		initGrid();
@@ -199,7 +199,7 @@ public class Grid {
 
 		if (mover.isMoveMade()) {
 			world.addScore(mover.getScoreIncrement());
-			grid[getRandomEmptyLocation()].setValue(initialValue());
+			setTile(getRandomEmptyLocation(), initialValue(), false);
 		}
 
 		mover.reset();
@@ -211,9 +211,9 @@ public class Grid {
 	 * @return True if the grid is full.
 	 */
 	public boolean isFull() {
-		/* Check each tile on the grid. */
+		/* Check each AnimatedTile on the grid. */
 		for (int index = 0; index < grid.length; index++) {
-			/* If any tile on the grid is empty, the grid is not full. */
+			/* If any AnimatedTile on the grid is empty, the grid is not full. */
 			if (grid[index].isEmpty()) {
 				return false;
 			}
@@ -230,15 +230,15 @@ public class Grid {
 		int moves = 0;
 
 		for (int index = 0; index < grid.length; index++) {
-			/* An empty tile cannot move. */
+			/* An empty AnimatedTile cannot move. */
 			if (!grid[index].isEmpty()) {
-				/* Get current tile value. */
+				/* Get current AnimatedTile value. */
 				int value = grid[index].getValue();
-				/* Get all Tile's neighbors. */
-				List<Tile> neighbors = getTileNeighbors(index);
+				/* Get all AnimatedTile's neighbors. */
+				List<AnimatedTile> neighbors = getTileNeighbors(index);
 
 				/* For all neighboring tiles, compare the values. */
-				for (Tile neighbor : neighbors) {
+				for (AnimatedTile neighbor : neighbors) {
 					if (neighbor.getValue() == value
 							|| neighbor.getValue() == 0)
 						moves++;
@@ -253,11 +253,11 @@ public class Grid {
 	 * Get a list of neighboring Tiles by index.
 	 * 
 	 * @param index
-	 *            The tile index.
+	 *            The AnimatedTile index.
 	 * @return A list of tiles.
 	 */
-	public List<Tile> getTileNeighbors(int index) {
-		List<Tile> neighbors = new ArrayList<Tile>();
+	public List<AnimatedTile> getTileNeighbors(int index) {
+		List<AnimatedTile> neighbors = new ArrayList<AnimatedTile>();
 
 		// right neighbor:
 		// check if the index we're checking is not the right edge of the grid
@@ -289,25 +289,25 @@ public class Grid {
 	 * 
 	 * @return The array containing all the tiles.
 	 */
-	public Tile[] getTiles() {
+	public AnimatedTile[] getTiles() {
 		return grid;
 	}
 
 	/**
-	 * Updates the highest Tile value present in the grid.
+	 * Updates the highest AnimatedTile value present in the grid.
 	 */
 	public void updateHighestTile() {
 		highestTile = 0;
-		for (Tile t : grid) {
+		for (AnimatedTile t : grid) {
 			if (t.getValue() > highestTile)
 				highestTile = t.getValue();
 		}
 	}
 
 	/**
-	 * Returns the highest Tile value present in the grid.
+	 * Returns the highest AnimatedTile value present in the grid.
 	 * 
-	 * @return The highest tile value.
+	 * @return The highest AnimatedTile value.
 	 */
 	public int getCurrentHighestTile() {
 		return highestTile;

@@ -105,10 +105,4 @@ public class Tile {
 		resetValue();
 		isMerged = false;
 	}
-
-	/**
-	 * Updates the Tile.
-	 */
-	public void update() {
-	}
 }

@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 import nl.tudelft.ti2206.helpers.AssetHandler;
 import nl.tudelft.ti2206.helpers.ButtonHandler;
 import nl.tudelft.ti2206.helpers.XYCalculator;
@@ -29,6 +30,8 @@ public class GameRenderer {
 	private static final int SCORE_HEIGHT = 50;
 	/** A reference to the GameWorld, which is used to interact with the game. */
 	private GameWorld world;
+
+	private AnimatedGrid grid;
 	/** The orthographic camera, to make the scene appear 2D. */
 	private OrthographicCamera cam;
 	/** */
@@ -50,6 +53,7 @@ public class GameRenderer {
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
+		this.grid = world.getGrid();
 
 		restartButton = ButtonHandler.getRestartButton();
 		continueButton = ButtonHandler.getContinueButton();
@@ -108,14 +112,14 @@ public class GameRenderer {
 	 * Render the tiles.
 	 */
 	private void drawTiles() {
-		for (int i = 0; i < world.getGrid().getTiles().length; i++) {
-			batch.draw(AssetHandler.getTile(world.getGrid().getTiles()[i]
-					.getValue()), XYCalculator.getTileX(i), XYCalculator
-					.getTileY(i), XYCalculator.getTileWidth(), XYCalculator
-					.getTileHeight());
+
+		for (int i = 0; i < grid.getTiles().length; i++) {
+			batch.draw(AssetHandler.getTile(grid.getTiles()[i].getValue()),
+					grid.getTileX(i), grid.getTileY(i),
+					grid.getTileWidth(i), grid.getTileHeight(i));
 			drawTileValue(XYCalculator.getCenterTileX(i),
 					XYCalculator.getCenterTileY(i),
-					world.getGrid().getTiles()[i].getValue());
+					grid.getTiles()[i].getValue());
 		}
 	}
 
@@ -179,7 +183,7 @@ public class GameRenderer {
 	private void drawContinueButton() {
 		continueButton.draw(batch);
 	}
-	
+
 	/**
 	 * Draw the lost overlay to show to the user it lost.
 	 */

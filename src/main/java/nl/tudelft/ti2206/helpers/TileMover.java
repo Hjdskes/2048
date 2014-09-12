@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.helpers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.gameobjects.AnimatedTile;
 
 /**
  * This class is designed to move tiles on the grid.
@@ -16,11 +16,11 @@ public class TileMover {
 	/** The length of a column on the grid. */
 	private static final int COL_LENGTH = 4;
 	/** The array holding all the tiles. */
-	private Tile[] grid;
+	private AnimatedTile[] grid;
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
 	/**
-	 * The difference between the indices of the tile to be moved and the tile
+	 * The difference between the indices of the AnimatedTile to be moved and the AnimatedTile
 	 * to move to.
 	 */
 	private int offset;
@@ -81,25 +81,25 @@ public class TileMover {
 	}
 
 	/**
-	 * Checks if a tile can move to the neighboring tile in the specified
+	 * Checks if a AnimatedTile can move to the neighboring AnimatedTile in the specified
 	 * direction.
 	 * 
 	 * @param index
-	 *            index of the tile
+	 *            index of the AnimatedTile
 	 * @param dir
 	 *            direction to move to.
 	 * @return true if a move can be made, false otherwise.
 	 */
 	private boolean isNeighbourFree(int index, Direction dir) {
-		/* If the tile is empty, no move can be made. */
+		/* If the AnimatedTile is empty, no move can be made. */
 		if (grid[index].isEmpty())
 			return false;
 
-		/* If the tile next to this tile is empty, it can move */
+		/* If the AnimatedTile next to this AnimatedTile is empty, it can move */
 		if (grid[index + offset].isEmpty())
 			return true;
 		/*
-		 * If the tile is at the edge of that direction, it cannot move. For
+		 * If the AnimatedTile is at the edge of that direction, it cannot move. For
 		 * example, in | T - - - |, T cannot move to the left as it is already
 		 * in the leftmost spot.
 		 */
@@ -114,12 +114,12 @@ public class TileMover {
 		}
 
 		/*
-		 * If the destination and the tile to be moved have not already merged
-		 * with another tile...
+		 * If the destination and the AnimatedTile to be moved have not already merged
+		 * with another AnimatedTile...
 		 */
 		if (!grid[index + offset].isMerged() && !grid[index].isMerged()) {
 			/*
-			 * ...and either their values are equal or the destination tile is
+			 * ...and either their values are equal or the destination AnimatedTile is
 			 * empty, the move can be made.
 			 */
 			if (grid[index + offset].getValue() == grid[index].getValue()
@@ -134,14 +134,14 @@ public class TileMover {
 	 * Moves a row or column of tiles into the specified direction.
 	 * 
 	 * @param i
-	 *            the index of the farthest tile in the row or column, depending
+	 *            the index of the farthest AnimatedTile in the row or column, depending
 	 *            on the direction to move to.
 	 * @param dir
 	 *            the direction to move to.
 	 */
 	private void moveAffected(int i, Direction dir) {
 		/*
-		 * While moves can be made in the row or column, move each tile in that
+		 * While moves can be made in the row or column, move each AnimatedTile in that
 		 * row or column.
 		 */
 		while (isNeighbourFree(i - offset, dir) || isNeighbourFree(i - 2* offset, dir)
@@ -156,10 +156,10 @@ public class TileMover {
 	}
 
 	/**
-	 * Moves a tile into the specified direction.
+	 * Moves a AnimatedTile into the specified direction.
 	 * 
 	 * @param index
-	 *            the index of the tile
+	 *            the index of the AnimatedTile
 	 * @return the value to add to the score.
 	 */
 	private void moveTile(int index) {
@@ -184,7 +184,7 @@ public class TileMover {
 	 * Resets all merged tiles in a row or column so they can merge again.
 	 * 
 	 * @param index
-	 *            the index of the farthest tile in the row or column, depending
+	 *            the index of the farthest AnimatedTile in the row or column, depending
 	 *            on the direction to move to.
 	 * @param dir
 	 *            the direction to move to
