@@ -219,6 +219,10 @@ public class AssetHandler {
 		}
 	}
 
+	public static void setAssetManager(AssetManager assetManager) {
+		manager = assetManager;
+	}
+	
 	/**
 	 * Dispose of all the textures, the font and the AssetManager.
 	 */
