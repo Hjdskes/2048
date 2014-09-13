@@ -9,16 +9,19 @@ import org.junit.Test;
  * Test suite for the AnimatedTile class.
  *
  * @author group-21
- *
  */
 public class AnimatedTileTest {
+	/** The object under test. */
 	private AnimatedTile tile;
 
+	/**
+	 * Creates the test object.
+	 */
 	@Before
 	public void setUp() {
 		tile = new AnimatedTile(4);
 	}
-	
+
 	/**
 	 * Test AnimatedTile's setMerged method.
 	 */
@@ -27,6 +30,7 @@ public class AnimatedTileTest {
 		tile.setMerged(true);
 		assertTrue(tile.isMerged());
 	}
+
 	/**
 	 * Test AnimatedTile's reset method.
 	 */
@@ -36,13 +40,15 @@ public class AnimatedTileTest {
 		assertEquals(0, tile.getValue());
 		assertFalse(tile.isMerged());
 	}
-	/**
-	 * Test AnimatedTile's update method.
-	 */
-	@Test
-	public void testUpdate() {
-		tile.update();
-	}
+
+	// /**
+	// * Test AnimatedTile's update method.
+	// */
+	// @Test
+	// public void testUpdate() {
+	// tile.update();
+	// }
+
 	/**
 	 * Test AnimatedTile's getTileSize method.
 	 */
@@ -50,6 +56,7 @@ public class AnimatedTileTest {
 	public void testGetTileSize() {
 		assertEquals(81, tile.getTileSize(), .1f);
 	}
+
 	/**
 	 * Test AnimatedTile's getScale method.
 	 */
@@ -57,6 +64,7 @@ public class AnimatedTileTest {
 	public void testGetScale() {
 		assertEquals(1, tile.getScale(), .1f);
 	}
+
 	/**
 	 * Test AnimatedTile's getXYOffset method.
 	 */
@@ -64,12 +72,12 @@ public class AnimatedTileTest {
 	public void testGetXYOffset() {
 		assertEquals(0, tile.getXYOffset(), .1f);
 	}
-	/**
-	 * Test AnimatedTile's merge method.
-	 */
-	@Test
-	public void testMerge() {
-		tile.merge();
-	}
 
+	// /**
+	// * Test AnimatedTile's merge method.
+	// */
+	// @Test
+	// public void testMerge() {
+	// tile.merge();
+	// }
 }

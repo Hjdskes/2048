@@ -15,7 +15,6 @@ import org.mockito.Mockito;
  * Test suite for the AnimatedGrid class.
  *
  * @author group-21
- *
  */
 public class AnimatedGridTest {
 	/** The object under test. */
@@ -26,7 +25,7 @@ public class AnimatedGridTest {
 	private TileHandler tileHandler;
 	
 	/**
-	 * Setup method for this test case.
+	 * Initializes all the mocks and creates the test object.
 	 */
 	@Before
 	public void setUp() {
@@ -37,7 +36,7 @@ public class AnimatedGridTest {
 	}
 
 	/**
-	 * Test the tile's X coordinate.
+	 * Test the tile's X-coordinate.
 	 */
 	@Test
 	public void testGetTileX() {
@@ -45,7 +44,7 @@ public class AnimatedGridTest {
 	}
 
 	/**
-	 * Test the tile Y coordinate.
+	 * Test the tile's Y-coordinate.
 	 */
 	@Test
 	public void testGetTileY() {
@@ -67,5 +66,4 @@ public class AnimatedGridTest {
 	public void testGetTileHeight() {
 		assertEquals(81, grid.getTileHeight(3), .1f);
 	}
-
 }
