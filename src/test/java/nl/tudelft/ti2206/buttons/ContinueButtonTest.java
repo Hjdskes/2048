@@ -24,7 +24,7 @@ public class ContinueButtonTest {
 	private static ContinueButton button;
 
 	/**
-	 * Initializes all the mocks and create the test object.
+	 * Initializes all the mocks and creates the test object.
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() {

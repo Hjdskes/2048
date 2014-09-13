@@ -23,7 +23,7 @@ public class RestartButtonTest {
 	private static RestartButton button;
 
 	/**
-	 * Initializes all the mocks and create the test object.
+	 * Initializes all the mocks and creates the test object.
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -33,7 +33,7 @@ public class RestartButtonTest {
 	}
 
 	/**
-	 * Tests if the onClick method successfully calls the world.restart method.
+	 * Tests if the onClick method successfully calls the GameWorld.restart() method.
 	 */
 	@Test
 	public void testOnClick() {
