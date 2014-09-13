@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;

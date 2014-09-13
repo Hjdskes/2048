@@ -1,11 +1,9 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.buttons.ContinueButton;
-import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
-import nl.tudelft.ti2206.helpers.AssetHandler;
-import nl.tudelft.ti2206.helpers.ButtonHandler;
-import nl.tudelft.ti2206.helpers.XYCalculator;
+import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ButtonHandler;
+import nl.tudelft.ti2206.handlers.CoordinateHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -36,10 +34,6 @@ public class GameRenderer {
 	private OrthographicCamera cam;
 	/** */
 	private SpriteBatch batch;
-	/** The button used to initiate a restart. */
-	private RestartButton restartButton;
-	/** The button used to continue the game after winning. */
-	private ContinueButton continueButton;
 
 	/**
 	 * Constructs a GameRenderer object.
@@ -55,8 +49,6 @@ public class GameRenderer {
 		this.world = world;
 		this.grid = world.getGrid();
 
-		restartButton = ButtonHandler.getRestartButton();
-		continueButton = ButtonHandler.getContinueButton();
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
 
@@ -103,9 +95,9 @@ public class GameRenderer {
 	 * Render the grid.
 	 */
 	private void drawGrid() {
-		batch.draw(AssetHandler.grid, XYCalculator.getGridX(),
-				XYCalculator.getGridY(), XYCalculator.getGridWidth(),
-				XYCalculator.getGridHeight());
+		batch.draw(AssetHandler.grid, CoordinateHandler.getGridX(),
+				CoordinateHandler.getGridY(), CoordinateHandler.getGridWidth(),
+				CoordinateHandler.getGridHeight());
 	}
 
 	/**
@@ -117,8 +109,8 @@ public class GameRenderer {
 			batch.draw(AssetHandler.getTile(grid.getTiles()[i].getValue()),
 					grid.getTileX(i), grid.getTileY(i),
 					grid.getTileWidth(i), grid.getTileHeight(i));
-			drawTileValue(XYCalculator.getCenterTileX(i),
-					XYCalculator.getCenterTileY(i),
+			drawTileValue(CoordinateHandler.getCenterTileX(i),
+					CoordinateHandler.getCenterTileY(i),
 					grid.getTiles()[i].getValue());
 		}
 	}
@@ -174,14 +166,14 @@ public class GameRenderer {
 	 * Render the button that will initiate a restart of the game.
 	 */
 	private void drawRestartButton() {
-		restartButton.draw(batch);
+		ButtonHandler.getRestartButton().draw(batch);
 	}
 
 	/**
 	 * Render the button that will allow to continue playing after winning.
 	 */
 	private void drawContinueButton() {
-		continueButton.draw(batch);
+		ButtonHandler.getContinueButton().draw(batch);
 	}
 
 	/**

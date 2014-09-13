@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.Random;
 
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.helpers.TileMover;
+import nl.tudelft.ti2206.handlers.TileHandler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,15 +25,15 @@ public class GridTest {
 	Grid grid;
 	Random random;
 	GameWorld world;
-	TileMover mover;
+	TileHandler tileHandler;
 
 	@Before
 	public void setup() {
 		world = Mockito.mock(GameWorld.class);
-		mover = Mockito.mock(TileMover.class);
+		tileHandler = Mockito.mock(TileHandler.class);
 		grid = new Grid(world, false);
 		random = new Random();
-		grid.setTileMover(mover);
+		grid.setTileHandler(tileHandler);
 		// world.setGameState(GameState.RUNNING);
 	}
 
@@ -106,7 +105,7 @@ public class GridTest {
 
 	@Test
 	public void testTileAddedOnMove() {
-		stub(mover.isMoveMade()).toReturn(true);
+		stub(tileHandler.isMoveMade()).toReturn(true);
 
 		int endTiles = 0;
 		int tiles = 0;
@@ -132,7 +131,7 @@ public class GridTest {
 		stub(world.isWon()).toReturn(true);
 		grid.move(Direction.LEFT);
 
-		verify(mover, times(0)).moveLeft();
+		verify(tileHandler, times(0)).moveLeft();
 	}
 
 	@Test
@@ -140,7 +139,7 @@ public class GridTest {
 		stub(world.isLost()).toReturn(true);
 		grid.move(Direction.LEFT);
 		
-		verify(mover, times(0)).moveLeft();
+		verify(tileHandler, times(0)).moveLeft();
 	}
 	
 	@Test
@@ -191,18 +190,18 @@ public class GridTest {
 	@Test
 	public void testMove() {
 		grid.move(Direction.DOWN);
-		Mockito.verify(mover).moveDown();
+		Mockito.verify(tileHandler).moveDown();
 		grid.move(Direction.LEFT);
-		Mockito.verify(mover).moveLeft();
+		Mockito.verify(tileHandler).moveLeft();
 		grid.move(Direction.RIGHT);
-		Mockito.verify(mover).moveRight();
+		Mockito.verify(tileHandler).moveRight();
 		grid.move(Direction.UP);
-		Mockito.verify(mover).moveUp();
+		Mockito.verify(tileHandler).moveUp();
 	}
 
 	@Test
-	public void testGetMover() {
-		assertEquals(grid.getTileMover(), mover);
+	public void testGettileHandler() {
+		assertEquals(grid.getTileHandler(), tileHandler);
 	}
 	
 	/*

@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +9,7 @@ import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

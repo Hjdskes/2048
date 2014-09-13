@@ -1,7 +1,8 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.handlers.PreferenceHandler;
 
 import org.junit.Before;
 import org.junit.Test;

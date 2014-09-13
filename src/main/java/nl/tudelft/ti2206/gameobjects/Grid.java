@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.helpers.TileMover;
+import nl.tudelft.ti2206.handlers.TileHandler;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -49,8 +49,8 @@ public class Grid {
 	protected AnimatedTile[] grid;
 	/** Randomizer needed for filling tiles. */
 	private Random random;
-	/** TileMover is used to move the tiles. */
-	private TileMover mover;
+	/** TileHandler is used to move the tiles. */
+	private TileHandler tileHandler;
 	/** Keeps track of the highest AnimatedTile value in game. */
 	private int highestTile;
 	/** The game world. */
@@ -65,7 +65,7 @@ public class Grid {
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
 		this.grid = new AnimatedTile[NTILES];
-		this.mover = new TileMover(this);
+		this.tileHandler = new TileHandler(this);
 		this.world = world;
 		if (!isEmpty) {
 			initGrid();
@@ -182,27 +182,27 @@ public class Grid {
 
 		switch (direction) {
 		case LEFT:
-			mover.moveLeft();
+			tileHandler.moveLeft();
 			break;
 		case RIGHT:
-			mover.moveRight();
+			tileHandler.moveRight();
 			break;
 		case UP:
-			mover.moveUp();
+			tileHandler.moveUp();
 			break;
 		case DOWN:
-			mover.moveDown();
+			tileHandler.moveDown();
 			break;
 		default:
 			break;
 		}
 
-		if (mover.isMoveMade()) {
-			world.addScore(mover.getScoreIncrement());
+		if (tileHandler.isMoveMade()) {
+			world.addScore(tileHandler.getScoreIncrement());
 			setTile(getRandomEmptyLocation(), initialValue(), false);
 		}
 
-		mover.reset();
+		tileHandler.reset();
 	}
 
 	/**
@@ -314,21 +314,21 @@ public class Grid {
 	}
 
 	/**
-	 * Returns the TileMover object used by the grid.
+	 * Returns the TileHandler object used by the grid.
 	 * 
-	 * @return The TileMover object.
+	 * @return The TileHanler object.
 	 */
-	public TileMover getTileMover() {
-		return mover;
+	public TileHandler getTileHandler() {
+		return tileHandler;
 	}
 
 	/**
-	 * Sets the TileMover object used by the grid.
+	 * Sets the TileHandler object used by the grid.
 	 * 
-	 * @param mover
-	 *            The TileMover object to set.
+	 * @param tileHandler
+	 *            The TileHandler object to set.
 	 */
-	public void setTileMover(TileMover mover) {
-		this.mover = mover;
+	public void setTileHandler(TileHandler tileHandler) {
+		this.tileHandler = tileHandler;
 	}
 }

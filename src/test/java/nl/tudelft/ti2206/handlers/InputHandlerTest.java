@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.handlers.InputHandler;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

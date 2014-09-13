@@ -1,4 +1,6 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
+
+import nl.tudelft.ti2206.handlers.AssetHandlerTest;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;

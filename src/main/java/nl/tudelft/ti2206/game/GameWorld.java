@@ -1,8 +1,8 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
-import nl.tudelft.ti2206.helpers.AssetHandler;
-import nl.tudelft.ti2206.helpers.ProgressHandler;
+import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 /**
  * This is simply a helper class to update our game objects.

@@ -1,6 +1,6 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
-public class XYCalculator {
+public class CoordinateHandler {
 	/** The TILE_HEIGHT of the Tile */
 	private static final int TILE_WIDTH = 81;
 	/** The width of the Tile */

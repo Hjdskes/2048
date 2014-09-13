@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
