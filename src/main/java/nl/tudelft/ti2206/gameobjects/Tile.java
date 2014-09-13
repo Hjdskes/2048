@@ -1,28 +1,21 @@
 package nl.tudelft.ti2206.gameobjects;
 
 /**
- * The Tile class represents the Tiles you move around while playing 2048.
- * 
- * Its instance variables contain the current value and its index into the Grid
- * array.
- * 
- * Checking for possible movements can be done simply by checking if the value
- * of the Tiles at index+1, index-1, index+4 or index-4 are 0 (since empty Tiles
- * have a value of 0).
+ * The Tile class represents the tiles you move around while playing 2048.
  * 
  * @author group-21
- *
  */
 public class Tile {
-	/** The value (e.g. 2,4,8,16... */
+	/** The value (e.g. 2, 4, 8, 16, ...). */
 	private int value;
 	/**
-	 * Indicates whether or not this Tile has merged into another.
+	 * Indicates whether or not this Tile has merged into another in the current
+	 * update.
 	 */
 	private boolean isMerged;
 
 	/**
-	 * Creates a new Tile with a given value.
+	 * Creates a new Tile with the given value.
 	 * 
 	 * @param value
 	 *            The value of the Tile.
@@ -54,7 +47,7 @@ public class Tile {
 	/**
 	 * Checks whether the tile is empty (value 0).
 	 * 
-	 * @return True if tile is empty (value 0).
+	 * @return True if the tile is empty (value 0), false otherwise.
 	 */
 	public boolean isEmpty() {
 		return this.value == 0;
@@ -63,7 +56,7 @@ public class Tile {
 	/**
 	 * Returns true if this Tile has been merged.
 	 * 
-	 * @return True if this Tile has been merged.
+	 * @return True if this Tile has been merged, false otherwise.
 	 */
 	public boolean isMerged() {
 		return this.isMerged;
@@ -72,7 +65,7 @@ public class Tile {
 	/**
 	 * Sets the merged state of this Tile.
 	 * 
-	 * @param isMerged 
+	 * @param isMerged
 	 *            The new merged state.
 	 */
 	public void setMerged(boolean isMerged) {
@@ -87,8 +80,7 @@ public class Tile {
 	}
 
 	/**
-	 * Doubles the value of the Tile, or sets it to 2 if the current Tile is
-	 * empty.
+	 * Doubles the value of the Tile, or sets it to 2 if the current value is 0.
 	 */
 	public void doubleValue() {
 		if (this.isEmpty()) {
