@@ -16,5 +16,5 @@
 10. ~~Allow mocking of graphical elements for testing purposes.~~
 11. ~~Refactor/redesign AssetLoader in order to make it work even when testing (by creating a headless launcher for example).~~
 12. Make use of .ttf instead of .fnt for drawing strings to fix uggly text drawing.
-11. Test (line) coverage >75% 
+11. ~~Test (line) coverage >75%~~ 
 12. Prepare for submitting by checking if the project covers all requirements as defined in the file "Rubrics for Working Version". The aim is to reach examplary status in all subjects.

@@ -17,19 +17,18 @@ See doc/xx-Sprint-Backlog.md (where xx is the current sprint number) for task ex
 
 | ## |  WIP  | Testing | Done |
 |----|-----  |---------|------|
-| 01 |       |         |      |
-| 02 |       |         |      |
+| 01 |   X   |         |      |
+| 02 |   X   |         |      |
 | 03 |       |         |   X  |
-| 04 |       |         |      |
-| 05 |       |         |      |
-| 06 |       |         |      |
-| 07 |       |         |      |
-| 08 |       |         |      |
-| 09 |       |         |      |
+| 04 |       |         |   X  |
+| 05 |       |         |   X  |
+| 06 |       |         |   X  |
+| 07 |       |         |   X  |
+| 08 |   X   |         |      |
+| 09 |       |         |   X  |
 | 10 |       |         |   X  |
 | 11 |       |         |   X  |
-| 12 |       |         |      |
-| 13 |       |         |      |
+| 12 |   X   |         |      |
 
 ## How to add the new GitHub remote
 
