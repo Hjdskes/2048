@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.helpers.TileMover;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -49,12 +48,10 @@ public class Grid {
 	protected AnimatedTile[] grid;
 	/** Randomizer needed for filling tiles. */
 	private Random random;
-	/** TileMover is used to move the tiles. */
-	private TileMover mover;
 	/** Keeps track of the highest AnimatedTile value in game. */
 	private int highestTile;
 	/** The game world. */
-	private GameWorld world;
+	protected GameWorld world;
 
 	/**
 	 * Creates a new Grid with NTILES AnimatedTile objects.
@@ -65,7 +62,6 @@ public class Grid {
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
 		this.grid = new AnimatedTile[NTILES];
-		this.mover = new TileMover(this);
 		this.world = world;
 		if (!isEmpty) {
 			initGrid();
@@ -106,7 +102,7 @@ public class Grid {
 	 * 
 	 * @return A new valid location.
 	 */
-	private int getRandomEmptyLocation() {
+	protected int getRandomEmptyLocation() {
 		int index = random.nextInt(grid.length);
 		while (!grid[index].isEmpty() && !isFull()) {
 			index = random.nextInt(grid.length);
@@ -120,7 +116,7 @@ public class Grid {
 	 * 
 	 * @return A random value, being either 2 or 4.
 	 */
-	private int initialValue() {
+	protected int initialValue() {
 		return random.nextInt(10) < 9 ? TWO : FOUR;
 	}
 
@@ -140,17 +136,6 @@ public class Grid {
 	}
 
 	/**
-	 * Updates the grid, by updating all the Tiles it contains and checking for a
-	 * new highest value.
-	 */
-	public void update() {
-		for (AnimatedTile t : grid) {
-			t.update();
-		}
-		updateHighestTile();
-	}
-
-	/**
 	 * Resets the grid, by calling reset on all the Tiles it contains and reinitializing
 	 * itself and checking for a new highest value.
 	 */
@@ -160,49 +145,6 @@ public class Grid {
 		}
 		initGrid();
 		updateHighestTile();
-	}
-
-	/**
-	 * This method is the one method used for moving tiles.
-	 * 
-	 * Its parameter shall indicate which direction is to be moved in. The
-	 * method will walk over all Tiles, checking if a move is possible in the
-	 * desired direction. If a valid move is possible, it will update the grid
-	 * array.
-	 * 
-	 * @param direction
-	 *            The direction in which is to be moved.
-	 */
-	public void move(Direction direction) {
-		/* If the game is not in running or continuing state,
-		 * ignore the moves. */
-		if (world.isLost() || world.isWon()) {
-			return;
-		}
-
-		switch (direction) {
-		case LEFT:
-			mover.moveLeft();
-			break;
-		case RIGHT:
-			mover.moveRight();
-			break;
-		case UP:
-			mover.moveUp();
-			break;
-		case DOWN:
-			mover.moveDown();
-			break;
-		default:
-			break;
-		}
-
-		if (mover.isMoveMade()) {
-			world.addScore(mover.getScoreIncrement());
-			setTile(getRandomEmptyLocation(), initialValue(), false);
-		}
-
-		mover.reset();
 	}
 
 	/**
@@ -311,24 +253,5 @@ public class Grid {
 	 */
 	public int getCurrentHighestTile() {
 		return highestTile;
-	}
-
-	/**
-	 * Returns the TileMover object used by the grid.
-	 * 
-	 * @return The TileMover object.
-	 */
-	public TileMover getTileMover() {
-		return mover;
-	}
-
-	/**
-	 * Sets the TileMover object used by the grid.
-	 * 
-	 * @param mover
-	 *            The TileMover object to set.
-	 */
-	public void setTileMover(TileMover mover) {
-		this.mover = mover;
 	}
 }

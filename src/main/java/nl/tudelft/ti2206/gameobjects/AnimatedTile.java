@@ -8,6 +8,7 @@ public class AnimatedTile extends Tile {
 	private float size;
 	private boolean isSpawning;
 	private boolean isMerging;
+	private boolean isVisible;
 
 	/**
 	 * Creates a new AnimatedTile with the specified parameters.
@@ -20,6 +21,7 @@ public class AnimatedTile extends Tile {
 		size = 1;
 		isSpawning = false;
 		isMerging = false;
+		isVisible = true;
 	}
 
 	/**
@@ -87,6 +89,14 @@ public class AnimatedTile extends Tile {
 			return (DIMENSION - size * DIMENSION) / 2;
 		else
 			return 0;
+	}
+
+	public boolean isVisible() {
+		return isVisible;
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
 	}
 
 	/**

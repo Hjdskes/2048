@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
+import nl.tudelft.ti2206.gameobjects.MovingTile;
 import nl.tudelft.ti2206.helpers.AssetHandler;
 import nl.tudelft.ti2206.helpers.ButtonHandler;
 import nl.tudelft.ti2206.helpers.XYCalculator;
@@ -112,14 +113,31 @@ public class GameRenderer {
 	 * Render the tiles.
 	 */
 	private void drawTiles() {
-
 		for (int i = 0; i < grid.getTiles().length; i++) {
-			batch.draw(AssetHandler.getTile(grid.getTiles()[i].getValue()),
-					grid.getTileX(i), grid.getTileY(i),
-					grid.getTileWidth(i), grid.getTileHeight(i));
-			drawTileValue(XYCalculator.getCenterTileX(i),
-					XYCalculator.getCenterTileY(i),
-					grid.getTiles()[i].getValue());
+			if (grid.getTiles()[i].isVisible()) {
+				batch.draw(AssetHandler.getTile(grid.getTiles()[i].getValue()),
+						grid.getTileX(i), grid.getTileY(i),
+						grid.getTileWidth(i), grid.getTileHeight(i));
+
+				drawTileValue(XYCalculator.getCenterTileX(i),
+						XYCalculator.getCenterTileY(i),
+						grid.getTiles()[i].getValue());
+			}
+		}
+
+		for (int i = 0; i < grid.getMovingTiles().length; i++) {
+			MovingTile t = grid.getMovingTiles()[i];
+			if (t != null && t.isVisible()) {
+				if (t.isXMove()) {
+					batch.draw(AssetHandler.getTile(t.getValue()),
+							t.getCurCoordinate(), XYCalculator.getTileY(i),
+							grid.getTileWidth(i), grid.getTileHeight(i));
+				} else {
+					batch.draw(AssetHandler.getTile(t.getValue()),
+							XYCalculator.getTileX(i), t.getCurCoordinate(),
+							grid.getTileWidth(i), grid.getTileHeight(i));
+				}
+			}
 		}
 	}
 
