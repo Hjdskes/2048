@@ -41,13 +41,25 @@ public class AnimatedTileTest {
 		assertFalse(tile.isMerged());
 	}
 
-	// /**
-	// * Test AnimatedTile's update method.
-	// */
-	// @Test
-	// public void testUpdate() {
-	// tile.update();
-	// }
+	/**
+	 * Test AnimatedTile's update method when spawning.
+	 */
+	@Test
+	public void testUpdateSpawn() {
+		tile.spawn();
+		tile.update();
+		assertEquals(.54f, tile.getScale(), .01f);
+	}
+
+	/**
+	 * Test AnimatedTile's update method when merging.
+	 */
+	@Test
+	public void testUpdateMerge() {
+		tile.merge();
+		tile.update();
+		assertEquals(1.188f, tile.getScale(), .01f);
+	}
 
 	/**
 	 * Test AnimatedTile's getTileSize method.
@@ -73,11 +85,12 @@ public class AnimatedTileTest {
 		assertEquals(0, tile.getXYOffset(), .1f);
 	}
 
-	// /**
-	// * Test AnimatedTile's merge method.
-	// */
-	// @Test
-	// public void testMerge() {
-	// tile.merge();
-	// }
+	/**
+	 * Test AnimatedTile's merge method.
+	 */
+	@Test
+	public void testMerge() {
+		tile.merge();
+		assertEquals(1.2f, tile.getScale(), .1f);
+	}
 }
