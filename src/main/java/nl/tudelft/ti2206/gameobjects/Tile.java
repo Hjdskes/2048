@@ -37,7 +37,7 @@ public class Tile {
 	 * 
 	 * @return The value of the Tile.
 	 */
-	public final int getValue() {
+	public int getValue() {
 		return this.value;
 	}
 
@@ -82,7 +82,7 @@ public class Tile {
 	/**
 	 * Resets the value of the Tile.
 	 */
-	public final void resetValue() {
+	public void resetValue() {
 		this.value = 0;
 	}
 
@@ -90,7 +90,7 @@ public class Tile {
 	 * Doubles the value of the Tile, or sets it to 2 if the current Tile is
 	 * empty.
 	 */
-	public final void doubleValue() {
+	public void doubleValue() {
 		if (this.isEmpty()) {
 			value = 2;
 		} else {
