@@ -5,10 +5,10 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 /**
- * This is simply a helper class to update our game objects.
+ * This is simply a helper class to manage our game objects in a central place.
  * 
- * It is created and called from GameScreen, in its render method which is
- * actually the game loop.
+ * It is created from GameScreen and gets updated through the
+ * GameScreen.render() method which is actually the game loop.
  * 
  * @author group-21
  */
@@ -22,7 +22,7 @@ public class GameWorld {
 	private int score;
 	/** The highscore at the time of launching the game. */
 	private int oldHighscore;
-	/** The highest value at the time of launching the game. */
+	/** The highest tile value ever reached at the time of launching the game. */
 	private int oldHighestTile;
 	/** The current grid in the game. */
 	private AnimatedGrid grid;
@@ -30,7 +30,8 @@ public class GameWorld {
 	private GameState state;
 
 	/**
-	 * Constructor for GameWorld object, creating the grid.
+	 * Constructor for GameWorld object. If there is a saved game present it
+	 * will be loaded, otherwise a new game will be created.
 	 */
 	public GameWorld() {
 		if (AssetHandler.isLibraryInitialized()) {
@@ -45,10 +46,10 @@ public class GameWorld {
 	}
 
 	/**
-	 * Update the game objects. This method will be called every frame.
+	 * Updates the game objects. This method will be called every render.
 	 * 
 	 * @param delta
-	 *            Time in milliseconds to update.
+	 *            The time in milliseconds since the last render.
 	 */
 	public void update(float delta) {
 		/*
@@ -65,8 +66,7 @@ public class GameWorld {
 		 * won nor already lost, then we have won. Otherwise, if there are no
 		 * possible moves remaining, we lost.
 		 */
-		if (grid.getCurrentHighestTile() == 2048 && !isContinuing()
-				&& !isLost()) {
+		if (grid.getCurrentHighestTile() == 2048 && !isContinuing()) {
 			setGameState(GameState.WON);
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			setGameState(GameState.LOST);
@@ -186,36 +186,38 @@ public class GameWorld {
 	}
 
 	/**
-	 * Sets the highest value at the time of launch.
+	 * Sets the highest tile value ever reached at the time of launching the
+	 * game.
 	 * 
 	 * @param oldHighest
-	 *            The highest value at the time of launch.
+	 *            The highest tile value ever reached at the time of launching
+	 *            the game.
 	 */
 	public void setOldHighest(int oldHighest) {
 		this.oldHighestTile = oldHighest;
 	}
 
 	/**
-	 * Returns the current game grid.
+	 * Returns the current game's grid.
 	 * 
-	 * @return The current game grid.
+	 * @return The current game's grid.
 	 */
 	public AnimatedGrid getGrid() {
 		return grid;
 	}
 
 	/**
-	 * Sets the current game grid.
+	 * Sets the current game's grid.
 	 * 
 	 * @param grid
-	 *            The new grid.
+	 *            The grid to set.
 	 */
 	public void setGrid(AnimatedGrid grid) {
 		this.grid = grid;
 	}
 
 	/**
-	 * Adds points to current game's score
+	 * Adds points to current game's score.
 	 * 
 	 * @param increment
 	 *            The value to add.

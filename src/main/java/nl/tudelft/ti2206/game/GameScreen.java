@@ -15,9 +15,9 @@ import com.badlogic.gdx.Screen;
  * @author group-21
  */
 public class GameScreen implements Screen {
-	/** The width of the game. */
+	/** The width of the game window. */
 	private static final int GAME_WIDTH = 600;
-	/** The height of the game. */
+	/** The height of the game window. */
 	private static final int GAME_HEIGHT = 600;
 	/** The GameWorld object is used to control our game objects. */
 	private GameWorld world;
@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
 	 * 2) render all our game objects, by using the GameRenderer class.
 	 * 
 	 * @param delta
-	 *            The time in seconds since the last render.
+	 *            The time in milliseconds since the last render.
 	 */
 	@Override
 	public void render(float delta) {

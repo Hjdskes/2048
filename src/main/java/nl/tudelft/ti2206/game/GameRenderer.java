@@ -20,30 +20,30 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author group-21
  */
 public class GameRenderer {
-	/** */
+	/** The brown font. */
 	private static final BitmapFont BROWN_F = AssetHandler.font;
-	/** */
+	/** The white font. */
 	private static final BitmapFont WHITE_F = AssetHandler.whiteFont;
-	/** */
+	/** The gap between the top of the game window and the score text. */
 	private static final int SCORE_HEIGHT = 50;
 	/** A reference to the GameWorld, which is used to interact with the game. */
 	private GameWorld world;
-
+	/** A reference to the AnimatedGrid. */
 	private AnimatedGrid grid;
 	/** The orthographic camera, to make the scene appear 2D. */
 	private OrthographicCamera cam;
-	/** */
+	/** The SpriteBratch is used to draw all Sprite objects. */
 	private SpriteBatch batch;
 
 	/**
 	 * Constructs a GameRenderer object.
 	 * 
 	 * @param world
-	 *            The world.
+	 *            A reference to the GameWorld, used to retrieve objects and states for rendering.
 	 * @param gameWidth
-	 *            The game's width.
+	 *            The game window's width.
 	 * @param gameHeight
-	 *            The game's height.
+	 *            The game window's height.
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
@@ -57,8 +57,8 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render all sprites, shapes and strings at the rate of 1000/delta times
-	 * per second. It also draws a black background to prevent flickering of the
+	 * Renders all sprites and strings at the rate of 1000/delta times
+	 * per second. It also draws a beige background to prevent flickering of the
 	 * screen.
 	 */
 	public void render() {
@@ -74,7 +74,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render all our sprites.
+	 * Renders all our sprites.
 	 */
 	private void drawSpriteBatches() {
 		drawGrid();
@@ -92,7 +92,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the grid.
+	 * Renders the grid.
 	 */
 	private void drawGrid() {
 		batch.draw(AssetHandler.grid, CoordinateHandler.getGridX(),
@@ -101,14 +101,14 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the tiles.
+	 * Renders the tiles.
 	 */
 	private void drawTiles() {
-
 		for (int i = 0; i < grid.getTiles().length; i++) {
 			batch.draw(AssetHandler.getTile(grid.getTiles()[i].getValue()),
 					grid.getTileX(i), grid.getTileY(i),
 					grid.getTileWidth(i), grid.getTileHeight(i));
+
 			drawTileValue(CoordinateHandler.getCenterTileX(i),
 					CoordinateHandler.getCenterTileY(i),
 					grid.getTiles()[i].getValue());
@@ -116,7 +116,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the Tile values, exactly in the middle of the Tile.
+	 * Renders the Tile's value, exactly in the middle of the Tile.
 	 * 
 	 * @param x
 	 *            The center x-coordinate of the Tile.
@@ -134,7 +134,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the square in which the current score should appear.
+	 * Renders the square in which the current score should appear.
 	 */
 	private void drawScoreTile() {
 		batch.draw(AssetHandler.score, AssetHandler.score.getX(),
@@ -143,7 +143,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the square in which the highscore should appear.
+	 * Renders the square in which the highscore should appear.
 	 */
 	private void drawHighscoreTile() {
 		batch.draw(AssetHandler.highscore, AssetHandler.highscore.getX(),
@@ -153,7 +153,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the square in which the highest tile number achieved should
+	 * Renders the square in which the highest tile value ever achieved should
 	 * appear.
 	 */
 	private void drawHighestTile() {
@@ -163,21 +163,21 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the button that will initiate a restart of the game.
+	 * Renders the button that will initiate a restart of the game.
 	 */
 	private void drawRestartButton() {
 		ButtonHandler.getRestartButton().draw(batch);
 	}
 
 	/**
-	 * Render the button that will allow to continue playing after winning.
+	 * Renders the button that will allow to continue playing after winning.
 	 */
 	private void drawContinueButton() {
 		ButtonHandler.getContinueButton().draw(batch);
 	}
 
 	/**
-	 * Draw the lost overlay to show to the user it lost.
+	 * Draws the lost overlay to show to the user it lost.
 	 */
 	private void drawLostOverlay() {
 		batch.draw(AssetHandler.lost, 0, 0);
@@ -185,7 +185,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Draw the won overlay to show to the user it won.
+	 * Draws the won overlay to show to the user it won.
 	 */
 	private void drawWonOverlay() {
 		batch.draw(AssetHandler.won, 0, 0);
@@ -194,7 +194,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the strings using the specified font.
+	 * Renders the strings.
 	 */
 	private void drawText() {
 		drawScore();
@@ -203,7 +203,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the score in its square.
+	 * Renders the score in its square.
 	 */
 	private void drawScore() {
 		String score = ((Integer)world.getScore()).toString();
@@ -214,7 +214,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the highscore in its square.
+	 * Renders the highscore in its square.
 	 */
 	private void drawHighscore() {
 		String highscore = ((Integer)world.getHighscore()).toString();
@@ -227,7 +227,7 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Render the highest tile ever scored in its square.
+	 * Renders the highest tile value ever reached in its square.
 	 */
 	private void drawHighest() {
 		String highest = ((Integer)world.getHighestTile()).toString();
