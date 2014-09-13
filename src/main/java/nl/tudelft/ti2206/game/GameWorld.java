@@ -60,6 +60,11 @@ public class GameWorld {
 		/* Tell the grid to update its objects. */
 		grid.update();
 
+		/*
+		 * If the current highest tile is of value 2048 and we haven't already
+		 * won nor already lost, then we have won. Otherwise, if there are no
+		 * possible moves remaining, we lost.
+		 */
 		if (grid.getCurrentHighestTile() == 2048 && !isContinuing()
 				&& !isLost()) {
 			setGameState(GameState.WON);
@@ -129,7 +134,6 @@ public class GameWorld {
 	public void restart() {
 		state = GameState.RUNNING;
 		score = 0;
-		oldHighestTile = 0;
 		grid.restart();
 	}
 
@@ -140,6 +144,16 @@ public class GameWorld {
 	 */
 	public int getScore() {
 		return score;
+	}
+
+	/**
+	 * Sets the current game's score.
+	 * 
+	 * @param score
+	 *            The score to set.
+	 */
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	/**
@@ -162,6 +176,26 @@ public class GameWorld {
 	}
 
 	/**
+	 * Sets the highscore at the time of launch.
+	 * 
+	 * @param oldHighestTile
+	 *            The highscore at the time of launch.
+	 */
+	public void setOldHighscore(int oldHighscore) {
+		this.oldHighscore = oldHighscore;
+	}
+
+	/**
+	 * Sets the highest value at the time of launch.
+	 * 
+	 * @param oldHighest
+	 *            The highest value at the time of launch.
+	 */
+	public void setOldHighest(int oldHighest) {
+		this.oldHighestTile = oldHighest;
+	}
+
+	/**
 	 * Returns the current game grid.
 	 * 
 	 * @return The current game grid.
@@ -178,36 +212,6 @@ public class GameWorld {
 	 */
 	public void setGrid(AnimatedGrid grid) {
 		this.grid = grid;
-	}
-
-	/**
-	 * Sets the current game's score.
-	 * 
-	 * @param score
-	 *            The score to set.
-	 */
-	public void setScore(int score) {
-		this.score = score;
-	}
-
-	/**
-	 * Sets the highest value at the time of launch.
-	 * 
-	 * @param oldHighest
-	 *            The highest value at the time of launch.
-	 */
-	public void setOldHighest(int oldHighest) {
-		this.oldHighestTile = oldHighest;
-	}
-
-	/**
-	 * Sets the highscore at the time of launch.
-	 * 
-	 * @param oldHighestTile
-	 *            The highscore at the time of launch.
-	 */
-	public void setOldHighscore(int oldHighscore) {
-		this.oldHighscore = oldHighscore;
 	}
 
 	/**
