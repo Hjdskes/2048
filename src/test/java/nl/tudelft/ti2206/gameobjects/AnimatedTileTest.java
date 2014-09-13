@@ -86,6 +86,24 @@ public class AnimatedTileTest {
 	}
 
 	/**
+	 * Test AnimatedTile's getXYOffset method after merge.
+	 */
+	@Test
+	public void testGetXYOffset_merge() {
+		tile.merge();
+		assertEquals(-8.1f, tile.getXYOffset(), .1f);
+	}	
+	
+	/**
+	 * Test AnimatedTile's getXYOffset method after spawn.
+	 */
+	@Test
+	public void testGetXYOffset_spawn() {
+		tile.spawn();
+		assertEquals(20.25, tile.getXYOffset(), .1f);
+	}
+	
+	/**
 	 * Test AnimatedTile's merge method.
 	 */
 	@Test
