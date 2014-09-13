@@ -16,8 +16,14 @@ import nl.tudelft.ti2206.handlers.TileHandler;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
+ * +---+---+---+---+
+ * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+
+ * | 8 | 9 | 10| 11|
+ * +---+---+---+---+
+ * | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -48,13 +54,13 @@ public class Grid {
 	private Random random;
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
-	/** Keeps track of the highest AnimatedTile value in the current game. */
+	/** Keeps track of the highest Tile value in the current game. */
 	private int highestTile;
 	/** A reference to the GameWorld. */
 	private GameWorld world;
 
 	/**
-	 * Creates a new Grid with NTILES AnimatedTile objects.
+	 * Creates a new Grid with NTILES Tile objects.
 	 * 
 	 * @param world
 	 *            The GameWorld this Grid will be placed in.
@@ -100,8 +106,8 @@ public class Grid {
 
 	/**
 	 * Returns a random value, smaller than 16, indicating a location for a new
-	 * AnimatedTile. This new location is always valid, i.e. there is not
-	 * already an AnimatedTile there.
+	 * Tile. This new location is always valid, i.e. there is not
+	 * already an Tile there.
 	 * 
 	 * @return A new valid location.
 	 */
@@ -124,14 +130,14 @@ public class Grid {
 	}
 
 	/**
-	 * Sets an AnimatedTile's parameters by index.
+	 * Sets an Tile's parameters by index.
 	 * 
 	 * @param index
-	 *            The AnimatedTile's index on the grid.
+	 *            The Tile's index on the grid.
 	 * @param value
-	 *            The AnimatedTile's value (should be a multiple of 2 or 0).
+	 *            The Tile's value (should be a multiple of 2 or 0).
 	 * @param isMerged
-	 *            True if the AnimatedTile is merged.
+	 *            True if the Tile is merged.
 	 */
 	public void setTile(int index, int value, boolean isMerged) {
 		grid[index].setValue(value);
@@ -166,7 +172,7 @@ public class Grid {
 	 * 
 	 * Its parameter shall indicate which direction is to be moved in. The
 	 * actual moving will be delegated to TileHandler. If a move has been made,
-	 * it will update the score and create a new AnimatedTile.
+	 * it will update the score and create a new Tile.
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
@@ -208,9 +214,9 @@ public class Grid {
 	 * @return True if the grid is full.
 	 */
 	public boolean isFull() {
-		/* Check each AnimatedTile on the grid. */
+		/* Check each Tile on the grid. */
 		for (int index = 0; index < grid.length; index++) {
-			/* If any AnimatedTile on the grid is empty, the grid is not full. */
+			/* If any Tile on the grid is empty, the grid is not full. */
 			if (grid[index].isEmpty()) {
 				return false;
 			}
@@ -227,11 +233,11 @@ public class Grid {
 		int moves = 0;
 
 		for (int index = 0; index < grid.length; index++) {
-			/* An empty AnimatedTile cannot move. */
+			/* An empty Tile cannot move. */
 			if (!grid[index].isEmpty()) {
-				/* Get current AnimatedTile value. */
+				/* Get current Tile value. */
 				int value = grid[index].getValue();
-				/* Get all AnimatedTile's neighbors. */
+				/* Get all Tile's neighbors. */
 				List<AnimatedTile> neighbors = getTileNeighbors(index);
 
 				/* For all neighboring tiles, compare the values. */
@@ -250,7 +256,7 @@ public class Grid {
 	 * Get a list of neighboring Tiles by index.
 	 * 
 	 * @param index
-	 *            The AnimatedTile index.
+	 *            The Tile index.
 	 * @return A list of tiles.
 	 */
 	public List<AnimatedTile> getTileNeighbors(int index) {
@@ -302,7 +308,7 @@ public class Grid {
 	}
 
 	/**
-	 * Updates the highest AnimatedTile value present in the grid.
+	 * Updates the highest Tile value present in the grid.
 	 */
 	public void updateHighestTile() {
 		highestTile = 0;
@@ -313,9 +319,9 @@ public class Grid {
 	}
 
 	/**
-	 * Returns the highest AnimatedTile value present in the grid.
+	 * Returns the highest Tile value present in the grid.
 	 * 
-	 * @return The highest AnimatedTile value.
+	 * @return The highest Tile value.
 	 */
 	public int getCurrentHighestTile() {
 		return highestTile;

@@ -19,8 +19,8 @@ public class TileHandler {
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
 	/**
-	 * The difference between the indices of the AnimatedTile to be moved and
-	 * the AnimatedTile to move to.
+	 * The difference between the indices of the Tile to be moved and
+	 * the Tile to move to.
 	 */
 	private int offset;
 	/** The points to be awarded to the player */
@@ -86,28 +86,28 @@ public class TileHandler {
 	}
 
 	/**
-	 * Checks if an AnimatedTile can move to the neighboring AnimatedTile in the
+	 * Checks if an Tile can move to the neighboring Tile in the
 	 * specified direction.
 	 * 
 	 * @param index
-	 *            The index of the AnimatedTile.
+	 *            The index of the Tile.
 	 * @param dir
 	 *            The direction to move in.
 	 * @return True if a move can be made, false otherwise.
 	 */
 	private boolean isNeighbourFree(int index, Direction dir) {
-		/* If the AnimatedTile is empty, no move can be made. */
+		/* If the Tile is empty, no move can be made. */
 		if (grid[index].isEmpty()) {
 			return false;
 		}
 
-		/* If the AnimatedTile next to this AnimatedTile is empty, it can move */
+		/* If the Tile next to this Tile is empty, it can move */
 		if (grid[index + offset].isEmpty()) {
 			return true;
 		}
 
 		/*
-		 * If the AnimatedTile is at the edge of that direction, it cannot move.
+		 * If the Tile is at the edge of that direction, it cannot move.
 		 * For example, in | T - - - |, T cannot move to the left as it is
 		 * already in the leftmost spot.
 		 */
@@ -122,13 +122,13 @@ public class TileHandler {
 		}
 
 		/*
-		 * If the destination and the AnimatedTile to be moved have not already
-		 * merged with another AnimatedTile...
+		 * If the destination and the Tile to be moved have not already
+		 * merged with another Tile...
 		 */
 		if (!grid[index + offset].isMerged() && !grid[index].isMerged()) {
 			/*
 			 * ...and either their values are equal or the destination
-			 * AnimatedTile is empty, the move can be made.
+			 * Tile is empty, the move can be made.
 			 */
 			if (grid[index + offset].getValue() == grid[index].getValue()
 					|| grid[index + offset].isEmpty()) {
@@ -142,14 +142,14 @@ public class TileHandler {
 	 * Moves a row or column of tiles into the specified direction.
 	 * 
 	 * @param i
-	 *            The index of the farthest AnimatedTile in the row or column,
+	 *            The index of the farthest Tile in the row or column,
 	 *            depending on the direction to move in.
 	 * @param dir
 	 *            The direction to move in.
 	 */
 	private void moveAffected(int i, Direction dir) {
 		/*
-		 * While moves can be made in the row or column, move each AnimatedTile
+		 * While moves can be made in the row or column, move each Tile
 		 * in that row or column.
 		 */
 		while (isNeighbourFree(i - offset, dir)
@@ -165,10 +165,10 @@ public class TileHandler {
 	}
 
 	/**
-	 * Moves an AnimatedTile into the specified direction.
+	 * Moves an Tile into the specified direction.
 	 * 
 	 * @param index
-	 *            The index of the AnimatedTile.
+	 *            The index of the Tile.
 	 * @return The value to add to the score.
 	 */
 	private void moveTile(int index) {
@@ -194,7 +194,7 @@ public class TileHandler {
 	 * Resets all merged tiles in a row or column so they can merge again.
 	 * 
 	 * @param index
-	 *            The index of the farthest AnimatedTile in the row or column,
+	 *            The index of the farthest Tile in the row or column,
 	 *            depending on the direction to move to.
 	 * @param dir
 	 *            The direction to move in.

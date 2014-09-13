@@ -1,16 +1,22 @@
 package nl.tudelft.ti2206.gameobjects;
 
+/**
+ * The AnimatedGrid class is a subclass of the Grid class to provide animations.
+ * 
+ * @author group-21
+ */
 public class AnimatedTile extends Tile {
-
-	/** The size of the tile */
+	/** The dimensions of the Tile. */
 	private static final int DIMENSION = 81;
-
+	/** The current size of the Tile. */
 	private float size;
+	/** True if this Tile is spawning. */
 	private boolean isSpawning;
+	/** True if this Tile is merging. */
 	private boolean isMerging;
 
 	/**
-	 * Creates a new AnimatedTile with the specified parameters.
+	 * Creates a new AnimatedTile with the given value.
 	 * 
 	 * @param value
 	 *            The value of the Tile.
@@ -24,24 +30,26 @@ public class AnimatedTile extends Tile {
 
 	/**
 	 * Updates the Tile. If it is spawning its size increases each frame. If it
-	 * is merging, reduce its size each frame.
+	 * is merging, its size reduces each frame.
 	 */
 	public void update() {
 		if (isSpawning) {
-			if (size < 1)
+			if (size < 1) {
 				size += .04;
-			else
+			} else {
 				isSpawning = false;
+			}
 		} else if (isMerging) {
-			if (size > 1)
-				size -= .015;
-			else
+			if (size > 1) {
+				size -= .012;
+			} else {
 				isMerging = false;
+			}
 		}
 	}
 
 	/**
-	 * Resets the AnimatedTile.
+	 * Resets the AnimatedTile to its default state.
 	 */
 	@Override
 	public void reset() {
@@ -54,21 +62,24 @@ public class AnimatedTile extends Tile {
 	@Override
 	public void setMerged(boolean isMerged) {
 		super.setMerged(isMerged);
-		if (isMerged)
+		if (isMerged) {
 			merge();
+		}
 	}
 
 	/**
+	 * Returns the current size of the Tile.
 	 * 
-	 * @return The dimension multiplied by the scale.
+	 * @return The dimensions multiplied by the Tile's scale.
 	 */
 	public float getTileSize() {
 		return size * DIMENSION;
 	}
 
 	/**
-	 *
-	 * @return The scale of the AnimatedTile.
+	 * Returns the current scale of the Tile.
+	 * 
+	 * @return The scale of the Tile.
 	 */
 	public float getScale() {
 		return size / 1;
@@ -76,17 +87,18 @@ public class AnimatedTile extends Tile {
 
 	/**
 	 * Calculates the offset that should be taken into account when determining
-	 * the x and y coordinates for drawing.
+	 * the x- and y-coordinates for drawing.
 	 * 
-	 * @return The offset.
+	 * @return The offset to be taken into account.
 	 */
 	public float getXYOffset() {
-		if (isSpawning)
+		if (isSpawning) {
 			return (1 - size) * DIMENSION / 2;
-		else if (isMerging)
+		} else if (isMerging) {
 			return (DIMENSION - size * DIMENSION) / 2;
-		else
+		} else {
 			return 0;
+		}
 	}
 
 	/**
