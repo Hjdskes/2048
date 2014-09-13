@@ -9,6 +9,8 @@ import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
+
 
 /**
  * Test suite for the GameWorld class.
@@ -16,24 +18,24 @@ import org.junit.Test;
  * @author group-21
  */
 public class GameWorldTest {
+	/** A mock for the AnimatedGrid object. */
+	private AnimatedGrid grid;
 	/** The object under test. */
 	private GameWorld world;
 
 	/**
-	 * Creates a GameWorld and launches the game.
-	 * 
-	 * Launching the game is a requirement, because without a running game the
-	 * Preferences object can not be instantiated, resulting in nullpointers.
+	 * Initializes the mock object and creates a GameWorld.
+	 * Sets the mocked AnimatedGrid in the GameWorld.
 	 */
 	@Before
 	public void setUp() {
-		HeadlessLauncher launcher = new HeadlessLauncher();
-		launcher.launch();
+		grid = mock(AnimatedGrid.class);
 		world = new GameWorld();
+		world.setGrid(grid);
 	}
 
 	/**
-	 * Tests the constructor of GameWorld: after creation, there should be a
+	 * Tests the constructor of GameWorld: after creation, there should be an
 	 * AnimatedGrid and the game should be running.
 	 * 
 	 * Testing for the score is impossible, since the game might be restarted
@@ -46,12 +48,11 @@ public class GameWorldTest {
 	}
 
 	/**
-	 * Testing how the world behaves when the game is won.
+	 * Tests if the world behaves correctly when the game is won.
 	 */
 	@Test
 	public void testWon() {
-		assertTrue(world.isRunning());
-		world.getGrid().setTile(0, 2048, false);
+		when(grid.getCurrentHighestTile()).thenReturn(2048);
 		world.update(.15f);
 		assertTrue(world.isWon());
 		assertFalse(world.isLost());
@@ -60,20 +61,12 @@ public class GameWorldTest {
 	}
 
 	/**
-	 * Fills the grid as follows:
-	 * 
-	 * 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-	 * 
-	 * which should result in a loss
+	 * Tests if the world behaves correctly when the game is lost.
 	 */
 	@Test
 	public void testLost() {
-		assertTrue(world.isRunning());
-
-		for (int i = 0; i < world.getGrid().getTiles().length; i++) {
-			world.getGrid().setTile(i, i + 1, false);
-		}
-
+		when(grid.isFull()).thenReturn(true);
+		when(grid.getPossibleMoves()).thenReturn(0);
 		world.update(.15f);
 		assertTrue(world.isLost());
 		assertFalse(world.isWon());
@@ -82,38 +75,91 @@ public class GameWorldTest {
 	}
 
 	/**
-	 * Testing how the world behaves when the game is restarted.
+	 * Tests if the world behaves correctly when the game is won
+	 * and the player continues.
 	 */
 	@Test
-	public void testRestart() {
-		world.setGrid(new AnimatedGrid(world, true));
-		world.setScore(8);
-		world.getGrid().setTile(0, 2048, true);
+	public void testContinuing() {
+		when(grid.getCurrentHighestTile()).thenReturn(2048);
 		world.update(.15f);
-		assertTrue(world.isWon());
-		world.restart();
-		assertEquals(world.getScore(), 0);
-		assertFalse(world.getGrid().getCurrentHighestTile() == 2048);
+
+		/* We have to manually set the game state to continuing. */
+		world.setGameState(GameState.CONTINUING);
+		assertTrue(world.isContinuing());
 	}
 
 	/**
-	 * Testing if the score is incremented.
+	 * Tests if the world behaves correctly when the game is restarted.
+	 */
+	@Test
+	public void testRestart() {
+		when(grid.getCurrentHighestTile()).thenReturn(2048);
+		/* We have to manually set a score to test if the score gets reset
+		 * correctly. */
+		world.setScore(1500);
+
+		world.update(.15f);
+		assertTrue(world.isWon());
+
+		/* Make the restart happen and assert the correct behaviour. */
+		world.restart();
+		assertEquals(world.getGameState(), GameState.RUNNING);
+		assertEquals(world.getScore(), 0);
+		verify(grid).restart();
+	}
+
+	/**
+	 * Tests if the score gets incremented correctly.
 	 */
 	@Test
 	public void testAddScore() {
 		int score = world.getScore();
-		int increment = 3;
+		int increment = 2;
 		world.addScore(increment);
 		assertEquals(world.getScore(), score + increment);
 	}
-	
-//	@Test
-//	public void testGetHighestTile() {
-//		AnimatedGrid grid = Mockito.mock(AnimatedGrid.class);
-//		world.setGrid(grid);
-//		
-//		stub(grid.getCurrentHighestTile()).toReturn(4096);
-//		
-//		world.getHighestTile();
-//	}
+
+	/**
+	 * Tests if the correct highest tile gets returned when the
+	 * highest tile is in the current game.
+	 */
+	@Test
+	public void testGetHighestTileCurrent() {
+		when(grid.getCurrentHighestTile()).thenReturn(4096);
+		world.setOldHighest(2048);
+		assertEquals(world.getHighestTile(), 4096);
+	}
+
+	/**
+	 * Tests if the correct highest tile gets returned when the
+	 * highest tile is from an old game.
+	 */
+	@Test
+	public void testGetHighestTileOld() {
+		when(grid.getCurrentHighestTile()).thenReturn(2048);
+		world.setOldHighest(4096);
+		assertEquals(world.getHighestTile(), 4096);
+	}
+
+	/**
+	 * Tests if the correct highscore gets returned when the
+	 * highestscore is in the current game.
+	 */
+	@Test
+	public void testGetHighscoreCurrent() {
+		world.setScore(4096);
+		world.setOldHighscore(2048);
+		assertEquals(world.getHighscore(), 4096);
+	}
+
+	/**
+	 * Tests if the correct highscore gets returned when the
+	 * highestscore is from an old game.
+	 */
+	@Test
+	public void testGetHighscoreOld() {
+		world.setScore(2048);
+		world.setOldHighscore(4096);
+		assertEquals(world.getHighscore(), 4096);
+	}
 }
