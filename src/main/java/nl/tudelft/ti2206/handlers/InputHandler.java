@@ -1,23 +1,33 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
-import nl.tudelft.ti2206.buttons.ContinueButton;
-import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * The InputHandler processes input events from for example the keyboard, the mice or touch events.
+ * It delegates these events to the appropriate abstraction classes. Currently this is only the ButtonHandler.
+ * 
+ * @author group-21
+ */
 public class InputHandler implements InputProcessor {
-
+	/**
+	 * A reference to the current GameWorld, so the called objects can interact
+	 * with it.
+	 */
 	private GameWorld world;
-	private RestartButton restartButton;
-	private ContinueButton continueButton;
 
+	/**
+	 * Creates a new InputHandler instance.
+	 * 
+	 * @param world
+	 *            A reference to the current GameWorld. It will be passed to the
+	 *            called objects to interact with it.
+	 */
 	public InputHandler(GameWorld world) {
 		this.world = world;
-		setRestartButton(ButtonHandler.getRestartButton());
-		setContinueButton(ButtonHandler.getContinueButton());
 	}
 
 	@Override
@@ -34,10 +44,6 @@ public class InputHandler implements InputProcessor {
 			return true;
 		case Keys.DPAD_RIGHT:
 			world.getGrid().move(Direction.RIGHT);
-			return true;
-		case Keys.ESCAPE:
-			/* Forward to restart button. */
-			restartButton.onClick(world);
 			return true;
 		}
 
@@ -66,17 +72,7 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (restartButton.isTouchDown(screenX, screenY)) {
-			restartButton.onClick(world);
-			return true;
-		}
-		
-		if (continueButton.isTouchDown(screenX, screenY)) {
-			continueButton.onClick(world);
-			return true;
-		}
-		
-		return false;
+		return ButtonHandler.touchDown(world, screenX, screenY);
 	}
 
 	@Override
@@ -87,13 +83,5 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		return false;
-	}
-
-	public void setRestartButton(RestartButton restartButton) {
-		this.restartButton = restartButton;
-	}
-	
-	public void setContinueButton(ContinueButton continueButton) {
-		this.continueButton = continueButton;
 	}
 }

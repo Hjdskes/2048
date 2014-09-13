@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
@@ -10,7 +10,7 @@ import nl.tudelft.ti2206.gameobjects.AnimatedTile;
  * @author group-21
  * 
  */
-public class TileMover {
+public class TileHandler {
 	/** The length of a row on the grid. */
 	private static final int ROW_LENGTH = 4;
 	/** The length of a column on the grid. */
@@ -27,7 +27,7 @@ public class TileMover {
 	/** The points to be awarded to the player */
 	private int scoreIncrement;
 
-	public TileMover(Grid grid) {
+	public TileHandler(Grid grid) {
 		this.grid = grid.getTiles();
 		scoreIncrement = 0;
 	}

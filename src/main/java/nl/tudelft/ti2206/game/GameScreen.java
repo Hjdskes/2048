@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.helpers.InputHandler;
-import nl.tudelft.ti2206.helpers.ProgressHandler;
+import nl.tudelft.ti2206.handlers.InputHandler;
+import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

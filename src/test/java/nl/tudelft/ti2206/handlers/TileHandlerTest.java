@@ -1,18 +1,19 @@
-package nl.tudelft.ti2206.helpers;
+package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.handlers.TileHandler;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TileMoverTest {
+public class TileHandlerTest {
 
 	private Grid grid;
-	private TileMover tileMover;
+	private TileHandler tileMover;
 	private GameWorld world;
 	private Grid emptyGrid;
 
@@ -40,7 +41,7 @@ public class TileMoverTest {
 		}
 		grid.getTiles()[2].setValue(4);
 		grid.getTiles()[3].setValue(8);
-		tileMover = new TileMover(grid);
+		tileMover = new TileHandler(grid);
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class TileMoverTest {
 	 */
 	@Test
 	public void testMoveEmptyGrid() {
-		tileMover = new TileMover(emptyGrid);
+		tileMover = new TileHandler(emptyGrid);
 		tileMover.moveDown();
 		assertEquals(toString(emptyGrid), "0000.0000.0000.0000");
 
@@ -187,7 +188,7 @@ public class TileMoverTest {
 	 */
 	@Test
 	public void testIsMoveMadeEmptyGrid() {
-		tileMover = new TileMover(emptyGrid);
+		tileMover = new TileHandler(emptyGrid);
 		tileMover.moveUp();
 		assertFalse(tileMover.isMoveMade());
 

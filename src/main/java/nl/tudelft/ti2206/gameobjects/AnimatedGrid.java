@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.helpers.XYCalculator;
+import nl.tudelft.ti2206.handlers.CoordinateHandler;
 
 public class AnimatedGrid extends Grid {
 
@@ -34,7 +34,7 @@ public class AnimatedGrid extends Grid {
 	 * @return The x coordinate where the Tile should be drawn.
 	 */
 	public float getTileX(int index) {
-		return grid[index].getXYOffset() + XYCalculator.getTileX(index);
+		return grid[index].getXYOffset() + CoordinateHandler.getTileX(index);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class AnimatedGrid extends Grid {
 	 * @return The y coordinate where the Tile should be drawn.
 	 */
 	public float getTileY(int index) {
-		return XYCalculator.getTileY(index) + grid[index].getXYOffset();
+		return CoordinateHandler.getTileY(index) + grid[index].getXYOffset();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class AnimatedGrid extends Grid {
 	 * @return The width of the Tile.
 	 */
 	public float getTileWidth(int index) {
-		return XYCalculator.getTileWidth() * grid[index].getScale();
+		return CoordinateHandler.getTileWidth() * grid[index].getScale();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class AnimatedGrid extends Grid {
 	 * @return The height of the Tile.
 	 */
 	public float getTileHeight(int index) {
-		return XYCalculator.getTileHeight() * grid[index].getScale();
+		return CoordinateHandler.getTileHeight() * grid[index].getScale();
 	}
 
 }
