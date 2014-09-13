@@ -11,13 +11,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * A test class for the ProgressHandler.
+ * 
+ * @author group-21
+ */
 public class ProgressHandlerTest {
 
 	private static GameWorld world;
 	private AnimatedGrid grid;
 
 	/**
-	 * Launch a headless game to enable file IO and create a new GameWorld
+	 * Launches a headless game to enable file I/O and creates a new GameWorld.
 	 */
 	@BeforeClass
 	public static void init() {
@@ -26,23 +31,25 @@ public class ProgressHandlerTest {
 	}
 
 	/**
-	 * Clear the grid before executing a new test case
+	 * Clears the saved Preferences and the Grid before executing a new test
+	 * case.
 	 */
 	@Before
 	public void reinitGrid() {
-		// clear the saved data to make sure the test case can use its own grid,
-		// score, etc.
+		/*
+		 * Clear the saved data to make sure the test case can use its own grid,
+		 * score, etc.
+		 */
 		PreferenceHandler.getPrefs().clear();
 		grid = new AnimatedGrid(world, true);
 		world.setGrid(grid);
 	}
 
 	/**
-	 * Tests if a grid is saved correctly
+	 * Tests if a Grid is saved correctly.
 	 */
 	@Test
 	public void testSaveGrid() {
-
 		grid.setTile(0, 2, true);
 		grid.setTile(1, 4, false);
 
@@ -53,7 +60,7 @@ public class ProgressHandlerTest {
 	}
 
 	/**
-	 * Tests if a game is saved correctly
+	 * Tests if a game is saved correctly.
 	 */
 	@Test
 	public void testSaveGame() {
@@ -73,30 +80,27 @@ public class ProgressHandlerTest {
 	 */
 	@Test
 	public void testLoadGame() {
-		// construct the grid
+		/* Construct the grid. */
 		AnimatedGrid grid = new AnimatedGrid(world, true);
 		grid.setTile(0, 2, true);
 		grid.setTile(1, 4, true);
 
-		// set the grid and save the game
+		/* Set the grid and save the game. */
 		world.setGrid(grid);
 		ProgressHandler.saveGame(world);
 
-		// copy current scores
+		/* Copy current stats. */
 		int score = world.getScore();
 		int highestTile = world.getHighestTile();
+		int possibleMoves = world.getGrid().getPossibleMoves();
 
-		// reset world
-		world.setGrid(new AnimatedGrid(world, true));
-		world.setScore(0);
-		world.setOldHighest(0);
+		/* Reset world. */
+		world.restart();
 
+		/* Load the saved game and make sure everything is loaded correctly. */
 		ProgressHandler.loadGame(world);
-
-		// make sure the grid is loaded in correctly
 		assertEquals(score, world.getScore());
 		assertEquals(highestTile, world.getHighestTile());
-		assertEquals(grid.getPossibleMoves(), world.getGrid()
-				.getPossibleMoves());
+		assertEquals(possibleMoves, world.getGrid().getPossibleMoves());
 	}
 }

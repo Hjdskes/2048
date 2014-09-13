@@ -7,6 +7,11 @@ import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * A test class for the PreferenceHandler.
+ * 
+ * @author group-21
+ */
 public class PreferenceHandlerTest {
 
 	/**

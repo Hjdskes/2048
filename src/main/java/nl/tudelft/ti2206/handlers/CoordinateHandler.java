@@ -1,30 +1,34 @@
 package nl.tudelft.ti2206.handlers;
 
+/**
+ * The CoordinateHandler is used to calculate coordinates for several sprites.
+ * 
+ * @author group-21
+ */
 public class CoordinateHandler {
-	/** The TILE_HEIGHT of the Tile */
+	/** The width of the Tile. */
 	private static final int TILE_WIDTH = 81;
-	/** The width of the Tile */
+	/** The height of the Tile. */
 	private static final int TILE_HEIGHT = 81;
-
-	/** Base x coordinate */
+	/** The base Tile x-coordinate. */
 	private static final int TILE_X = 115;
-	/** Base y coordinate */
+	/** The base Tile y-coordinate. */
 	private static final int TILE_Y = 115;
-	/** Gap between Tiles, Grid edges, etc */
+	/** The gap in between tiles, Grid edges, etc. */
 	private static final int GAP = 15;
-	/** The width of the grid. */
+	/** The width of the Grid. */
 	private static final int GRID_WIDTH = 400;
-	/** The height of the grid. */
+	/** The height of the Grid. */
 	private static final int GRID_HEIGHT = 400;
-	/** Base x coordinate. */
+	/** The base Grid x-coordinate. */
 	private static final int GRID_X = 100;
-	/** Base y coordinate. */
+	/** The base Grid y-coordinate. */
 	private static final int GRID_Y = 100;
 
 	/**
-	 * Returns the x coordinate of the Tile
+	 * Returns the x-coordinate of a Tile.
 	 * 
-	 * @return the x coordinate
+	 * @return The x-coordinate of the Tile.
 	 */
 	public static float getTileX(int index) {
 		switch (index % 4) {
@@ -41,18 +45,9 @@ public class CoordinateHandler {
 	}
 
 	/**
-	 * Get the center x coordinate of a Tile.
+	 * Returns the y-coordinate of a Tile.
 	 * 
-	 * @return center x coordinate of the Tile
-	 */
-	public static float getCenterTileX(int index) {
-		return getTileX(index) + TILE_WIDTH / 2;
-	}
-
-	/**
-	 * Get the Y coordinate of a Tile.
-	 * 
-	 * @return the y coordinate
+	 * @return The y-coordinate of the Tile.
 	 */
 	public static float getTileY(int index) {
 		if (index < 4) {
@@ -69,63 +64,72 @@ public class CoordinateHandler {
 	}
 
 	/**
-	 * Get the center Y coordinate of a Tile.
+	 * Returns the center x-coordinate of a Tile.
 	 * 
-	 * @return center y coordinate of the Tile
+	 * @return The center x-coordinate of the Tile.
+	 */
+	public static float getCenterTileX(int index) {
+		return getTileX(index) + TILE_WIDTH / 2;
+	}
+
+	/**
+	 * Returns the center y-coordinate of a Tile.
+	 * 
+	 * @return The center y-coordinate of the Tile.
 	 */
 	public static float getCenterTileY(int index) {
 		return getTileY(index) + TILE_HEIGHT / 2;
 	}
 
 	/**
-	 * Get the X coordinate of the Grid.
+	 * Returns the x-coordinate of the Grid.
 	 * 
-	 * @return x coordinate
+	 * @return The x-coordinate of the Grid.
 	 */
 	public static int getGridX() {
 		return GRID_X;
 	}
 
 	/**
-	 * Get the Y coordinate of the Grid.
+	 * Returns the y-coordinate of the Grid.
 	 * 
-	 * @return y coordinate
+	 * @return The y-coordinate of the Grid.
 	 */
 	public static int getGridY() {
 		return GRID_Y;
 	}
 
 	/**
-	 * Get the width of a tile in pixels.
+	 * Returns the width of a Tile in pixels.
 	 * 
-	 * @return the width of a tile in pixels
+	 * @return the width of a Tile in pixels
 	 */
 	public static int getTileWidth() {
 		return TILE_WIDTH;
 	}
 
 	/**
-	 * Get the height of a tile in pixels.
+	 * Returns the height of a Tile in pixels.
 	 * 
-	 * @return the height of a tile in pixels
+	 * @return The height of a Tile in pixels.
 	 */
 	public static int getTileHeight() {
 		return TILE_HEIGHT;
 	}
 
 	/**
-	 * Get the width of the grid in pixels.
+	 * Returns the width of the Grid in pixels.
 	 * 
-	 * @return width in pixels
+	 * @return The width of the Grid in pixels.
 	 */
 	public static int getGridWidth() {
 		return GRID_WIDTH;
 	}
 
 	/**
-	 * Get the height of the grid in pixels.
+	 * Returns the height of the Grid in pixels.
 	 * 
-	 * @return height in pixels
+	 * @return The height of the Grid in pixels.
 	 */
 	public static int getGridHeight() {
 		return GRID_HEIGHT;

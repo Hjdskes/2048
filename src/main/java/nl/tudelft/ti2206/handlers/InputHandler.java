@@ -7,7 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 /**
- * The InputHandler processes input events from for example the keyboard, the mice or touch events.
+ * The InputHandler processes input events, from for example the keyboard or the mice.
  * It delegates these events to the appropriate abstraction classes. Currently this is only the ButtonHandler.
  * 
  * @author group-21
@@ -24,7 +24,7 @@ public class InputHandler implements InputProcessor {
 	 * 
 	 * @param world
 	 *            A reference to the current GameWorld. It will be passed to the
-	 *            called objects to interact with it.
+	 *            called objects to interact with the GameWorld.
 	 */
 	public InputHandler(GameWorld world) {
 		this.world = world;

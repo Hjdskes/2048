@@ -6,6 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/**
+ * The AssetHandler is used to load and hold all the assets (textures and
+ * fonts) the game requires.
+ * 
+ * @author group-21
+ */
 public class AssetHandler {
 	/** The font used in the game, in two colors. */
 	public static BitmapFont font, whiteFont;
@@ -13,9 +19,9 @@ public class AssetHandler {
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
 			t1024, t2048, empty, score, highscore, highest, newgame,
 			continuebutton, lost, won;
-	/** The width of the game. */
+	/** The width of the game window. */
 	private static final int GAME_WIDTH = 600;
-	/** The height of the game. */
+	/** The height of the game window. */
 	private static final int GAME_HEIGHT = 600;
 	/** The width of a gap, which is between all the tiles. */
 	private static final int GAP = 15;
@@ -32,11 +38,12 @@ public class AssetHandler {
 	 * @return true If the manager is done, false otherwise.
 	 */
 	public static boolean isLibraryInitialized() {
+		/* The check for Gdx.app is required to test on headless mode. */
 		return Gdx.app != null && manager.update();
 	}
 
 	/**
-	 * Instructs the AssetManager to load all the required items (textures and
+	 * Instructs the AssetManager to load all the required assets (textures and
 	 * fonts).
 	 * 
 	 * Blocks until the AssetManager is done.
@@ -85,7 +92,7 @@ public class AssetHandler {
 	}
 
 	/**
-	 * Creates all the textures and fonts from the AssetManager.
+	 * Creates all sprites for the tiles.
 	 */
 	private static void getTiles() {
 		t2 = new Sprite(manager.get("src/main/resources/images/tile2.png",
@@ -116,6 +123,10 @@ public class AssetHandler {
 				Texture.class));
 	}
 
+	/**
+	 * Creates and positions all sprites for the three scores (current score, highscore
+	 * and highest tile value ever reached).
+	 */
 	private static void getScores() {
 		score = new Sprite(manager.get("src/main/resources/images/score.png",
 				Texture.class));
@@ -131,6 +142,9 @@ public class AssetHandler {
 				+ GAP * 2, GAP, false, true);
 	}
 
+	/**
+	 * Creates and positions all sprites for the two buttons.
+	 */
 	private static void getButtons() {
 		newgame = new Sprite(manager.get(
 				"src/main/resources/images/newgame.png", Texture.class));
@@ -144,6 +158,9 @@ public class AssetHandler {
 						- GAP * 3 - continuebutton.getHeight() * 2, false, true);
 	}
 
+	/**
+	 * Creates all the fonts.
+	 */
 	private static void getFonts() {
 		font = manager.get("src/main/resources/fonts/tahoma.fnt",
 				BitmapFont.class);
@@ -154,6 +171,9 @@ public class AssetHandler {
 		whiteFont.setScale(.6f, -.6f);
 	}
 
+	/**
+	 * Creates all the overlay sprites.
+	 */
 	private static void getOverlays() {
 		lost = new Sprite(manager.get(
 				"src/main/resources/images/lostoverlay.png", Texture.class));
@@ -186,10 +206,10 @@ public class AssetHandler {
 	}
 
 	/**
-	 * Gets the Sprite belonging to the provided value.
+	 * Returns the Sprite belonging to the provided value.
 	 * 
 	 * @param value
-	 *            The number indicating which Sprite to return.
+	 *            The value indicating which Sprite to return.
 	 * @return The Sprite belonging to the required value.
 	 */
 	public static Sprite getTile(int value) {
@@ -220,7 +240,7 @@ public class AssetHandler {
 			return empty;
 		}
 	}
-	
+
 	/**
 	 * Sets the AssetManager to be used by the AssetHandler. Needed for the
 	 * headless application which is used for DevHub. Since DevHub cannot make
@@ -228,7 +248,7 @@ public class AssetHandler {
 	 * very specific way. See {@link AssetHandlerTest}.
 	 * 
 	 * @param assetManager
-	 *            The manager to be used by the AssetHandler.
+	 *            The AssetManager to be used by the AssetHandler.
 	 */
 	public static void setAssetManager(AssetManager assetManager) {
 		manager = assetManager;

@@ -4,13 +4,20 @@ import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 import nl.tudelft.ti2206.gameobjects.AnimatedTile;
 
+/**
+ * The ProgressHandler is used to save the current game, or load the previously
+ * saved game.
+ * 
+ * @author group-21
+ */
 public class ProgressHandler {
 	/**
 	 * Calls saveGrid to save the current grid and uses the PreferenceHandler to
-	 * save the current score, highscore and highest value.
+	 * save the current score, highscore and highest tile value ever reached.
 	 * 
 	 * @param world
-	 *            The GameWorld to save.
+	 *            The GameWorld to save its' grid, score, highscore and highest
+	 *            tile value ever reached.
 	 */
 	public static void saveGame(GameWorld world) {
 		AnimatedGrid grid = world.getGrid();
@@ -28,7 +35,8 @@ public class ProgressHandler {
 	}
 
 	/**
-	 * Loads the saved grid, score, highscore and highest value.
+	 * Loads the saved grid, score, highscore and highest tile value ever
+	 * reached.
 	 * 
 	 * @param world
 	 *            The world to load all the values into.
@@ -63,7 +71,8 @@ public class ProgressHandler {
 	/**
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 * 
-	 * @param world The World to load the AnimatedGrid into.
+	 * @param world
+	 *            The World to load the AnimatedGrid into.
 	 * @return The loaded grid.
 	 */
 	private static AnimatedGrid loadGrid(GameWorld world) {

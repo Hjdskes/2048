@@ -16,10 +16,9 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 
 /**
- * Test class for the InputHandler
+ * Test class for the InputHandler.
  * 
  * @author group-21
- *
  */
 public class InputHandlerTest {
 	/** The object under test. */
@@ -30,7 +29,7 @@ public class InputHandlerTest {
 	private static AnimatedGrid grid;
 
 	/**
-	 * Initialize all mocks and create a new InputHandler.
+	 * Initialize all mocks and creates a new InputHandler.
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -42,7 +41,7 @@ public class InputHandlerTest {
 	}
 
 	/**
-	 * Make sure the constructor works.
+	 * Tests if the constructor successfully creates a new SimpleButton object.
 	 */
 	@Test
 	public void testConstructor() {

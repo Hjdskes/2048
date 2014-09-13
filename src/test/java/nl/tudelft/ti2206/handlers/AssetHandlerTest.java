@@ -19,21 +19,26 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/**
+ * A test class for the AssetHandler.
+ * 
+ * @author group-21
+ */
 public class AssetHandlerTest {
-
+	/** A mock for the AssetManager object. */
 	private static AssetManager manager;
+	/** A mock for the Texture object. */
 	private static Texture texture;
+	/** A mock for the BitmapFont object. */
 	private static BitmapFont font;
 
 	/**
 	 * Sets up the test environment. Mockito is used extensively to prevent GL
 	 * related classes and methods from throwing NullPointerExceptions when
 	 * running the HeadlessLauncher.
-	 * 
-	 * @throws Exception
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() {
 		new HeadlessLauncher().launch();
 
 		manager = mock(AssetManager.class);
@@ -44,9 +49,11 @@ public class AssetHandlerTest {
 
 		stub(manager.get(anyString(), eq(Texture.class))).toReturn(texture);
 		stub(manager.get(anyString(), eq(BitmapFont.class))).toReturn(font);
-
 	}
 
+	/**
+	 * Tests if isLibraryInitialized() behaves correctly.
+	 */
 	@Test
 	public void testIsLibraryInitialized() {
 		assertFalse(AssetHandler.isLibraryInitialized());
