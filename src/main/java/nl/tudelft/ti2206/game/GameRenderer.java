@@ -214,9 +214,10 @@ public class GameRenderer {
 	 * Render the score in its square.
 	 */
 	private void drawScore() {
-		AssetHandler.whiteFont.draw(batch, Integer.toString(world.getScore()),
+		String score = ((Integer)world.getScore()).toString();
+		AssetHandler.whiteFont.draw(batch, score,
 				AssetHandler.score.getX() + AssetHandler.score.getWidth() / 2
-						- getTextCenterX(WHITE_F, world.getScore()),
+						- getTextCenterX(WHITE_F, score),
 				SCORE_HEIGHT);
 	}
 
@@ -224,10 +225,10 @@ public class GameRenderer {
 	 * Render the highscore in its square.
 	 */
 	private void drawHighscore() {
-		int highscore = world.getHighscore();
+		String highscore = ((Integer)world.getHighscore()).toString();
 		WHITE_F.draw(
 				batch,
-				Integer.toString(highscore),
+				highscore,
 				AssetHandler.highscore.getX()
 						+ AssetHandler.highscore.getWidth() / 2
 						- getTextCenterX(WHITE_F, highscore), SCORE_HEIGHT);
@@ -237,8 +238,8 @@ public class GameRenderer {
 	 * Render the highest tile ever scored in its square.
 	 */
 	private void drawHighest() {
-		int highest = world.getHighestTile();
-		WHITE_F.draw(batch, Integer.toString(highest),
+		String highest = ((Integer)world.getHighestTile()).toString();
+		WHITE_F.draw(batch, highest,
 				AssetHandler.highest.getX() + AssetHandler.highest.getWidth()
 						/ 2 - getTextCenterX(WHITE_F, highest), SCORE_HEIGHT);
 	}
@@ -255,22 +256,11 @@ public class GameRenderer {
 	}
 
 	/**
-	 * Calculates the center x-coordinate of an integer.
-	 * 
-	 * @param value
-	 *            The integer to be centered.
-	 * @return The center x-coordinate of the provided integer.
-	 */
-	private float getTextCenterX(BitmapFont f, int value) {
-		return f.getBounds(Integer.toString(value)).width / 2;
-	}
-
-	/**
 	 * Calculates the center y-coordinate of a String.
 	 * 
 	 * @param text
 	 *            The text to be centered.
-	 * @return The center y-coordinate of the provided Strings.
+	 * @return The center y-coordinate of the provided String.
 	 */
 	private float getTextCenterY(BitmapFont f, String text) {
 		return f.getBounds(text).height / 2;
