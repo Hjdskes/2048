@@ -13,12 +13,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class ContinueButton extends SimpleButton {
 	/**
 	 * Creates a new ContinueButton with the specified parameters.
+	 * 
 	 * @param x
+	 *            The x-coordinate for the button.
 	 * @param y
+	 *            The y-coordinate for the button.
 	 * @param width
+	 *            The width for the button.
 	 * @param height
+	 *            The height for the button.
 	 * @param buttonUp
+	 *            The Sprite shown when the button is not pressed.
 	 * @param buttonDown
+	 *            The Sprite shown when the button is pressed.
 	 */
 	public ContinueButton(float x, float y, float width, float height,
 			Sprite buttonUp, Sprite buttonDown) {
@@ -26,7 +33,7 @@ public class ContinueButton extends SimpleButton {
 	}
 
 	/**
-	 * Handles the click event. Sets the gameState to CONTINUING.
+	 * Handles the click event. Sets the game state to GameState.CONTINUING.
 	 */
 	@Override
 	public void onClick(GameWorld world) {

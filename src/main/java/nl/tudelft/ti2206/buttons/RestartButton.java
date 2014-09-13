@@ -5,25 +5,24 @@ import nl.tudelft.ti2206.game.GameWorld;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
- * A restart button to restart the game.
+ * A button to restart the game.
  * 
  * @author group-21
  */
 public class RestartButton extends SimpleButton {
-
 	/**
 	 * Creates a new RestartButton with the specified parameters.
 	 * 
 	 * @param x
-	 *            The x coordinate
+	 *            The x-coordinate for the button.
 	 * @param y
-	 *            The y coordinate
+	 *            The y-coordinate for the button.
 	 * @param width
-	 *            The width
+	 *            The width for the button.
 	 * @param height
-	 *            The height
+	 *            The height for the button.
 	 * @param buttonUp
-	 *            The Sprite shown when the button is not pressed
+	 *            The Sprite shown when the button is not pressed.
 	 * @param buttonDown
 	 *            The Sprite shown when the button is pressed
 	 */
