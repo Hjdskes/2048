@@ -43,7 +43,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
-		// center camera: true
+		/* center camera: true */
 		stage.getViewport().update(GAME_WIDTH, GAME_HEIGHT, true);
 	}
 
