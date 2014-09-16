@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,7 +17,7 @@ public class AssetHandler {
 	/** The AssetManager is used to load and get all our textures and font. */
 	private static AssetManager manager = new AssetManager();
 	/** The Skin contains all our textures and fonts. */
-	private static Skin skin = new Skin(Gdx.files.internal("skin.json"));
+	private static Skin skin = new Skin();
 
 	/**
 	 * Checks if the manager is done loading all the textures and font.
@@ -116,8 +117,27 @@ public class AssetHandler {
 		manager = assetManager;
 	}
 
-	public static void setSkin(Skin skinn) {
-		skin = skinn;
+	/**
+	 * Sets the Skin to be used by the AssetHandler. Needed for the
+	 * headless application which is used for DevHub. Since DevHub cannot make
+	 * use of GL related classes, it is necessary to test the AssetHandler in a
+	 * very specific way. See {@link AssetHandlerTest}.
+	 * 
+	 * @param newSkin
+	 *            The Skin to be used by the AssetHandler.
+	 */
+	public static void setSkin(Skin newSkin) {
+		skin = newSkin;
+	}
+
+	/**
+	 * Makes the Skin load a file that contains all resources.
+	 * Required for headless testing.
+	 * 
+	 * @param file The file containing the resources.
+	 */
+	public static void loadSkinFile(FileHandle file) {
+		skin.load(file);
 	}
 
 	/**
