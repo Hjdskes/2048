@@ -32,12 +32,10 @@ public class TwentyFourtyGame implements ApplicationListener {
 
 		group = new Group();
 		Grid grid = new Grid(true);
-		//grid.setBounds(grid.getX(), grid.getY(), 400, 400);
 		group.addActor(grid);
-		Tile[] tiless = grid.getTiles();
-		for (int i = 0; i < tiless.length; i++) {
-			//tiles[i].setBounds(tiles[i].getX(), tiles[i].getY(), 81, 81);
-			group.addActor(tiless[i]);
+		Tile[] tiles = grid.getTiles();
+		for (int i = 0; i < tiles.length; i++) {
+			group.addActor(tiles[i]);
 		}
 
 		stage.addActor(group);
