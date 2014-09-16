@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.net;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -65,6 +67,9 @@ public class Networking {
 
 			@Override
 			public void run() {
+
+				System.out.println("Starting server");
+
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				// 0 means no timeout. Probably not the greatest idea in
 				// production!
@@ -82,17 +87,31 @@ public class Networking {
 
 					Socket socket = serverSocket.accept(null);
 
-					// Read data from the socket into a BufferedReader
-					BufferedReader buffer = new BufferedReader(
-							new InputStreamReader(socket.getInputStream()));
+					System.out.println("client conncted");
+
+					DataInputStream is = new DataInputStream(
+							socket.getInputStream());
+					DataOutputStream os = new DataOutputStream(
+							socket.getOutputStream());
 
 					try {
-						// Read to the next newline (\n) and display that text
-						// on labelMessage
-						System.out.println(buffer.readLine());
+						os.writeBytes("I'm the server");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					String responseLine;
+					try {
+						while ((responseLine = is.readLine()) != null) {
+							System.out.println("message received: "
+									+ responseLine);
+						}
 					} catch (IOException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+
 				}
 			}
 		}).start(); // And, start the thread running
@@ -103,6 +122,7 @@ public class Networking {
 
 			@Override
 			public void run() {
+				System.out.println("Starting client");
 
 				SocketHints socketHints = new SocketHints();
 				// Socket will time our in 4 seconds
@@ -111,13 +131,31 @@ public class Networking {
 				// text box ( x.x.x.x format ) on port 9021
 				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, address,
 						port, socketHints);
+				System.out.println("I'm connected to " + socket.toString());
+				DataInputStream is = new DataInputStream(socket
+						.getInputStream());
+				DataOutputStream os = new DataOutputStream(socket
+						.getOutputStream());
 
-				PrintWriter out = new PrintWriter(socket.getOutputStream(),
-						true);
-				String str = "Connection established";
-				out.print(str);
+				try {
+					os.writeBytes("I'm a client");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				String responseLine;
+				try {
+					while ((responseLine = is.readLine()) != null) {
+						System.out.println("message received: " + responseLine);
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 
-		});
+		}).start(); // And, start the thread running
 	}
 }

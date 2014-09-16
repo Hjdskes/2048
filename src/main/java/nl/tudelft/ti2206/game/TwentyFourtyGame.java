@@ -24,7 +24,7 @@ public class TwentyFourtyGame extends Game {
 	public void create() {
 		Networking.initalize();
 		
-		//Networking.startServer();
+//		Networking.startServer();
 		Networking.startClient("192.168.1.225", 2526);
 		
 		AssetHandler.load();
