@@ -67,18 +67,18 @@ public class GameWorld {
 		 * possible moves remaining, we lost.
 		 */
 		
-		Networking.send("TILE:" + grid.getCurrentHighestTile());
+	//	Networking.send("TILE:" + grid.getCurrentHighestTile());
 		
 		if (grid.getCurrentHighestTile() == 2048 && !isContinuing()) {
 			setGameState(GameState.WON);
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			setGameState(GameState.LOST);
-			Networking.send("LOST:0");
+	//		Networking.send("LOST:0");
 		}
 		
-		if (Networking.getOpponentHighestTile() == 2048) {
-			setGameState(GameState.LOST);
-		}
+	//	if (Networking.getOpponentHighestTile() == 2048) {
+	//		setGameState(GameState.LOST);
+	//	}
 	}
 
 	/**
