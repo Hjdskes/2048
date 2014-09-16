@@ -1,10 +1,11 @@
-package nl.tudelft.ti2206.game;
+package old.game;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
- /** This class launches an instance of TwentyFourtyGame.
+/**
+ * This class launches an instance of TwentyFourtyGame.
  * 
  * @author group-21
  */

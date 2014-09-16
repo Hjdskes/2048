@@ -1,38 +1,54 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.handlers.ButtonHandler;
-import nl.tudelft.ti2206.handlers.PreferenceHandler;
-import nl.tudelft.ti2206.net.Networking;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import com.badlogic.gdx.Game;
+public class TwentyFourtyGame implements ApplicationListener {
 
-/**
- * The TwentyFourtyGame is used to hook into LibGDX. It extends Game, which
- * implements LibGDX's ApplicationListener interface.
- * 
- * Through implementing this interface, we receive events from LibGDX. These
- * events are received in the Screen, for which we have written our own
- * GameScreen. In essence, GameScreen is our 'controller' class, because
- * TwentyFourtyGame delegates all events to it.
- * 
- * @author group-21
- */
-public class TwentyFourtyGame extends Game {
+	private static final int GAME_WIDTH = 600;
+	private static final int GAME_HEIGHT = 600;
+
+	private Stage stage;
+
+	public TwentyFourtyGame() {
+	}
 
 	@Override
 	public void create() {
-		Networking.initalize();
-		AssetHandler.load();
-		ButtonHandler.load();
-		PreferenceHandler.initScores();
-		setScreen(new GameScreen());
+		stage = new Stage(new ScreenViewport());
+		Gdx.input.setInputProcessor(stage);
+
 	}
 
 	@Override
 	public void dispose() {
-		super.dispose();
-		getScreen().dispose();
-		AssetHandler.dispose();
 	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void render() {
+		/* Draw beige background in the screen. */
+		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		stage.act();
+		stage.draw();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// center camera: true
+		stage.getViewport().update(GAME_WIDTH, GAME_HEIGHT, true);
+	}
+
+	@Override
+	public void resume() {
+	}
+
 }
