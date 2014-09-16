@@ -4,7 +4,7 @@ Game: 2048
 Group: 21
 
 | User Story   | Task | Assigned to   | Estimated effort |
-|--------------------------------------------------------|
+|--------------|------|---------------|------------------|
 | Assignment 1 | 1.1  | Paul & Arthur | Easy |
 |              | 1.2  | Paul & Arthur | Easy |
 |              | 1.3  | Paul & Arthur | Easy |
