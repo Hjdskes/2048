@@ -1,0 +1,65 @@
+
+fonts.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tahoma1
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+fonts2.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tahoma2
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+fonts3.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tahoma3
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+fonts4.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tahoma4
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+fonts5.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tahomaWhite
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1

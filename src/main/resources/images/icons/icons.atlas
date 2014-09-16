@@ -1,0 +1,27 @@
+
+icons.png
+size: 148,164
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+2048_linux_windows
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+2048_mac
+  rotate: false
+  xy: 2, 36
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+2048_windows
+  rotate: false
+  xy: 132, 148
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
