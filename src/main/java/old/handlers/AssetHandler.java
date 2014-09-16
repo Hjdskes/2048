@@ -1,7 +1,5 @@
 package old.handlers;
 
-import old.handlers.AssetHandlerTest;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
