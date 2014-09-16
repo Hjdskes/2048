@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ButtonHandler;
 import nl.tudelft.ti2206.handlers.PreferenceHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Game;
 
@@ -18,8 +19,10 @@ import com.badlogic.gdx.Game;
  * @author group-21
  */
 public class TwentyFourtyGame extends Game {
+
 	@Override
 	public void create() {
+		Networking.initalize();
 		AssetHandler.load();
 		ButtonHandler.load();
 		PreferenceHandler.initScores();
