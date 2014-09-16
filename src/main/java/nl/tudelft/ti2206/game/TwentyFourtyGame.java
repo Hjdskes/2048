@@ -28,6 +28,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
 
+		AssetHandler.loadSkinFile(Gdx.files.internal("skin.json"));
 		AssetHandler.load();
 
 		group = new Group();
@@ -43,6 +44,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 
 	@Override
 	public void dispose() {
+		AssetHandler.dispose();
 		stage.dispose();
 	}
 
