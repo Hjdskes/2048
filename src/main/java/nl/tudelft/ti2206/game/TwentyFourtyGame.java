@@ -27,6 +27,7 @@ public class TwentyFourtyGame extends Game {
 //		Networking.startServer();
 		Networking.startClient("192.168.1.225", 2526);
 		
+		
 		AssetHandler.load();
 		ButtonHandler.load();
 		PreferenceHandler.initScores();

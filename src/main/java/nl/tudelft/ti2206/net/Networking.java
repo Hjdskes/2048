@@ -1,11 +1,8 @@
 package nl.tudelft.ti2206.net;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -15,8 +12,9 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import nl.tudelft.ti2206.game.GameWorld.GameState;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
@@ -28,6 +26,12 @@ public class Networking {
 	private static final int PORT = 2526;
 
 	private static List<String> addresses = new ArrayList<String>();
+
+	private static DataInputStream is;
+	private static DataOutputStream os;
+	
+	private static GameState oState;
+	private static int oTile;
 
 	public static void initalize() {
 		initIPv4Address();
@@ -87,12 +91,11 @@ public class Networking {
 
 					Socket socket = serverSocket.accept(null);
 
-					System.out.println("client conncted");
+					System.out.println("I'm connected to "
+							+ socket.getRemoteAddress());
 
-					DataInputStream is = new DataInputStream(
-							socket.getInputStream());
-					DataOutputStream os = new DataOutputStream(
-							socket.getOutputStream());
+					is = new DataInputStream(socket.getInputStream());
+					os = new DataOutputStream(socket.getOutputStream());
 
 					try {
 						os.writeBytes("I'm the server");
@@ -104,8 +107,7 @@ public class Networking {
 					String responseLine;
 					try {
 						while ((responseLine = is.readLine()) != null) {
-							System.out.println("message received: "
-									+ responseLine);
+							processResponse(responseLine);
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -131,11 +133,12 @@ public class Networking {
 				// text box ( x.x.x.x format ) on port 9021
 				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, address,
 						port, socketHints);
-				System.out.println("I'm connected to " + socket.toString());
-				DataInputStream is = new DataInputStream(socket
-						.getInputStream());
-				DataOutputStream os = new DataOutputStream(socket
-						.getOutputStream());
+
+				System.out.println("I'm connected to "
+						+ socket.getRemoteAddress());
+
+				is = new DataInputStream(socket.getInputStream());
+				os = new DataOutputStream(socket.getOutputStream());
 
 				try {
 					os.writeBytes("I'm a client");
@@ -147,7 +150,7 @@ public class Networking {
 				String responseLine;
 				try {
 					while ((responseLine = is.readLine()) != null) {
-						System.out.println("message received: " + responseLine);
+						processResponse(responseLine);
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -158,4 +161,46 @@ public class Networking {
 
 		}).start(); // And, start the thread running
 	}
+
+	public static void send(String msg) {
+		try {
+			os.writeBytes(msg + "\r\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void processResponse(String msg) {
+		System.out.println("response = " + msg);
+		
+		
+		String[] parts = msg.split(":");
+		
+		if (parts[0].startsWith("LOST")) {
+			setOpponentState(GameState.LOST);
+		}
+		
+		
+		if (parts[0].startsWith("TILE")) {
+			setOpponentHighestTile(parts[1]);
+		}
+	}
+	
+	private static void setOpponentHighestTile(String string) {
+		oTile = Integer.parseInt(string);
+	}
+	
+	public static int getOpponentHighestTile() {
+		return oTile;
+	}
+
+	private static void setOpponentState(GameState state) {
+		GameState oState = state;
+	}
+	
+	public static GameState getOpponentState() {
+		return oState;
+	}
+	
 }

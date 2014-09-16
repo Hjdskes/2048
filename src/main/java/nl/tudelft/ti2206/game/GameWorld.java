@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 /**
  * This is simply a helper class to manage our game objects in a central place.
@@ -58,14 +59,24 @@ public class GameWorld {
 		/* Tell the grid to update its objects. */
 		grid.update();
 
+		
+		
 		/*
 		 * If the current highest tile is of value 2048 and we haven't already
 		 * won nor already lost, then we have won. Otherwise, if there are no
 		 * possible moves remaining, we lost.
 		 */
+		
+		Networking.send("TILE:" + grid.getCurrentHighestTile());
+		
 		if (grid.getCurrentHighestTile() == 2048 && !isContinuing()) {
 			setGameState(GameState.WON);
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
+			setGameState(GameState.LOST);
+			Networking.send("LOST:0");
+		}
+		
+		if (Networking.getOpponentHighestTile() == 2048) {
 			setGameState(GameState.LOST);
 		}
 	}
