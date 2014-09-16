@@ -2,8 +2,6 @@ package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -28,20 +26,26 @@ public class Tile extends Actor {
 	private int value;
 	/** The index into the Grid array. */
 	private int index;
-
+	/**
+	 * Defines a rectangular area of a texture, kind of like a viewport, on the
+	 * whole image.
+	 */
 	private TextureRegion region;
 
 	/**
 	 * Creates a new Tile with the given value.
 	 * 
+	 * @param index
+	 *            The index into the Grid array.
 	 * @param value
 	 *            The value of the Tile.
 	 */
-	public Tile(int value, int index) {
+	public Tile(int index, int value) {
 		this.value = value;
 		this.index = index;
 
-		region = new TextureRegion(AssetHandler.getSkin().get("grid", Texture.class));
+		region = new TextureRegion();
+		setSprite();
 	}
 
 	/**
@@ -109,6 +113,14 @@ public class Tile extends Actor {
 		}
 	}
 
+	/**
+	 * Moves the TextureRegion to the new Texture, belonging to the current
+	 * value of the Tile.
+	 */
+	public void setSprite() {
+		region.setRegion(AssetHandler.getSkin().getRegion("tile" + this.value));
+	}
+
 	@Override
 	public float getX() {
 		switch (this.index % 4) {
@@ -149,49 +161,8 @@ public class Tile extends Actor {
 		return TILE_HEIGHT;
 	}
 
-	/**
-	 * Returns the correct color for the Tile, based on its value.
-	 * 
-	 * @return The color for the Tile.
-	 */
-	@Override
-	public Color getColor() {
-		switch (this.value) {
-		case 0:
-			return new Color();
-		case 2:
-			return new Color(237f, 227f, 217f, 0f);
-		case 4:
-			return new Color(236f, 223f, 199f, 0f);
-		case 8:
-			return new Color(241f, 176f, 120f, 0f);
-		case 16:
-			return new Color(244f, 148f, 98f, 0f);
-		case 32:
-			return new Color(245f, 123f, 94f, 0f);
-		case 64:
-			return new Color(245f, 93f, 58f, 0f);
-		case 128:
-			return new Color(236f, 206f, 113f, 0f);
-		case 256:
-			return new Color(236f, 203f, 96f, 0f);
-		case 512:
-			return new Color(236f, 199f, 79f, 0f);
-		case 1024:
-			return new Color(236f, 196f, 62f, 0f);
-		case 2048: /* Fallthrough */
-		case 4096: /* Fallthrough */
-		case 16384: /* Fallthrough */
-			return new Color(236f, 193f, 45f, 0f);
-		default:
-			return new Color();
-		}
-	}
-
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		//Color color = getColor();
-		//batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());
 		// drawTileValue(CoordinateHandler.getCenterTileX(i),
 		// CoordinateHandler.getCenterTileY(i),

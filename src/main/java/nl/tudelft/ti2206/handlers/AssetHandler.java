@@ -1,12 +1,8 @@
 package nl.tudelft.ti2206.handlers;
 
-import old.handlers.AssetHandlerTest;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -17,16 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * @author group-21
  */
 public class AssetHandler {
-	/** The font used in the game, in two colors. */
-	public static BitmapFont font, whiteFont;
-	/** All sprites used in the game, which should be publicly accessible. */
-	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
-			t1024, t2048, empty, score, highscore, highest, newgame,
-			continuebutton, lost, won;
-
 	/** The AssetManager is used to load and get all our textures and font. */
 	private static AssetManager manager = new AssetManager();
-
+	/** The Skin contains all our textures and fonts. */
 	private static Skin skin = new Skin(Gdx.files.internal("skin.json"));
 
 	/**
@@ -73,6 +62,9 @@ public class AssetHandler {
 		setupSkin();
 	}
 
+	/**
+	 * Uses the AssetManager to get all the textures and fonts into the Skin.
+	 */
 	private static void setupSkin() {
 		TextureAtlas fonts = manager.get(
 				"src/main/resources/fonts/fonts.atlas", TextureAtlas.class);
@@ -89,7 +81,6 @@ public class AssetHandler {
 				"src/main/resources/images/buttons/buttons.atlas",
 				TextureAtlas.class);
 
-		// skin = new Skin(Gdx.files.internal("skin.json"));
 		skin.addRegions(fonts);
 		skin.addRegions(icons);
 		skin.addRegions(tiles);
@@ -103,44 +94,13 @@ public class AssetHandler {
 				"src/main/resources/images/wonoverlay.png", Texture.class));
 	}
 
+	/**
+	 * Returns the Skin object, so other classes can load their assets.
+	 * 
+	 * @return The Skin object.
+	 */
 	public static Skin getSkin() {
 		return skin;
-	}
-
-	/**
-	 * Returns the Sprite belonging to the provided value.
-	 * 
-	 * @param value
-	 *            The value indicating which Sprite to return.
-	 * @return The Sprite belonging to the required value.
-	 */
-	public static Sprite getTile(int value) {
-		switch (value) {
-		case 2:
-			return t2;
-		case 4:
-			return t4;
-		case 8:
-			return t8;
-		case 16:
-			return t16;
-		case 32:
-			return t32;
-		case 64:
-			return t64;
-		case 128:
-			return t128;
-		case 256:
-			return t256;
-		case 512:
-			return t512;
-		case 1024:
-			return t1024;
-		case 2048:
-			return t2048;
-		default:
-			return empty;
-		}
 	}
 
 	/**
@@ -154,6 +114,10 @@ public class AssetHandler {
 	 */
 	public static void setAssetManager(AssetManager assetManager) {
 		manager = assetManager;
+	}
+
+	public static void setSkin(Skin skinn) {
+		skin = skinn;
 	}
 
 	/**
