@@ -22,15 +22,17 @@ public class ProgressHandler {
 	public static void saveGame(GameWorld world) {
 		AnimatedGrid grid = world.getGrid();
 		int highest = world.getHighestTile();
+		int highscore = world.getHighscore();
 		int score = world.getScore();
 
 		saveGrid(grid);
 		PreferenceHandler.setScore(score);
+		
 		if (highest > PreferenceHandler.getHighestTile()) {
 			PreferenceHandler.setHighest(highest);
 		}
-		if (score > PreferenceHandler.getHighscore()) {
-			PreferenceHandler.setHighscore(highest);
+		if (highscore > PreferenceHandler.getHighscore()) {
+			PreferenceHandler.setHighscore(highscore);
 		}
 	}
 

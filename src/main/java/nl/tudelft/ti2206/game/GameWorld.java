@@ -1,7 +1,10 @@
 package nl.tudelft.ti2206.game;
 
+import com.badlogic.gdx.Preferences;
+
 import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 /**
@@ -51,13 +54,7 @@ public class GameWorld {
 	 * @param delta
 	 *            The time in milliseconds since the last render.
 	 */
-	public void update(float delta) {
-		/*
-		 * Add delta cap so if the game takes too long to update, it will still
-		 * work.
-		 */
-		delta = Math.max(delta, .15f);
-
+	public void update() {
 		/* Tell the grid to update its objects. */
 		grid.update();
 
@@ -133,6 +130,11 @@ public class GameWorld {
 	 */
 	public void restart() {
 		state = GameState.RUNNING;
+
+		if (score > oldHighscore) {
+			oldHighscore = score;
+		}
+
 		score = 0;
 		grid.restart();
 	}
