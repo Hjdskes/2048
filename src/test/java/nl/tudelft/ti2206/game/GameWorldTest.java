@@ -52,7 +52,7 @@ public class GameWorldTest {
 	@Test
 	public void testWon() {
 		when(grid.getCurrentHighestTile()).thenReturn(2048);
-		world.update(.15f);
+		world.update();
 		assertTrue(world.isWon());
 		assertFalse(world.isLost());
 		assertEquals(world.getGameState(), GameState.WON);
@@ -66,7 +66,7 @@ public class GameWorldTest {
 	public void testLost() {
 		when(grid.isFull()).thenReturn(true);
 		when(grid.getPossibleMoves()).thenReturn(0);
-		world.update(.15f);
+		world.update();
 		assertTrue(world.isLost());
 		assertFalse(world.isWon());
 		assertEquals(world.getGameState(), GameState.LOST);
@@ -80,7 +80,7 @@ public class GameWorldTest {
 	@Test
 	public void testContinuing() {
 		when(grid.getCurrentHighestTile()).thenReturn(2048);
-		world.update(.15f);
+		world.update();
 
 		/* We have to manually set the game state to continuing. */
 		world.setGameState(GameState.CONTINUING);
@@ -97,7 +97,7 @@ public class GameWorldTest {
 		 * correctly. */
 		world.setScore(1500);
 
-		world.update(.15f);
+		world.update();
 		assertTrue(world.isWon());
 
 		/* Make the restart happen and assert the correct behaviour. */
