@@ -6,6 +6,7 @@ import java.util.Random;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,14 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+
- * | 0 | 1 | 2 | 3 |
- * +---+---+---+---+
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+
- * | 8 | 9 | 10| 11|
- * +---+---+---+---+
- * | 12| 13| 14| 15|
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -79,8 +74,10 @@ public class Grid extends Actor {
 	 *            True if the grid should be empty.
 	 */
 	public Grid(boolean isEmpty) {
-		this.region = new TextureRegion(AssetHandler.getSkin().get("grid",
-				Texture.class));
+		if (Gdx.app.getGraphics() != null) {
+			this.region = new TextureRegion(AssetHandler.getSkin().get("grid",
+					Texture.class));
+		}
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
 		// this.tileHandler = new TileHandler(this);

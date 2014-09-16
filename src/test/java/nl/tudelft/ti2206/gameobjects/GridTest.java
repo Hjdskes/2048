@@ -4,18 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
 
 import java.util.List;
 
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Test suite for the Grid class.
@@ -30,9 +27,9 @@ public class GridTest {
 	/** The object under test. */
 	private Grid grid;
 	/** A mock for the GameWorld object. */
-	//private GameWorld world;
+	// private GameWorld world;
 	/** A mock for the TileHandler object. */
-	//private TileHandler tileHandler;
+	// private TileHandler tileHandler;
 
 	/**
 	 * Initializes all the mocks and creates the test object.
@@ -41,10 +38,10 @@ public class GridTest {
 	public void setup() {
 		new HeadlessLauncher().launch();
 
-		//world = Mockito.mock(GameWorld.class);
-		//tileHandler = Mockito.mock(TileHandler.class);
-		grid = new Grid(true);
-		//grid.setTileHandler(tileHandler);
+		// world = Mockito.mock(GameWorld.class);
+		// tileHandler = Mockito.mock(TileHandler.class);
+		grid = new Grid(false);
+		// grid.setTileHandler(tileHandler);
 	}
 
 	/**
@@ -107,49 +104,49 @@ public class GridTest {
 		assertFalse(grid.isFull());
 	}
 
-//	@Test
-//	public void testTileAddedOnMove() {
-//		stub(tileHandler.isMoveMade()).toReturn(true);
-//
-//		int endTiles = 0;
-//		int tiles = 0;
-//
-//		// make a move to the left. This can always be done because of the stub.
-//		grid.move(Direction.LEFT);
-//
-//		// if the tile is not empty, count it. If the tile is merged, dont
-//		// increment endTiles because a merge has taken place.
-//		for (Tile tile : grid.getTiles()) {
-//			if (!tile.isEmpty()) {
-//				tiles++;
-//				if (!tile.isMerged()) {
-//					endTiles++;
-//				}
-//			}
-//		}
-//
-//		assertEquals(endTiles, tiles);
-//	}
+	// @Test
+	// public void testTileAddedOnMove() {
+	// stub(tileHandler.isMoveMade()).toReturn(true);
+	//
+	// int endTiles = 0;
+	// int tiles = 0;
+	//
+	// // make a move to the left. This can always be done because of the stub.
+	// grid.move(Direction.LEFT);
+	//
+	// // if the tile is not empty, count it. If the tile is merged, dont
+	// // increment endTiles because a merge has taken place.
+	// for (Tile tile : grid.getTiles()) {
+	// if (!tile.isEmpty()) {
+	// tiles++;
+	// if (!tile.isMerged()) {
+	// endTiles++;
+	// }
+	// }
+	// }
+	//
+	// assertEquals(endTiles, tiles);
+	// }
 
-//	/**
-//	 * Tests if a move is correctly not made because the game has been won.
-//	 */
-//	@Test
-//	public void testMoveImpossibleWhenWon() {
-//		stub(world.isWon()).toReturn(true);
-//		grid.move(Direction.LEFT);
-//		verify(tileHandler, times(0)).moveLeft();
-//	}
+	// /**
+	// * Tests if a move is correctly not made because the game has been won.
+	// */
+	// @Test
+	// public void testMoveImpossibleWhenWon() {
+	// stub(world.isWon()).toReturn(true);
+	// grid.move(Direction.LEFT);
+	// verify(tileHandler, times(0)).moveLeft();
+	// }
 
-//	/**
-//	 * Tests if a move is correctly not made because the game has been lost.
-//	 */
-//	@Test
-//	public void testMoveImpossibleWhenLost() {
-//		stub(world.isLost()).toReturn(true);
-//		grid.move(Direction.LEFT);
-//		verify(tileHandler, times(0)).moveLeft();
-//	}
+	// /**
+	// * Tests if a move is correctly not made because the game has been lost.
+	// */
+	// @Test
+	// public void testMoveImpossibleWhenLost() {
+	// stub(world.isLost()).toReturn(true);
+	// grid.move(Direction.LEFT);
+	// verify(tileHandler, times(0)).moveLeft();
+	// }
 
 	/**
 	 * Tests if getPossibleMoves() correctly returns 0 when no move is possible.
@@ -197,49 +194,49 @@ public class GridTest {
 		assertEquals(4, found);
 	}
 
-//	/**
-//	 * Tests the move method when moving down.
-//	 */
-//	@Test
-//	public void testMoveDown() {
-//		grid.move(Direction.DOWN);
-//		Mockito.verify(tileHandler).moveDown();
-//	}
-//
-//	/**
-//	 * Tests the move method when moving up.
-//	 */
-//	@Test
-//	public void testMoveUp() {
-//		grid.move(Direction.UP);
-//		Mockito.verify(tileHandler).moveUp();
-//	}
-//
-//	/**
-//	 * Tests the move method when moving left.
-//	 */
-//	@Test
-//	public void testMoveLeft() {
-//		grid.move(Direction.LEFT);
-//		Mockito.verify(tileHandler).moveLeft();
-//	}
-//
-//	/**
-//	 * Tests the move method when moving right.
-//	 */
-//	@Test
-//	public void testMoveRight() {
-//		grid.move(Direction.RIGHT);
-//		Mockito.verify(tileHandler).moveRight();
-//	}
-//
-//	/**
-//	 * Tests if getTileHandler() correctly returns the tileHandler.
-//	 */
-//	@Test
-//	public void testGetTileHandler() {
-//		assertEquals(tileHandler, grid.getTileHandler());
-//	}
+	// /**
+	// * Tests the move method when moving down.
+	// */
+	// @Test
+	// public void testMoveDown() {
+	// grid.move(Direction.DOWN);
+	// Mockito.verify(tileHandler).moveDown();
+	// }
+	//
+	// /**
+	// * Tests the move method when moving up.
+	// */
+	// @Test
+	// public void testMoveUp() {
+	// grid.move(Direction.UP);
+	// Mockito.verify(tileHandler).moveUp();
+	// }
+	//
+	// /**
+	// * Tests the move method when moving left.
+	// */
+	// @Test
+	// public void testMoveLeft() {
+	// grid.move(Direction.LEFT);
+	// Mockito.verify(tileHandler).moveLeft();
+	// }
+	//
+	// /**
+	// * Tests the move method when moving right.
+	// */
+	// @Test
+	// public void testMoveRight() {
+	// grid.move(Direction.RIGHT);
+	// Mockito.verify(tileHandler).moveRight();
+	// }
+	//
+	// /**
+	// * Tests if getTileHandler() correctly returns the tileHandler.
+	// */
+	// @Test
+	// public void testGetTileHandler() {
+	// assertEquals(tileHandler, grid.getTileHandler());
+	// }
 
 	/**
 	 * Tests if restart() correctly resets all tiles and the current highest

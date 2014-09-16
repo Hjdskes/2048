@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -44,8 +45,10 @@ public class Tile extends Actor {
 		this.value = value;
 		this.index = index;
 
-		region = new TextureRegion();
-		setSprite();
+		if (Gdx.app.getGraphics() != null) {
+			region = new TextureRegion(AssetHandler.getSkin().getRegion("tile" + value));
+			setSprite();
+		}
 	}
 
 	/**

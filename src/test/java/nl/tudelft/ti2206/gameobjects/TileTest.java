@@ -68,22 +68,22 @@ public class TileTest {
 		assertEquals(false, tile.isEmpty());
 	}
 
-//	/**
-//	 * Tests if isMerged() correctly returns false if the tile has not merged.
-//	 */
-//	@Test
-//	public void testIsMerged() {
-//		assertEquals(false, tile.isMerged());
-//	}
-//
-//	/**
-//	 * Tests if testMerged() correctly sets the isMerged variable.
-//	 */
-//	@Test
-//	public void testSetMerged() {
-//		tile.setMerged(true);
-//		assertEquals(true, tile.isMerged());
-//	}
+	// /**
+	// * Tests if isMerged() correctly returns false if the tile has not merged.
+	// */
+	// @Test
+	// public void testIsMerged() {
+	// assertEquals(false, tile.isMerged());
+	// }
+	//
+	// /**
+	// * Tests if testMerged() correctly sets the isMerged variable.
+	// */
+	// @Test
+	// public void testSetMerged() {
+	// tile.setMerged(true);
+	// assertEquals(true, tile.isMerged());
+	// }
 
 	/**
 	 * Tests if resetValue() correctly resets the value of the tile.
