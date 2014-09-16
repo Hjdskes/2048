@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 /**
  * The Tile class represents the tiles you move around while playing 2048.
@@ -27,6 +28,7 @@ public class Tile extends Actor {
 	private int value;
 	/** The index into the Grid array. */
 	private int index;
+
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
 	 * whole image.
@@ -66,6 +68,8 @@ public class Tile extends Actor {
 	 */
 	public void setValue(int value) {
 		this.value = value;
+		// update the sprite
+		setSprite();
 	}
 
 	/**
@@ -112,6 +116,9 @@ public class Tile extends Actor {
 		} else {
 			value *= 2;
 		}
+		
+		// update the sprite
+		setSprite();
 	}
 
 	/**
@@ -121,8 +128,25 @@ public class Tile extends Actor {
 	public void setSprite() {
 		/* Temporary fix to allow headless testing. */
 		if (Gdx.app.getGraphics() != null) {
-			region.setRegion(AssetHandler.getSkin().getRegion("tile" + this.value));
+			region.setRegion(AssetHandler.getSkin().getRegion(
+					"tile" + this.value));
 		}
+	}
+
+	/**
+	 * Sets the label displaying the value of the tile to the designated
+	 * position.
+	 */
+	public Label getLabel() {
+		AssetHandler.getSkin().getFont("brownText").setScale(.2f);
+		Label label = new Label(Integer.toString(value), AssetHandler.getSkin());
+		label.setX(getX());
+		label.setY(getY());
+		label.setCenterPosition(getX() + 40, getY() + 40);
+
+		if (value == 0)
+			label.setVisible(false);
+		return label;
 	}
 
 	@Override
