@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ButtonHandler;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -29,6 +30,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 
 		AssetHandler.loadSkinFile(Gdx.files.internal("skin.json"));
 		AssetHandler.load();
+		ButtonHandler.load();
 
 		group = new Group();
 		Grid grid = new Grid(false);
@@ -40,6 +42,8 @@ public class TwentyFourtyGame implements ApplicationListener {
 		}
 
 		stage.addActor(group);
+		// add buttons
+		stage.addActor(ButtonHandler.getRestartButton());
 	}
 
 	@Override
