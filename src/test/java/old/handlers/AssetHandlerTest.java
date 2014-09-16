@@ -8,8 +8,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import nl.tudelft.ti2206.handlers.AssetHandler;
 import old.game.HeadlessLauncher;
-import old.handlers.AssetHandler;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

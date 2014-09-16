@@ -1,7 +1,7 @@
 package old.gameobjects;
 
 import static org.junit.Assert.*;
-import old.gameobjects.Tile;
+import nl.tudelft.ti2206.gameobjects.Tile;
 
 import org.junit.Test;
 import org.junit.Before;

@@ -3,9 +3,9 @@ package old.handlers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
+import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import old.game.GameWorld;
 import old.gameobjects.AnimatedGrid;
-import old.gameobjects.Grid.Direction;
 import old.handlers.InputHandler;
 
 import org.junit.BeforeClass;

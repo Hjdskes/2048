@@ -1,11 +1,17 @@
-package old.gameobjects;
+package nl.tudelft.ti2206.gameobjects;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import old.game.GameWorld;
-import old.handlers.TileHandler;
+import nl.tudelft.ti2206.handlers.AssetHandler;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+//import old.handlers.TileHandler;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -16,14 +22,8 @@ import old.handlers.TileHandler;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+
- * | 0 | 1 | 2 | 3 |
- * +---+---+---+---+
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+
- * | 8 | 9 | 10| 11|
- * +---+---+---+---+
- * | 12| 13| 14| 15|
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -32,46 +32,52 @@ import old.handlers.TileHandler;
  * 
  * @author group-21
  */
-public class Grid {
+public class Grid extends Actor {
 	/** This enumeration is used to indicate the direction of a movement. */
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT;
 	}
 
-	/** The width of the grid. */
-	public static final int WIDTH = 400;
-	/** The height of the grid. */
-	public static final int HEIGHT = 400;
+	/** The width of the Grid. */
+	private static final int GRID_WIDTH = 400;
+	/** The height of the Grid. */
+	private static final int GRID_HEIGHT = 400;
+	/** The base Grid x-coordinate. */
+	private static final int GRID_X = 100;
+	/** The base Grid y-coordinate. */
+	private static final int GRID_Y = 100;
 	/** The grid contains sixteen tiles. */
 	private static final int NTILES = 16;
 	/** The lowest value to start with. */
 	private static final int TWO = 2;
 	/** The highest value to start with. */
 	private static final int FOUR = 4;
+
 	/** The array containing all sixteen tiles. */
-	protected AnimatedTile[] grid;
+	protected Tile[] grid;
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
 	/** The TileHandler is used to move the tiles. */
-	private TileHandler tileHandler;
+	// private TileHandler tileHandler;
 	/** Keeps track of the highest Tile value in the current game. */
 	private int highestTile;
 	/** A reference to the GameWorld. */
-	private GameWorld world;
+	// private GameWorld world;
+
+	private TextureRegion region;
 
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
 	 * 
-	 * @param world
-	 *            The GameWorld this Grid will be placed in.
 	 * @param isEmpty
 	 *            True if the grid should be empty.
 	 */
-	public Grid(GameWorld world, boolean isEmpty) {
+	public Grid(boolean isEmpty) {
+		this.region = new TextureRegion(AssetHandler.getSkin().get("grid", Texture.class));
 		this.random = new Random();
-		this.grid = new AnimatedTile[NTILES];
-		this.tileHandler = new TileHandler(this);
-		this.world = world;
+		this.grid = new Tile[NTILES];
+		// this.tileHandler = new TileHandler(this);
+		// this.world = world;
 		if (!isEmpty) {
 			initGrid();
 		} else {
@@ -100,14 +106,14 @@ public class Grid {
 	 */
 	private void initEmptyGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new AnimatedTile(0);
+			grid[i] = new Tile(i, 0);
 		}
 	}
 
 	/**
 	 * Returns a random value, smaller than 16, indicating a location for a new
-	 * Tile. This new location is always valid, i.e. there is not
-	 * already an Tile there.
+	 * Tile. This new location is always valid, i.e. there is not already an
+	 * Tile there.
 	 * 
 	 * @return A new valid location.
 	 */
@@ -141,7 +147,7 @@ public class Grid {
 	 */
 	public void setTile(int index, int value, boolean isMerged) {
 		grid[index].setValue(value);
-		grid[index].setMerged(isMerged);
+		// grid[index].setMerged(index, isMerged);
 	}
 
 	/**
@@ -149,9 +155,9 @@ public class Grid {
 	 * a new highest value.
 	 */
 	public void update() {
-		for (AnimatedTile t : grid) {
-			t.update();
-		}
+		// for (Tile t : grid) {
+		// t.update();
+		// }
 		updateHighestTile();
 	}
 
@@ -160,9 +166,9 @@ public class Grid {
 	 * reinitializing itself and checking for the new highest value.
 	 */
 	public void restart() {
-		for (AnimatedTile t : grid) {
-			t.reset();
-		}
+		// for (Tile t : grid) {
+		// t.reset();
+		// }
 		initGrid();
 		updateHighestTile();
 	}
@@ -179,33 +185,33 @@ public class Grid {
 	 */
 	public void move(Direction direction) {
 		/* If the game is not in running or continuing state, ignore the moves. */
-		if (world.isLost() || world.isWon()) {
-			return;
-		}
+		// if (world.isLost() || world.isWon()) {
+		// return;
+		// }
 
-		switch (direction) {
-		case LEFT:
-			tileHandler.moveLeft();
-			break;
-		case RIGHT:
-			tileHandler.moveRight();
-			break;
-		case UP:
-			tileHandler.moveUp();
-			break;
-		case DOWN:
-			tileHandler.moveDown();
-			break;
-		default:
-			break;
-		}
-
-		if (tileHandler.isMoveMade()) {
-			world.addScore(tileHandler.getScoreIncrement());
-			setTile(getRandomEmptyLocation(), initialValue(), false);
-		}
-
-		tileHandler.reset();
+		// switch (direction) {
+		// case LEFT:
+		// tileHandler.moveLeft();
+		// break;
+		// case RIGHT:
+		// tileHandler.moveRight();
+		// break;
+		// case UP:
+		// tileHandler.moveUp();
+		// break;
+		// case DOWN:
+		// tileHandler.moveDown();
+		// break;
+		// default:
+		// break;
+		// }
+		//
+		// if (tileHandler.isMoveMade()) {
+		// //world.addScore(tileHandler.getScoreIncrement());
+		// setTile(getRandomEmptyLocation(), initialValue(), false);
+		// }
+		//
+		// tileHandler.reset();
 	}
 
 	/**
@@ -238,10 +244,10 @@ public class Grid {
 				/* Get current Tile value. */
 				int value = grid[index].getValue();
 				/* Get all Tile's neighbors. */
-				List<AnimatedTile> neighbors = getTileNeighbors(index);
+				List<Tile> neighbors = getTileNeighbors(index);
 
 				/* For all neighboring tiles, compare the values. */
-				for (AnimatedTile neighbor : neighbors) {
+				for (Tile neighbor : neighbors) {
 					if (neighbor.getValue() == value
 							|| neighbor.getValue() == 0)
 						moves++;
@@ -259,8 +265,8 @@ public class Grid {
 	 *            The Tile index.
 	 * @return A list of tiles.
 	 */
-	public List<AnimatedTile> getTileNeighbors(int index) {
-		List<AnimatedTile> neighbors = new ArrayList<AnimatedTile>();
+	public List<Tile> getTileNeighbors(int index) {
+		List<Tile> neighbors = new ArrayList<Tile>();
 
 		/*
 		 * Right neighbor: check if the index we're checking is not the right
@@ -299,11 +305,11 @@ public class Grid {
 	}
 
 	/**
-	 * Returns the array containing all the AnimatedTiles.
+	 * Returns the array containing all the Tiles.
 	 * 
-	 * @return The array containing all the AnimatedTiles.
+	 * @return The array containing all the Tiles.
 	 */
-	public AnimatedTile[] getTiles() {
+	public Tile[] getTiles() {
 		return grid;
 	}
 
@@ -312,7 +318,7 @@ public class Grid {
 	 */
 	public void updateHighestTile() {
 		highestTile = 0;
-		for (AnimatedTile t : grid) {
+		for (Tile t : grid) {
 			if (t.getValue() > highestTile)
 				highestTile = t.getValue();
 		}
@@ -327,22 +333,47 @@ public class Grid {
 		return highestTile;
 	}
 
-	/**
-	 * Returns the TileHandler object used by the grid.
-	 * 
-	 * @return The TileHandler object.
-	 */
-	public TileHandler getTileHandler() {
-		return tileHandler;
+	// /**
+	// * Returns the TileHandler object used by the grid.
+	// *
+	// * @return The TileHandler object.
+	// */
+	// public TileHandler getTileHandler() {
+	// return tileHandler;
+	// }
+	//
+	// /**
+	// * Sets the TileHandler object used by the grid.
+	// *
+	// * @param tileHandler
+	// * The TileHandler object to set.
+	// */
+	// public void setTileHandler(TileHandler tileHandler) {
+	// this.tileHandler = tileHandler;
+	// }
+
+	@Override
+	public float getX() {
+		return GRID_X;
 	}
 
-	/**
-	 * Sets the TileHandler object used by the grid.
-	 * 
-	 * @param tileHandler
-	 *            The TileHandler object to set.
-	 */
-	public void setTileHandler(TileHandler tileHandler) {
-		this.tileHandler = tileHandler;
+	@Override
+	public float getY() {
+		return GRID_Y;
+	}
+
+	@Override
+	public float getWidth() {
+		return GRID_WIDTH;
+	}
+
+	@Override
+	public float getHeight() {
+		return GRID_HEIGHT;
+	}
+
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		batch.draw(region, getX(), getY(), getWidth(), getHeight());
 	}
 }

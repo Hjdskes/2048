@@ -1,6 +1,6 @@
 package old.game;
 
-import old.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.AssetHandler;
 import old.handlers.ButtonHandler;
 import old.handlers.PreferenceHandler;
 

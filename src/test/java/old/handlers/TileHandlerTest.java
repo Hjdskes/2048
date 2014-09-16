@@ -3,7 +3,7 @@ package old.handlers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import old.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Grid;
 import old.handlers.TileHandler;
 
 import org.junit.Before;

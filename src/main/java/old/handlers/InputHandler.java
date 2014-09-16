@@ -1,7 +1,7 @@
 package old.handlers;
 
+import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import old.game.GameWorld;
-import old.gameobjects.Grid.Direction;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;

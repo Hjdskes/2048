@@ -8,11 +8,11 @@ import static org.mockito.Mockito.*;
 
 import java.util.List;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import old.game.GameWorld;
 import old.gameobjects.AnimatedTile;
-import old.gameobjects.Grid;
-import old.gameobjects.Tile;
-import old.gameobjects.Grid.Direction;
 import old.handlers.TileHandler;
 
 import org.junit.Before;

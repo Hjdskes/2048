@@ -1,5 +1,7 @@
 package old.gameobjects;
 
+import nl.tudelft.ti2206.gameobjects.Tile;
+
 /**
  * The AnimatedGrid class is a subclass of the Grid class to provide animations.
  * 

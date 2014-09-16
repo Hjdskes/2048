@@ -1,8 +1,8 @@
 package old.handlers;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import old.gameobjects.AnimatedTile;
-import old.gameobjects.Grid;
-import old.gameobjects.Grid.Direction;
 
 /**
  * This class is responsible for moving tiles on the grid.

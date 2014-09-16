@@ -1,7 +1,7 @@
 package old.game;
 
+import nl.tudelft.ti2206.handlers.AssetHandler;
 import old.gameobjects.AnimatedGrid;
-import old.handlers.AssetHandler;
 import old.handlers.ButtonHandler;
 import old.handlers.CoordinateHandler;
 
@@ -28,8 +28,6 @@ public class GameRenderer {
 	private static final int SCORE_HEIGHT = 50;
 	/** A reference to the GameWorld, which is used to interact with the game. */
 	private GameWorld world;
-	/** A reference to the AnimatedGrid. */
-	private AnimatedGrid grid;
 	/** The orthographic camera, to make the scene appear 2D. */
 	private OrthographicCamera cam;
 	/** The SpriteBratch is used to draw all Sprite objects. */
@@ -47,7 +45,6 @@ public class GameRenderer {
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
 		this.world = world;
-		this.grid = world.getGrid();
 
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, gameWidth, gameHeight);
@@ -77,8 +74,6 @@ public class GameRenderer {
 	 * Renders all our sprites.
 	 */
 	private void drawSpriteBatches() {
-		drawGrid();
-		drawTiles();
 		drawScoreTile();
 		drawHighscoreTile();
 		drawHighestTile();
@@ -88,30 +83,6 @@ public class GameRenderer {
 			drawLostOverlay();
 		} else if (world.isWon()) {
 			drawWonOverlay();
-		}
-	}
-
-	/**
-	 * Renders the grid.
-	 */
-	private void drawGrid() {
-		batch.draw(AssetHandler.grid, CoordinateHandler.getGridX(),
-				CoordinateHandler.getGridY(), CoordinateHandler.getGridWidth(),
-				CoordinateHandler.getGridHeight());
-	}
-
-	/**
-	 * Renders the tiles.
-	 */
-	private void drawTiles() {
-		for (int i = 0; i < grid.getTiles().length; i++) {
-			batch.draw(AssetHandler.getTile(grid.getTiles()[i].getValue()),
-					grid.getTileX(i), grid.getTileY(i),
-					grid.getTileWidth(i), grid.getTileHeight(i));
-
-			drawTileValue(CoordinateHandler.getCenterTileX(i),
-					CoordinateHandler.getCenterTileY(i),
-					grid.getTiles()[i].getValue());
 		}
 	}
 

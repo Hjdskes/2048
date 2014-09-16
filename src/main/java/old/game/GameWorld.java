@@ -1,7 +1,7 @@
 package old.game;
 
+import nl.tudelft.ti2206.handlers.AssetHandler;
 import old.gameobjects.AnimatedGrid;
-import old.handlers.AssetHandler;
 import old.handlers.PreferenceHandler;
 import old.handlers.ProgressHandler;
 

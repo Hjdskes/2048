@@ -1,5 +1,6 @@
 package old.handlers;
 
+import nl.tudelft.ti2206.handlers.AssetHandler;
 import old.buttons.ContinueButton;
 import old.buttons.RestartButton;
 import old.game.GameWorld;

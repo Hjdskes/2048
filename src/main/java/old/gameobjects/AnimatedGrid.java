@@ -1,5 +1,6 @@
 package old.gameobjects;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
 import old.game.GameWorld;
 import old.handlers.CoordinateHandler;
 
