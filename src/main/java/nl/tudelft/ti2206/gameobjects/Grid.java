@@ -74,6 +74,7 @@ public class Grid extends Actor {
 	 *            True if the grid should be empty.
 	 */
 	public Grid(boolean isEmpty) {
+		/* Temporary fix to allow headless testing. */
 		if (Gdx.app.getGraphics() != null) {
 			this.region = new TextureRegion(AssetHandler.getSkin().get("grid",
 					Texture.class));

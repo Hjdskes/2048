@@ -45,10 +45,7 @@ public class Tile extends Actor {
 		this.value = value;
 		this.index = index;
 
-		if (Gdx.app.getGraphics() != null) {
-			region = new TextureRegion(AssetHandler.getSkin().getRegion("tile" + value));
-			setSprite();
-		}
+		setSprite();
 	}
 
 	/**
@@ -121,7 +118,10 @@ public class Tile extends Actor {
 	 * value of the Tile.
 	 */
 	public void setSprite() {
-		region.setRegion(AssetHandler.getSkin().getRegion("tile" + this.value));
+		/* Temporary fix to allow headless testing. */
+		if (Gdx.app.getGraphics() != null) {
+			region.setRegion(AssetHandler.getSkin().getRegion("tile" + this.value));
+		}
 	}
 
 	@Override
