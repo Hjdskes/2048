@@ -45,6 +45,7 @@ public class Tile extends Actor {
 		this.value = value;
 		this.index = index;
 
+		region = new TextureRegion();
 		setSprite();
 	}
 
