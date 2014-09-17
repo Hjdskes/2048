@@ -12,17 +12,15 @@ import nl.tudelft.ti2206.gameobjects.Tile;
 public class ProgressHandler {
 	/**
 	 * Calls saveGrid to save the current grid and uses the PreferenceHandler to
-	 * save the current score, highscore and highest tile value ever reached.
+	 * save the current score, high score and highest tile value ever reached.
 	 * 
-	 * @param world
-	 *            The GameWorld to save its' grid, score, highscore and highest
-	 *            tile value ever reached.
+	 * @param grid
+	 *            The Grid to save its' current state.
 	 */
 	public static void saveGame(Grid grid) {
 		int highest = grid.getCurrentHighestTile();
-		// FIXME: use highscore and score instead of highest
-		int highscore = grid.getCurrentHighestTile();
-		int score = grid.getCurrentHighestTile();
+		int highscore = grid.getHighscore();
+		int score = grid.getScore();
 
 		saveGrid(grid);
 		PreferenceHandler.setScore(score);
@@ -36,19 +34,14 @@ public class ProgressHandler {
 	}
 
 	/**
-	 * Loads the saved grid, score, highscore and highest tile value ever
+	 * Loads the saved grid, score, high score and highest tile value ever
 	 * reached.
-	 * 
-	 * @param world
-	 *            The world to load all the values into.
 	 */
 	public static Grid loadGame() {
-		// FIXME: use setHighscore and setScore
-		// grid.setScore(PreferenceHandler.getScore());
-		// world.setOldHighest(PreferenceHandler.getHighestTile());
-		// world.setOldHighscore(PreferenceHandler.getHighscore());
 		Grid grid = loadGrid();
 		grid.setHighestTile(PreferenceHandler.getHighestTile());
+		grid.setHighscore(PreferenceHandler.getHighscore());
+		grid.setScore(PreferenceHandler.getScore());
 		return grid;
 	}
 
@@ -67,15 +60,12 @@ public class ProgressHandler {
 				state += index + "," + tiles[index].getValue() + "\n";
 			}
 		}
-
+		
 		PreferenceHandler.setGrid(state);
 	}
 
 	/**
-	 * Loads the saved grid. If no grid is saved, returns a default grid.
-	 * 
-	 * @param world
-	 *            The World to load the AnimatedGrid into.
+	 * Loads the saved grid. If no grid is saved, returns a default grid.s
 	 */
 	private static Grid loadGrid() {
 		String filledTiles = PreferenceHandler.getGrid();

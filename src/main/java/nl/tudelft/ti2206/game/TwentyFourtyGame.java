@@ -15,14 +15,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class TwentyFourtyGame implements ApplicationListener {
 
-	private static final int GAME_WIDTH = 600;
-	private static final int GAME_HEIGHT = 600;
+	/** The width of the game */
+	public static final int GAME_WIDTH = 600;
+	/** The height of the game */
+	public static final int GAME_HEIGHT = 600;
 
 	private Stage stage;
 	private Group group;
-
-	public TwentyFourtyGame() {
-	}
 
 	@Override
 	public void create() {
@@ -46,6 +45,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 			group.addActor(tiles[i].getLabel());
 		}
 
+		// add grid and tiles
 		stage.addActor(group);
 		// add buttons
 		stage.addActor(ButtonHandler.getRestartButton());

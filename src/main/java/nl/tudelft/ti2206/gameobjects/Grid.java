@@ -62,6 +62,10 @@ public class Grid extends Actor {
 	// private TileHandler tileHandler;
 	/** Keeps track of the highest Tile value in the current game. */
 	private int highestTile;
+	/** Keeps track of the current score */
+	private int score;
+	/** Keeps track of the current high score */
+	private int highScore;
 
 	private TextureRegion region;
 
@@ -80,7 +84,6 @@ public class Grid extends Actor {
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
 		// this.tileHandler = new TileHandler(this);
-		// this.world = world;
 		if (!isEmpty) {
 			initGrid();
 		} else {
@@ -145,8 +148,6 @@ public class Grid extends Actor {
 	 *            The Tile's index on the grid.
 	 * @param value
 	 *            The Tile's value (should be a multiple of 2 or 0).
-	 * @param isMerged
-	 *            True if the Tile is merged.
 	 */
 	public void setTile(int index, int value) {
 		grid[index].setValue(value);
@@ -216,6 +217,17 @@ public class Grid extends Actor {
 		// }
 		//
 		// tileHandler.reset();
+	}
+
+	/**
+	 * Updates the highest Tile value present in the grid.
+	 */
+	public void updateHighestTile() {
+		highestTile = 0;
+		for (Tile t : grid) {
+			if (t.getValue() > highestTile)
+				highestTile = t.getValue();
+		}
 	}
 
 	/**
@@ -318,23 +330,29 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Updates the highest Tile value present in the grid.
-	 */
-	public void updateHighestTile() {
-		highestTile = 0;
-		for (Tile t : grid) {
-			if (t.getValue() > highestTile)
-				highestTile = t.getValue();
-		}
-	}
-
-	/**
 	 * Returns the highest Tile value present in the grid.
 	 * 
 	 * @return The highest Tile value.
 	 */
 	public int getCurrentHighestTile() {
 		return highestTile;
+	}
+
+	/**
+	 * 
+	 * @return The current score.
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * 
+	 * @return The current high score. Is not necessarily higher than the saved
+	 *         high score. This is checked when saving the game.
+	 */
+	public int getHighscore() {
+		return highScore;
 	}
 
 	// /**
@@ -376,16 +394,42 @@ public class Grid extends Actor {
 		return GRID_HEIGHT;
 	}
 
-	public void setHighestTile(int highest) {
-		this.highestTile = highest;
-	}
-	
+	/**
+	 * Sets the values in the grid to the values provided.
+	 * 
+	 * @param values
+	 *            The new tile values.
+	 */
 	public void setTileValues(int[] values) {
 		for (int i = 0; i < grid.length; i++) {
 			grid[i].setValue(values[i]);
 		}
 	}
-	
+
+	/**
+	 * Sets the highest tile to the value provided.
+	 * 
+	 * @param highest
+	 *            The new highest tile.
+	 */
+	public void setHighestTile(int highest) {
+		this.highestTile = highest;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	/**
+	 * Sets the current high score to the value provided.
+	 * 
+	 * @param highScore
+	 *            The new high score.
+	 */
+	public void setHighscore(int highScore) {
+		this.highScore = highScore;
+	}
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());

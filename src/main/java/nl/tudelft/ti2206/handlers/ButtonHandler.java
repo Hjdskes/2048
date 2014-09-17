@@ -1,17 +1,23 @@
 package nl.tudelft.ti2206.handlers;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class ButtonHandler {
 
-	private static final int GAME_WIDTH = 600;
+	/** The width of the game */
+	private static final int GAME_WIDTH = TwentyFourtyGame.GAME_WIDTH;
+	/** The gap between the edge of the game and the button. */
 	private static final int GAP = 15;
+	/** The button width */
 	private static final int BUTTON_WIDTH = 140;
-	// private static final int BUTTON_HEIGHT = 70;
 
+	/** The button used to continue playing after the game is won. */
 	private static Button continueButton;
+	/** The button used to restart the game. */
 	private static Button restartButton;
 
 	/**
