@@ -76,8 +76,8 @@ public class GridTest {
 	 */
 	@Test
 	public void testGetHighestTile() {
-		grid.setTile(0, 2048, false);
-		grid.setTile(1, 4096, false);
+		grid.setTile(0, 2048);
+		grid.setTile(1, 4096);
 		grid.updateHighestTile();
 		assertEquals(4096, grid.getCurrentHighestTile());
 	}
@@ -157,7 +157,7 @@ public class GridTest {
 				FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO };
 
 		for (int i = 0; i < grid_noMoves.length; i++) {
-			grid.setTile(i, grid_noMoves[i], false);
+			grid.setTile(i, grid_noMoves[i]);
 		}
 
 		assertEquals(0, grid.getPossibleMoves());
@@ -180,7 +180,7 @@ public class GridTest {
 
 		// initialize grid:
 		for (int i = 0; i < grid_noMoves.length; i++)
-			grid.setTile(i, grid_noMoves[i], false);
+			grid.setTile(i, grid_noMoves[i]);
 
 		// get neighbors for tile at index 5 (should be 4 in total)
 		List<Tile> neighbours = grid.getTileNeighbors(5);
@@ -250,8 +250,8 @@ public class GridTest {
 		 * Set two extra tiles on the grid (they can possible overlap, so no
 		 * assert is possible here) and confirm the highest tile.
 		 */
-		grid.setTile(4, 2048, false);
-		grid.setTile(3, 4096, false);
+		grid.setTile(4, 2048);
+		grid.setTile(3, 4096);
 		grid.updateHighestTile();
 		assertEquals(4096, grid.getCurrentHighestTile());
 

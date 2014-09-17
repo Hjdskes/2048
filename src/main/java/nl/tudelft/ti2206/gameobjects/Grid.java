@@ -62,8 +62,6 @@ public class Grid extends Actor {
 	// private TileHandler tileHandler;
 	/** Keeps track of the highest Tile value in the current game. */
 	private int highestTile;
-	/** A reference to the GameWorld. */
-	// private GameWorld world;
 
 	private TextureRegion region;
 
@@ -150,7 +148,7 @@ public class Grid extends Actor {
 	 * @param isMerged
 	 *            True if the Tile is merged.
 	 */
-	public void setTile(int index, int value, boolean isMerged) {
+	public void setTile(int index, int value) {
 		grid[index].setValue(value);
 		// grid[index].setMerged(index, isMerged);
 	}
@@ -159,7 +157,8 @@ public class Grid extends Actor {
 	 * Updates the grid, by updating all the Tiles it contains and checking for
 	 * a new highest value.
 	 */
-	public void update() {
+	@Override
+	public void act(float delta) {
 		// for (Tile t : grid) {
 		// t.update();
 		// }
@@ -377,6 +376,16 @@ public class Grid extends Actor {
 		return GRID_HEIGHT;
 	}
 
+	public void setHighestTile(int highest) {
+		this.highestTile = highest;
+	}
+	
+	public void setTileValues(int[] values) {
+		for (int i = 0; i < grid.length; i++) {
+			grid[i].setValue(values[i]);
+		}
+	}
+	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());

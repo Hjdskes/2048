@@ -4,6 +4,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ButtonHandler;
+import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -33,8 +34,12 @@ public class TwentyFourtyGame implements ApplicationListener {
 		ButtonHandler.load();
 
 		group = new Group();
-		Grid grid = new Grid(false);
+		
+		Grid grid = ProgressHandler.loadGame();
+		// set the name so the actor can be found in the group.
+		grid.setName("Grid");
 		group.addActor(grid);
+		
 		Tile[] tiles = grid.getTiles();
 		for (int i = 0; i < tiles.length; i++) {
 			group.addActor(tiles[i]);
@@ -49,6 +54,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 	@Override
 	public void dispose() {
 		AssetHandler.dispose();
+		ProgressHandler.saveGame((Grid) group.findActor("Grid"));
 		stage.dispose();
 	}
 
