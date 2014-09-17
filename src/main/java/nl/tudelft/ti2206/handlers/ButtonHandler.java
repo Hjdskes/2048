@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.Game;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 public class ButtonHandler {
 
 	/** The width of the game */
-	private static final int GAME_WIDTH = TwentyFourtyGame.GAME_WIDTH;
+	private static final int GAME_WIDTH = Game.GAME_WIDTH;
 	/** The gap between the edge of the game and the button. */
 	private static final int GAP = 15;
 	/** The button width */

@@ -62,6 +62,6 @@ public class Launcher {
 	 * Launches a new LwjglApplication, containing the game.
 	 */
 	public void launch() {
-		new LwjglApplication(new TwentyFourtyGame(), config);
+		new LwjglApplication(new Game(), config);
 	}
 }

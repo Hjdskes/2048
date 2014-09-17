@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.OverlayDisplay;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -14,8 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class TwentyFourtyGame implements ApplicationListener {
+public class Game implements ApplicationListener {
 
+	public static enum GameState {
+		RUNNING, LOST, WON, CONTINUEING
+	}
+	
+	private static GameState curState;
+	
 	/** The width of the game */
 	public static final int GAME_WIDTH = 600;
 	/** The height of the game */
@@ -24,6 +31,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 	private Stage stage;
 	private Group group;
 	private ScoreDisplay scores;
+	private OverlayDisplay overlays;
 
 	@Override
 	public void create() {
@@ -48,7 +56,10 @@ public class TwentyFourtyGame implements ApplicationListener {
 		}
 
 		scores = new ScoreDisplay(grid);
+		overlays = new OverlayDisplay();
+		// add score displays and overlay displays
 		group.addActor(scores);
+		group.addActor(overlays);
 		// add grid and tiles
 		stage.addActor(group);
 		// add buttons
@@ -84,5 +95,13 @@ public class TwentyFourtyGame implements ApplicationListener {
 
 	@Override
 	public void resume() {
+	}
+	
+	public static GameState getState() {
+		return curState;
+	}
+	
+	public static void setState(GameState state) {
+		curState = state;
 	}
 }

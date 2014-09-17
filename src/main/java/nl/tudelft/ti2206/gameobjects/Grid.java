@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import nl.tudelft.ti2206.game.Game;
+import nl.tudelft.ti2206.game.Game.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.Gdx;
@@ -11,8 +13,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
-//import old.handlers.TileHandler;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -89,6 +89,9 @@ public class Grid extends Actor {
 		} else {
 			initEmptyGrid();
 		}
+
+		// after loading the grid, start the game.
+		Game.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -164,6 +167,10 @@ public class Grid extends Actor {
 		// t.update();
 		// }
 		updateHighestTile();
+		if (Game.getState() == GameState.RUNNING && highestTile == 2048)
+			Game.setState(GameState.WON);
+		if (Game.getState() == GameState.RUNNING && getPossibleMoves() == 0)
+			Game.setState(GameState.LOST);
 	}
 
 	/**
