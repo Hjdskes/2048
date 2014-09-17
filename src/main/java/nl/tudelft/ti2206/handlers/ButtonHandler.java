@@ -24,7 +24,14 @@ public class ButtonHandler {
 	 * Loads all buttons and sets their event listeners and locations.
 	 */
 	public static void load() {
-		// init the restart button
+		initRestartButton();
+		initContinueButton();
+	}
+	
+	/**
+	 * Initializes the restart button
+	 */
+	private static void initRestartButton() {
 		restartButton = new Button(AssetHandler.getSkin()
 				.getDrawable("newgame"));
 		restartButton.addListener(new ChangeListener() {
@@ -35,12 +42,14 @@ public class ButtonHandler {
 		});
 		restartButton.setX(GAME_WIDTH / 2 - BUTTON_WIDTH / 2);
 		restartButton.setY(GAP);
-
+	}
+	
+	private static void initContinueButton() {
 		continueButton = new Button(AssetHandler.getSkin().getDrawable(
 				"continue"));
 		// TODO: Set location
 	}
-
+	
 	/**
 	 * 
 	 * @return The continue button
