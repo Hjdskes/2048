@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ButtonHandler;
@@ -22,6 +23,7 @@ public class TwentyFourtyGame implements ApplicationListener {
 
 	private Stage stage;
 	private Group group;
+	private ScoreDisplay scores;
 
 	@Override
 	public void create() {
@@ -33,18 +35,20 @@ public class TwentyFourtyGame implements ApplicationListener {
 		ButtonHandler.load();
 
 		group = new Group();
-		
+
 		Grid grid = ProgressHandler.loadGame();
 		// set the name so the actor can be found in the group.
 		grid.setName("Grid");
 		group.addActor(grid);
-		
+
 		Tile[] tiles = grid.getTiles();
 		for (int i = 0; i < tiles.length; i++) {
 			group.addActor(tiles[i]);
 			group.addActor(tiles[i].getLabel());
 		}
 
+		scores = new ScoreDisplay(grid);
+		group.addActor(scores);
 		// add grid and tiles
 		stage.addActor(group);
 		// add buttons

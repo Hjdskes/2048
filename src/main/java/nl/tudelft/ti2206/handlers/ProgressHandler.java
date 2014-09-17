@@ -60,7 +60,7 @@ public class ProgressHandler {
 				state += index + "," + tiles[index].getValue() + "\n";
 			}
 		}
-		
+
 		PreferenceHandler.setGrid(state);
 	}
 
