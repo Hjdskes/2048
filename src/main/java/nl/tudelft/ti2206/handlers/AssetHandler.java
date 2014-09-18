@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
- * The AssetHandler is used to load and hold all the assets (textures and
- * fonts) the game requires.
+ * The AssetHandler is used to load and hold all the assets (textures and fonts)
+ * the game requires.
  * 
  * @author group-21
  */
@@ -17,7 +17,7 @@ public class AssetHandler {
 	public static BitmapFont font, whiteFont;
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
-			t1024, t2048, empty, score, highscore, highest, newgame,
+			t1024, t2048, t0, score, highscore, highest, newgame,
 			continuebutton, lost, won;
 	/** The width of the game window. */
 	private static final int GAME_WIDTH = 600;
@@ -56,26 +56,39 @@ public class AssetHandler {
 		manager.load("src/main/resources/images/lostoverlay.png", Texture.class);
 		manager.load("src/main/resources/images/wonoverlay.png", Texture.class);
 		manager.load("src/main/resources/images/grid.png", Texture.class);
-		manager.load("src/main/resources/images/tile2.png", Texture.class);
-		manager.load("src/main/resources/images/tile4.png", Texture.class);
-		manager.load("src/main/resources/images/tile8.png", Texture.class);
-		manager.load("src/main/resources/images/tile16.png", Texture.class);
-		manager.load("src/main/resources/images/tile32.png", Texture.class);
-		manager.load("src/main/resources/images/tile64.png", Texture.class);
-		manager.load("src/main/resources/images/tile128.png", Texture.class);
-		manager.load("src/main/resources/images/tile256.png", Texture.class);
-		manager.load("src/main/resources/images/tile512.png", Texture.class);
-		manager.load("src/main/resources/images/tile1024.png", Texture.class);
-		manager.load("src/main/resources/images/tile2048.png", Texture.class);
-		manager.load("src/main/resources/images/empty.png", Texture.class);
-		manager.load("src/main/resources/images/score.png", Texture.class);
-		manager.load("src/main/resources/images/highscore.png", Texture.class);
-		manager.load("src/main/resources/images/highest.png", Texture.class);
+		manager.load("src/main/resources/images/tiles/tile2.png", Texture.class);
+		manager.load("src/main/resources/images/tiles/tile4.png", Texture.class);
+		manager.load("src/main/resources/images/tiles/tile8.png", Texture.class);
+		manager.load("src/main/resources/images/tiles/tile16.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile32.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile64.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile128.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile256.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile512.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile1024.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile2048.png",
+				Texture.class);
+		manager.load("src/main/resources/images/tiles/tile0.png", Texture.class);
+		manager.load("src/main/resources/images/scoretiles/score.png",
+				Texture.class);
+		manager.load("src/main/resources/images/scoretiles/highscore.png",
+				Texture.class);
+		manager.load("src/main/resources/images/scoretiles/highest.png",
+				Texture.class);
 		manager.load("src/main/resources/fonts/tahoma.fnt", BitmapFont.class);
 		manager.load("src/main/resources/fonts/tahomaWhite.fnt",
 				BitmapFont.class);
-		manager.load("src/main/resources/images/newgame.png", Texture.class);
-		manager.load("src/main/resources/images/continue.png", Texture.class);
+		manager.load("src/main/resources/images/buttons/newgame.png",
+				Texture.class);
+		manager.load("src/main/resources/images/buttons/continue.png",
+				Texture.class);
 
 		/*
 		 * Instruct the asset manager to load everything in its queue, block
@@ -95,45 +108,45 @@ public class AssetHandler {
 	 * Creates all sprites for the tiles.
 	 */
 	private static void getTiles() {
-		t2 = new Sprite(manager.get("src/main/resources/images/tile2.png",
+		t0 = new Sprite(manager.get("src/main/resources/images/tiles/tile0.png",
 				Texture.class));
-		t4 = new Sprite(manager.get("src/main/resources/images/tile4.png",
-				Texture.class));
-		t8 = new Sprite(manager.get("src/main/resources/images/tile8.png",
-				Texture.class));
-		t16 = new Sprite(manager.get("src/main/resources/images/tile16.png",
-				Texture.class));
-		t32 = new Sprite(manager.get("src/main/resources/images/tile32.png",
-				Texture.class));
-		t64 = new Sprite(manager.get("src/main/resources/images/tile64.png",
-				Texture.class));
-		t128 = new Sprite(manager.get("src/main/resources/images/tile128.png",
-				Texture.class));
-		t256 = new Sprite(manager.get("src/main/resources/images/tile256.png",
-				Texture.class));
-		t512 = new Sprite(manager.get("src/main/resources/images/tile512.png",
-				Texture.class));
+		t2 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile2.png", Texture.class));
+		t4 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile4.png", Texture.class));
+		t8 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile8.png", Texture.class));
+		t16 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile16.png", Texture.class));
+		t32 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile32.png", Texture.class));
+		t64 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile64.png", Texture.class));
+		t128 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile128.png", Texture.class));
+		t256 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile256.png", Texture.class));
+		t512 = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile512.png", Texture.class));
 		t1024 = new Sprite(manager.get(
-				"src/main/resources/images/tile1024.png", Texture.class));
+				"src/main/resources/images/tiles/tile1024.png", Texture.class));
 		t2048 = new Sprite(manager.get(
-				"src/main/resources/images/tile2048.png", Texture.class));
-		empty = new Sprite(manager.get("src/main/resources/images/empty.png",
-				Texture.class));
+				"src/main/resources/images/tiles/tile2048.png", Texture.class));
 		grid = new Sprite(manager.get("src/main/resources/images/grid.png",
 				Texture.class));
 	}
 
 	/**
-	 * Creates and positions all sprites for the three scores (current score, highscore
-	 * and highest tile value ever reached).
+	 * Creates and positions all sprites for the three scores (current score,
+	 * highscore and highest tile value ever reached).
 	 */
 	private static void getScores() {
-		score = new Sprite(manager.get("src/main/resources/images/score.png",
+		score = new Sprite(manager.get("src/main/resources/images/scoretiles/score.png",
 				Texture.class));
 		highscore = new Sprite(manager.get(
-				"src/main/resources/images/highscore.png", Texture.class));
+				"src/main/resources/images/scoretiles/highscore.png", Texture.class));
 		highest = new Sprite(manager.get(
-				"src/main/resources/images/highest.png", Texture.class));
+				"src/main/resources/images/scoretiles/highest.png", Texture.class));
 
 		setAssetLocation(score, BASE_Y, GAP, false, true);
 		setAssetLocation(highscore, AssetHandler.score.getWidth() + BASE_X
@@ -147,12 +160,12 @@ public class AssetHandler {
 	 */
 	private static void getButtons() {
 		newgame = new Sprite(manager.get(
-				"src/main/resources/images/newgame.png", Texture.class));
+				"src/main/resources/images/buttons/newgame.png", Texture.class));
 		setAssetLocation(newgame, GAME_WIDTH / 2 - newgame.getWidth() / 2,
 				GAME_HEIGHT - GAP - newgame.getHeight(), false, true);
 
 		continuebutton = new Sprite(manager.get(
-				"src/main/resources/images/continue.png", Texture.class));
+				"src/main/resources/images/buttons/continue.png", Texture.class));
 		setAssetLocation(continuebutton,
 				GAME_WIDTH / 2 - continuebutton.getWidth() / 2, GAME_HEIGHT
 						- GAP * 3 - continuebutton.getHeight() * 2, false, true);
@@ -237,7 +250,7 @@ public class AssetHandler {
 		case 2048:
 			return t2048;
 		default:
-			return empty;
+			return t0;
 		}
 	}
 

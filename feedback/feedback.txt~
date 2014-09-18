@@ -1,0 +1,38 @@
+Your requirements could be slightly more verbose, but I like their preciseness and that you have clearly taken my feedback into consideration. Good job!
+
+I love your game! It contains nothing more than it must, the pop-up animation of the tiles are beautiful and the user interface is almost indistinguishable from the original 2048. The highscore works nicely even across reboots. Excellent!
+
+Formatting/Naming/Comments: Generally very well done and a lot of effort went into polishing it, which I highly value. Some points to improve your work: Your java doc is redundant:
+	/**
+	 * Returns the Preferences object.
+	 * 
+	 * @return The Preferences object.
+	 */
+
+Why not only @return or Returns ... ? You can increase readability by leaving empty spaces in between field declarations:
+	/** The brown font. */
+	private static final BitmapFont BROWN_F = AssetHandler.font;
+	/** The white font. */
+	private static final BitmapFont WHITE_F = AssetHandler.whiteFont;
+	/** The gap between the top of the game window and the score text. */
+	private static final int SCORE_HEIGHT = 50;
+	/** A reference to the GameWorld, which is used to interact with the game. */
+	private GameWorld world;
+	/** A reference to the AnimatedGrid. */
+	private AnimatedGrid grid;
+	/** The orthographic camera, to make the scene appear 2D. */
+	private OrthographicCamera cam;
+	/** The SpriteBratch is used to draw all Sprite objects. */
+	private SpriteBatch batch;
+
+Remove the  * @author group-21 tags, this is obvious (there are many good reasons not to mention the author of a particular piece of code in a comment, besides). 
+
+
+If you want to even further improve your already good git commit messages, here is a guide: https://wiki.openstack.org/wiki/GitCommitMessages
+and probably more relevant in your case: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+
+
+Testing: Well done!
+
+
+An overall remark: I am very happy with your work.
