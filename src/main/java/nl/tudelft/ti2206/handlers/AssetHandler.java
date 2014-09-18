@@ -106,30 +106,11 @@ public class AssetHandler {
 	 * Creates all sprites for the tiles.
 	 */
 	private static void getTiles() {
-		sprites[0] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile0.png", Texture.class));
-		sprites[1] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile2.png", Texture.class));
-		sprites[2] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile4.png", Texture.class));
-		sprites[3] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile8.png", Texture.class));
-		sprites[4] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile16.png", Texture.class));
-		sprites[5] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile32.png", Texture.class));
-		sprites[6] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile64.png", Texture.class));
-		sprites[7] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile128.png", Texture.class));
-		sprites[8] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile256.png", Texture.class));
-		sprites[9] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile512.png", Texture.class));
-		sprites[10] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile1024.png", Texture.class));
-		sprites[11] = new Sprite(manager.get(
-				"src/main/resources/images/tiles/tile2048.png", Texture.class));
+		for (int i = 0; i < 12; i++) {
+			sprites[i] = new Sprite(manager.get(
+					"src/main/resources/images/tiles/tile" + Math.pow(i, 2)
+							+ ".png", Texture.class));
+		}
 
 		grid = new Sprite(manager.get("src/main/resources/images/grid.png",
 				Texture.class));
