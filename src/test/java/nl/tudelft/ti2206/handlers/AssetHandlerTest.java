@@ -21,14 +21,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * A test class for the AssetHandler.
- * 
- * @author group-21
  */
 public class AssetHandlerTest {
 	/** A mock for the AssetManager object. */
 	private static AssetManager manager;
+
 	/** A mock for the Texture object. */
 	private static Texture texture;
+
 	/** A mock for the BitmapFont object. */
 	private static BitmapFont font;
 

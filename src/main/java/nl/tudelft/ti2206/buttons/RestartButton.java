@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * A button to restart the game.
- * 
- * @author group-21
  */
 public class RestartButton extends SimpleButton {
 	/**

@@ -9,33 +9,36 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 /**
  * The AssetHandler is used to load and hold all the assets (textures and fonts)
  * the game requires.
- * 
- * @author group-21
  */
 public class AssetHandler {
 	/** The font used in the game, in two colors. */
 	public static BitmapFont font, whiteFont;
+
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
 			t1024, t2048, t0, score, highscore, highest, newgame,
 			continuebutton, lost, won;
+
 	/** The width of the game window. */
 	private static final int GAME_WIDTH = 600;
+
 	/** The height of the game window. */
 	private static final int GAME_HEIGHT = 600;
+
 	/** The width of a gap, which is between all the tiles. */
 	private static final int GAP = 15;
+
 	/** */
 	private static final int BASE_X = 100;
+
 	/** */
 	private static final int BASE_Y = 100;
+
 	/** The AssetManager is used to load and get all our textures and font. */
 	private static AssetManager manager = new AssetManager();
 
 	/**
-	 * Checks if the manager is done loading all the textures and font.
-	 * 
-	 * @return true If the manager is done, false otherwise.
+	 * @return True if the manager is done, false otherwise.
 	 */
 	public static boolean isLibraryInitialized() {
 		/* The check for Gdx.app is required to test on headless mode. */

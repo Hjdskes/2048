@@ -9,8 +9,6 @@ import nl.tudelft.ti2206.handlers.ProgressHandler;
  * 
  * It is created from GameScreen and gets updated through the
  * GameScreen.render() method which is actually the game loop.
- * 
- * @author group-21
  */
 public class GameWorld {
 	/** Enumeration indicating what state the game is currently in. */
@@ -20,12 +18,16 @@ public class GameWorld {
 
 	/** The current game score. */
 	private int score;
+
 	/** The highscore at the time of launching the game. */
 	private int oldHighscore;
+
 	/** The highest tile value ever reached at the time of launching the game. */
 	private int oldHighestTile;
+
 	/** The current grid in the game. */
 	private DrawableGrid grid;
+
 	/** The state the game is currently in. */
 	private GameState state;
 
@@ -47,9 +49,6 @@ public class GameWorld {
 
 	/**
 	 * Updates the game objects. This method will be called every render.
-	 * 
-	 * @param delta
-	 *            The time in milliseconds since the last render.
 	 */
 	public void update() {
 		/* Tell the grid to update its objects. */
@@ -68,61 +67,6 @@ public class GameWorld {
 	}
 
 	/**
-	 * Sets the current game state.
-	 * 
-	 * @param state
-	 *            The new game state.
-	 */
-	public void setGameState(GameState state) {
-		this.state = state;
-	}
-
-	/**
-	 * Returns the current game state.
-	 * 
-	 * @return The current game state.
-	 */
-	public GameState getGameState() {
-		return state;
-	}
-
-	/**
-	 * Returns true if the game is currently running.
-	 * 
-	 * @return True if the game is currently running.
-	 */
-	public boolean isRunning() {
-		return (state == GameState.RUNNING);
-	}
-
-	/**
-	 * Returns true if the current game is lost.
-	 * 
-	 * @return True if the current game is lost.
-	 */
-	public boolean isLost() {
-		return (state == GameState.LOST);
-	}
-
-	/**
-	 * Returns true if the current game is won.
-	 * 
-	 * @return True if the current game is won.
-	 */
-	public boolean isWon() {
-		return (state == GameState.WON);
-	}
-
-	/**
-	 * Returns true if the current game is in continuing state.
-	 * 
-	 * @return True if game is in continuing state.
-	 */
-	public boolean isContinuing() {
-		return (state == GameState.CONTINUING);
-	}
-
-	/**
 	 * Restarts the game.
 	 */
 	public void restart() {
@@ -137,8 +81,61 @@ public class GameWorld {
 	}
 
 	/**
-	 * Returns the current game score.
+	 * Adds points to current game's score.
 	 * 
+	 * @param increment
+	 *            The value to add.
+	 */
+	public void addScore(int increment) {
+		score += increment;
+	}
+
+	/**
+	 * @return True if the game is currently running.
+	 */
+	public boolean isRunning() {
+		return (state == GameState.RUNNING);
+	}
+
+	/**
+	 * @return True if the current game is lost.
+	 */
+	public boolean isLost() {
+		return (state == GameState.LOST);
+	}
+
+	/**
+	 * @return True if the current game is won.
+	 */
+	public boolean isWon() {
+		return (state == GameState.WON);
+	}
+
+	/**
+	 * @return True if game is in continuing state.
+	 */
+	public boolean isContinuing() {
+		return (state == GameState.CONTINUING);
+	}
+
+	/**
+	 * @return The current game state.
+	 */
+	public GameState getGameState() {
+		return state;
+	}
+
+	/**
+	 * Sets the current game state.
+	 * 
+	 * @param state
+	 *            The new game state.
+	 */
+	public void setGameState(GameState state) {
+		this.state = state;
+	}
+
+	/**
 	 * @return The current score.
 	 */
 	public int getScore() {
@@ -156,22 +153,10 @@ public class GameWorld {
 	}
 
 	/**
-	 * Returns the current highscore.
-	 * 
 	 * @return The current highscore.
 	 */
 	public int getHighscore() {
 		return oldHighscore > score ? oldHighscore : score;
-	}
-
-	/**
-	 * Returns the currently highest value.
-	 * 
-	 * @return The currently highest value.
-	 */
-	public int getHighestTile() {
-		return oldHighestTile > grid.getCurrentHighestTile() ? oldHighestTile
-				: grid.getCurrentHighestTile();
 	}
 
 	/**
@@ -182,6 +167,14 @@ public class GameWorld {
 	 */
 	public void setOldHighscore(int oldHighscore) {
 		this.oldHighscore = oldHighscore;
+	}
+
+	/**
+	 * @return The currently highest value.
+	 */
+	public int getHighestTile() {
+		return oldHighestTile > grid.getCurrentHighestTile() ? oldHighestTile
+				: grid.getCurrentHighestTile();
 	}
 
 	/**
@@ -197,8 +190,6 @@ public class GameWorld {
 	}
 
 	/**
-	 * Returns the current game's grid.
-	 * 
 	 * @return The current game's grid.
 	 */
 	public DrawableGrid getGrid() {
@@ -213,15 +204,5 @@ public class GameWorld {
 	 */
 	public void setGrid(DrawableGrid grid) {
 		this.grid = grid;
-	}
-
-	/**
-	 * Adds points to current game's score.
-	 * 
-	 * @param increment
-	 *            The value to add.
-	 */
-	public void addScore(int increment) {
-		score += increment;
 	}
 }

@@ -7,8 +7,6 @@ import com.badlogic.gdx.Preferences;
  * The PreferenceHandler is used to control the Preferences. These are used to
  * save and load the highscore, the highest tile value ever reached and the
  * current game (the grid and the current score).
- * 
- * @author group-21
  */
 public class PreferenceHandler {
 	/** The Preferences object to save and load everything. */
@@ -43,8 +41,6 @@ public class PreferenceHandler {
 	}
 
 	/**
-	 * Returns the score saved from the previous game.
-	 * 
 	 * @return The score saved from the previous game.
 	 */
 	public static int getScore() {
@@ -63,8 +59,6 @@ public class PreferenceHandler {
 	}
 
 	/**
-	 * Returns the highscore.
-	 * 
 	 * @return The highscore.
 	 */
 	public static int getHighscore() {
@@ -83,8 +77,6 @@ public class PreferenceHandler {
 	}
 
 	/**
-	 * Returns the value of the highest tile ever reached.
-	 * 
 	 * @return The value of the highest tile ever reached.
 	 */
 	public static int getHighestTile() {
@@ -102,7 +94,6 @@ public class PreferenceHandler {
 	}
 
 	/**
-	 * Returns the grid saved from the previous game.
 	 * @return The grid saved from the previous game.
 	 */
 	public static String getGrid() {

@@ -11,11 +11,8 @@ import org.junit.Test;
 
 /**
  * A test class for the ProgressHandler.
- * 
- * @author group-21
  */
 public class ProgressHandlerTest {
-
 	private static GameWorld world;
 	private DrawableGrid grid;
 

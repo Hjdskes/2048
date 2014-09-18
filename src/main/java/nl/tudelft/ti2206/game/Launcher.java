@@ -6,16 +6,16 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
  * This class launches an instance of TwentyFourtyGame.
- * 
- * @author group-21
  */
 public class Launcher {
 	/** The width of the game window. */
 	private static final int WIDTH = 600;
+
 	/** The height of the game window. */
 	private static final int HEIGHT = 600;
+
 	/** The configuration for the game window. */
-	LwjglApplicationConfiguration config;
+	private LwjglApplicationConfiguration config;
 
 	/**
 	 * Main entry point for the game.

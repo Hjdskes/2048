@@ -9,8 +9,6 @@ import org.junit.Test;
 
 /**
  * A test class for the PreferenceHandler.
- * 
- * @author group-21
  */
 public class PreferenceHandlerTest {
 

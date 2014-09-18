@@ -17,14 +17,14 @@ import com.badlogic.gdx.Input.Keys;
 
 /**
  * Test class for the InputHandler.
- * 
- * @author group-21
  */
 public class InputHandlerTest {
 	/** The object under test. */
 	private static InputHandler handler;
+
 	/** A mock to verify behavior. */
 	private static GameWorld world;
+
 	/** A mock to verify behavior. */
 	private static DrawableGrid grid;
 

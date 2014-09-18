@@ -7,8 +7,6 @@ import org.junit.Test;
 
 /**
  * Test suite for the AnimatedTile class.
- *
- * @author group-21
  */
 public class AnimatedTileTest {
 	/** The object under test. */

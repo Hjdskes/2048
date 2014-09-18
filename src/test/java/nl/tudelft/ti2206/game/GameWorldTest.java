@@ -14,12 +14,11 @@ import static org.mockito.Mockito.*;
 
 /**
  * Test suite for the GameWorld class.
- *
- * @author group-21
  */
 public class GameWorldTest {
 	/** A mock for the AnimatedGrid object. */
 	private DrawableGrid grid;
+
 	/** The object under test. */
 	private GameWorld world;
 

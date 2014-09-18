@@ -9,8 +9,6 @@ import com.badlogic.gdx.InputProcessor;
 /**
  * The InputHandler processes input events, from for example the keyboard or the mice.
  * It delegates these events to the appropriate abstraction classes. Currently this is only the ButtonHandler.
- * 
- * @author group-21
  */
 public class InputHandler implements InputProcessor {
 	/**
@@ -30,7 +28,6 @@ public class InputHandler implements InputProcessor {
 		this.world = world;
 	}
 
-	@Override
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:

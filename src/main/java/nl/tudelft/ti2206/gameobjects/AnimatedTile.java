@@ -2,16 +2,17 @@ package nl.tudelft.ti2206.gameobjects;
 
 /**
  * The AnimatedGrid class is a subclass of the Grid class to provide animations.
- * 
- * @author group-21
  */
 public class AnimatedTile extends Tile {
 	/** The dimensions of the Tile. */
 	private static final int DIMENSION = 81;
+
 	/** The current size of the Tile. */
 	private float size;
+
 	/** True if this Tile is spawning. */
 	private boolean isSpawning;
+
 	/** True if this Tile is merging. */
 	private boolean isMerging;
 
@@ -68,17 +69,13 @@ public class AnimatedTile extends Tile {
 	}
 
 	/**
-	 * Returns the current size of the Tile.
-	 * 
-	 * @return The dimensions multiplied by the Tile's scale.
+	 * @return The current size of the Tile.
 	 */
 	public float getTileSize() {
 		return size * DIMENSION;
 	}
 
 	/**
-	 * Returns the current scale of the Tile.
-	 * 
 	 * @return The scale of the Tile.
 	 */
 	public float getScale() {

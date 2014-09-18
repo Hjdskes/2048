@@ -18,18 +18,20 @@ import org.mockito.Mockito;
 
 /**
  * Test suite for the Grid class.
- *
- * @author group-21
  */
 public class GridTest {
 	/** The lowest value to start with. */
 	private static final int TWO = 2;
+
 	/** The highest value to start with. */
 	private static final int FOUR = 4;
+
 	/** The object under test. */
 	private Grid grid;
+
 	/** A mock for the GameWorld object. */
 	private GameWorld world;
+
 	/** A mock for the TileHandler object. */
 	private TileHandler tileHandler;
 

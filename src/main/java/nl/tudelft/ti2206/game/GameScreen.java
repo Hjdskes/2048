@@ -11,16 +11,17 @@ import com.badlogic.gdx.Screen;
  * main game loop: the render method.
  * 
  * Via this class, all other classes are controlled, updated and rendered.
- * 
- * @author group-21
  */
 public class GameScreen implements Screen {
 	/** The width of the game window. */
 	private static final int GAME_WIDTH = 600;
+
 	/** The height of the game window. */
 	private static final int GAME_HEIGHT = 600;
+
 	/** The GameWorld object is used to control our game objects. */
 	private GameWorld world;
+
 	/** The GameRenderer object is used to render our game objects. */
 	private GameRenderer renderer;
 

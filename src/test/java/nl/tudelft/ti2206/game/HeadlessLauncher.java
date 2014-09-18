@@ -6,13 +6,17 @@ import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 /**
  * This class launches an instance of TwentyFourtyGame, via a headless launcher.
  * This is required for testing on the remote DevHub server.
- * 
- * @author group-21
  */
 public class HeadlessLauncher extends Launcher {
 	/** The configuration for the game window. */
-	HeadlessApplicationConfiguration config;
+	private HeadlessApplicationConfiguration config;
 
+	/**
+	 * Main entry point for the game.
+	 * 
+	 * @param args
+	 *            The command line arguments. These are ignored.
+	 */
 	public static void main(final String[] args) {
 		HeadlessLauncher launcher = new HeadlessLauncher();
 		launcher.launch();

@@ -9,8 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * The SimpleButton class represents a basic button, from which other buttons
  * can be derived.
- * 
- * @author group-21
  */
 public abstract class SimpleButton {
 	/** The coordinates and dimension. */

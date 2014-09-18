@@ -15,12 +15,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * A test class for the SimpleButton.
- * 
- * @author group-21
  */
 public class SimpleButtonTest {
 	/** A mock for the sprite object. */
 	private static Sprite sprite;
+
 	/** The object under test. */
 	private static SimpleButton button;
 

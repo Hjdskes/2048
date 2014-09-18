@@ -11,14 +11,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * A test class for the RestartButton.
- * 
- * @author group-21
  */
 public class RestartButtonTest {
 	/** A mock for the sprite object. */
 	private static Sprite sprite;
+
 	/** A mock for the game world. */
 	private static GameWorld world;
+
 	/** The object under test. */
 	private static RestartButton button;
 

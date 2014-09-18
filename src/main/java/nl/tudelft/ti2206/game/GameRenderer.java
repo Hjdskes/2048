@@ -15,20 +15,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * creates all objects needed for drawing. It also sets the camera to
  * orthographic, meaning that the game is drawn in a 3D scene which appears to
  * be 2D.
- * 
- * @author group-21
  */
 public class GameRenderer {
 	/** The white font. */
 	private static final BitmapFont WHITE_F = AssetHandler.whiteFont;
+
 	/** The gap between the top of the game window and the score text. */
 	private static final int SCORE_HEIGHT = 50;
+
 	/** A reference to the GameWorld, which is used to interact with the game. */
 	private GameWorld world;
+
 	/** A reference to the Grid. */
 	private DrawableGrid grid;
+
 	/** The orthographic camera, to make the scene appear 2D. */
 	private OrthographicCamera cam;
+
 	/** The SpriteBratch is used to draw all Sprite objects. */
 	private SpriteBatch batch;
 

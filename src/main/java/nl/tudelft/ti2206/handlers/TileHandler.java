@@ -6,23 +6,26 @@ import nl.tudelft.ti2206.gameobjects.DrawableTile;
 
 /**
  * This class is responsible for moving tiles on the grid.
- * 
- * @author group-21
  */
 public class TileHandler {
 	/** The length of a row on the grid. */
 	private static final int ROW_LENGTH = 4;
+
 	/** The length of a column on the grid. */
 	private static final int COL_LENGTH = 4;
+
 	/** The array holding all the tiles. */
 	private DrawableTile[] grid;
+
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
+
 	/**
 	 * The difference between the indices of the Tile to be moved and
 	 * the Tile to move to.
 	 */
 	private int offset;
+
 	/** The points to be awarded to the player */
 	private int scoreIncrement;
 
@@ -220,8 +223,6 @@ public class TileHandler {
 	}
 
 	/**
-	 * Indicates whether a move has been made.
-	 * 
 	 * @return True if a move has been made, false otherwise.
 	 */
 	public boolean isMoveMade() {
@@ -229,7 +230,6 @@ public class TileHandler {
 	}
 
 	/**
-	 * Returns the value by which the score should be incremented.
 	 * @return The value by which the score should be incremented.
 	 */
 	public int getScoreIncrement() {

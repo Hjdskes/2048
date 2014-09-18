@@ -2,12 +2,11 @@ package nl.tudelft.ti2206.gameobjects;
 
 /**
  * The Tile class represents the tiles you move around while playing 2048.
- * 
- * @author group-21
  */
 public class Tile {
 	/** The value (e.g. 2, 4, 8, 16, ...). */
 	private int value;
+
 	/**
 	 * Indicates whether or not this Tile has merged into another in the current
 	 * update.
@@ -26,8 +25,6 @@ public class Tile {
 	}
 
 	/**
-	 * Returns the value of the Tile.
-	 * 
 	 * @return The value of the Tile.
 	 */
 	public int getValue() {
@@ -45,8 +42,6 @@ public class Tile {
 	}
 
 	/**
-	 * Checks whether the tile is empty (value 0).
-	 * 
 	 * @return True if the tile is empty (value 0), false otherwise.
 	 */
 	public boolean isEmpty() {
@@ -54,8 +49,6 @@ public class Tile {
 	}
 
 	/**
-	 * Returns true if this Tile has been merged.
-	 * 
 	 * @return True if this Tile has been merged, false otherwise.
 	 */
 	public boolean isMerged() {

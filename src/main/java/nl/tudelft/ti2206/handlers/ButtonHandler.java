@@ -6,12 +6,11 @@ import nl.tudelft.ti2206.game.GameWorld;
 
 /**
  * The ButtonHandler is responsible for managing the buttons.
- *
- * @author group-21
  */
 public class ButtonHandler {
 	/** The restart button. */
 	private static RestartButton restartButton;
+
 	/** The continue button. */
 	private static ContinueButton continueButton;
 
@@ -53,7 +52,6 @@ public class ButtonHandler {
 	}
 
 	/**
-	 * Gets the button used to initiate a restart.
 	 * @return The RestartButton object.
 	 */
 	public static RestartButton getRestartButton() {
@@ -61,7 +59,6 @@ public class ButtonHandler {
 	}
 
 	/**
-	 * Gets the button used to continue playing after winning.
 	 * @return The ContinueButton object.
 	 */
 	public static ContinueButton getContinueButton() {

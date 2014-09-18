@@ -40,22 +40,31 @@ public class Grid {
 
 	/** The width of the grid. */
 	public static final int WIDTH = 400;
+
 	/** The height of the grid. */
 	public static final int HEIGHT = 400;
+
 	/** The grid contains sixteen tiles. */
 	private static final int NTILES = 16;
+
 	/** The lowest value to start with. */
 	private static final int TWO = 2;
+
 	/** The highest value to start with. */
 	private static final int FOUR = 4;
+
 	/** The array containing all sixteen tiles. */
 	protected DrawableTile[] grid;
+
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
+
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
+
 	/** Keeps track of the highest Tile value in the current game. */
 	private int highestTile;
+
 	/** A reference to the GameWorld. */
 	private GameWorld world;
 
@@ -207,8 +216,6 @@ public class Grid {
 	}
 
 	/**
-	 * Returns true if the grid is full.
-	 * 
 	 * @return True if the grid is full.
 	 */
 	public boolean isFull() {
@@ -223,8 +230,6 @@ public class Grid {
 	}
 
 	/**
-	 * Return the amount of possible moves on the grid.
-	 * 
 	 * @return The amount of possible moves.
 	 */
 	public int getPossibleMoves() {
@@ -297,8 +302,6 @@ public class Grid {
 	}
 
 	/**
-	 * Returns the array containing all the AnimatedTiles.
-	 * 
 	 * @return The array containing all the AnimatedTiles.
 	 */
 	public DrawableTile[] getTiles() {
@@ -317,8 +320,6 @@ public class Grid {
 	}
 
 	/**
-	 * Returns the highest Tile value present in the grid.
-	 * 
 	 * @return The highest Tile value.
 	 */
 	public int getCurrentHighestTile() {
@@ -326,8 +327,6 @@ public class Grid {
 	}
 
 	/**
-	 * Returns the TileHandler object used by the grid.
-	 * 
 	 * @return The TileHandler object.
 	 */
 	public TileHandler getTileHandler() {
@@ -335,8 +334,6 @@ public class Grid {
 	}
 
 	/**
-	 * Sets the TileHandler object used by the grid.
-	 * 
 	 * @param tileHandler
 	 *            The TileHandler object to set.
 	 */

@@ -14,8 +14,6 @@ import com.badlogic.gdx.Game;
  * events are received in the Screen, for which we have written our own
  * GameScreen. In essence, GameScreen is our 'controller' class, because
  * TwentyFourtyGame delegates all events to it.
- * 
- * @author group-21
  */
 public class TwentyFourtyGame extends Game {
 	@Override

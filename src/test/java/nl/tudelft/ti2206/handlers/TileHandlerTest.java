@@ -11,14 +11,14 @@ import org.junit.Test;
 
 /**
  * A test class for TileHandler.
- * 
- * @author group-21
  */
 public class TileHandlerTest {
 	/** The grid containing the tiles. */
 	private Grid grid;
+
 	/** The object under test. */
 	private TileHandler tileHandler;
+
 	/** The grid containing no tiles. */
 	private Grid emptyGrid;
 

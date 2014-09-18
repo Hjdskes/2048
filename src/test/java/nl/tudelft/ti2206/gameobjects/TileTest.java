@@ -9,8 +9,6 @@ import org.junit.Before;
 
 /**
  * Test class for the Tile class.
- * 
- * @author group-21
  */
 public class TileTest {
 	/** The object under test. */

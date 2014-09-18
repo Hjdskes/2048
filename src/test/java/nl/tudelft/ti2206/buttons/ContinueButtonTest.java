@@ -12,14 +12,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * A test class for the ContinueButton.
- * 
- * @author group-21
  */
 public class ContinueButtonTest {
 	/** A mock for the sprite object. */
 	private static Sprite sprite;
+
 	/** A mock for the game world. */
 	private static GameWorld world;
+
 	/** The object under test. */
 	private static ContinueButton button;
 

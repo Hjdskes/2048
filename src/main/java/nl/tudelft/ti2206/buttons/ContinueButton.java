@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * A button to continue the game when 2048 has been reached.
- * 
- * @author group-21
  */
 public class ContinueButton extends SimpleButton {
 	/**
