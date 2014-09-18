@@ -147,7 +147,6 @@ public class Tile extends Group {
 		float x = getX();
 		float y = getY();
 
-		AssetHandler.getSkin().getFont("brownText").setScale(.2f);
 		label.setStyle(AssetHandler.getSkin().get("brown-text",
 				LabelStyle.class));
 		label.setText(Integer.toString(value));

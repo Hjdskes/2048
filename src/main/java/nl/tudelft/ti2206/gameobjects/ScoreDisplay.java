@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 /**
  * This class creates, positions and updates the labels and textures for
@@ -17,7 +18,7 @@ public class ScoreDisplay extends Group {
 
 	/** Coordinates and offsets used to position the score tiles and labels. */
 	private static final int BASE_X = 100;
-	private static final int LABEL_Y = 510;
+	private static final int LABEL_Y = 520;
 	private static final int SCORE_TILE_WIDTH = 140;
 	private static final int GAP = 15;
 	private static final int GRID_TOP = 500;
@@ -105,8 +106,6 @@ public class ScoreDisplay extends Group {
 	 * Sets the label styles and scale.
 	 */
 	private void setLabelStyles() {
-		AssetHandler.getSkin().get("white-text", Label.LabelStyle.class).font
-				.setScale(.65f);
 		scoreLabel.setStyle(AssetHandler.getSkin().get("white-text",
 				Label.LabelStyle.class));
 		highScoreLabel.setStyle(AssetHandler.getSkin().get("white-text",
@@ -123,16 +122,21 @@ public class ScoreDisplay extends Group {
 		scoreLabel.setX(BASE_X + scoreRegion.getRegionWidth() / 2
 				- scoreLabel.getWidth() / 2);
 		scoreLabel.setY(LABEL_Y);
+		scoreLabel.setAlignment(Align.center);
 
 		highScoreLabel.setX(BASE_X + SCORE_TILE_WIDTH + GAP
 				+ highScoreRegion.getRegionWidth() / 2
 				- highScoreLabel.getWidth() / 2);
 		highScoreLabel.setY(LABEL_Y);
+		highScoreLabel.setAlignment(Align.center);
+		highScoreLabel.setAlignment(Align.center);
 
 		highestTileLabel.setX(BASE_X + 2 * SCORE_TILE_WIDTH + 2 * GAP
 				+ highestTileRegion.getRegionWidth() / 2
 				- scoreLabel.getWidth() / 2);
 		highestTileLabel.setY(LABEL_Y);
+		highestTileLabel.setAlignment(Align.center);
+
 	}
 
 	/**
