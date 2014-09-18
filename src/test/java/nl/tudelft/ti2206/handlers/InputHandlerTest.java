@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 
 /**
@@ -96,56 +95,8 @@ public class InputHandlerTest {
 		assertEquals(false, handler.keyDown(Keys.BACKSLASH));
 	}
 
-	/**
-	 * Make sure the keyUp method returns false.
-	 */
-	@Test
-	public void testKeyUp() {
-		assertEquals(false, handler.keyUp(Keys.BACKSLASH));
-	}
-
-	/**
-	 * Make sure the keyTyped method returns false.
-	 */
-	@Test
-	public void testKeyTyped() {
-		assertEquals(false, handler.keyTyped('a'));
-	}
-
-	/**
-	 * Make sure the mouseMoved method returns false.
-	 */
-	@Test
-	public void testMouseMoved() {
-		assertEquals(false, handler.mouseMoved(2, 3));
-	}
-
-	/**
-	 * Make sure the scrolled method returns false.
-	 */
-	@Test
-	public void testScrolled() {
-		assertEquals(false, handler.scrolled(5));
-	}
-
 //	@Test
 //	public void testTouchDown() {
 //		handler.touchDown(0, 0, 0, Buttons.LEFT);
 //	}
-
-	/**
-	 * Make sure the touchDragged method returns false.
-	 */
-	@Test
-	public void testTouchDragged() {
-		assertEquals(false, handler.touchDragged(2, 3, 5));
-	}
-
-	/**
-	 * Make sure the touchUp method returns false.
-	 */
-	@Test
-	public void testTouchUp() {
-		assertEquals(false, handler.touchUp(2, 3, 5, Buttons.LEFT));
-	}
 }

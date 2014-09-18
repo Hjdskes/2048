@@ -4,13 +4,13 @@ import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.InputAdapter;
 
 /**
  * The InputHandler processes input events, from for example the keyboard or the mice.
  * It delegates these events to the appropriate abstraction classes. Currently this is only the ButtonHandler.
  */
-public class InputHandler implements InputProcessor {
+public class InputHandler extends InputAdapter {
 	/**
 	 * A reference to the current GameWorld, so the called objects can interact
 	 * with it.
@@ -48,37 +48,7 @@ public class InputHandler implements InputProcessor {
 	}
 
 	@Override
-	public boolean keyUp(int keycode) {
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		return false;
-	}
-
-	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		return ButtonHandler.touchDown(world, screenX, screenY);
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
 	}
 }
