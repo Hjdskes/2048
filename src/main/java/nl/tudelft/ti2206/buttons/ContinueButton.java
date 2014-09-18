@@ -2,13 +2,15 @@ package nl.tudelft.ti2206.buttons;
 
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.game.GameWorld.GameState;
+import nl.tudelft.ti2206.gameobjects.Drawable;
+import nl.tudelft.ti2206.handlers.AssetHandler;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 /**
  * A button to continue the game when 2048 has been reached.
  */
-public class ContinueButton extends SimpleButton {
+public class ContinueButton extends SimpleButton implements Drawable {
 	/**
 	 * Creates a new ContinueButton with the specified parameters.
 	 * 
@@ -20,14 +22,9 @@ public class ContinueButton extends SimpleButton {
 	 *            The width for the button.
 	 * @param height
 	 *            The height for the button.
-	 * @param buttonUp
-	 *            The Sprite shown when the button is not pressed.
-	 * @param buttonDown
-	 *            The Sprite shown when the button is pressed.
 	 */
-	public ContinueButton(float x, float y, float width, float height,
-			Sprite buttonUp, Sprite buttonDown) {
-		super(x, y, width, height, buttonUp, buttonDown);
+	public ContinueButton(float x, float y, float width, float height) {
+		super(x, y, width, height);
 	}
 
 	/**
@@ -36,5 +33,10 @@ public class ContinueButton extends SimpleButton {
 	@Override
 	public void onClick(GameWorld world) {
 		world.setGameState(GameState.CONTINUING);
+	}
+
+	@Override
+	public void draw(Batch batch) {
+		batch.draw(AssetHandler.continuebutton, super.getX(), super.getY(), super.getWidth(), super.getHeight());
 	}
 }

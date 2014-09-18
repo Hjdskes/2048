@@ -17,14 +17,8 @@ public class AssetHandler {
 
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite[] sprites = new Sprite[12];
-	public static Sprite grid, score, highscore, highest, newgame,
+	public static Sprite grid, score, highscore, highest, restartbutton,
 			continuebutton, lost, won;
-
-	/** The width of the game window. */
-	private static final int GAME_WIDTH = 600;
-
-	/** The height of the game window. */
-	private static final int GAME_HEIGHT = 600;
 
 	/** The width of a gap, which is between all the tiles. */
 	private static final int GAP = 15;
@@ -167,17 +161,14 @@ public class AssetHandler {
 	 * Creates and positions all sprites for the two buttons.
 	 */
 	private static void getButtons() {
-		newgame = new Sprite(manager.get(
+		restartbutton = new Sprite(manager.get(
 				"src/main/resources/images/buttons/newgame.png", Texture.class));
-		setAssetLocation(newgame, GAME_WIDTH / 2 - newgame.getWidth() / 2,
-				GAME_HEIGHT - GAP - newgame.getHeight(), false, true);
+		restartbutton.setFlip(false, true);
 
 		continuebutton = new Sprite(
 				manager.get("src/main/resources/images/buttons/continue.png",
 						Texture.class));
-		setAssetLocation(continuebutton,
-				GAME_WIDTH / 2 - continuebutton.getWidth() / 2, GAME_HEIGHT
-						- GAP * 3 - continuebutton.getHeight() * 2, false, true);
+		continuebutton.setFlip(false, true);
 	}
 
 	/**

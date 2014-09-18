@@ -1,13 +1,16 @@
 package nl.tudelft.ti2206.buttons;
 
-import nl.tudelft.ti2206.game.GameWorld;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.gameobjects.Drawable;
+import nl.tudelft.ti2206.handlers.AssetHandler;
 
 /**
  * A button to restart the game.
  */
-public class RestartButton extends SimpleButton {
+public class RestartButton extends SimpleButton implements Drawable {
+	
 	/**
 	 * Creates a new RestartButton with the specified parameters.
 	 * 
@@ -19,14 +22,9 @@ public class RestartButton extends SimpleButton {
 	 *            The width for the button.
 	 * @param height
 	 *            The height for the button.
-	 * @param buttonUp
-	 *            The Sprite shown when the button is not pressed.
-	 * @param buttonDown
-	 *            The Sprite shown when the button is pressed
 	 */
-	public RestartButton(float x, float y, float width, float height,
-			Sprite buttonUp, Sprite buttonDown) {
-		super(x, y, width, height, buttonUp, buttonDown);
+	public RestartButton(float x, float y, float width, float height) {
+		super(x, y, width, height);
 	}
 
 	/**
@@ -35,5 +33,10 @@ public class RestartButton extends SimpleButton {
 	@Override
 	public void onClick(GameWorld world) {
 		world.restart();
+	}
+
+	@Override
+	public void draw(Batch batch) {
+		batch.draw(AssetHandler.restartbutton, super.getX(), super.getY(), super.getWidth(), super.getHeight());
 	}
 }

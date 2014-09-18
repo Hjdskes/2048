@@ -2,8 +2,6 @@ package nl.tudelft.ti2206.buttons;
 
 import nl.tudelft.ti2206.game.GameWorld;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -13,8 +11,6 @@ import com.badlogic.gdx.math.Rectangle;
 public abstract class SimpleButton {
 	/** The coordinates and dimension. */
 	private float x, y, width, height;
-	/** The Sprites to be shown. */
-	private Sprite buttonUp, buttonDown;
 	/** The boundaries of the button. */
 	private Rectangle bounds;
 	/** Determines whether the button has been pressed or not. */
@@ -31,19 +27,12 @@ public abstract class SimpleButton {
 	 *            The width for the button.
 	 * @param height
 	 *            The height for the button.
-	 * @param buttonUp
-	 *            The Sprite shown when the button is not pressed.
-	 * @param buttonDown
-	 *            The Sprite shown when the button is pressed.
 	 */
-	public SimpleButton(float x, float y, float width, float height,
-			Sprite buttonUp, Sprite buttonDown) {
+	public SimpleButton(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.buttonUp = buttonUp;
-		this.buttonDown = buttonDown;
 
 		bounds = new Rectangle(x, y, width, height);
 	}
@@ -62,17 +51,31 @@ public abstract class SimpleButton {
 	}
 
 	/**
-	 * Draws the button. Automatically draws the correct Sprite.
-	 * 
-	 * @param batcher
-	 *            The SpriteBatcher that draws the button.
+	 * @return The button's x-coordinate.
 	 */
-	public void draw(SpriteBatch batcher) {
-		if (isPressed) {
-			batcher.draw(buttonDown, x, y, width, height);
-		} else {
-			batcher.draw(buttonUp, x, y, width, height);
-		}
+	public float getX() {
+		return x;
+	}
+
+	/**
+	 * @return The button's y-coordinate.
+	 */
+	public float getY() {
+		return y;
+	}
+
+	/**
+	 * @return The button's height.
+	 */
+	public float getHeight() {
+		return height;
+	}
+
+	/**
+	 * @return The button's width.
+	 */
+	public float getWidth() {
+		return width;
 	}
 
 	/**
