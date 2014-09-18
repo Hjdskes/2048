@@ -63,7 +63,6 @@ public class Game implements ApplicationListener {
 		group.addActor(grid);
 		for (int i = 0; i < tiles.length; i++) {
 			group.addActor(tiles[i]);
-			group.addActor(tiles[i].getLabel());
 		}
 		group.addActor(scores);
 		group.addActor(overlays);

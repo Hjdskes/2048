@@ -5,13 +5,14 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 /**
  * The Tile class represents the tiles you move around while playing 2048.
  */
-public class Tile extends Actor {
+public class Tile extends Group {
 	/** The width of the Tile. */
 	private static final int TILE_WIDTH = 81;
 
@@ -33,6 +34,9 @@ public class Tile extends Actor {
 	/** The index into the Grid array. */
 	private int index;
 
+	/** The label of the Tile, displaying its value. */
+	private Label label;
+
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
 	 * whole image.
@@ -51,8 +55,13 @@ public class Tile extends Actor {
 		this.value = value;
 		this.index = index;
 
-		region = new TextureRegion();
+		this.region = new TextureRegion();
+		//AssetHandler.getSkin().getFont("brownText").setScale(.2f);
+		this.label = new Label(Integer.toString(value), AssetHandler.getSkin().get("white-text", LabelStyle.class));
+		this.addActor(label);
+
 		setSprite();
+		setLabel();
 	}
 
 	/**
@@ -133,17 +142,21 @@ public class Tile extends Actor {
 	 * Sets the label displaying the value of the tile to the designated
 	 * position.
 	 */
-	public Label getLabel() {
-		AssetHandler.getSkin().getFont("brownText").setScale(.2f);
-		Label label = new Label(Integer.toString(value), AssetHandler.getSkin());
-		label.setX(getX());
-		label.setY(getY());
-		label.setCenterPosition(getX() + 40, getY() + 40);
+	public void setLabel() {
+		float x = getX();
+		float y = getY();
+
+		AssetHandler.getSkin().getFont("brownText").setScale(.2f);		
+		label.setText(Integer.toString(value));
+		label.setX(x);
+		label.setY(y);
+		label.setCenterPosition(x + 40, y + 40);
 
 		if (value == 0) {
 			label.setVisible(false);
+		} else {
+			label.setVisible(true);
 		}
-		return label;
 	}
 
 	@Override
@@ -184,6 +197,12 @@ public class Tile extends Actor {
 	@Override
 	public float getHeight() {
 		return TILE_HEIGHT;
+	}
+
+	@Override
+	public void act(float delta) {
+		setSprite();
+		setLabel();
 	}
 
 	@Override
