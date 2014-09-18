@@ -43,6 +43,7 @@ public class Tile extends Actor {
 	private boolean isMerged;
 
 	private ScaleToAction spawnAction;
+	private ScaleToAction mergeAction;
 
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
@@ -168,6 +169,13 @@ public class Tile extends Actor {
 	}
 
 	/**
+	 * Sets the size of the scale to 1.4, to trigger the merge action.
+	 */
+	public void merge() {
+		this.setScale(1.4f);
+	}
+
+	/**
 	 * Moves the TextureRegion to the new Texture, belonging to the current
 	 * value of the Tile.
 	 */
@@ -203,14 +211,19 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Sets the actions for the tile.s
+	 * Sets the actions for the tile.
 	 */
 	private void setActors() {
 		spawnAction = new ScaleToAction();
 		spawnAction.setDuration(.3f);
 		spawnAction.setScale(1);
 
+		mergeAction = new ScaleToAction();
+		mergeAction.setDuration(.3f);
+		mergeAction.setScale(1);
+
 		this.addAction(spawnAction);
+		this.addAction(mergeAction);
 	}
 
 	@Override
@@ -271,9 +284,12 @@ public class Tile extends Actor {
 
 	@Override
 	public void act(float delta) {
-		if (getScaleX() != 1) {
+		if (getScaleX() < 1) {
 			spawnAction.act(delta);
+		} else if (getScaleX() > 1) {
+			mergeAction.act(delta);
 		}
+
 		setSprite();
 		setLabel();
 	}
