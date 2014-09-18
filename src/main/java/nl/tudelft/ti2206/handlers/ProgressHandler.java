@@ -6,8 +6,6 @@ import nl.tudelft.ti2206.gameobjects.Tile;
 /**
  * The ProgressHandler is used to save the current game, or load the previously
  * saved game.
- * 
- * @author group-21
  */
 public class ProgressHandler {
 	/**

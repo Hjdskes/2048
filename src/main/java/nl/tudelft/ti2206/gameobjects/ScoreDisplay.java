@@ -11,36 +11,37 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  * This class creates, positions and updates the labels and textures for
  * displaying scores. It extends Group so an instance of this class can be added
  * to the stage.
- * 
- *
  */
 public class ScoreDisplay extends Group {
 
-	/** X or y coordinates used to position the score tiles and labels */
+	/** Coordinates and offsets used to position the score tiles and labels. */
 	private static final int BASE_X = 100;
 	private static final int LABEL_Y = 523;
 	private static final int SCORE_TILE_WIDTH = 140;
 	private static final int GAP = 15;
 	private static final int GRID_TOP = 500;
 
-	/** The grid holding the tiles */
+	/** The grid holding the tiles. */
 	private Grid grid;
-	/** A group holding all actors */
+
+	/** The group holding all actors. */
 	private Group group;
-	/** Labels to display scores */
+
+	/** Labels to display scores. */
 	private Label scoreLabel;
 	private Label highScoreLabel;
 	private Label highestTileLabel;
-	/** Textures to display score tiles */
+
+	/** Textures to display score tiles. */
 	private TextureRegion scoreRegion;
 	private TextureRegion highScoreRegion;
 	private TextureRegion highestTileRegion;
 
 	/**
-	 * Creates a new ScoreDisplay object, creating all textures, labels and
-	 * positions them.
+	 * Creates a new ScoreDisplay object. Automatically creates all textures and
+	 * labels and positions them.
 	 * 
-	 * @param grid
+	 * @param grid A reference to the Grid.
 	 */
 	public ScoreDisplay(Grid grid) {
 		this.grid = grid;
@@ -143,16 +144,14 @@ public class ScoreDisplay extends Group {
 	}
 
 	/**
-	 * 
-	 * @return The x coordinate for the score tile.
+	 * @return The x-coordinate of the score tile.
 	 */
 	private int getScoreX() {
 		return BASE_X;
 	}
 
 	/**
-	 * 
-	 * @return The x coordinate for the high score tile.
+	 * @return The x-coordinate of the high score tile.
 	 */
 	private int getHighScoreX() {
 		return BASE_X + GAP + SCORE_TILE_WIDTH;
@@ -160,7 +159,7 @@ public class ScoreDisplay extends Group {
 
 	/**
 	 * 
-	 * @return The x coordinate for the tile displaying the highest value.
+	 * @return The x-coordinate for the tile displaying the highest value.
 	 */
 	private int getHighestTileX() {
 		return BASE_X + 2 * GAP + 2 * SCORE_TILE_WIDTH;
@@ -168,7 +167,7 @@ public class ScoreDisplay extends Group {
 
 	/**
 	 * 
-	 * @return The y coordinate for all score tiles.
+	 * @return The y-coordinate for all score tiles.
 	 */
 	private int getScoreY() {
 		return GRID_TOP + GAP;

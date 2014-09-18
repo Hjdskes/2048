@@ -10,22 +10,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 /**
  * The Tile class represents the tiles you move around while playing 2048.
- * 
- * @author group-21
  */
 public class Tile extends Actor {
 	/** The width of the Tile. */
 	private static final int TILE_WIDTH = 81;
+
 	/** The height of the Tile. */
 	private static final int TILE_HEIGHT = 81;
+
 	/** The base Tile x-coordinate. */
 	private static final int TILE_X = 115;
+
 	/** The base Tile y-coordinate. */
 	private static final int TILE_Y = 115;
+
 	/** The gap in between tiles, Grid edges, etc. */
 	private static final int GAP = 15;
+
 	/** The value (e.g. 2, 4, 8, 16, ...). */
 	private int value;
+
 	/** The index into the Grid array. */
 	private int index;
 
@@ -52,8 +56,6 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Returns the value of the Tile.
-	 * 
 	 * @return The value of the Tile.
 	 */
 	public int getValue() {
@@ -68,14 +70,11 @@ public class Tile extends Actor {
 	 */
 	public void setValue(int value) {
 		this.value = value;
-		// update the sprite
 		setSprite();
 	}
 
 	/**
-	 * Returns the index of the Tile into the Grid array.
-	 * 
-	 * @return The index of the Tile.
+	 * @return The index of the Tile into the Grid array.
 	 */
 	public int getIndex() {
 		return this.index;
@@ -92,8 +91,6 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Checks whether the tile is empty (value 0).
-	 * 
 	 * @return True if the tile is empty (value 0), false otherwise.
 	 */
 	public boolean isEmpty() {
@@ -117,7 +114,6 @@ public class Tile extends Actor {
 			value *= 2;
 		}
 		
-		// update the sprite
 		setSprite();
 	}
 
@@ -144,8 +140,9 @@ public class Tile extends Actor {
 		label.setY(getY());
 		label.setCenterPosition(getX() + 40, getY() + 40);
 
-		if (value == 0)
+		if (value == 0) {
 			label.setVisible(false);
+		}
 		return label;
 	}
 
@@ -158,7 +155,7 @@ public class Tile extends Actor {
 			return TILE_X + 2 * (TILE_WIDTH + GAP);
 		case 3:
 			return TILE_X + 3 * (TILE_WIDTH + GAP);
-		case 0: /* Fallthrough */
+		case 0: /* Fallthrough. */
 		default:
 			return TILE_X;
 		}
@@ -192,8 +189,5 @@ public class Tile extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());
-		// drawTileValue(CoordinateHandler.getCenterTileX(i),
-		// CoordinateHandler.getCenterTileY(i),
-		// grid.getTiles()[i].getValue());
 	}
 }

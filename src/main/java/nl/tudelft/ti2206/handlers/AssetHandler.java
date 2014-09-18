@@ -10,12 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 /**
  * The AssetHandler is used to load and hold all the assets (textures and fonts)
  * the game requires.
- * 
- * @author group-21
  */
 public class AssetHandler {
 	/** The AssetManager is used to load and get all our textures and font. */
 	private static AssetManager manager = new AssetManager();
+
 	/** The Skin contains all our textures and fonts. */
 	private static Skin skin = new Skin();
 
@@ -141,7 +140,7 @@ public class AssetHandler {
 	}
 
 	/**
-	 * Dispose of all the textures, the font and the AssetManager.
+	 * Disposes of all the textures, the font and the AssetManager.
 	 */
 	public static void dispose() {
 		manager.dispose();

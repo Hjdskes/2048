@@ -23,15 +23,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
+ * +---+---+---+---+
+ * | 12| 13| 12| 14|
+ * +---+---+---+---+
+ * | 8 | 9 | 10| 11|
+ * +---+---+---+---+
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+
+ * | 0 | 1 | 2 | 3 |
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
  * from its index. It can move up or down by adding or subtracting 4 from its
  * index.
- * 
- * @author group-21
  */
 public class Grid extends Actor {
 	/** This enumeration is used to indicate the direction of a movement. */
@@ -41,32 +45,44 @@ public class Grid extends Actor {
 
 	/** The width of the Grid. */
 	private static final int GRID_WIDTH = 400;
+
 	/** The height of the Grid. */
 	private static final int GRID_HEIGHT = 400;
+
 	/** The base Grid x-coordinate. */
 	private static final int GRID_X = 100;
+
 	/** The base Grid y-coordinate. */
 	private static final int GRID_Y = 100;
+
 	/** The grid contains sixteen tiles. */
 	private static final int NTILES = 16;
+
 	/** The lowest value to start with. */
 	private static final int TWO = 2;
+
 	/** The highest value to start with. */
 	private static final int FOUR = 4;
 
 	/** The array containing all sixteen tiles. */
 	protected Tile[] grid;
+
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
+
 	/** The TileHandler is used to move the tiles. */
 	// private TileHandler tileHandler;
+
 	/** Keeps track of the highest Tile value in the current game. */
 	private int highestTile;
-	/** Keeps track of the current score */
+
+	/** Keeps track of the current score. */
 	private int score;
-	/** Keeps track of the current high score */
+
+	/** Keeps track of the current high score. */
 	private int highScore;
 
+	/** . */
 	private TextureRegion region;
 
 	/**
@@ -238,8 +254,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Returns true if the grid is full.
-	 * 
 	 * @return True if the grid is full.
 	 */
 	public boolean isFull() {
@@ -254,8 +268,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Return the amount of possible moves on the grid.
-	 * 
 	 * @return The amount of possible moves.
 	 */
 	public int getPossibleMoves() {
@@ -286,7 +298,7 @@ public class Grid extends Actor {
 	 * 
 	 * @param index
 	 *            The Tile index.
-	 * @return A list of tiles.
+	 * @return A list of neighboring tiles.
 	 */
 	public List<Tile> getTileNeighbors(int index) {
 		List<Tile> neighbors = new ArrayList<Tile>();
@@ -328,8 +340,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Returns the array containing all the Tiles.
-	 * 
 	 * @return The array containing all the Tiles.
 	 */
 	public Tile[] getTiles() {
@@ -337,8 +347,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Returns the highest Tile value present in the grid.
-	 * 
 	 * @return The highest Tile value.
 	 */
 	public int getCurrentHighestTile() {
@@ -346,7 +354,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * 
 	 * @return The current score.
 	 */
 	public int getScore() {
@@ -354,7 +361,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * 
 	 * @return The current high score. Is not necessarily higher than the saved
 	 *         high score. This is checked when saving the game.
 	 */
@@ -423,6 +429,12 @@ public class Grid extends Actor {
 		this.highestTile = highest;
 	}
 
+	/**
+	 * Sets the current score to the value provided.
+	 * 
+	 * @param score
+	 *            The new score.
+	 */
 	public void setScore(int score) {
 		this.score = score;
 	}

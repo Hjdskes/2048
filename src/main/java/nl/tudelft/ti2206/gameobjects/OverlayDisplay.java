@@ -9,19 +9,18 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 /**
- * This class draws overlays if the game is lost or won.
- *
+ * This class creates, positions and draws the overlays if necessary.
+ * 
+ * It extends Group so an instance of this class can be
+ * added to the stage.
  */
 public class OverlayDisplay extends Group {
-
-	/** The textures of the overlays */
+	/** The textures of the overlays. */
 	private Texture wonOverlay;
 	private Texture lostOverlay;
 
 	/**
-	 * Loads the textures of the overlays
-	 * 
-	 * @param grid
+	 * Loads the textures of the overlays.
 	 */
 	public OverlayDisplay() {
 		wonOverlay = AssetHandler.getSkin().get("wonoverlay", Texture.class);
@@ -33,10 +32,10 @@ public class OverlayDisplay extends Group {
 	 */
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		if (Game.getState() == GameState.WON)
+		if (Game.getState() == GameState.WON) {
 			batch.draw(wonOverlay, 0, 0);
-		else if (Game.getState() == GameState.LOST)
+		} else if (Game.getState() == GameState.LOST) {
 			batch.draw(lostOverlay, 0, 0);
+		}
 	}
-
 }
