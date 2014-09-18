@@ -137,7 +137,7 @@ public class Grid {
 	}
 
 	/**
-	 * Sets an Tile's parameters by index.
+	 * Sets a Tile's parameters by index.
 	 * 
 	 * @param index
 	 *            The Tile's index on the grid.
@@ -156,9 +156,6 @@ public class Grid {
 	 * a new highest value.
 	 */
 	public void update() {
-//		for (DrawableTile t : grid) {
-//			t.update();
-//		}
 		updateHighestTile();
 	}
 

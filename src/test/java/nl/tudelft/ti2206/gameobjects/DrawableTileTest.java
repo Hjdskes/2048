@@ -6,22 +6,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test suite for the AnimatedTile class.
+ * Test suite for the DrawableTile class.
  */
-public class AnimatedTileTest {
+public class DrawableTileTest {
 	/** The object under test. */
-	private AnimatedTile tile;
+	private DrawableTile tile;
 
 	/**
 	 * Creates the test object.
 	 */
 	@Before
 	public void setUp() {
-		tile = new AnimatedTile(4);
+		tile = new DrawableTile(0, 4);
 	}
 
 	/**
-	 * Test AnimatedTile's setMerged method.
+	 * Test DrawableTile's setMerged method.
 	 */
 	@Test
 	public void testSetMerged() {
@@ -30,7 +30,7 @@ public class AnimatedTileTest {
 	}
 
 	/**
-	 * Test AnimatedTile's reset method.
+	 * Test DrawableTile's reset method.
 	 */
 	@Test
 	public void testReset() {
@@ -40,7 +40,7 @@ public class AnimatedTileTest {
 	}
 
 	/**
-	 * Test AnimatedTile's update method when spawning.
+	 * Test DrawableTile's update method when spawning.
 	 */
 	@Test
 	public void testUpdateSpawn() {
@@ -50,7 +50,7 @@ public class AnimatedTileTest {
 	}
 
 	/**
-	 * Test AnimatedTile's update method when merging.
+	 * Test DrawableTile's update method when merging.
 	 */
 	@Test
 	public void testUpdateMerge() {
@@ -60,49 +60,49 @@ public class AnimatedTileTest {
 	}
 
 	/**
-	 * Test AnimatedTile's getTileSize method.
+	 * Test DrawableTile's getTileSize method.
 	 */
 	@Test
 	public void testGetTileSize() {
-		assertEquals(81, tile.getTileSize(), .1f);
-	}
-
-	/**
-	 * Test AnimatedTile's getScale method.
-	 */
-	@Test
-	public void testGetScale() {
 		assertEquals(1, tile.getScale(), .1f);
 	}
 
+//	/**
+//	 * Test DrawableTile's getScale method.
+//	 */
+//	@Test
+//	public void testGetScale() {
+//		assertEquals(1, tile.getScale(), .1f);
+//	}
+
 	/**
-	 * Test AnimatedTile's getXYOffset method.
+	 * Test DrawableTile's getOffset method.
 	 */
 	@Test
-	public void testGetXYOffset() {
-		assertEquals(0, tile.getXYOffset(), .1f);
+	public void testGetOffset() {
+		assertEquals(0, tile.getOffset(), .1f);
 	}
 
 	/**
-	 * Test AnimatedTile's getXYOffset method after merge.
+	 * Test DrawableTile's getOffset method after merge.
 	 */
 	@Test
-	public void testGetXYOffset_merge() {
+	public void testGetOffset_merge() {
 		tile.merge();
-		assertEquals(-8.1f, tile.getXYOffset(), .1f);
+		assertEquals(-8.1f, tile.getOffset(), .1f);
 	}	
 	
 	/**
-	 * Test AnimatedTile's getXYOffset method after spawn.
+	 * Test DrawableTile's getOffset method after spawn.
 	 */
 	@Test
-	public void testGetXYOffset_spawn() {
+	public void testGetOffset_spawn() {
 		tile.spawn();
-		assertEquals(20.25, tile.getXYOffset(), .1f);
+		assertEquals(20.25, tile.getOffset(), .1f);
 	}
 	
 	/**
-	 * Test AnimatedTile's merge method.
+	 * Test DrawableTile's merge method.
 	 */
 	@Test
 	public void testMerge() {

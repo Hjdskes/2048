@@ -34,6 +34,30 @@ public class DrawableGrid extends Grid implements Drawable {
 		super(world, isEmpty);
 	}
 
+	/**
+	 * Sets a Tile's parameters by index and starts the spawning animation.
+	 * 
+	 * @param index
+	 *            The Tile's index on the grid.
+	 * @param value
+	 *            The Tile's value (should be a multiple of 2 or 0).
+	 * @param isMerged
+	 *            True if the Tile is merged.
+	 */
+	@Override
+	public void setTile(int index, int value, boolean isMerged) {
+		super.setTile(index, value, isMerged);
+		grid[index].spawn();
+	}
+
+	@Override
+	public void update() {
+		for (DrawableTile t : grid) {
+			t.update();
+		}
+		updateHighestTile();
+	}
+
 	@Override
 	public void draw(Batch batch) {
 		batch.draw(AssetHandler.grid, GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT);
