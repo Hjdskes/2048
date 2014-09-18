@@ -17,8 +17,8 @@ public class AssetHandler {
 
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite[] sprites = new Sprite[12];
-	public static Sprite grid, score, highscore, highest, restart,
-			continueb, single, multi, lost, won;
+	public static Sprite grid, score, highscore, highest, restart, continueb,
+			single, multi, lost, won;
 
 	/** The width of a gap, which is between all the tiles. */
 	private static final int GAP = 15;
@@ -110,9 +110,11 @@ public class AssetHandler {
 	 * Creates all sprites for the tiles.
 	 */
 	private static void getTiles() {
-		for (int i = 0; i < 12; i++) {
+		sprites[0] = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile0.png", Texture.class));
+		for (int i = 1; i < 12; i++) {
 			sprites[i] = new Sprite(manager.get(
-					"src/main/resources/images/tiles/tile" + Math.pow(i, 2)
+					"src/main/resources/images/tiles/tile" + (int)Math.pow(2, i)
 							+ ".png", Texture.class));
 		}
 
