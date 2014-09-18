@@ -2,11 +2,11 @@ package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
+import nl.tudelft.ti2206.gameobjects.DrawableGrid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.handlers.InputHandler;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class InputHandlerTest {
 	/** A mock to verify behavior. */
 	private static GameWorld world;
 	/** A mock to verify behavior. */
-	private static AnimatedGrid grid;
+	private static DrawableGrid grid;
 
 	/**
 	 * Initialize all mocks and creates a new InputHandler.
@@ -34,7 +34,7 @@ public class InputHandlerTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		world = Mockito.mock(GameWorld.class);
-		grid = Mockito.mock(AnimatedGrid.class);
+		grid = Mockito.mock(DrawableGrid.class);
 		when(world.getGrid()).thenReturn(grid);
 
 		handler = new InputHandler(world);

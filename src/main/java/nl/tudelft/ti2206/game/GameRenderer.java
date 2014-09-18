@@ -1,9 +1,8 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
+import nl.tudelft.ti2206.gameobjects.DrawableGrid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ButtonHandler;
-import nl.tudelft.ti2206.handlers.CoordinateHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,16 +19,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author group-21
  */
 public class GameRenderer {
-	/** The brown font. */
-	private static final BitmapFont BROWN_F = AssetHandler.font;
 	/** The white font. */
 	private static final BitmapFont WHITE_F = AssetHandler.whiteFont;
 	/** The gap between the top of the game window and the score text. */
 	private static final int SCORE_HEIGHT = 50;
 	/** A reference to the GameWorld, which is used to interact with the game. */
 	private GameWorld world;
-	/** A reference to the AnimatedGrid. */
-	private AnimatedGrid grid;
+	/** A reference to the Grid. */
+	private DrawableGrid grid;
 	/** The orthographic camera, to make the scene appear 2D. */
 	private OrthographicCamera cam;
 	/** The SpriteBratch is used to draw all Sprite objects. */
@@ -69,7 +66,7 @@ public class GameRenderer {
 		/* Draw all the sprites and strings. */
 		batch.begin();
 		drawSpriteBatches();
-		drawText();
+		//drawText();
 		batch.end();
 	}
 
@@ -77,8 +74,12 @@ public class GameRenderer {
 	 * Renders all our sprites.
 	 */
 	private void drawSpriteBatches() {
-		drawGrid();
-		drawTiles();
+		grid.draw(batch);
+
+		for (int i = 0; i < grid.getTiles().length; i++) {
+			grid.getTiles()[i].draw(batch);
+		}
+
 		drawScoreTile();
 		drawHighscoreTile();
 		drawHighestTile();
@@ -88,48 +89,6 @@ public class GameRenderer {
 			drawLostOverlay();
 		} else if (world.isWon()) {
 			drawWonOverlay();
-		}
-	}
-
-	/**
-	 * Renders the grid.
-	 */
-	private void drawGrid() {
-		batch.draw(AssetHandler.grid, CoordinateHandler.getGridX(),
-				CoordinateHandler.getGridY(), CoordinateHandler.getGridWidth(),
-				CoordinateHandler.getGridHeight());
-	}
-
-	/**
-	 * Renders the tiles.
-	 */
-	private void drawTiles() {
-		for (int i = 0; i < grid.getTiles().length; i++) {
-			batch.draw(AssetHandler.getTile(grid.getTiles()[i].getValue()),
-					grid.getTileX(i), grid.getTileY(i),
-					grid.getTileWidth(i), grid.getTileHeight(i));
-
-			drawTileValue(CoordinateHandler.getCenterTileX(i),
-					CoordinateHandler.getCenterTileY(i),
-					grid.getTiles()[i].getValue());
-		}
-	}
-
-	/**
-	 * Renders the Tile's value, exactly in the middle of the Tile.
-	 * 
-	 * @param x
-	 *            The center x-coordinate of the Tile.
-	 * @param y
-	 *            The center y-coordinate of the Tile.
-	 * @param value
-	 *            The value of the Tile.
-	 */
-	private void drawTileValue(float x, float y, int value) {
-		if (value != 0) {
-			String val = Integer.toString(value);
-			BROWN_F.draw(batch, val, x - getTextCenterX(BROWN_F, val), y
-					+ getTextCenterY(BROWN_F, val));
 		}
 	}
 
@@ -193,68 +152,46 @@ public class GameRenderer {
 		drawContinueButton();
 	}
 
-	/**
-	 * Renders the strings.
-	 */
-	private void drawText() {
-		drawScore();
-		drawHighscore();
-		drawHighest();
-	}
-
-	/**
-	 * Renders the score in its square.
-	 */
-	private void drawScore() {
-		String score = ((Integer)world.getScore()).toString();
-		AssetHandler.whiteFont.draw(batch, score,
-				AssetHandler.score.getX() + AssetHandler.score.getWidth() / 2
-						- getTextCenterX(WHITE_F, score),
-				SCORE_HEIGHT);
-	}
-
-	/**
-	 * Renders the highscore in its square.
-	 */
-	private void drawHighscore() {
-		String highscore = ((Integer)world.getHighscore()).toString();
-		WHITE_F.draw(
-				batch,
-				highscore,
-				AssetHandler.highscore.getX()
-						+ AssetHandler.highscore.getWidth() / 2
-						- getTextCenterX(WHITE_F, highscore), SCORE_HEIGHT);
-	}
-
-	/**
-	 * Renders the highest tile value ever reached in its square.
-	 */
-	private void drawHighest() {
-		String highest = ((Integer)world.getHighestTile()).toString();
-		WHITE_F.draw(batch, highest,
-				AssetHandler.highest.getX() + AssetHandler.highest.getWidth()
-						/ 2 - getTextCenterX(WHITE_F, highest), SCORE_HEIGHT);
-	}
-
-	/**
-	 * Calculates the center x-coordinate of a String.
-	 * 
-	 * @param text
-	 *            The text to be centered.
-	 * @return The center x-coordinate of the provided String.
-	 */
-	private float getTextCenterX(BitmapFont f, String text) {
-		return f.getBounds(text).width / 2;
-	}
-
-	/**
-	 * Calculates the center y-coordinate of a String.
-	 * 
-	 * @param text
-	 *            The text to be centered.
-	 * @return The center y-coordinate of the provided String.
-	 */
-	private float getTextCenterY(BitmapFont f, String text) {
-		return f.getBounds(text).height / 2;
-	}
+//	/**
+//	 * Renders the strings.
+//	 */
+//	private void drawText() {
+//		drawScore();
+//		drawHighscore();
+//		drawHighest();
+//	}
+//
+//	/**
+//	 * Renders the score in its square.
+//	 */
+//	private void drawScore() {
+//		String score = ((Integer)world.getScore()).toString();
+//		AssetHandler.whiteFont.draw(batch, score,
+//				AssetHandler.score.getX() + AssetHandler.score.getWidth() / 2
+//						- getTextCenterX(WHITE_F, score),
+//				SCORE_HEIGHT);
+//	}
+//
+//	/**
+//	 * Renders the highscore in its square.
+//	 */
+//	private void drawHighscore() {
+//		String highscore = ((Integer)world.getHighscore()).toString();
+//		WHITE_F.draw(
+//				batch,
+//				highscore,
+//				AssetHandler.highscore.getX()
+//						+ AssetHandler.highscore.getWidth() / 2
+//						- getTextCenterX(WHITE_F, highscore), SCORE_HEIGHT);
+//	}
+//
+//	/**
+//	 * Renders the highest tile value ever reached in its square.
+//	 */
+//	private void drawHighest() {
+//		String highest = ((Integer)world.getHighestTile()).toString();
+//		WHITE_F.draw(batch, highest,
+//				AssetHandler.highest.getX() + AssetHandler.highest.getWidth()
+//						/ 2 - getTextCenterX(WHITE_F, highest), SCORE_HEIGHT);
+//	}
 }

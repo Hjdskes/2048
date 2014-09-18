@@ -5,10 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.game.GameWorld.GameState;
-import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
+import nl.tudelft.ti2206.gameobjects.DrawableGrid;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.mockito.Mockito.*;
 
 /**
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.*;
  */
 public class GameWorldTest {
 	/** A mock for the AnimatedGrid object. */
-	private AnimatedGrid grid;
+	private DrawableGrid grid;
 	/** The object under test. */
 	private GameWorld world;
 
@@ -28,7 +29,7 @@ public class GameWorldTest {
 	 */
 	@Before
 	public void setUp() {
-		grid = mock(AnimatedGrid.class);
+		grid = mock(DrawableGrid.class);
 		world = new GameWorld();
 		world.setGrid(grid);
 	}

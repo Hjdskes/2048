@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.gameobjects.AnimatedTile;
+import nl.tudelft.ti2206.gameobjects.DrawableTile;
 
 /**
  * This class is responsible for moving tiles on the grid.
@@ -15,7 +15,7 @@ public class TileHandler {
 	/** The length of a column on the grid. */
 	private static final int COL_LENGTH = 4;
 	/** The array holding all the tiles. */
-	private AnimatedTile[] grid;
+	private DrawableTile[] grid;
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
 	/**

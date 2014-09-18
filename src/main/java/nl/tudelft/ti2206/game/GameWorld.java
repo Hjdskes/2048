@@ -1,10 +1,7 @@
 package nl.tudelft.ti2206.game;
 
-import com.badlogic.gdx.Preferences;
-
-import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
+import nl.tudelft.ti2206.gameobjects.DrawableGrid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 /**
@@ -28,7 +25,7 @@ public class GameWorld {
 	/** The highest tile value ever reached at the time of launching the game. */
 	private int oldHighestTile;
 	/** The current grid in the game. */
-	private AnimatedGrid grid;
+	private DrawableGrid grid;
 	/** The state the game is currently in. */
 	private GameState state;
 
@@ -42,7 +39,7 @@ public class GameWorld {
 			ProgressHandler.loadGame(this);
 		} else {
 			/* Create a new game. */
-			grid = new AnimatedGrid(this, false);
+			grid = new DrawableGrid(this, false);
 			score = 0;
 		}
 		state = GameState.RUNNING;
@@ -204,7 +201,7 @@ public class GameWorld {
 	 * 
 	 * @return The current game's grid.
 	 */
-	public AnimatedGrid getGrid() {
+	public DrawableGrid getGrid() {
 		return grid;
 	}
 
@@ -214,7 +211,7 @@ public class GameWorld {
 	 * @param grid
 	 *            The grid to set.
 	 */
-	public void setGrid(AnimatedGrid grid) {
+	public void setGrid(DrawableGrid grid) {
 		this.grid = grid;
 	}
 

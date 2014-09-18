@@ -3,9 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
-import nl.tudelft.ti2206.handlers.PreferenceHandler;
-import nl.tudelft.ti2206.handlers.ProgressHandler;
+import nl.tudelft.ti2206.gameobjects.DrawableGrid;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -19,7 +17,7 @@ import org.junit.Test;
 public class ProgressHandlerTest {
 
 	private static GameWorld world;
-	private AnimatedGrid grid;
+	private DrawableGrid grid;
 
 	/**
 	 * Launches a headless game to enable file I/O and creates a new GameWorld.
@@ -41,7 +39,7 @@ public class ProgressHandlerTest {
 		 * score, etc.
 		 */
 		PreferenceHandler.getPrefs().clear();
-		grid = new AnimatedGrid(world, true);
+		grid = new DrawableGrid(world, true);
 		world.setGrid(grid);
 	}
 
@@ -81,7 +79,7 @@ public class ProgressHandlerTest {
 	@Test
 	public void testLoadGame() {
 		/* Construct the grid. */
-		AnimatedGrid grid = new AnimatedGrid(world, true);
+		DrawableGrid grid = new DrawableGrid(world, true);
 		grid.setTile(0, 2, true);
 		grid.setTile(1, 4, true);
 

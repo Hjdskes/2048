@@ -49,7 +49,7 @@ public class Grid {
 	/** The highest value to start with. */
 	private static final int FOUR = 4;
 	/** The array containing all sixteen tiles. */
-	protected AnimatedTile[] grid;
+	protected DrawableTile[] grid;
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
 	/** The TileHandler is used to move the tiles. */
@@ -69,13 +69,13 @@ public class Grid {
 	 */
 	public Grid(GameWorld world, boolean isEmpty) {
 		this.random = new Random();
-		this.grid = new AnimatedTile[NTILES];
+		this.grid = new DrawableTile[NTILES];
 		this.tileHandler = new TileHandler(this);
 		this.world = world;
+
+		initEmptyGrid();
 		if (!isEmpty) {
 			initGrid();
-		} else {
-			initEmptyGrid();
 		}
 	}
 
@@ -84,8 +84,6 @@ public class Grid {
 	 * setting the rest empty.
 	 */
 	private void initGrid() {
-		initEmptyGrid();
-
 		int loc1 = getRandomEmptyLocation();
 		int loc2 = getRandomEmptyLocation();
 		while (loc2 == loc1) {
@@ -100,7 +98,7 @@ public class Grid {
 	 */
 	private void initEmptyGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new AnimatedTile(0);
+			grid[i] = new DrawableTile(i, 0);
 		}
 	}
 
@@ -149,9 +147,9 @@ public class Grid {
 	 * a new highest value.
 	 */
 	public void update() {
-		for (AnimatedTile t : grid) {
-			t.update();
-		}
+//		for (DrawableTile t : grid) {
+//			t.update();
+//		}
 		updateHighestTile();
 	}
 
@@ -160,7 +158,7 @@ public class Grid {
 	 * reinitializing itself and checking for the new highest value.
 	 */
 	public void restart() {
-		for (AnimatedTile t : grid) {
+		for (DrawableTile t : grid) {
 			t.reset();
 		}
 		initGrid();
@@ -238,10 +236,10 @@ public class Grid {
 				/* Get current Tile value. */
 				int value = grid[index].getValue();
 				/* Get all Tile's neighbors. */
-				List<AnimatedTile> neighbors = getTileNeighbors(index);
+				List<DrawableTile> neighbors = getTileNeighbors(index);
 
 				/* For all neighboring tiles, compare the values. */
-				for (AnimatedTile neighbor : neighbors) {
+				for (DrawableTile neighbor : neighbors) {
 					if (neighbor.getValue() == value
 							|| neighbor.getValue() == 0)
 						moves++;
@@ -259,8 +257,8 @@ public class Grid {
 	 *            The Tile index.
 	 * @return A list of tiles.
 	 */
-	public List<AnimatedTile> getTileNeighbors(int index) {
-		List<AnimatedTile> neighbors = new ArrayList<AnimatedTile>();
+	public List<DrawableTile> getTileNeighbors(int index) {
+		List<DrawableTile> neighbors = new ArrayList<DrawableTile>();
 
 		/*
 		 * Right neighbor: check if the index we're checking is not the right
@@ -303,7 +301,7 @@ public class Grid {
 	 * 
 	 * @return The array containing all the AnimatedTiles.
 	 */
-	public AnimatedTile[] getTiles() {
+	public DrawableTile[] getTiles() {
 		return grid;
 	}
 
@@ -312,7 +310,7 @@ public class Grid {
 	 */
 	public void updateHighestTile() {
 		highestTile = 0;
-		for (AnimatedTile t : grid) {
+		for (DrawableTile t : grid) {
 			if (t.getValue() > highestTile)
 				highestTile = t.getValue();
 		}

@@ -1,8 +1,8 @@
 package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.game.GameWorld;
-import nl.tudelft.ti2206.gameobjects.AnimatedGrid;
-import nl.tudelft.ti2206.gameobjects.AnimatedTile;
+import nl.tudelft.ti2206.gameobjects.DrawableGrid;
+import nl.tudelft.ti2206.gameobjects.DrawableTile;
 
 /**
  * The ProgressHandler is used to save the current game, or load the previously
@@ -20,7 +20,7 @@ public class ProgressHandler {
 	 *            tile value ever reached.
 	 */
 	public static void saveGame(GameWorld world) {
-		AnimatedGrid grid = world.getGrid();
+		DrawableGrid grid = world.getGrid();
 		int highest = world.getHighestTile();
 		int highscore = world.getHighscore();
 		int score = world.getScore();
@@ -56,10 +56,10 @@ public class ProgressHandler {
 	 * @param grid
 	 *            The grid to store.
 	 */
-	private static void saveGrid(AnimatedGrid grid) {
+	private static void saveGrid(DrawableGrid grid) {
 		String state = "";
 
-		AnimatedTile[] tiles = grid.getTiles();
+		DrawableTile[] tiles = grid.getTiles();
 		for (int index = 0; index < tiles.length; index++) {
 			if (!tiles[index].isEmpty()) {
 				state += index + "," + tiles[index].getValue() + ","
@@ -74,19 +74,19 @@ public class ProgressHandler {
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 * 
 	 * @param world
-	 *            The World to load the AnimatedGrid into.
+	 *            The World to load the Grid into.
 	 * @return The loaded grid.
 	 */
-	private static AnimatedGrid loadGrid(GameWorld world) {
+	private static DrawableGrid loadGrid(GameWorld world) {
 		String filledTiles = PreferenceHandler.getGrid();
 		/*
 		 * If no grid is saved, return a default one. Else, fill the grid with
 		 * the saved tiles.
 		 */
 		if (filledTiles == "") {
-			return new AnimatedGrid(world, false);
+			return new DrawableGrid(world, false);
 		} else {
-			AnimatedGrid grid = new AnimatedGrid(world, true);
+			DrawableGrid grid = new DrawableGrid(world, true);
 			String[] split = filledTiles.split("\n");
 
 			for (String tile : split) {
