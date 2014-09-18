@@ -7,15 +7,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 /**
  * A test class for the RestartButton.
  */
 public class RestartButtonTest {
-	/** A mock for the sprite object. */
-	private static Sprite sprite;
-
 	/** A mock for the game world. */
 	private static GameWorld world;
 
@@ -27,8 +22,7 @@ public class RestartButtonTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		sprite = Mockito.mock(Sprite.class);
-		button = new RestartButton(1, 2, 3, 4, sprite, sprite);
+		button = new RestartButton(1, 2, 3, 4);
 		world = Mockito.mock(GameWorld.class);
 	}
 
