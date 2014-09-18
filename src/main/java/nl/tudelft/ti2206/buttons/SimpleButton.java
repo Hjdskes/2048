@@ -11,8 +11,10 @@ import com.badlogic.gdx.math.Rectangle;
 public abstract class SimpleButton {
 	/** The coordinates and dimension. */
 	private float x, y, width, height;
+
 	/** The boundaries of the button. */
 	private Rectangle bounds;
+
 	/** Determines whether the button has been pressed or not. */
 	protected boolean isPressed = false;
 

@@ -28,16 +28,16 @@ public class ButtonHandler {
 	 */
 	public static void load() {
 		restartButton = new RestartButton(GAME_WIDTH / 2
-				- AssetHandler.restartbutton.getWidth() / 2, GAME_HEIGHT - GAP
-				- AssetHandler.restartbutton.getHeight(),
-				AssetHandler.restartbutton.getWidth(),
-				AssetHandler.restartbutton.getHeight());
+				- AssetHandler.restart.getWidth() / 2, GAME_HEIGHT - GAP
+				- AssetHandler.restart.getHeight(),
+				AssetHandler.restart.getWidth(),
+				AssetHandler.restart.getHeight());
 
 		continueButton = new ContinueButton(GAME_WIDTH / 2
-				- AssetHandler.continuebutton.getWidth() / 2, GAME_HEIGHT - GAP
-				* 3 - AssetHandler.continuebutton.getHeight() * 2,
-				AssetHandler.continuebutton.getWidth(),
-				AssetHandler.continuebutton.getHeight());
+				- AssetHandler.continueb.getWidth() / 2, GAME_HEIGHT - GAP
+				* 3 - AssetHandler.continueb.getHeight() * 2,
+				AssetHandler.continueb.getWidth(),
+				AssetHandler.continueb.getHeight());
 	}
 
 	/**

@@ -66,7 +66,6 @@ public class GameRenderer {
 		/* Draw all the sprites and strings. */
 		batch.begin();
 		drawSpriteBatches();
-		//drawText();
 		batch.end();
 	}
 

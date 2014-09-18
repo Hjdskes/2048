@@ -3,14 +3,10 @@ package nl.tudelft.ti2206.buttons;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.game.GameWorld;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * A test class for the SimpleButton.
