@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 /**
  * The Tile class represents the tiles you move around while playing 2048.
@@ -56,12 +57,12 @@ public class Tile extends Group {
 		this.index = index;
 
 		this.region = new TextureRegion();
-		//AssetHandler.getSkin().getFont("brownText").setScale(.2f);
-		this.label = new Label(Integer.toString(value), AssetHandler.getSkin().get("white-text", LabelStyle.class));
-		this.addActor(label);
+		this.label = new Label(Integer.toString(value), AssetHandler.getSkin());
 
 		setSprite();
 		setLabel();
+
+		this.addActor(label);
 	}
 
 	/**
@@ -122,7 +123,7 @@ public class Tile extends Group {
 		} else {
 			value *= 2;
 		}
-		
+
 		setSprite();
 	}
 
@@ -146,10 +147,13 @@ public class Tile extends Group {
 		float x = getX();
 		float y = getY();
 
-		AssetHandler.getSkin().getFont("brownText").setScale(.2f);		
+		AssetHandler.getSkin().getFont("brownText").setScale(.2f);
+		label.setStyle(AssetHandler.getSkin().get("brown-text",
+				LabelStyle.class));
 		label.setText(Integer.toString(value));
 		label.setX(x);
 		label.setY(y);
+		label.setAlignment(Align.center);
 		label.setCenterPosition(x + 40, y + 40);
 
 		if (value == 0) {
@@ -208,5 +212,7 @@ public class Tile extends Group {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());
+		if (label.isVisible())
+			label.draw(batch, parentAlpha);
 	}
 }

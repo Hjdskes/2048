@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 /**
  * This class creates, positions and updates the labels and textures for
@@ -16,7 +17,7 @@ public class ScoreDisplay extends Group {
 
 	/** Coordinates and offsets used to position the score tiles and labels. */
 	private static final int BASE_X = 100;
-	private static final int LABEL_Y = 523;
+	private static final int LABEL_Y = 510;
 	private static final int SCORE_TILE_WIDTH = 140;
 	private static final int GAP = 15;
 	private static final int GRID_TOP = 500;
@@ -41,7 +42,8 @@ public class ScoreDisplay extends Group {
 	 * Creates a new ScoreDisplay object. Automatically creates all textures and
 	 * labels and positions them.
 	 * 
-	 * @param grid A reference to the Grid.
+	 * @param grid
+	 *            A reference to the Grid.
 	 */
 	public ScoreDisplay(Grid grid) {
 		this.grid = grid;
@@ -70,22 +72,24 @@ public class ScoreDisplay extends Group {
 	 * update the scores.
 	 */
 	private void initLabels() {
-		scoreLabel = new Label("0", AssetHandler.getSkin().get(
-				Label.LabelStyle.class)) {
+		scoreLabel = new Label("0", AssetHandler.getSkin().get("white-text",
+				LabelStyle.class)) {
 			@Override
 			public void act(float delta) {
 				scoreLabel.setText(Integer.toString(grid.getScore()));
 			}
 		};
 
-		highScoreLabel = new Label("0", AssetHandler.getSkin()) {
+		highScoreLabel = new Label("0", AssetHandler.getSkin().get("white-text",
+				LabelStyle.class)) {
 			@Override
 			public void act(float delta) {
 				highScoreLabel.setText(Integer.toString(grid.getHighscore()));
 			}
 		};
 
-		highestTileLabel = new Label("0", AssetHandler.getSkin()) {
+		highestTileLabel = new Label("0", AssetHandler.getSkin().get("white-text",
+				LabelStyle.class)) {
 			@Override
 			public void act(float delta) {
 				highestTileLabel.setText(Integer.toString(grid
@@ -102,7 +106,7 @@ public class ScoreDisplay extends Group {
 	 */
 	private void setLabelStyles() {
 		AssetHandler.getSkin().get("white-text", Label.LabelStyle.class).font
-				.setScale(.6f);
+				.setScale(.65f);
 		scoreLabel.setStyle(AssetHandler.getSkin().get("white-text",
 				Label.LabelStyle.class));
 		highScoreLabel.setStyle(AssetHandler.getSkin().get("white-text",
