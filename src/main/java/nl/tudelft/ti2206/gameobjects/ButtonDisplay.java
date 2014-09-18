@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.game.Game;
+import nl.tudelft.ti2206.game.Game.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,6 +27,10 @@ public class ButtonDisplay extends Group {
 	/** The button height. */
 	private static final int BUTTON_HEIGHT = 70;
 
+	/** References to the buttons. */
+	private Button continueButton;
+	private Button restartButton;
+
 	/**
 	 * Loads all buttons and sets their event listeners and locations.
 	 */
@@ -38,8 +43,8 @@ public class ButtonDisplay extends Group {
 	 * Initializes the restart button.
 	 */
 	private void initRestartButton() {
-		Button restartButton = new Button(AssetHandler.getSkin().getDrawable(
-				"newgame"));
+		restartButton = new Button(AssetHandler.getSkin()
+				.getDrawable("newgame"));
 		restartButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -55,7 +60,7 @@ public class ButtonDisplay extends Group {
 	 * Initializes the continue button.
 	 */
 	private void initContinueButton() {
-		Button continueButton = new Button(AssetHandler.getSkin().getDrawable(
+		continueButton = new Button(AssetHandler.getSkin().getDrawable(
 				"continue"));
 		continueButton.addListener(new ChangeListener() {
 			@Override
@@ -65,6 +70,15 @@ public class ButtonDisplay extends Group {
 		});
 		continueButton.setX(GAME_WIDTH / 2 - BUTTON_WIDTH / 2);
 		continueButton.setY(BUTTON_HEIGHT + 2 * GAP);
+		continueButton.setVisible(false);
+
 		this.addActor(continueButton);
+	}
+
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		if (Game.getState() == GameState.WON)
+			continueButton.setVisible(true);
 	}
 }

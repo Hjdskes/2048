@@ -7,7 +7,8 @@
    beige: { r: 0.976, g: 0.969, b: 0.933, a: 1 },  
   },  
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {  
-   default: { font: brownText },   
+   default: { font: brownText },
+   brown-text: { font: brownText },   
    white-text: { font: whiteText },  
   }  
 /*  com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {

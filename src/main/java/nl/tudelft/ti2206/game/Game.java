@@ -64,10 +64,11 @@ public class Game implements ApplicationListener {
 		for (int i = 0; i < tiles.length; i++) {
 			group.addActor(tiles[i]);
 		}
+		
+		group.addActor(buttons);
 		group.addActor(scores);
 		group.addActor(overlays);
 		stage.addActor(group);
-		stage.addActor(buttons);
 	}
 
 	@Override
