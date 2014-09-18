@@ -45,7 +45,7 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage); 
+		Gdx.input.setInputProcessor(stage);
 
 		/* Load all our assets. */
 		AssetHandler.loadSkinFile(Gdx.files.internal("skin.json"));
@@ -65,7 +65,7 @@ public class Game implements ApplicationListener {
 		for (int i = 0; i < tiles.length; i++) {
 			group.addActor(tiles[i]);
 		}
-		
+
 		group.addActor(buttons);
 		group.addActor(scores);
 		group.addActor(overlays);
@@ -77,12 +77,17 @@ public class Game implements ApplicationListener {
 	@Override
 	public void dispose() {
 		AssetHandler.dispose();
-		ProgressHandler.saveGame((Grid) group.findActor("Grid"));
 		stage.dispose();
 	}
 
+	/*
+	 * According to the documentation, this is a good place to save the game
+	 * state on the desktop, because it is called prior to dispose(). See:
+	 * https://github.com/libgdx/libgdx/wiki/The-life-cycle
+	 */
 	@Override
 	public void pause() {
+		ProgressHandler.saveGame((Grid) group.findActor("Grid"));
 	}
 
 	@Override
@@ -115,10 +120,40 @@ public class Game implements ApplicationListener {
 	}
 
 	/**
+	 * Sets the new state of the game.
+	 * 
 	 * @param state
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
 		curState = state;
+	}
+
+	/**
+	 * @return True if the game is currently running.
+	 */
+	public static boolean isRunning() {
+		return (curState == GameState.RUNNING);
+	}
+
+	/**
+	 * @return True if the current game is lost.
+	 */
+	public static boolean isLost() {
+		return (curState == GameState.LOST);
+	}
+
+	/**
+	 * @return True if the current game is won.
+	 */
+	public static boolean isWon() {
+		return (curState == GameState.WON);
+	}
+
+	/**
+	 * @return True if game is in continuing state.
+	 */
+	public static boolean isContinuing() {
+		return (curState == GameState.CONTINUING);
 	}
 }

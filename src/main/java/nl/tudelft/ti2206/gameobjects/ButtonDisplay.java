@@ -65,7 +65,7 @@ public class ButtonDisplay extends Group {
 		continueButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println("Continue");
+				Game.setState(GameState.CONTINUING);
 			}
 		});
 		continueButton.setX(GAME_WIDTH / 2 - BUTTON_WIDTH / 2);
@@ -78,7 +78,8 @@ public class ButtonDisplay extends Group {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (Game.getState() == GameState.WON)
+		if (Game.isWon()) {
 			continueButton.setVisible(true);
+		}
 	}
 }

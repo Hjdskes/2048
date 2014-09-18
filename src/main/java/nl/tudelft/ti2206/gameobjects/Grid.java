@@ -96,10 +96,9 @@ public class Grid extends Actor {
 		this.grid = new Tile[NTILES];
 		this.tileHandler = new TileHandler(this);
 
+		initEmptyGrid();
 		if (!isEmpty) {
 			initGrid();
-		} else {
-			initEmptyGrid();
 		}
 
 		/* After loading the grid, start the game. */
@@ -111,8 +110,6 @@ public class Grid extends Actor {
 	 * setting the rest empty.
 	 */
 	private void initGrid() {
-		initEmptyGrid();
-
 		int loc1 = getRandomEmptyLocation();
 		int loc2 = getRandomEmptyLocation();
 		while (loc2 == loc1) {
@@ -175,11 +172,13 @@ public class Grid extends Actor {
 	@Override
 	public void act(float delta) {
 		updateHighestTile();
+		if (score > highScore) {
+			highScore = score;
+		}
 
-		if (Game.getState() == GameState.RUNNING && highestTile == 2048) {
+		if (Game.isRunning() && highestTile == 2048) {
 			Game.setState(GameState.WON);
-		} else if (Game.getState() == GameState.RUNNING
-				&& getPossibleMoves() == 0) {
+		} else if (Game.isRunning() && getPossibleMoves() == 0) {
 			Game.setState(GameState.LOST);
 		}
 	}
@@ -189,11 +188,13 @@ public class Grid extends Actor {
 	 * reinitializing itself and checking for the new highest value.
 	 */
 	public void restart() {
-		// for (Tile t : grid) {
-		// t.reset();
-		// }
+		score = 0;
+		for (Tile t : grid) {
+			t.reset();
+		}
 		initGrid();
 		updateHighestTile();
+		Game.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -208,8 +209,7 @@ public class Grid extends Actor {
 	 */
 	public void move(Direction direction) {
 		/* If the game is not in running or continuing state, ignore the moves. */
-		if (Game.getState() == GameState.LOST
-				|| Game.getState() == GameState.WON) {
+		if (Game.isLost() || Game.isWon()) {
 			return;
 		}
 
@@ -381,26 +381,6 @@ public class Grid extends Actor {
 		this.tileHandler = tileHandler;
 	}
 
-	@Override
-	public float getX() {
-		return GRID_X;
-	}
-
-	@Override
-	public float getY() {
-		return GRID_Y;
-	}
-
-	@Override
-	public float getWidth() {
-		return GRID_WIDTH;
-	}
-
-	@Override
-	public float getHeight() {
-		return GRID_HEIGHT;
-	}
-
 	/**
 	 * Sets the values in the grid to the values provided.
 	 * 
@@ -441,6 +421,26 @@ public class Grid extends Actor {
 	 */
 	public void setHighscore(int highScore) {
 		this.highScore = highScore;
+	}
+
+	@Override
+	public float getX() {
+		return GRID_X;
+	}
+
+	@Override
+	public float getY() {
+		return GRID_Y;
+	}
+
+	@Override
+	public float getWidth() {
+		return GRID_WIDTH;
+	}
+
+	@Override
+	public float getHeight() {
+		return GRID_HEIGHT;
 	}
 
 	@Override
