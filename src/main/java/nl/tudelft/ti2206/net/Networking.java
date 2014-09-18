@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.net;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -29,7 +31,10 @@ public class Networking {
 
 	private static DataInputStream is;
 	private static DataOutputStream os;
-	
+
+	private static ObjectOutputStream outputStream;
+	private static ObjectInputStream inputStream;
+
 	private static GameState oState;
 	private static int oTile;
 
@@ -98,6 +103,20 @@ public class Networking {
 					os = new DataOutputStream(socket.getOutputStream());
 
 					try {
+						outputStream = new ObjectOutputStream(socket
+								.getOutputStream());
+					} catch (IOException e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
+					}
+					try {
+						inputStream = new ObjectInputStream(socket.getInputStream());
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+
+					try {
 						os.writeBytes("I'm the server");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -141,6 +160,19 @@ public class Networking {
 				os = new DataOutputStream(socket.getOutputStream());
 
 				try {
+					outputStream = new ObjectOutputStream(socket.getOutputStream());
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				try {
+					inputStream = new ObjectInputStream(socket.getInputStream());
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+
+				try {
 					os.writeBytes("I'm a client");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -162,7 +194,7 @@ public class Networking {
 		}).start(); // And, start the thread running
 	}
 
-	public static void send(String msg) {
+	public static void sendString(String msg) {
 		try {
 			os.writeBytes(msg + "\r\n");
 		} catch (IOException e) {
@@ -171,26 +203,32 @@ public class Networking {
 		}
 	}
 
+	public static void send(Sendable obj) {
+		try {
+			outputStream.writeObject(obj);
+		} catch (IOException e) {
+			System.err.println("Unable to send message");
+		}
+	}
+
 	private static void processResponse(String msg) {
 		System.out.println("response = " + msg);
-		
-		
+
 		String[] parts = msg.split(":");
-		
+
 		if (parts[0].startsWith("LOST")) {
 			setOpponentState(GameState.LOST);
 		}
-		
-		
+
 		if (parts[0].startsWith("TILE")) {
 			setOpponentHighestTile(parts[1]);
 		}
 	}
-	
+
 	private static void setOpponentHighestTile(String string) {
 		oTile = Integer.parseInt(string);
 	}
-	
+
 	public static int getOpponentHighestTile() {
 		return oTile;
 	}
@@ -198,9 +236,9 @@ public class Networking {
 	private static void setOpponentState(GameState state) {
 		GameState oState = state;
 	}
-	
+
 	public static GameState getOpponentState() {
 		return oState;
 	}
-	
+
 }
