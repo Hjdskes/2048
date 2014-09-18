@@ -67,7 +67,7 @@ public class AssetHandlerTest {
 	@Test
 	public void testLoad() {
 		AssetHandler.load();
-		verify(manager, times(20)).load(anyString(), eq(Texture.class));
+		verify(manager, times(22)).load(anyString(), eq(Texture.class));
 		verify(manager, times(2)).load(anyString(), eq(BitmapFont.class));
 	}
 
