@@ -3,28 +3,23 @@ package nl.tudelft.ti2206.buttons;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import nl.tudelft.ti2206.game.GameWorld;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * A test class for the SimpleButton.
+ * A test class for the Button class.
  */
-public class SimpleButtonTest {
+public class ButtonTest {
 	/** The object under test. */
-	private static SimpleButton button;
+	private static Button button;
 
 	/**
 	 * Initializes all the mocks and creates the test object.
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		button = new SimpleButton(1, 2, 3, 4) {
-			@Override
-			public void onClick(GameWorld world) {
-			}
-		};
+		button = new Button(1, 2, 3, 4);
 	}
 
 	/**

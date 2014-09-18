@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 /**
  * A button to continue the game when 2048 has been reached.
  */
-public class ContinueButton extends SimpleButton implements Drawable {
+public class ContinueButton extends GameButton implements Drawable {
 	/**
 	 * Creates a new ContinueButton with the specified parameters.
 	 * 

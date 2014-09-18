@@ -9,7 +9,7 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 /**
  * A button to restart the game.
  */
-public class RestartButton extends SimpleButton implements Drawable {
+public class RestartButton extends GameButton implements Drawable {
 	/**
 	 * Creates a new RestartButton with the specified parameters.
 	 * 

@@ -1,15 +1,15 @@
 package nl.tudelft.ti2206.buttons;
 
-import nl.tudelft.ti2206.game.GameWorld;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 
 /**
- * The GameButton class represents a basic button to be used in-game.
+ * The MenuButton class represents a basic button to be used in menus.
  * It defines an abstract onClick method, which derived buttons must
  * implement to define their own behavior.
  */
-public abstract class GameButton extends Button {
+public abstract class MenuButton extends Button {
 	/**
-	 * Creates a new GameButton object with specified parameters.
+	 * Creates a new MenuButton object with specified parameters.
 	 * 
 	 * @param x
 	 *            The x-coordinate for the button.
@@ -20,17 +20,17 @@ public abstract class GameButton extends Button {
 	 * @param height
 	 *            The height for the button.
 	 */
-	public GameButton(float x, float y, float width, float height) {
+	public MenuButton(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
 
 	/**
 	 * Each derived button should override this method to ensure specific
-	 * behavior when it is clicked. The GameWorld parameter is provided to allow
-	 * access to the GameWorld object.
+	 * behavior when it is clicked. The TwentyFourtyGame parameter is provided
+	 * to allow access to current game.
 	 * 
-	 * @param world
-	 *            A reference to the current GameWorld.
+	 * @param game
+	 *            A reference to the current game.
 	 */
-	public abstract void onClick(GameWorld world);
+	public abstract void onClick(TwentyFourtyGame game);
 }
