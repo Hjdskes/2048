@@ -1,0 +1,26 @@
+
+fonts.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+brown
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+fonts2.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+white
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
