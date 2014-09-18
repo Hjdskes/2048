@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
+import java.lang.Math;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,8 +16,8 @@ public class AssetHandler {
 	public static BitmapFont font, whiteFont;
 
 	/** All sprites used in the game, which should be publicly accessible. */
-	public static Sprite grid, t2, t4, t8, t16, t32, t64, t128, t256, t512,
-			t1024, t2048, t0, score, highscore, highest, newgame,
+	public static Sprite[] sprites = new Sprite[12];
+	public static Sprite grid, score, highscore, highest, newgame,
 			continuebutton, lost, won;
 
 	/** The width of the game window. */
@@ -111,30 +112,31 @@ public class AssetHandler {
 	 * Creates all sprites for the tiles.
 	 */
 	private static void getTiles() {
-		t0 = new Sprite(manager.get("src/main/resources/images/tiles/tile0.png",
-				Texture.class));
-		t2 = new Sprite(manager.get(
+		sprites[0] = new Sprite(manager.get(
+				"src/main/resources/images/tiles/tile0.png", Texture.class));
+		sprites[1] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile2.png", Texture.class));
-		t4 = new Sprite(manager.get(
+		sprites[2] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile4.png", Texture.class));
-		t8 = new Sprite(manager.get(
+		sprites[3] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile8.png", Texture.class));
-		t16 = new Sprite(manager.get(
+		sprites[4] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile16.png", Texture.class));
-		t32 = new Sprite(manager.get(
+		sprites[5] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile32.png", Texture.class));
-		t64 = new Sprite(manager.get(
+		sprites[6] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile64.png", Texture.class));
-		t128 = new Sprite(manager.get(
+		sprites[7] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile128.png", Texture.class));
-		t256 = new Sprite(manager.get(
+		sprites[8] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile256.png", Texture.class));
-		t512 = new Sprite(manager.get(
+		sprites[9] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile512.png", Texture.class));
-		t1024 = new Sprite(manager.get(
+		sprites[10] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile1024.png", Texture.class));
-		t2048 = new Sprite(manager.get(
+		sprites[11] = new Sprite(manager.get(
 				"src/main/resources/images/tiles/tile2048.png", Texture.class));
+
 		grid = new Sprite(manager.get("src/main/resources/images/grid.png",
 				Texture.class));
 	}
@@ -144,12 +146,15 @@ public class AssetHandler {
 	 * highscore and highest tile value ever reached).
 	 */
 	private static void getScores() {
-		score = new Sprite(manager.get("src/main/resources/images/scoretiles/score.png",
-				Texture.class));
+		score = new Sprite(
+				manager.get("src/main/resources/images/scoretiles/score.png",
+						Texture.class));
 		highscore = new Sprite(manager.get(
-				"src/main/resources/images/scoretiles/highscore.png", Texture.class));
+				"src/main/resources/images/scoretiles/highscore.png",
+				Texture.class));
 		highest = new Sprite(manager.get(
-				"src/main/resources/images/scoretiles/highest.png", Texture.class));
+				"src/main/resources/images/scoretiles/highest.png",
+				Texture.class));
 
 		setAssetLocation(score, BASE_Y, GAP, false, true);
 		setAssetLocation(highscore, AssetHandler.score.getWidth() + BASE_X
@@ -167,8 +172,9 @@ public class AssetHandler {
 		setAssetLocation(newgame, GAME_WIDTH / 2 - newgame.getWidth() / 2,
 				GAME_HEIGHT - GAP - newgame.getHeight(), false, true);
 
-		continuebutton = new Sprite(manager.get(
-				"src/main/resources/images/buttons/continue.png", Texture.class));
+		continuebutton = new Sprite(
+				manager.get("src/main/resources/images/buttons/continue.png",
+						Texture.class));
 		setAssetLocation(continuebutton,
 				GAME_WIDTH / 2 - continuebutton.getWidth() / 2, GAME_HEIGHT
 						- GAP * 3 - continuebutton.getHeight() * 2, false, true);
@@ -229,32 +235,19 @@ public class AssetHandler {
 	 * @return The Sprite belonging to the required value.
 	 */
 	public static Sprite getTile(int value) {
-		switch (value) {
-		case 2:
-			return t2;
-		case 4:
-			return t4;
-		case 8:
-			return t8;
-		case 16:
-			return t16;
-		case 32:
-			return t32;
-		case 64:
-			return t64;
-		case 128:
-			return t128;
-		case 256:
-			return t256;
-		case 512:
-			return t512;
-		case 1024:
-			return t1024;
-		case 2048:
-			return t2048;
-		default:
-			return t0;
+		/* The calculation below acts weird when value equals zero. */
+		if (value == 0) {
+			return sprites[0];
 		}
+
+		/* Reverse of a = pow(b, c). */
+		int index = (int) Math.abs(((Math.log(value) / Math.log(2))));
+
+		/*
+		 * If the index is higher than 11 (e.g. the value is higher than 2048)
+		 * we don't have a sprite to return.
+		 */
+		return sprites[index > 11 ? 11 : index];
 	}
 
 	/**
