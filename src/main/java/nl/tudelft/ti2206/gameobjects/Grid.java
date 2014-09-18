@@ -7,6 +7,7 @@ import java.util.Random;
 import nl.tudelft.ti2206.game.Game;
 import nl.tudelft.ti2206.game.Game.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.TileHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,14 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+
- * | 12| 13| 12| 14|
- * +---+---+---+---+
- * | 8 | 9 | 10| 11|
- * +---+---+---+---+
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+
- * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+ | 12| 13| 12| 14| +---+---+---+---+ | 8 | 9 | 10| 11|
+ * +---+---+---+---+ | 4 | 5 | 6 | 7 | +---+---+---+---+ | 0 | 1 | 2 | 3 |
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -71,7 +66,7 @@ public class Grid extends Actor {
 	private Random random;
 
 	/** The TileHandler is used to move the tiles. */
-	// private TileHandler tileHandler;
+	private TileHandler tileHandler;
 
 	/** Keeps track of the highest Tile value in the current game. */
 	private int highestTile;
@@ -99,14 +94,15 @@ public class Grid extends Actor {
 		}
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
-		// this.tileHandler = new TileHandler(this);
+		this.tileHandler = new TileHandler(this);
+
 		if (!isEmpty) {
 			initGrid();
 		} else {
 			initEmptyGrid();
 		}
 
-		// after loading the grid, start the game.
+		/* After loading the grid, start the game. */
 		Game.setState(GameState.RUNNING);
 	}
 
@@ -170,7 +166,6 @@ public class Grid extends Actor {
 	 */
 	public void setTile(int index, int value) {
 		grid[index].setValue(value);
-		// grid[index].setMerged(index, isMerged);
 	}
 
 	/**
@@ -179,14 +174,14 @@ public class Grid extends Actor {
 	 */
 	@Override
 	public void act(float delta) {
-		// for (Tile t : grid) {
-		// t.update();
-		// }
 		updateHighestTile();
-		if (Game.getState() == GameState.RUNNING && highestTile == 2048)
+
+		if (Game.getState() == GameState.RUNNING && highestTile == 2048) {
 			Game.setState(GameState.WON);
-		if (Game.getState() == GameState.RUNNING && getPossibleMoves() == 0)
+		} else if (Game.getState() == GameState.RUNNING
+				&& getPossibleMoves() == 0) {
 			Game.setState(GameState.LOST);
+		}
 	}
 
 	/**
@@ -213,33 +208,34 @@ public class Grid extends Actor {
 	 */
 	public void move(Direction direction) {
 		/* If the game is not in running or continuing state, ignore the moves. */
-		// if (world.isLost() || world.isWon()) {
-		// return;
-		// }
+		if (Game.getState() == GameState.LOST
+				|| Game.getState() == GameState.WON) {
+			return;
+		}
 
-		// switch (direction) {
-		// case LEFT:
-		// tileHandler.moveLeft();
-		// break;
-		// case RIGHT:
-		// tileHandler.moveRight();
-		// break;
-		// case UP:
-		// tileHandler.moveUp();
-		// break;
-		// case DOWN:
-		// tileHandler.moveDown();
-		// break;
-		// default:
-		// break;
-		// }
-		//
-		// if (tileHandler.isMoveMade()) {
-		// //world.addScore(tileHandler.getScoreIncrement());
-		// setTile(getRandomEmptyLocation(), initialValue(), false);
-		// }
-		//
-		// tileHandler.reset();
+		switch (direction) {
+		case LEFT:
+			tileHandler.moveLeft();
+			break;
+		case RIGHT:
+			tileHandler.moveRight();
+			break;
+		case UP:
+			tileHandler.moveUp();
+			break;
+		case DOWN:
+			tileHandler.moveDown();
+			break;
+		default:
+			break;
+		}
+
+		if (tileHandler.isMoveMade()) {
+			setScore(score + tileHandler.getScoreIncrement());
+			setTile(getRandomEmptyLocation(), initialValue());
+		}
+
+		tileHandler.reset();
 	}
 
 	/**
@@ -368,24 +364,22 @@ public class Grid extends Actor {
 		return highScore;
 	}
 
-	// /**
-	// * Returns the TileHandler object used by the grid.
-	// *
-	// * @return The TileHandler object.
-	// */
-	// public TileHandler getTileHandler() {
-	// return tileHandler;
-	// }
-	//
-	// /**
-	// * Sets the TileHandler object used by the grid.
-	// *
-	// * @param tileHandler
-	// * The TileHandler object to set.
-	// */
-	// public void setTileHandler(TileHandler tileHandler) {
-	// this.tileHandler = tileHandler;
-	// }
+	/**
+	 * @return The TileHandler object used by the Grid.
+	 */
+	public TileHandler getTileHandler() {
+		return tileHandler;
+	}
+
+	/**
+	 * Sets the TileHandler object used by the grid.
+	 *
+	 * @param tileHandler
+	 *            The TileHandler object to set.
+	 */
+	public void setTileHandler(TileHandler tileHandler) {
+		this.tileHandler = tileHandler;
+	}
 
 	@Override
 	public float getX() {

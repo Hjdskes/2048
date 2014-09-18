@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.gameobjects.OverlayDisplay;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -44,7 +45,7 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setInputProcessor(stage); 
 
 		/* Load all our assets. */
 		AssetHandler.loadSkinFile(Gdx.files.internal("skin.json"));
@@ -69,6 +70,8 @@ public class Game implements ApplicationListener {
 		group.addActor(scores);
 		group.addActor(overlays);
 		stage.addActor(group);
+		stage.addActor(buttons);
+		stage.addListener(new InputHandler(grid));
 	}
 
 	@Override
