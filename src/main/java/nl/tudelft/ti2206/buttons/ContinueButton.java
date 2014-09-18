@@ -37,6 +37,6 @@ public class ContinueButton extends SimpleButton implements Drawable {
 
 	@Override
 	public void draw(Batch batch) {
-		batch.draw(AssetHandler.continuebutton, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+		batch.draw(AssetHandler.continueb, super.getX(), super.getY(), super.getWidth(), super.getHeight());
 	}
 }

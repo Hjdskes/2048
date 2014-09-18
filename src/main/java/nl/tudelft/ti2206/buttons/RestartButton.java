@@ -10,7 +10,6 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
  * A button to restart the game.
  */
 public class RestartButton extends SimpleButton implements Drawable {
-	
 	/**
 	 * Creates a new RestartButton with the specified parameters.
 	 * 
@@ -37,6 +36,6 @@ public class RestartButton extends SimpleButton implements Drawable {
 
 	@Override
 	public void draw(Batch batch) {
-		batch.draw(AssetHandler.restartbutton, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+		batch.draw(AssetHandler.restart, super.getX(), super.getY(), super.getWidth(), super.getHeight());
 	}
 }
