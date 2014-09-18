@@ -17,8 +17,8 @@ public class AssetHandler {
 
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite[] sprites = new Sprite[12];
-	public static Sprite grid, score, highscore, highest, restartbutton,
-			continuebutton, lost, won;
+	public static Sprite grid, score, highscore, highest, restart,
+			continueb, single, multi, lost, won;
 
 	/** The width of a gap, which is between all the tiles. */
 	private static final int GAP = 15;
@@ -86,6 +86,10 @@ public class AssetHandler {
 		manager.load("src/main/resources/images/buttons/newgame.png",
 				Texture.class);
 		manager.load("src/main/resources/images/buttons/continue.png",
+				Texture.class);
+		manager.load("src/main/resources/images/buttons/singleplayer.png",
+				Texture.class);
+		manager.load("src/main/resources/images/buttons/multiplayer.png",
 				Texture.class);
 
 		/*
@@ -162,17 +166,48 @@ public class AssetHandler {
 	}
 
 	/**
+	 * Sets the sprite location and whether it is has an X or Y flip or not.
+	 * 
+	 * @param sprite
+	 *            The sprite to configure.
+	 * @param x
+	 *            The x-coordinate of the sprite.
+	 * @param y
+	 *            The y-coordinate of the sprite.
+	 * @param isXFlipped
+	 *            If true, flip the sprite vertically.
+	 * @param isYFlipped
+	 *            If true, flip the sprite horizontally.
+	 */
+	private static void setAssetLocation(Sprite sprite, float x, float y,
+			boolean isXFlip, boolean isYFlip) {
+		sprite.setX(x);
+		sprite.setY(y);
+		sprite.setFlip(isXFlip, isYFlip);
+	}
+
+	/**
 	 * Creates and positions all sprites for the two buttons.
 	 */
 	private static void getButtons() {
-		restartbutton = new Sprite(manager.get(
+		restart = new Sprite(manager.get(
 				"src/main/resources/images/buttons/newgame.png", Texture.class));
-		restartbutton.setFlip(false, true);
+		restart.setFlip(false, true);
 
-		continuebutton = new Sprite(
+		continueb = new Sprite(
 				manager.get("src/main/resources/images/buttons/continue.png",
 						Texture.class));
-		continuebutton.setFlip(false, true);
+		continueb.setFlip(false, true);
+
+		single = new Sprite(manager.get(
+				"src/main/resources/images/buttons/singleplayer.png",
+				Texture.class));
+		single.setFlip(false, true);
+
+		multi = new Sprite(manager.get(
+				"src/main/resources/images/buttons/multiplayer.png",
+				Texture.class));
+		multi.setFlip(false, true);
 	}
 
 	/**
@@ -199,27 +234,6 @@ public class AssetHandler {
 		won = new Sprite(manager.get(
 				"src/main/resources/images/wonoverlay.png", Texture.class));
 		won.flip(false, true);
-	}
-
-	/**
-	 * Sets the sprite location and whether it is has an X or Y flip or not.
-	 * 
-	 * @param sprite
-	 *            The sprite to configure.
-	 * @param x
-	 *            The x-coordinate of the sprite.
-	 * @param y
-	 *            The y-coordinate of the sprite.
-	 * @param isXFlipped
-	 *            If true, flip the sprite vertically.
-	 * @param isYFlipped
-	 *            If true, flip the sprite horizontally.
-	 */
-	private static void setAssetLocation(Sprite sprite, float x, float y,
-			boolean isXFlip, boolean isYFlip) {
-		sprite.setX(x);
-		sprite.setY(y);
-		sprite.setFlip(isXFlip, isYFlip);
 	}
 
 	/**

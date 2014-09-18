@@ -21,7 +21,7 @@ public class TwentyFourtyGame extends Game {
 		AssetHandler.load();
 		ButtonHandler.load();
 		PreferenceHandler.initScores();
-		setScreen(new GameScreen());
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override
