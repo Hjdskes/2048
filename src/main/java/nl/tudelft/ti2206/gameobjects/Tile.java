@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -41,6 +42,8 @@ public class Tile extends Actor {
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
 
+	private ScaleToAction spawnAction;
+
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
 	 * whole image.
@@ -65,6 +68,9 @@ public class Tile extends Actor {
 
 		setSprite();
 		setLabel();
+		setActors();
+
+		spawn();
 	}
 
 	/**
@@ -155,10 +161,17 @@ public class Tile extends Actor {
 	}
 
 	/**
+	 * Sets the size of the scale to 0.5, to trigger the spawn action.
+	 */
+	public void spawn() {
+		this.setScale(.5f);
+	}
+
+	/**
 	 * Moves the TextureRegion to the new Texture, belonging to the current
 	 * value of the Tile.
 	 */
-	public void setSprite() {
+	private void setSprite() {
 		/* Temporary fix to allow headless testing. */
 		if (Gdx.app.getGraphics() != null) {
 			region.setRegion(AssetHandler.getSkin().getRegion(
@@ -170,7 +183,7 @@ public class Tile extends Actor {
 	 * Sets the label displaying the value of the tile to the designated
 	 * position.
 	 */
-	public void setLabel() {
+	private void setLabel() {
 		float x = getX();
 		float y = getY();
 
@@ -187,6 +200,17 @@ public class Tile extends Actor {
 		} else {
 			label.setVisible(true);
 		}
+	}
+
+	/**
+	 * Sets the actions for the tile.s
+	 */
+	private void setActors() {
+		spawnAction = new ScaleToAction();
+		spawnAction.setDuration(.3f);
+		spawnAction.setScale(1);
+
+		this.addAction(spawnAction);
 	}
 
 	@Override
@@ -219,6 +243,22 @@ public class Tile extends Actor {
 		}
 	}
 
+	/**
+	 * @return The Y offset for the y coordinate, depending on the current
+	 *         scale.
+	 */
+	private float getXOffset() {
+		return getWidth() / 2 - getWidth() * getScaleX() / 2;
+	}
+
+	/**
+	 * @return The Y offset for the y coordinate, depending on the current
+	 *         scale.
+	 */
+	private float getYOffset() {
+		return getHeight() / 2 - getHeight() * getScaleY() / 2;
+	}
+
 	@Override
 	public float getWidth() {
 		return TILE_WIDTH;
@@ -231,13 +271,18 @@ public class Tile extends Actor {
 
 	@Override
 	public void act(float delta) {
+		if (getScaleX() != 1) {
+			spawnAction.act(delta);
+		}
 		setSprite();
 		setLabel();
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(region, getX(), getY(), getWidth(), getHeight());
+		batch.draw(region, getX() + getXOffset(), getY() + getYOffset(),
+				getOriginX(), getOriginY(), getWidth(), getHeight(),
+				getScaleX(), getScaleY(), 0);
 		if (label.isVisible()) {
 			label.draw(batch, parentAlpha);
 		}
