@@ -5,7 +5,7 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 /**
  * The Tile class represents the tiles you move around while playing 2048.
  */
-public class Tile extends Group {
+public class Tile extends Actor {
 	/** The width of the Tile. */
 	private static final int TILE_WIDTH = 81;
 
@@ -38,6 +38,9 @@ public class Tile extends Group {
 	/** The label of the Tile, displaying its value. */
 	private Label label;
 
+	/** Indicates whether this Tile has been merged in the current move. */
+	private boolean isMerged;
+
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
 	 * whole image.
@@ -55,14 +58,13 @@ public class Tile extends Group {
 	public Tile(int index, int value) {
 		this.value = value;
 		this.index = index;
+		this.isMerged = false;
 
 		this.region = new TextureRegion();
 		this.label = new Label(Integer.toString(value), AssetHandler.getSkin());
 
 		setSprite();
 		setLabel();
-
-		this.addActor(label);
 	}
 
 	/**
@@ -108,10 +110,35 @@ public class Tile extends Group {
 	}
 
 	/**
+	 * @return True if this Tile has been merged, false otherwise.
+	 */
+	public boolean isMerged() {
+		return this.isMerged;
+	}
+
+	/**
+	 * Sets the merged state of this Tile.
+	 *
+	 * @param isMerged
+	 *            The new merged state.
+	 */
+	public void setMerged(boolean isMerged) {
+		this.isMerged = isMerged;
+	}
+
+	/**
 	 * Resets the value of the Tile.
 	 */
 	public void resetValue() {
 		this.value = 0;
+	}
+
+	/**
+	 * Resets the Tile to its default state.
+	 */
+	public void reset() {
+		resetValue();
+		isMerged = false;
 	}
 
 	/**
@@ -212,7 +239,8 @@ public class Tile extends Group {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());
-		if (label.isVisible())
+		if (label.isVisible()) {
 			label.draw(batch, parentAlpha);
+		}
 	}
 }
