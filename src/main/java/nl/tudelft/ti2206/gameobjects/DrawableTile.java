@@ -1,17 +1,13 @@
 package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.gameobjects.Drawable;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
  * The DrawableTile class is a subclass of Tile, that knows how to draw itself.
  */
 public class DrawableTile extends Tile implements Drawable {
-	/** The brown font. */
-	private static final BitmapFont BROWN_F = AssetHandler.font;
 
 	/** The width of the Tile. */
 	private static final int TILE_WIDTH = 81;
@@ -81,36 +77,7 @@ public class DrawableTile extends Tile implements Drawable {
 	@Override
 	public void draw(Batch batch) {
 		int value = super.getValue();
-		float x = getX();
-		float y = getY();
 
-		batch.draw(AssetHandler.getTile(value), x, y, TILE_WIDTH, TILE_HEIGHT);
-		if (!super.isEmpty()) {
-			String tileValue = Integer.toString(value);
-			BROWN_F.draw(batch, tileValue, x + (TILE_WIDTH / 2) + getTextCenterX(tileValue), y
-					- getTextCenterY(tileValue));
-		}
-	}
-
-	/**
-	 * Calculates the center x-coordinate of a String.
-	 * 
-	 * @param text
-	 *            The text to be centered.
-	 * @return The center x-coordinate of the provided String.
-	 */
-	private float getTextCenterX(String text) {
-		return BROWN_F.getBounds(text).width / 2;
-	}
-
-	/**
-	 * Calculates the center y-coordinate of a String.
-	 * 
-	 * @param text
-	 *            The text to be centered.
-	 * @return The center y-coordinate of the provided String.
-	 */
-	private float getTextCenterY(String text) {
-		return BROWN_F.getBounds(text).height / 2;
+		batch.draw(AssetHandler.getTile(value), getX(), getY(), TILE_WIDTH, TILE_HEIGHT);
 	}
 }

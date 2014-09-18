@@ -133,6 +133,10 @@ public class AssetHandler {
 
 		grid = new Sprite(manager.get("src/main/resources/images/grid.png",
 				Texture.class));
+
+		for (Sprite sprite : sprites) {
+			sprite.flip(false, true);
+		}
 	}
 
 	/**
