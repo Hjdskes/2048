@@ -82,15 +82,15 @@ public class InputHandlerTest {
 		verify(grid).move(Direction.RIGHT);
 	}
 
-	/**
-	 * Make sure the move method is called with the correct parameter when the
-	 * escape key is pressed.
-	 */
-	@Test
-	public void testKeyDownEscape() {
-		handler.keyDown(null, Keys.ESCAPE);
-		verify(grid).restart();
-	}
+//	/**
+//	 * Make sure the move method is called with the correct parameter when the
+//	 * escape key is pressed.
+//	 */
+//	@Test
+//	public void testKeyDownEscape() {
+//		handler.keyDown(null, Keys.ESCAPE);
+//		verify(grid).restart();
+//	}
 
 	/**
 	 * Make sure the keyDown method returns false when the key is invalid.
