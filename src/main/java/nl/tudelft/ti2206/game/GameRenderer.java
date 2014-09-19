@@ -1,9 +1,9 @@
 package nl.tudelft.ti2206.game;
 
+import nl.tudelft.ti2206.gameobjects.ButtonDisplay;
 import nl.tudelft.ti2206.gameobjects.DrawableGrid;
 import nl.tudelft.ti2206.gameobjects.OverlayDisplay;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
-import nl.tudelft.ti2206.handlers.ButtonHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,9 +18,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class GameRenderer {
 
-	/** A reference to the GameWorld, which is used to interact with the game. */
-	private GameWorld world;
-
 	/** A reference to the Grid. */
 	private DrawableGrid grid;
 
@@ -29,6 +26,7 @@ public class GameRenderer {
 
 	private OverlayDisplay overlays;
 	private ScoreDisplay scores;
+	private ButtonDisplay buttons;
 	
 	/**
 	 * Constructs a GameRenderer object.
@@ -41,7 +39,6 @@ public class GameRenderer {
 	 *            The game window's height.
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
-		this.world = world;
 		this.grid = world.getGrid();
 
 		OrthographicCamera cam = new OrthographicCamera();
@@ -52,6 +49,7 @@ public class GameRenderer {
 		
 		overlays = new OverlayDisplay(world, true);
 		scores = new ScoreDisplay(world, true);
+		buttons = new ButtonDisplay(world, true);
 	}
 
 	/**
@@ -82,23 +80,6 @@ public class GameRenderer {
 		
 		scores.draw(batch);
 		overlays.draw(batch);
-		
-		if (world.isWon())
-			drawContinueButton();
-		drawRestartButton();
-	}
-
-	/**
-	 * Renders the button that will initiate a restart of the game.
-	 */
-	private void drawRestartButton() {
-		ButtonHandler.getRestartButton().draw(batch);
-	}
-
-	/**
-	 * Renders the button that will allow to continue playing after winning.
-	 */
-	private void drawContinueButton() {
-		ButtonHandler.getContinueButton().draw(batch);
+		buttons.draw(batch);	
 	}
 }

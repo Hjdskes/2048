@@ -112,4 +112,12 @@ public class Button {
 		}
 		return false;
 	}
+	
+	/**
+	 * Sets the x coordinate of the button.
+	 * @param x
+	 */
+	public void setX(float x) {
+		this.x = x;
+	}
 }

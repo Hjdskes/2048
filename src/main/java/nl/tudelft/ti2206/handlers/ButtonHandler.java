@@ -8,37 +8,11 @@ import nl.tudelft.ti2206.game.GameWorld;
  * The ButtonHandler is responsible for managing the buttons.
  */
 public class ButtonHandler {
-	/** The width of the game window. */
-	private static final int GAME_WIDTH = 600;
-
-	/** The height of the game window. */
-	private static final int GAME_HEIGHT = 600;
-
-	/** The width of a gap, which is between all the tiles. */
-	private static final int GAP = 15;
-
 	/** The restart button. */
 	private static RestartButton restartButton;
 
 	/** The continue button. */
 	private static ContinueButton continueButton;
-
-	/**
-	 * Initializes all buttons.
-	 */
-	public static void load() {
-		restartButton = new RestartButton(GAME_WIDTH / 2
-				- AssetHandler.restart.getWidth() / 2, GAME_HEIGHT - GAP
-				- AssetHandler.restart.getHeight(),
-				AssetHandler.restart.getWidth(),
-				AssetHandler.restart.getHeight());
-
-		continueButton = new ContinueButton(GAME_WIDTH / 2
-				- AssetHandler.continueb.getWidth() / 2, GAME_HEIGHT - GAP
-				* 3 - AssetHandler.continueb.getHeight() * 2,
-				AssetHandler.continueb.getWidth(),
-				AssetHandler.continueb.getHeight());
-	}
 
 	/**
 	 * Delegates a touchDown event from the InputHandler to the correct button.
@@ -67,16 +41,16 @@ public class ButtonHandler {
 	}
 
 	/**
-	 * @return The RestartButton object.
+	 * Sets the RestartButton.
 	 */
-	public static RestartButton getRestartButton() {
-		return restartButton;
+	public static void setRestartButton(RestartButton b) {
+		restartButton = b;
 	}
 
 	/**
-	 * @return The ContinueButton object.
+	 * Sets the ContinueButton.
 	 */
-	public static ContinueButton getContinueButton() {
-		return continueButton;
+	public static void setContinueButton(ContinueButton b) {
+		continueButton = b;
 	}
 }
