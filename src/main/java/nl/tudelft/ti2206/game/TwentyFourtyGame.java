@@ -1,16 +1,15 @@
 package nl.tudelft.ti2206.game;
 
+import java.util.Stack;
+
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 
 /**
- * The Game class is used to hook into LibGDX. It implements LibGDX's
- * ApplicationListener interface.
- * 
- * Through implementing this interface, we receive events from LibGDX by which
- * we control the game.
  */
 public class TwentyFourtyGame extends Game {
 	/** The width of the game */
@@ -27,6 +26,9 @@ public class TwentyFourtyGame extends Game {
 		RUNNING, LOST, WON, CONTINUING
 	}
 
+	/** A stack of screens. */
+	private Stack<Screen> screens;
+
 	/** The current state of the game. */
 	private static GameState curState;
 
@@ -36,13 +38,40 @@ public class TwentyFourtyGame extends Game {
 		AssetHandler.load();
 		AssetHandler.loadSkinFile(Gdx.files.internal("src/main/resources/skin.json"));
 
-		setScreen(new Menu());
+		screens = new Stack<Screen>();
+		addScreen(new MenuScreen());
 	}
 
 	@Override
 	public void dispose() {
 		getScreen().dispose();
 		AssetHandler.dispose();
+		for (Screen screen : screens) {
+			if (screen == null) {
+				continue;
+			}
+			screen.dispose();
+		}
+		screens.clear();
+	}
+
+	public void addScreen(Screen screen) {
+		setScreen(screens.push(screen));
+		System.out.println(screens.size());
+	}
+
+	public void popScreen() {
+		if (screens.size() > 1) {
+			Screen screen = screens.pop();
+			setScreen(screens.peek());
+			screen.hide();
+			screen.dispose();
+			//setScreen(screens.get(screens.size()-1));
+			//screens.pop().dispose();
+			//setScreen(screens.peek());
+			//screen.dispose();
+		}
+		System.out.println(screens.size());
 	}
 
 	/**
