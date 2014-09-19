@@ -57,6 +57,22 @@ public class ScoreDisplay extends Group {
 		group.addActor(highScoreLabel);
 		group.addActor(highestTileLabel);
 	}
+	
+	public ScoreDisplay(Grid grid, Label label) {
+		this.grid = grid;
+		group = new Group();
+
+		scoreLabel = label;
+		highScoreLabel = label;
+		highestTileLabel = label;
+		
+		initRegions();
+		initLabels();
+
+		group.addActor(scoreLabel);
+		group.addActor(highScoreLabel);
+		group.addActor(highestTileLabel);
+	}
 
 	/**
 	 * Initializes all TextureRegions for the scores.
