@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Game;
 
@@ -16,8 +17,10 @@ import com.badlogic.gdx.Game;
  * TwentyFourtyGame delegates all events to it.
  */
 public class TwentyFourtyGame extends Game {
+
 	@Override
 	public void create() {
+		Networking.initalize();
 		AssetHandler.load();
 		PreferenceHandler.initScores();
 		setScreen(new MenuScreen(this));
