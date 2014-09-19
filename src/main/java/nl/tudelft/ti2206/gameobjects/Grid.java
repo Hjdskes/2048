@@ -167,6 +167,11 @@ public class Grid extends Actor {
 	 */
 	@Override
 	public void act(float delta) {
+		super.act(delta);
+		for (Tile t : grid) {
+			t.act(delta);
+		}
+
 		updateHighestTile();
 		if (score > highScore) {
 			highScore = score;
@@ -442,5 +447,8 @@ public class Grid extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());
+		for (Tile t : grid) {
+			t.draw(batch, parentAlpha);
+		}
 	}
 }
