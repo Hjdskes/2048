@@ -7,15 +7,11 @@
    beige: { r: 0.976, g: 0.969, b: 0.933, a: 1 },  
   },  
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {  
-   default: { font: brownText },
-   brown-text: { font: brownText },   
-   white-text: { font: whiteText },  
+   default: { font: brownText },  
+   brown-text: { font: brownText },     
+   white-text: { font: whiteText },   
+  },  
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {  
+   default: { font: whiteText, up: button, down: button, pressedOffsetY: -4 },  
   }  
-/*  com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
-   default: { up: button, down: button-down, checked: button-down },
-   transparent: { },
-  },
-  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-   default: { up: button, down: button, font: whiteText },
-  }*/
 } 

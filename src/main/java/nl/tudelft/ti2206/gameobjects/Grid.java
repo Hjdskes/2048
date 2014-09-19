@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nl.tudelft.ti2206.game.Game;
-import nl.tudelft.ti2206.game.Game.GameState;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
 
@@ -98,7 +98,7 @@ public class Grid extends Actor {
 		}
 
 		/* After loading the grid, start the game. */
-		Game.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -172,10 +172,10 @@ public class Grid extends Actor {
 			highScore = score;
 		}
 
-		if (Game.isRunning() && highestTile == 2048) {
-			Game.setState(GameState.WON);
-		} else if (Game.isRunning() && getPossibleMoves() == 0) {
-			Game.setState(GameState.LOST);
+		if (TwentyFourtyGame.isRunning() && highestTile == 2048) {
+			TwentyFourtyGame.setState(GameState.WON);
+		} else if (TwentyFourtyGame.isRunning() && getPossibleMoves() == 0) {
+			TwentyFourtyGame.setState(GameState.LOST);
 		}
 	}
 
@@ -190,7 +190,7 @@ public class Grid extends Actor {
 		}
 		initGrid();
 		updateHighestTile();
-		Game.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class Grid extends Actor {
 	 */
 	public void move(Direction direction) {
 		/* If the game is not in running or continuing state, ignore the moves. */
-		if (Game.isLost() || Game.isWon()) {
+		if (TwentyFourtyGame.isLost() || TwentyFourtyGame.isWon()) {
 			return;
 		}
 

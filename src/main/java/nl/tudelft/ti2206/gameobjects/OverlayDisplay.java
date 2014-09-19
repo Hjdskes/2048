@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.gameobjects;
 
-import nl.tudelft.ti2206.game.Game;
-import nl.tudelft.ti2206.game.Game.GameState;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -42,9 +42,9 @@ public class OverlayDisplay extends Group {
 	 */
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		if (Game.getState() == GameState.WON) {
+		if (TwentyFourtyGame.getState() == GameState.WON) {
 			batch.draw(wonOverlay, 0, 0);
-		} else if (Game.getState() == GameState.LOST) {
+		} else if (TwentyFourtyGame.getState() == GameState.LOST) {
 			batch.draw(lostOverlay, 0, 0);
 		}
 	}

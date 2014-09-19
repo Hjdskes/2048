@@ -65,8 +65,8 @@ public class AssetHandlerTest {
 	@Test
 	public void testLoad() {
 		AssetHandler.load();
-		verify(manager, times(5)).load(anyString(), eq(TextureAtlas.class));
-		verify(skin, times(5)).addRegions(textureAtlas);
+		verify(manager, times(4)).load(anyString(), eq(TextureAtlas.class));
+		verify(skin, times(4)).addRegions(textureAtlas);
 	}
 
 	/**
