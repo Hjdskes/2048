@@ -8,8 +8,8 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.game.Game;
-import nl.tudelft.ti2206.game.Game.GameState;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.BeforeClass;
@@ -48,7 +48,7 @@ public class OverlayDisplayTest {
 		// reset to remove possible draw invocation count
 		reset(batch);
 
-		Game.setState(GameState.WON);
+		TwentyFourtyGame.setState(GameState.WON);
 		overlays.draw(batch, 1);
 		verify(batch).draw(eq(texture), anyInt(), anyInt());
 	}
@@ -58,7 +58,7 @@ public class OverlayDisplayTest {
 		// reset to reset draw invocation counter
 		reset(batch);
 
-		Game.setState(GameState.LOST);
+		TwentyFourtyGame.setState(GameState.LOST);
 		overlays.draw(batch, 1);
 		verify(batch).draw(eq(texture), anyInt(), anyInt());
 	}
@@ -68,7 +68,7 @@ public class OverlayDisplayTest {
 		// reset to reset draw invocation counter
 		reset(batch);
 
-		Game.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(GameState.RUNNING);
 		overlays.draw(batch, 1);
 		verify(batch, times(0)).draw(eq(texture), anyInt(), anyInt());
 	}
