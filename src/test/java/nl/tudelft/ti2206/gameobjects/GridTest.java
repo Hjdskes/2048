@@ -13,9 +13,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import nl.tudelft.ti2206.game.Game;
-import nl.tudelft.ti2206.game.Game.GameState;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
@@ -63,7 +63,7 @@ public class GridTest {
 
 		grid = new Grid(false);
 		grid.setTileHandler(tileHandler);
-		Game.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class GridTest {
 	 */
 	@Test
 	public void testMoveImpossibleWhenWon() {
-		Game.setState(GameState.WON);
+		TwentyFourtyGame.setState(GameState.WON);
 		grid.move(Direction.LEFT);
 		verify(tileHandler, times(0)).moveLeft();
 	}
@@ -165,7 +165,7 @@ public class GridTest {
 	 */
 	@Test
 	public void testMoveImpossibleWhenLost() {
-		Game.setState(GameState.LOST);
+		TwentyFourtyGame.setState(GameState.LOST);
 		grid.move(Direction.LEFT);
 		verify(tileHandler, times(0)).moveLeft();
 	}
