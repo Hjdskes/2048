@@ -1,11 +1,19 @@
 package nl.tudelft.ti2206.gameobjects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.gameobjects.Tile;
 
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
+
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * Test class for the Tile class.
@@ -13,6 +21,8 @@ import org.junit.Before;
  * @author group-21
  */
 public class TileTest {
+	private Skin skin;
+
 	/** The object under test. */
 	private Tile tile;
 
@@ -21,8 +31,14 @@ public class TileTest {
 	 */
 	@Before
 	public void setup() {
+		skin = mock(Skin.class);
+		TextureRegion texture = mock(TextureRegion.class);
+		LabelStyle style = new LabelStyle();
+		style.font = mock(BitmapFont.class);
+		when(skin.get(LabelStyle.class)).thenReturn(style);
+		when(skin.getRegion(anyString())).thenReturn(texture);
 		new HeadlessLauncher().launch();
-		tile = new Tile(0, 0);
+		tile = new Tile(0, 0, skin, texture);
 	}
 
 	/**
@@ -68,22 +84,22 @@ public class TileTest {
 		assertEquals(false, tile.isEmpty());
 	}
 
-	// /**
-	// * Tests if isMerged() correctly returns false if the tile has not merged.
-	// */
-	// @Test
-	// public void testIsMerged() {
-	// assertEquals(false, tile.isMerged());
-	// }
-	//
-	// /**
-	// * Tests if testMerged() correctly sets the isMerged variable.
-	// */
-	// @Test
-	// public void testSetMerged() {
-	// tile.setMerged(true);
-	// assertEquals(true, tile.isMerged());
-	// }
+	/**
+	 * Tests if isMerged() correctly returns false if the tile has not merged.
+	 */
+	@Test
+	public void testIsMerged() {
+		assertEquals(false, tile.isMerged());
+	}
+
+	/**
+	 * Tests if testMerged() correctly sets the isMerged variable.
+	 */
+	@Test
+	public void testSetMerged() {
+		tile.setMerged(true);
+		assertEquals(true, tile.isMerged());
+	}
 
 	/**
 	 * Tests if resetValue() correctly resets the value of the tile.

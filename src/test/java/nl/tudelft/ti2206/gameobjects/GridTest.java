@@ -4,15 +4,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Tile;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * Test suite for the Grid class.
@@ -31,6 +37,10 @@ public class GridTest {
 	/** A mock for the TileHandler object. */
 	// private TileHandler tileHandler;
 
+	private static Skin skin;
+	private static Texture texture;
+	private static TextureRegion region;
+	
 	/**
 	 * Initializes all the mocks and creates the test object.
 	 */
@@ -38,10 +48,13 @@ public class GridTest {
 	public void setup() {
 		new HeadlessLauncher().launch();
 
-		// world = Mockito.mock(GameWorld.class);
-		// tileHandler = Mockito.mock(TileHandler.class);
-		grid = new Grid(false);
-		// grid.setTileHandler(tileHandler);
+		skin = mock(Skin.class);
+		texture = mock(Texture.class);
+		region = mock(TextureRegion.class);
+		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
+		
+		grid = new Grid(false, skin, region);
+		
 	}
 
 	/**

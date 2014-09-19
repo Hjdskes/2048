@@ -2,13 +2,13 @@ package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 /**
@@ -44,6 +44,8 @@ public class Tile extends Actor {
 
 	private ScaleToAction spawnAction;
 	private ScaleToAction mergeAction;
+	
+	private Skin skin;
 
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
@@ -64,14 +66,27 @@ public class Tile extends Actor {
 		this.index = index;
 		this.isMerged = false;
 
+		this.skin = AssetHandler.getSkin();
 		this.region = new TextureRegion();
-		this.label = new Label(Integer.toString(value), AssetHandler.getSkin());
+		this.label = new Label(Integer.toString(value), skin);
 
-		setSprite();
+		setSprite(skin);
 		setLabel();
 		setActors();
 
 		spawn();
+	}
+
+	public Tile(int index, int value, Skin skin, TextureRegion region) {
+		this.value = value;
+		this.index = index;
+		this.isMerged = false;
+
+		this.skin = skin;
+		this.region = region;
+		
+		setSprite(skin);
+		setActors();
 	}
 
 	/**
@@ -89,7 +104,7 @@ public class Tile extends Actor {
 	 */
 	public void setValue(int value) {
 		this.value = value;
-		setSprite();
+		setSprite(skin);
 	}
 
 	/**
@@ -158,7 +173,7 @@ public class Tile extends Actor {
 			value *= 2;
 		}
 
-		setSprite();
+		setSprite(skin);
 	}
 
 	/**
@@ -179,12 +194,8 @@ public class Tile extends Actor {
 	 * Moves the TextureRegion to the new Texture, belonging to the current
 	 * value of the Tile.
 	 */
-	private void setSprite() {
-		/* Temporary fix to allow headless testing. */
-		if (Gdx.app.getGraphics() != null) {
-			region.setRegion(AssetHandler.getSkin().getRegion(
-					"tile" + this.value));
-		}
+	private void setSprite(Skin skin) {
+		region.setRegion(skin.getRegion("tile" + this.value));
 	}
 
 	/**
@@ -195,7 +206,7 @@ public class Tile extends Actor {
 		float x = getX();
 		float y = getY();
 
-		label.setStyle(AssetHandler.getSkin().get("brown-text",
+		label.setStyle(skin.get("brown-text",
 				LabelStyle.class));
 		label.setText(Integer.toString(value));
 		label.setX(x);
@@ -290,7 +301,7 @@ public class Tile extends Actor {
 			mergeAction.act(delta);
 		}
 
-		setSprite();
+		setSprite(skin);
 		setLabel();
 	}
 

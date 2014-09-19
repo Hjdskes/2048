@@ -9,11 +9,11 @@ import nl.tudelft.ti2206.game.Game.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -87,16 +87,30 @@ public class Grid extends Actor {
 	 *            True if the grid should be empty.
 	 */
 	public Grid(boolean isEmpty) {
-		/* Temporary fix to allow headless testing. */
-		if (Gdx.app.getGraphics() != null) {
-			this.region = new TextureRegion(AssetHandler.getSkin().get("grid",
-					Texture.class));
-		}
+		this.region = new TextureRegion(AssetHandler.getSkin().get("grid",
+				Texture.class));
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
 		this.tileHandler = new TileHandler(this);
 
 		initEmptyGrid();
+		if (!isEmpty) {
+			initGrid();
+		}
+
+		/* After loading the grid, start the game. */
+		Game.setState(GameState.RUNNING);
+	}
+
+	public Grid(boolean isEmpty, Skin skin, TextureRegion texture) {
+		this.region = texture;
+		this.random = new Random();
+		this.grid = new Tile[NTILES];
+		this.tileHandler = new TileHandler(this);
+
+		for (int i = 0; i < NTILES; i++) {
+			grid[i] = new Tile(i, 0, skin, texture);
+		}
 		if (!isEmpty) {
 			initGrid();
 		}
