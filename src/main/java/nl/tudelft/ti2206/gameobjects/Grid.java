@@ -109,7 +109,7 @@ public class Grid {
 	/**
 	 * Initializes the grid with empty tiles (value 0).
 	 */
-	protected void initEmptyGrid() {
+	private void initEmptyGrid() {
 		for (int i = 0; i < NTILES; i++) {
 			grid[i] = new DrawableTile(i, 0, TILE_X, TILE_Y);
 		}

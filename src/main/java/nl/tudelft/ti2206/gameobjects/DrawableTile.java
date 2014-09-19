@@ -44,6 +44,10 @@ public class DrawableTile extends Tile implements Drawable {
 	 *            The index of the Tile into the Grid array.
 	 * @param value
 	 *            The value of the Tile.
+	 * @param baseX
+	 *            The base Tile x-coordinate.
+	 * @param baseY
+	 *            The base Tile y-coordinate.
 	 */
 	public DrawableTile(int index, int value, float baseX, float baseY) {
 		super(value);
@@ -55,12 +59,12 @@ public class DrawableTile extends Tile implements Drawable {
 		this.isMerging = false;
 	}
 
-//	/**
-//	 * @return The current size of the Tile.
-//	 */
-//	public float getSzie() {
-//		return scale * DIMENSION;
-//	}
+	// /**
+	// * @return The current size of the Tile.
+	// */
+	// public float getSzie() {
+	// return scale * DIMENSION;
+	// }
 
 	/**
 	 * @return The current scale of the Tile.
@@ -194,6 +198,7 @@ public class DrawableTile extends Tile implements Drawable {
 	public void draw(Batch batch) {
 		int value = super.getValue();
 
-		batch.draw(AssetHandler.getTile(value), getX(), getY(), getWidth(), getHeight());
+		batch.draw(AssetHandler.getTile(value), getX(), getY(), getWidth(),
+				getHeight());
 	}
 }
