@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.handlers.ButtonHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -17,7 +16,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * be 2D.
  */
 public class GameRenderer {
-
 	/** The gap between the top of the game window and the score text. */
 	private static final int SCORE_HEIGHT = 50;
 

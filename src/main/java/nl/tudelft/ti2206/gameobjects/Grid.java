@@ -29,14 +29,18 @@ import nl.tudelft.ti2206.handlers.TileHandler;
  * Now, a square on field 10 can move left or right by adding or subtracting 1
  * from its index. It can move up or down by adding or subtracting 4 from its
  * index.
- * 
- * @author group-21
  */
 public class Grid {
 	/** This enumeration is used to indicate the direction of a movement. */
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT;
 	}
+
+	/** The base Tile x-coordinate in a singleplayer game. */
+	private static final float TILE_X = 115;
+
+	/** The base Tile y-coordinate in a singleplayer game. */
+	private static final float TILE_Y = 115;
 
 	/** The width of the grid. */
 	public static final int WIDTH = 400;
@@ -105,9 +109,9 @@ public class Grid {
 	/**
 	 * Initializes the grid with empty tiles (value 0).
 	 */
-	private void initEmptyGrid() {
+	protected void initEmptyGrid() {
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new DrawableTile(i, 0);
+			grid[i] = new DrawableTile(i, 0, TILE_X, TILE_Y);
 		}
 	}
 

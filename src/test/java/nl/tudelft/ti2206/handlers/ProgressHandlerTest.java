@@ -13,6 +13,12 @@ import org.junit.Test;
  * A test class for the ProgressHandler.
  */
 public class ProgressHandlerTest {
+	/** The base Grid x-coordinate in a singleplayer game. */
+	private static final float GRID_X = 100;
+
+	/** The base Grid y-coordinate in a singleplayer game. */
+	private static final float GRID_Y = 100;
+
 	private static GameWorld world;
 	private DrawableGrid grid;
 
@@ -36,7 +42,7 @@ public class ProgressHandlerTest {
 		 * score, etc.
 		 */
 		PreferenceHandler.getPrefs().clear();
-		grid = new DrawableGrid(world, true);
+		grid = new DrawableGrid(world, true, GRID_X, GRID_Y);
 		world.setGrid(grid);
 	}
 
@@ -76,7 +82,7 @@ public class ProgressHandlerTest {
 	@Test
 	public void testLoadGame() {
 		/* Construct the grid. */
-		DrawableGrid grid = new DrawableGrid(world, true);
+		DrawableGrid grid = new DrawableGrid(world, true, GRID_X, GRID_Y);
 		grid.setTile(0, 2, true);
 		grid.setTile(1, 4, true);
 

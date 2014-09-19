@@ -9,6 +9,12 @@ import org.junit.Test;
  * Test suite for the DrawableTile class.
  */
 public class DrawableTileTest {
+	/** The base Tile x-coordinate in a singleplayer game. */
+	private static final float TILE_X = 115;
+
+	/** The base Tile y-coordinate in a singleplayer game. */
+	private static final float TILE_Y = 115;
+
 	/** The object under test. */
 	private DrawableTile tile;
 
@@ -17,7 +23,7 @@ public class DrawableTileTest {
 	 */
 	@Before
 	public void setUp() {
-		tile = new DrawableTile(0, 4);
+		tile = new DrawableTile(0, 4, TILE_X, TILE_Y);
 	}
 
 	/**
