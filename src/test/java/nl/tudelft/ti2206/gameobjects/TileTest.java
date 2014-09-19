@@ -124,4 +124,55 @@ public class TileTest {
 		tile.doubleValue();
 		assertEquals(4, tile.getValue());
 	}
+	
+	/**
+	 * Tests if we can correctly set the index of the tile.
+	 */
+	@Test
+	public void testIndex() {
+		tile.setIndex(2);
+		assertEquals(2, tile.getIndex());
+	}
+	
+	/**
+	 * Tests if the width and height is returned correctly.
+	 */
+	@Test
+	public void testWidthHeight() { 
+		int i = 81;
+		int width = (int) tile.getWidth();
+		int heigth = (int) tile.getHeight();
+		assertEquals(i, width);
+		assertEquals(i, heigth);
+	}
+	
+	/**
+	 * Tests if the getter of x and y are behaving correctly.
+	 */
+	@Test
+	public void testGetXY() {
+		tile.setIndex(5);
+		int x = (int) tile.getX();
+		int y = (int) tile.getY();
+		assertEquals(x, 211);
+		assertEquals(y, 211);
+		
+		tile.setIndex(14);
+		x = (int) tile.getX();
+		y = (int) tile.getY();
+		assertEquals(x, 307);
+		assertEquals(y, 403);
+		
+		tile.setIndex(0);
+		x = (int) tile.getX();
+		y = (int) tile.getY();
+		assertEquals(x, 115);
+		assertEquals(y, 115);
+		
+		tile.setIndex(8);
+		x = (int) tile.getX();
+		y = (int) tile.getY();
+		assertEquals(x, 115);
+		assertEquals(y, 307);
+	}
 }
