@@ -11,6 +11,7 @@ import com.badlogic.gdx.InputAdapter;
  * It delegates these events to the appropriate abstraction classes. Currently this is only the ButtonHandler.
  */
 public class InputHandler extends InputAdapter {
+	
 	/**
 	 * A reference to the current GameWorld, so the called objects can interact
 	 * with it.
@@ -28,6 +29,7 @@ public class InputHandler extends InputAdapter {
 		this.world = world;
 	}
 
+	@Override
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:

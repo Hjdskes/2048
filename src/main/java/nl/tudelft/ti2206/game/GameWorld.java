@@ -82,6 +82,10 @@ public class GameWorld {
 			oldHighscore = score;
 		}
 
+		if (oldHighestTile < grid.getCurrentHighestTile()) {
+			oldHighestTile = grid.getCurrentHighestTile();
+		}
+		
 		score = 0;
 		grid.restart();
 	}
