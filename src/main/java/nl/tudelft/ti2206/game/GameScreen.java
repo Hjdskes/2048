@@ -29,7 +29,6 @@ public class GameScreen implements Screen {
 		/* Create our groups and actors. */
 		Grid grid = ProgressHandler.loadGame();
 		grid.setName("Grid");
-		Tile[] tiles = grid.getTiles();
 		scores = new ScoreDisplay(grid);
 		overlays = new OverlayDisplay();
 		buttons = new ButtonDisplay();
@@ -37,9 +36,6 @@ public class GameScreen implements Screen {
 		/* Create the main group and pack everything in it. */
 		group = new Group();
 		group.addActor(grid);
-		for (int i = 0; i < tiles.length; i++) {
-			group.addActor(tiles[i]);
-		}
 
 		group.addActor(buttons);
 		group.addActor(scores);
