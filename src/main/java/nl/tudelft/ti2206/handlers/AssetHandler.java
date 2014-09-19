@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.handlers;
 
-import java.lang.Math;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,15 +18,6 @@ public class AssetHandler {
 	public static Sprite[] sprites = new Sprite[12];
 	public static Sprite grid, score, highscore, highest, restart, continueb,
 			single, multi, lost, won;
-
-	/** The width of a gap, which is between all the tiles. */
-	private static final int GAP = 15;
-
-	/** */
-	private static final int BASE_X = 100;
-
-	/** */
-	private static final int BASE_Y = 100;
 
 	/** The AssetManager is used to load and get all our textures and font. */
 	private static AssetManager manager = new AssetManager();
@@ -140,33 +130,10 @@ public class AssetHandler {
 		highest = new Sprite(manager.get(
 				"src/main/resources/images/scoretiles/highest.png",
 				Texture.class));
-
-		setAssetLocation(score, BASE_Y, GAP, false, true);
-		setAssetLocation(highscore, AssetHandler.score.getWidth() + BASE_X
-				+ GAP, GAP, false, true);
-		setAssetLocation(highest, BASE_X + AssetHandler.score.getWidth() * 2
-				+ GAP * 2, GAP, false, true);
-	}
-
-	/**
-	 * Sets the sprite location and whether it is has an X or Y flip or not.
-	 * 
-	 * @param sprite
-	 *            The sprite to configure.
-	 * @param x
-	 *            The x-coordinate of the sprite.
-	 * @param y
-	 *            The y-coordinate of the sprite.
-	 * @param isXFlipped
-	 *            If true, flip the sprite vertically.
-	 * @param isYFlipped
-	 *            If true, flip the sprite horizontally.
-	 */
-	private static void setAssetLocation(Sprite sprite, float x, float y,
-			boolean isXFlip, boolean isYFlip) {
-		sprite.setX(x);
-		sprite.setY(y);
-		sprite.setFlip(isXFlip, isYFlip);
+		
+		score.flip(false, true);
+		highscore.flip(false, true);
+		highest.flip(false, true);
 	}
 
 	/**

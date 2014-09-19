@@ -1,13 +1,13 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.gameobjects.DrawableGrid;
-import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.gameobjects.OverlayDisplay;
+import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.ButtonHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -18,9 +18,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class GameRenderer {
 
-	/** The gap between the top of the game window and the score text. */
-	private static final int SCORE_HEIGHT = 50;
-
 	/** A reference to the GameWorld, which is used to interact with the game. */
 	private GameWorld world;
 
@@ -30,6 +27,9 @@ public class GameRenderer {
 	/** The SpriteBratch is used to draw all Sprite objects. */
 	private SpriteBatch batch;
 
+	private OverlayDisplay overlays;
+	private ScoreDisplay scores;
+	
 	/**
 	 * Constructs a GameRenderer object.
 	 * 
@@ -49,6 +49,9 @@ public class GameRenderer {
 
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.combined);
+		
+		overlays = new OverlayDisplay(world, true);
+		scores = new ScoreDisplay(world, true);
 	}
 
 	/**
@@ -76,62 +79,13 @@ public class GameRenderer {
 		for (int i = 0; i < grid.getTiles().length; i++) {
 			grid.getTiles()[i].draw(batch);
 		}
-
-		drawScoreTile();
-		drawHighscoreTile();
-		drawHighestTile();
+		
+		scores.draw(batch);
+		overlays.draw(batch);
+		
+		if (world.isWon())
+			drawContinueButton();
 		drawRestartButton();
-
-		if (world.isLost()) {
-			drawLostOverlay();
-		} else if (world.isWon()) {
-			drawWonOverlay();
-		}
-	}
-
-	/**
-	 * Renders the square in which the current score should appear.
-	 */
-	private void drawScoreTile() {
-		batch.draw(AssetHandler.score, AssetHandler.score.getX(),
-				AssetHandler.score.getY(), AssetHandler.score.getWidth(),
-				AssetHandler.score.getHeight());
-		String score = ((Integer)world.getScore()).toString();
-		AssetHandler.font.draw(batch, score,
-				AssetHandler.score.getX() + AssetHandler.score.getWidth() / 2
-						- getTextCenterX(score),
-				SCORE_HEIGHT);
-	}
-
-	/**
-	 * Renders the square in which the highscore should appear.
-	 */
-	private void drawHighscoreTile() {
-		batch.draw(AssetHandler.highscore, AssetHandler.highscore.getX(),
-				AssetHandler.highscore.getY(),
-				AssetHandler.highscore.getWidth(),
-				AssetHandler.highscore.getHeight());
-		String highscore = ((Integer)world.getHighscore()).toString();
-		AssetHandler.font.draw(
-				batch,
-				highscore,
-				AssetHandler.highscore.getX()
-						+ AssetHandler.highscore.getWidth() / 2
-						- getTextCenterX(highscore), SCORE_HEIGHT);
-	}
-
-	/**
-	 * Renders the square in which the highest tile value ever achieved should
-	 * appear.
-	 */
-	private void drawHighestTile() {
-		batch.draw(AssetHandler.highest, AssetHandler.highest.getX(),
-				AssetHandler.highest.getY(), AssetHandler.highest.getWidth(),
-				AssetHandler.highest.getHeight());
-		String highest = ((Integer)world.getHighestTile()).toString();
-		AssetHandler.font.draw(batch, highest,
-				AssetHandler.highest.getX() + AssetHandler.highest.getWidth()
-						/ 2 - getTextCenterX(highest), SCORE_HEIGHT);
 	}
 
 	/**
@@ -146,33 +100,5 @@ public class GameRenderer {
 	 */
 	private void drawContinueButton() {
 		ButtonHandler.getContinueButton().draw(batch);
-	}
-
-	/**
-	 * Draws the lost overlay to show to the user it lost.
-	 */
-	private void drawLostOverlay() {
-		batch.draw(AssetHandler.lost, 0, 0);
-		drawRestartButton();
-	}
-
-	/**
-	 * Draws the won overlay to show to the user it won.
-	 */
-	private void drawWonOverlay() {
-		batch.draw(AssetHandler.won, 0, 0);
-		drawRestartButton();
-		drawContinueButton();
-	}
-
-	/**
-	 * Calculates the center x-coordinate of a String.
-	 * 
-	 * @param text
-	 *            The text to be centered.
-	 * @return The center x-coordinate of the provided String.
-	 */
-	private float getTextCenterX(String text) {
-		return AssetHandler.font.getBounds(text).width / 2;
 	}
 }
