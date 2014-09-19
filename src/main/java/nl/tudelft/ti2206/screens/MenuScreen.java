@@ -1,7 +1,8 @@
-package nl.tudelft.ti2206.game;
+package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.MultiPlayerButton;
 import nl.tudelft.ti2206.buttons.SinglePlayerButton;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.Gdx;

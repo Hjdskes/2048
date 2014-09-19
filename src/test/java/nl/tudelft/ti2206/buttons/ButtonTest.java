@@ -65,4 +65,24 @@ public class ButtonTest {
 	public void testIsTouchUpFalse() {
 		assertFalse(button.isTouchUp(20, 30));
 	}
+	
+	@Test
+	public void testGetX() {
+		assertTrue(Float.compare(1, button.getX()) == 0);
+	}
+	
+	@Test
+	public void testGetY() {
+		assertTrue(Float.compare(2, button.getY()) == 0);
+	}
+	
+	@Test
+	public void testGetWidth() {
+		assertTrue(Float.compare(3, button.getWidth()) == 0);
+	}
+	
+	@Test
+	public void testGetHeight() {
+		assertTrue(Float.compare(4, button.getHeight()) == 0);
+	}
 }

@@ -1,12 +1,17 @@
 package nl.tudelft.ti2206.buttons;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.game.GameWorld;
 import nl.tudelft.ti2206.game.GameWorld.GameState;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
+
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * A test class for the ContinueButton.
@@ -14,6 +19,8 @@ import org.mockito.Mockito;
 public class ContinueButtonTest {
 	/** A mock for the game world. */
 	private static GameWorld world;
+	/** A mock for the sprite drawer. */
+	private static Batch batch;
 
 	/** The object under test. */
 	private static ContinueButton button;
@@ -24,7 +31,8 @@ public class ContinueButtonTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		button = new ContinueButton(1, 2, 3, 4);
-		world = Mockito.mock(GameWorld.class);
+		world = mock(GameWorld.class);
+		batch = mock(Batch.class);
 	}
 
 	/**
@@ -34,5 +42,16 @@ public class ContinueButtonTest {
 	public void testOnClick() {
 		button.onClick(world);
 		verify(world).setGameState(GameState.CONTINUING);
+	}
+
+	/**
+	 * Tests if the button is drawn with the correct parameters.
+	 */
+	@Test
+	public void testDraw() {
+		button.draw(batch);
+		verify(batch).draw(any(Sprite.class), eq(button.getX()),
+				eq(button.getY()), eq(button.getWidth()),
+				eq(button.getHeight()));
 	}
 }

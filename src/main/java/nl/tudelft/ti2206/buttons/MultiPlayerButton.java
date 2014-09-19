@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.buttons;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Drawable;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.MultiPlayerScreen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -31,8 +32,7 @@ public class MultiPlayerButton extends MenuButton implements Drawable {
 	 */
 	@Override
 	public void onClick(TwentyFourtyGame game) {
-		//game.setScreen(new MultiGameScreen());
-		System.out.println("Multiplayer");
+		game.setScreen(new MultiPlayerScreen());
 	}
 
 	@Override

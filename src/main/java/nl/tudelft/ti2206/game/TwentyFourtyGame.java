@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ButtonHandler;
 import nl.tudelft.ti2206.handlers.PreferenceHandler;
+import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Game;
 

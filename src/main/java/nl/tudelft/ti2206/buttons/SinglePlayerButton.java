@@ -1,9 +1,9 @@
 package nl.tudelft.ti2206.buttons;
 
-import nl.tudelft.ti2206.game.GameScreen;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Drawable;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.GameScreen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
