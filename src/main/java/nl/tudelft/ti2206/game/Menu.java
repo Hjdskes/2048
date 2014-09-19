@@ -24,23 +24,27 @@ public class Menu implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				((TwentyFourtyGame) Gdx.app.getApplicationListener())
-					.setScreen(new GameScreen());
-				System.out.println("Singleplayer");
+						.setScreen(new GameScreen());
 			}
 		});
 		multiPlayer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("Multiplayer");
+				((TwentyFourtyGame) Gdx.app.getApplicationListener())
+						.setScreen(new MultiGameScreen());
 			}
 		});
 
-		singlePlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2 - singlePlayer.getPrefWidth() / 2);
-		singlePlayer.setY(TwentyFourtyGame.GAME_HEIGHT / 2 - singlePlayer.getPrefHeight() / 2 + 3 * TwentyFourtyGame.GAP);
+		singlePlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2
+				- singlePlayer.getPrefWidth() / 2);
+		singlePlayer.setY(TwentyFourtyGame.GAME_HEIGHT / 2
+				- singlePlayer.getPrefHeight() / 2 + 3 * TwentyFourtyGame.GAP);
 		stage.addActor(singlePlayer);
 
-		multiPlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2 - multiPlayer.getPrefWidth() / 2);
-		multiPlayer.setY(TwentyFourtyGame.GAME_HEIGHT / 2 - multiPlayer.getPrefHeight() / 2 - 3 * TwentyFourtyGame.GAP);
+		multiPlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2
+				- multiPlayer.getPrefWidth() / 2);
+		multiPlayer.setY(TwentyFourtyGame.GAME_HEIGHT / 2
+				- multiPlayer.getPrefHeight() / 2 - 3 * TwentyFourtyGame.GAP);
 		stage.addActor(multiPlayer);
 
 		Gdx.input.setInputProcessor(stage);
