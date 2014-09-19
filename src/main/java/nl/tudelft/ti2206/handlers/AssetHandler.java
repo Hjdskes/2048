@@ -46,8 +46,7 @@ public class AssetHandler {
 				TextureAtlas.class);
 		manager.load("src/main/resources/images/scoretiles/scoretiles.atlas",
 				TextureAtlas.class);
-		manager.load("src/main/resources/images/buttons/buttons.atlas",
-				TextureAtlas.class);
+		manager.load("src/main/resources/images/button.png", Texture.class);
 		manager.load("src/main/resources/images/grid.png", Texture.class);
 		manager.load("src/main/resources/images/lostoverlay.png", Texture.class);
 		manager.load("src/main/resources/images/wonoverlay.png", Texture.class);
@@ -77,17 +76,13 @@ public class AssetHandler {
 		TextureAtlas scoretiles = manager.get(
 				"src/main/resources/images/scoretiles/scoretiles.atlas",
 				TextureAtlas.class);
-		TextureAtlas buttons = manager.get(
-				"src/main/resources/images/buttons/buttons.atlas",
-				TextureAtlas.class);
 
 		skin.addRegions(fonts);
 		skin.addRegions(icons);
 		skin.addRegions(tiles);
 		skin.addRegions(scoretiles);
-		skin.addRegions(buttons);
-		skin.add("grid", manager.get("src/main/resources/images/grid.png",
-				Texture.class));
+		skin.add("button", manager.get("src/main/resources/images/button.png", Texture.class));
+		skin.add("grid", manager.get("src/main/resources/images/grid.png", Texture.class));
 		skin.add("lostoverlay", manager.get(
 				"src/main/resources/images/lostoverlay.png", Texture.class));
 		skin.add("wonoverlay", manager.get(

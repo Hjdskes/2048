@@ -1,13 +1,14 @@
 package nl.tudelft.ti2206.gameobjects;
 
-import nl.tudelft.ti2206.game.Game;
-import nl.tudelft.ti2206.game.Game.GameState;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * This class creates, positions and updates the buttons for restarting or
@@ -15,12 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
  * added to the stage.
  */
 public class ButtonDisplay extends Group {
-	/** The width of the game. */
-	private static final int GAME_WIDTH = Game.GAME_WIDTH;
-
-	/** The gap between the edge of the game and the button. */
-	private static final int GAP = 15;
-
 	/** The button width. */
 	private static final int BUTTON_WIDTH = 140;
 
@@ -43,16 +38,15 @@ public class ButtonDisplay extends Group {
 	 * Initializes the restart button.
 	 */
 	private void initRestartButton() {
-		restartButton = new Button(AssetHandler.getSkin()
-				.getDrawable("newgame"));
-		restartButton.addListener(new ChangeListener() {
+		restartButton = new TextButton("Restart", AssetHandler.getSkin());
+		restartButton.addListener(new ClickListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
+			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("Restart");
 			}
 		});
-		restartButton.setX(GAME_WIDTH / 2 - BUTTON_WIDTH / 2);
-		restartButton.setY(GAP);
+		restartButton.setX(TwentyFourtyGame.GAME_WIDTH / 2 - BUTTON_WIDTH / 2);
+		restartButton.setY(TwentyFourtyGame.GAP);
 		this.addActor(restartButton);
 	}
 
@@ -60,16 +54,15 @@ public class ButtonDisplay extends Group {
 	 * Initializes the continue button.
 	 */
 	private void initContinueButton() {
-		continueButton = new Button(AssetHandler.getSkin().getDrawable(
-				"continue"));
-		continueButton.addListener(new ChangeListener() {
+		continueButton = new TextButton("Continue!", AssetHandler.getSkin());
+		continueButton.addListener(new ClickListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Game.setState(GameState.CONTINUING);
+			public void clicked(InputEvent event, float x, float y) {
+				TwentyFourtyGame.setState(GameState.CONTINUING);
 			}
 		});
-		continueButton.setX(GAME_WIDTH / 2 - BUTTON_WIDTH / 2);
-		continueButton.setY(BUTTON_HEIGHT + 2 * GAP);
+		continueButton.setX(TwentyFourtyGame.GAME_WIDTH / 2 - BUTTON_WIDTH / 2);
+		continueButton.setY(BUTTON_HEIGHT + 2 * TwentyFourtyGame.GAP);
 		continueButton.setVisible(false);
 
 		this.addActor(continueButton);
@@ -78,7 +71,7 @@ public class ButtonDisplay extends Group {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (Game.isWon()) {
+		if (TwentyFourtyGame.isWon()) {
 			continueButton.setVisible(true);
 		}
 	}

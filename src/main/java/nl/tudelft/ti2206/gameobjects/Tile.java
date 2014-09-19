@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.gameobjects;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -26,9 +27,6 @@ public class Tile extends Actor {
 
 	/** The base Tile y-coordinate. */
 	private static final int TILE_Y = 115;
-
-	/** The gap in between tiles, Grid edges, etc. */
-	private static final int GAP = 15;
 
 	/** The value (e.g. 2, 4, 8, 16, ...). */
 	private int value;
@@ -241,11 +239,11 @@ public class Tile extends Actor {
 	public float getX() {
 		switch (this.index % 4) {
 		case 1:
-			return TILE_X + TILE_WIDTH + GAP;
+			return TILE_X + TILE_WIDTH + TwentyFourtyGame.GAP;
 		case 2:
-			return TILE_X + 2 * (TILE_WIDTH + GAP);
+			return TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame. GAP);
 		case 3:
-			return TILE_X + 3 * (TILE_WIDTH + GAP);
+			return TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame. GAP);
 		case 0: /* Fallthrough. */
 		default:
 			return TILE_X;
@@ -257,11 +255,11 @@ public class Tile extends Actor {
 		if (index < 4) {
 			return TILE_Y;
 		} else if (index < 8) {
-			return TILE_Y + TILE_HEIGHT + GAP;
+			return TILE_Y + TILE_HEIGHT + TwentyFourtyGame. GAP;
 		} else if (index < 12) {
-			return TILE_Y + 2 * (TILE_HEIGHT + GAP);
+			return TILE_Y + 2 * (TILE_HEIGHT + TwentyFourtyGame. GAP);
 		} else if (index < 16) {
-			return TILE_Y + 3 * (TILE_HEIGHT + GAP);
+			return TILE_Y + 3 * (TILE_HEIGHT + TwentyFourtyGame. GAP);
 		} else {
 			return TILE_Y;
 		}

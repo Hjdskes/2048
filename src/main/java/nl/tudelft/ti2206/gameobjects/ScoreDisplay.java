@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.gameobjects;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -20,7 +21,6 @@ public class ScoreDisplay extends Group {
 	private static final int BASE_X = 100;
 	private static final int LABEL_Y = 520;
 	private static final int SCORE_TILE_WIDTH = 140;
-	private static final int GAP = 15;
 	private static final int GRID_TOP = 500;
 
 	/** The grid holding the tiles. */
@@ -124,14 +124,14 @@ public class ScoreDisplay extends Group {
 		scoreLabel.setY(LABEL_Y);
 		scoreLabel.setAlignment(Align.center);
 
-		highScoreLabel.setX(BASE_X + SCORE_TILE_WIDTH + GAP
+		highScoreLabel.setX(BASE_X + SCORE_TILE_WIDTH + TwentyFourtyGame.GAP
 				+ highScoreRegion.getRegionWidth() / 2
 				- highScoreLabel.getWidth() / 2);
 		highScoreLabel.setY(LABEL_Y);
 		highScoreLabel.setAlignment(Align.center);
 		highScoreLabel.setAlignment(Align.center);
 
-		highestTileLabel.setX(BASE_X + 2 * SCORE_TILE_WIDTH + 2 * GAP
+		highestTileLabel.setX(BASE_X + 2 * SCORE_TILE_WIDTH + 2 *  TwentyFourtyGame.GAP
 				+ highestTileRegion.getRegionWidth() / 2
 				- scoreLabel.getWidth() / 2);
 		highestTileLabel.setY(LABEL_Y);
@@ -162,7 +162,7 @@ public class ScoreDisplay extends Group {
 	 * @return The x-coordinate of the high score tile.
 	 */
 	private int getHighScoreX() {
-		return BASE_X + GAP + SCORE_TILE_WIDTH;
+		return BASE_X +  TwentyFourtyGame.GAP + SCORE_TILE_WIDTH;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class ScoreDisplay extends Group {
 	 * @return The x-coordinate for the tile displaying the highest value.
 	 */
 	private int getHighestTileX() {
-		return BASE_X + 2 * GAP + 2 * SCORE_TILE_WIDTH;
+		return BASE_X + 2 *  TwentyFourtyGame.GAP + 2 * SCORE_TILE_WIDTH;
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class ScoreDisplay extends Group {
 	 * @return The y-coordinate for all score tiles.
 	 */
 	private int getScoreY() {
-		return GRID_TOP + GAP;
+		return GRID_TOP +  TwentyFourtyGame.GAP;
 	}
 
 	/**
