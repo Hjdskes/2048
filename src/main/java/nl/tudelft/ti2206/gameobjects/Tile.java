@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 /**
  * The Tile class represents the tiles you move around while playing 2048.
@@ -33,9 +30,6 @@ public class Tile extends Actor {
 
 	/** The index into the Grid array. */
 	private int index;
-
-	/** The label of the Tile, displaying its value. */
-	private Label label;
 
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
@@ -65,26 +59,12 @@ public class Tile extends Actor {
 		this.isMerged = false;
 
 		this.skin = AssetHandler.getSkin();
-		this.region = new TextureRegion();
-		this.label = new Label(Integer.toString(value), skin);
+		this.region = skin.getRegion("tile" + value);
 
 		setSprite(skin);
-		setLabel();
 		setActors();
 
 		spawn();
-	}
-
-	public Tile(int index, int value, Skin skin, TextureRegion region) {
-		this.value = value;
-		this.index = index;
-		this.isMerged = false;
-
-		this.skin = skin;
-		this.region = region;
-		
-		setSprite(skin);
-		setActors();
 	}
 
 	/**
@@ -197,29 +177,6 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Sets the label displaying the value of the tile to the designated
-	 * position.
-	 */
-	private void setLabel() {
-		float x = getX();
-		float y = getY();
-
-		label.setStyle(skin.get("brown-text",
-				LabelStyle.class));
-		label.setText(Integer.toString(value));
-		label.setX(x);
-		label.setY(y);
-		label.setAlignment(Align.center);
-		label.setCenterPosition(x + 40, y + 40);
-
-		if (value == 0) {
-			label.setVisible(false);
-		} else {
-			label.setVisible(true);
-		}
-	}
-
-	/**
 	 * Sets the actions for the tile.
 	 */
 	private void setActors() {
@@ -300,7 +257,6 @@ public class Tile extends Actor {
 		}
 
 		setSprite(skin);
-		setLabel();
 	}
 
 	@Override
@@ -308,8 +264,5 @@ public class Tile extends Actor {
 		batch.draw(region, getX() + getXOffset(), getY() + getYOffset(),
 				getOriginX(), getOriginY(), getWidth(), getHeight(),
 				getScaleX(), getScaleY(), 0);
-		if (label.isVisible()) {
-			label.draw(batch, parentAlpha);
-		}
 	}
 }

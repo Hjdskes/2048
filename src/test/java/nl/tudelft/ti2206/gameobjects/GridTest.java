@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,8 +53,10 @@ public class GridTest {
 		texture = mock(Texture.class);
 		region = mock(TextureRegion.class);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
+		when(skin.getRegion(anyString())).thenReturn(region);
+		AssetHandler.setSkin(skin);
 		
-		grid = new Grid(false, skin, region);
+		grid = new Grid(false);
 		
 	}
 

@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -94,23 +93,6 @@ public class Grid extends Actor {
 		this.tileHandler = new TileHandler(this);
 
 		initEmptyGrid();
-		if (!isEmpty) {
-			initGrid();
-		}
-
-		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(GameState.RUNNING);
-	}
-
-	public Grid(boolean isEmpty, Skin skin, TextureRegion texture) {
-		this.region = texture;
-		this.random = new Random();
-		this.grid = new Tile[NTILES];
-		this.tileHandler = new TileHandler(this);
-
-		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile(i, 0, skin, texture);
-		}
 		if (!isEmpty) {
 			initGrid();
 		}
