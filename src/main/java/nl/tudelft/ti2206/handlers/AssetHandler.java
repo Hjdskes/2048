@@ -12,8 +12,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * the game requires.
  */
 public class AssetHandler {
-	/** The font used in the game, in two colors. */
-	public static BitmapFont font, whiteFont;
+	/** The font used in the game. */
+	public static BitmapFont font;
 
 	/** All sprites used in the game, which should be publicly accessible. */
 	public static Sprite[] sprites = new Sprite[12];
@@ -197,13 +197,9 @@ public class AssetHandler {
 	 * Creates all the fonts.
 	 */
 	private static void getFonts() {
-		font = manager.get("src/main/resources/fonts/tahoma.fnt",
+		font = manager.get("src/main/resources/fonts/tahomaWhite.fnt",
 				BitmapFont.class);
-		whiteFont = manager.get("src/main/resources/fonts/tahomaWhite.fnt",
-				BitmapFont.class);
-
-		font.setScale(.25f, -.25f);
-		whiteFont.setScale(.6f, -.6f);
+		font.setScale(.6f, -.6f);
 	}
 
 	/**

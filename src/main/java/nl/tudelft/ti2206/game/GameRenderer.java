@@ -17,8 +17,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * be 2D.
  */
 public class GameRenderer {
-	/** The white font. */
-	private static final BitmapFont WHITE_F = AssetHandler.whiteFont;
 
 	/** The gap between the top of the game window and the score text. */
 	private static final int SCORE_HEIGHT = 50;
@@ -99,7 +97,7 @@ public class GameRenderer {
 				AssetHandler.score.getY(), AssetHandler.score.getWidth(),
 				AssetHandler.score.getHeight());
 		String score = ((Integer)world.getScore()).toString();
-		AssetHandler.whiteFont.draw(batch, score,
+		AssetHandler.font.draw(batch, score,
 				AssetHandler.score.getX() + AssetHandler.score.getWidth() / 2
 						- getTextCenterX(score),
 				SCORE_HEIGHT);
@@ -114,7 +112,7 @@ public class GameRenderer {
 				AssetHandler.highscore.getWidth(),
 				AssetHandler.highscore.getHeight());
 		String highscore = ((Integer)world.getHighscore()).toString();
-		WHITE_F.draw(
+		AssetHandler.font.draw(
 				batch,
 				highscore,
 				AssetHandler.highscore.getX()
@@ -131,7 +129,7 @@ public class GameRenderer {
 				AssetHandler.highest.getY(), AssetHandler.highest.getWidth(),
 				AssetHandler.highest.getHeight());
 		String highest = ((Integer)world.getHighestTile()).toString();
-		WHITE_F.draw(batch, highest,
+		AssetHandler.font.draw(batch, highest,
 				AssetHandler.highest.getX() + AssetHandler.highest.getWidth()
 						/ 2 - getTextCenterX(highest), SCORE_HEIGHT);
 	}
@@ -175,6 +173,6 @@ public class GameRenderer {
 	 * @return The center x-coordinate of the provided String.
 	 */
 	private float getTextCenterX(String text) {
-		return WHITE_F.getBounds(text).width / 2;
+		return AssetHandler.font.getBounds(text).width / 2;
 	}
 }
