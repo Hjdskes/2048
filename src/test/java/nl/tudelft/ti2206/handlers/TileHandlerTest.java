@@ -30,10 +30,6 @@ public class TileHandlerTest {
 	/** The grid containing no tiles. */
 	private Grid emptyGrid;
 
-	private static Skin skin;
-	private static Texture texture;
-	private static TextureRegion region;
-
 	/**
 	 * Sets up the needed variables for testing. To test the methods the
 	 * following grid is used:
@@ -52,20 +48,21 @@ public class TileHandlerTest {
 	 */
 	@Before
 	public void setup() {
-		skin = mock(Skin.class);
-		texture = mock(Texture.class);
-		region = mock(TextureRegion.class);
+		Skin skin = mock(Skin.class);
+		Texture texture = mock(Texture.class);
+		TextureRegion region = mock(TextureRegion.class);
+		when(skin.getRegion(anyString())).thenReturn(region);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
+		AssetHandler.setSkin(skin);
 		
-		grid = new Grid(true, skin, region);
-		emptyGrid = new Grid(true, skin, region);
+		grid = new Grid(true);
+		emptyGrid = new Grid(true);
 		for (int i = 0; i < 16; i = i + 5) {
 			grid.getTiles()[i].setValue(8);
 		}
 		grid.getTiles()[2].setValue(4);
 		grid.getTiles()[3].setValue(8);
 		tileHandler = new TileHandler(grid);
-		System.out.println(toString(grid));
 	}
 
 	/**
