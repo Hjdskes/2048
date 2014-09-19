@@ -15,11 +15,9 @@ public class DrawableTile extends Tile implements Drawable {
 	/** The height of the Tile. */
 	private static final int TILE_HEIGHT = 81;
 
-	/** The base Tile x-coordinate. */
-	private static final int TILE_X = 115;
-
-	/** The base Tile y-coordinate. */
-	private static final int TILE_Y = 115;
+	/** The base Tile x- and y-coordinates. */
+	private float baseX;
+	private float baseY;
 
 	/** The gap in between tiles, Grid edges, etc. */
 	private static final int GAP = 15;
@@ -46,21 +44,27 @@ public class DrawableTile extends Tile implements Drawable {
 	 *            The index of the Tile into the Grid array.
 	 * @param value
 	 *            The value of the Tile.
+	 * @param baseX
+	 *            The base Tile x-coordinate.
+	 * @param baseY
+	 *            The base Tile y-coordinate.
 	 */
-	public DrawableTile(int index, int value) {
+	public DrawableTile(int index, int value, float baseX, float baseY) {
 		super(value);
 		this.index = index;
+		this.baseX = baseX;
+		this.baseY = baseY;
 		this.scale = 1;
 		this.isSpawning = false;
 		this.isMerging = false;
 	}
 
-//	/**
-//	 * @return The current size of the Tile.
-//	 */
-//	public float getSzie() {
-//		return scale * DIMENSION;
-//	}
+	// /**
+	// * @return The current size of the Tile.
+	// */
+	// public float getSzie() {
+	// return scale * DIMENSION;
+	// }
 
 	/**
 	 * @return The current scale of the Tile.
@@ -132,14 +136,14 @@ public class DrawableTile extends Tile implements Drawable {
 	private float getX() {
 		switch (this.index % 4) {
 		case 1:
-			return TILE_X + TILE_WIDTH + GAP + getOffset();
+			return baseX + TILE_WIDTH + GAP + getOffset();
 		case 2:
-			return TILE_X + 2 * (TILE_WIDTH + GAP) + getOffset();
+			return baseX + 2 * (TILE_WIDTH + GAP) + getOffset();
 		case 3:
-			return TILE_X + 3 * (TILE_WIDTH + GAP) + getOffset();
+			return baseX + 3 * (TILE_WIDTH + GAP) + getOffset();
 		case 0: /* Fallthrough. */
 		default:
-			return TILE_X + getOffset();
+			return baseX + getOffset();
 		}
 	}
 
@@ -148,15 +152,15 @@ public class DrawableTile extends Tile implements Drawable {
 	 */
 	private float getY() {
 		if (index < 4) {
-			return TILE_Y + getOffset();
+			return baseY + getOffset();
 		} else if (index < 8) {
-			return TILE_Y + TILE_HEIGHT + GAP + getOffset();
+			return baseY + TILE_HEIGHT + GAP + getOffset();
 		} else if (index < 12) {
-			return TILE_Y + 2 * (TILE_HEIGHT + GAP) + getOffset();
+			return baseY + 2 * (TILE_HEIGHT + GAP) + getOffset();
 		} else if (index < 16) {
-			return TILE_Y + 3 * (TILE_HEIGHT + GAP) + getOffset();
+			return baseY + 3 * (TILE_HEIGHT + GAP) + getOffset();
 		} else {
-			return TILE_Y + getOffset();
+			return baseY + getOffset();
 		}
 	}
 
@@ -194,6 +198,7 @@ public class DrawableTile extends Tile implements Drawable {
 	public void draw(Batch batch) {
 		int value = super.getValue();
 
-		batch.draw(AssetHandler.getTile(value), getX(), getY(), getWidth(), getHeight());
+		batch.draw(AssetHandler.getTile(value), getX(), getY(), getWidth(),
+				getHeight());
 	}
 }

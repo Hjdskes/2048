@@ -11,6 +11,12 @@ import nl.tudelft.ti2206.handlers.ProgressHandler;
  * GameScreen.render() method which is actually the game loop.
  */
 public class GameWorld {
+	/** The base Grid x-coordinate. */
+	private static final int GRID_X = 100;
+
+	/** The base Grid y-coordinate. */
+	private static final int GRID_Y = 100;
+
 	/** Enumeration indicating what state the game is currently in. */
 	public enum GameState {
 		RUNNING, WON, LOST, CONTINUING
@@ -41,7 +47,7 @@ public class GameWorld {
 			ProgressHandler.loadGame(this);
 		} else {
 			/* Create a new game. */
-			grid = new DrawableGrid(this, false);
+			grid = new DrawableGrid(this, false, GRID_X, GRID_Y);
 			score = 0;
 		}
 		state = GameState.RUNNING;

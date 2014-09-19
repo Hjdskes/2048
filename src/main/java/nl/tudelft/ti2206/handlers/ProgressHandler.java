@@ -9,6 +9,12 @@ import nl.tudelft.ti2206.gameobjects.DrawableTile;
  * saved game.
  */
 public class ProgressHandler {
+	/** The base Grid x-coordinate in a singleplayer game. */
+	private static final float GRID_X = 100;
+
+	/** The base Grid y-coordinate in a singleplayer game. */
+	private static final float GRID_Y = 100;
+
 	/**
 	 * Calls saveGrid to save the current grid and uses the PreferenceHandler to
 	 * save the current score, highscore and highest tile value ever reached.
@@ -82,9 +88,9 @@ public class ProgressHandler {
 		 * the saved tiles.
 		 */
 		if (filledTiles == "") {
-			return new DrawableGrid(world, false);
+			return new DrawableGrid(world, false, GRID_X, GRID_Y);
 		} else {
-			DrawableGrid grid = new DrawableGrid(world, true);
+			DrawableGrid grid = new DrawableGrid(world, true, GRID_X, GRID_Y);
 			String[] split = filledTiles.split("\n");
 
 			for (String tile : split) {

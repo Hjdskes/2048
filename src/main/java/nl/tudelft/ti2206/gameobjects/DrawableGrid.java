@@ -15,11 +15,8 @@ public class DrawableGrid extends Grid implements Drawable {
 	/** The height of the Grid. */
 	private static final int GRID_HEIGHT = 400;
 
-	/** The base Grid x-coordinate. */
-	private static final int GRID_X = 100;
-
-	/** The base Grid y-coordinate. */
-	private static final int GRID_Y = 100;
+	/** The coordinates for this Grid. */
+	private float x, y;
 
 	/**
 	 * Constructs a new DrawableGrid instance, by calling super with its
@@ -29,9 +26,15 @@ public class DrawableGrid extends Grid implements Drawable {
 	 *            The GameWorld this Grid will be placed in.
 	 * @param isEmpty
 	 *            True if the grid should be empty.
+	 * @param x
+	 *            The x-coordinate for this Grid.
+	 * @param y
+	 *            The y-coordinate for this Grid.
 	 */
-	public DrawableGrid(GameWorld world, boolean isEmpty) {
+	public DrawableGrid(GameWorld world, boolean isEmpty, float x, float y) {
 		super(world, isEmpty);
+		this.x = x;
+		this.y = y;
 	}
 
 	/**
@@ -60,6 +63,6 @@ public class DrawableGrid extends Grid implements Drawable {
 
 	@Override
 	public void draw(Batch batch) {
-		batch.draw(AssetHandler.grid, GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT);
+		batch.draw(AssetHandler.grid, x, y, GRID_WIDTH, GRID_HEIGHT);
 	}
 }
