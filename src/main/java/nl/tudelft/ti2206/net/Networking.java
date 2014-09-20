@@ -139,6 +139,7 @@ public class Networking {
 
 	public static void startServer() {
 		setMode(Mode.SERVER);
+		setLastError("");
 		thread = new Thread(new Runnable() {
 
 			@Override
@@ -149,26 +150,44 @@ public class Networking {
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
 				serverSocketHint.reuseAddress = true;
+				
+				
+				try {
 				serverSocket = Gdx.net.newServerSocket(Protocol.TCP, PORT,
 						serverSocketHint);
 				
-				setServerSocketInitialized(true);
-
-				while (true) {
+				} 
+				catch(Exception e) {
+					//e.printStackTrace();
 					
-					socket = serverSocket.accept(null);
+					String msg = e.getMessage();
 					
-					if (socket != null) {
+					if (msg.contains("server socket "))
+						msg = msg.replace("server socket ", "server\r\n");
 					
-						setInitialized(true);
-						System.out.println("Accepted incoming connection from "
-								+ socket.getRemoteAddress());
+					setLastError(msg);
+				}
+				
+				if (serverSocket != null) {
+				
+					setServerSocketInitialized(true);
 	
-						setInput(socket);
-						setOutput(socket);
-	
-						while (isConnected()) {
-							receiveLoop();
+					while (true) {
+						
+						socket = serverSocket.accept(null);
+						
+						if (socket != null) {
+						
+							setInitialized(true);
+							System.out.println("Accepted incoming connection from "
+									+ socket.getRemoteAddress());
+		
+							setInput(socket);
+							setOutput(socket);
+		
+							while (isConnected()) {
+								receiveLoop();
+							}
 						}
 					}
 				}
@@ -185,6 +204,7 @@ public class Networking {
 	public static void startClient(final String address, final int port) {
 		
 		setMode(Mode.CLIENT);
+		setLastError("");
 		
 		thread = new Thread(new Runnable() {
 
@@ -202,8 +222,14 @@ public class Networking {
 						socketHints);
 				}
 				catch(Exception e) {
-					e.printStackTrace();
-					setLastError(e.getMessage());
+					//e.printStackTrace();
+					
+					String msg = e.getMessage();
+					
+					if (msg.contains("socket connection "))
+						msg = msg.replace("socket connection ", "connection\r\n");
+					
+					setLastError(msg);
 				}
 
 
@@ -320,8 +346,9 @@ public class Networking {
 	}
 
 	public static void disconnect() {
-
-		thread.stop();
+		
+		if (thread != null)
+			thread.stop();
 
 		if (getMode() == Mode.SERVER) {
 

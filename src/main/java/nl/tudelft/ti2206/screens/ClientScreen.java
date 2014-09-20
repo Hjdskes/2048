@@ -95,6 +95,7 @@ public class ClientScreen extends Screen {
 		String text = textField.getText();
 
 		if (Networking.isConnected()) {
+		label.setText("      Connected to host!");
 			// proceed
 		} else {
 

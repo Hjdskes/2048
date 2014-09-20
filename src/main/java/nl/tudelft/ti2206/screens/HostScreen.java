@@ -80,7 +80,7 @@ public class HostScreen extends Screen {
 	public void update() {
 		super.update();
 
-		if (Networking.isInitialized()) {
+		if (Networking.isServerSocketInitialized()) {
 			if (Networking.isConnected()) {
 				// remote user is connected
 				// get remote address:
@@ -95,6 +95,13 @@ public class HostScreen extends Screen {
 
 				// make play button visible:
 				play.setVisible(true);
+			}
+			else
+			{
+				String error = Networking.getLastError();
+				
+				if (error.compareTo("") != 0)
+					label.setText(error);
 			}
 		} else {
 			remote.setText(StringConstants.CONNECTION_WAITING);
