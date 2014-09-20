@@ -140,22 +140,13 @@ public class ScreenHandlerTest {
 		ScreenHandler.resume();
 		verify(screen, times(numScreens)).resume();
 	}
-
-	@Test
-	public void testUpdateNullScreen() {
-		screens.push(null);
-		assertTrue(screens.size() == 1);
-		ScreenHandler.update();
-		assertTrue(screens.size() == 0);
-	}
 	
 	@Test
 	public void testUpdateNotNullScreen() {
 		
 		screens.push(screen);
-		int numScreens = screens.size();
 		ScreenHandler.update();
-		verify(screen, times(numScreens)).update();
+		verify(screen).update();
 	}
 
 	@Test

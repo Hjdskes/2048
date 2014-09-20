@@ -18,7 +18,7 @@ public class ScreenHandler {
 	public static void setScreenStack(Stack<Screen> screens) {
 		screenStack = screens;
 	}
-	
+
 	/**
 	 * Adds the specified screen to the stack.
 	 *
@@ -87,17 +87,17 @@ public class ScreenHandler {
 	 */
 	public static void update() {
 		boolean coveredByOtherScreen = false;
+		screenStack.peek().update();
 		for (int i = screenStack.size() - 1; i >= 0; i--) {
 			Screen screen = screenStack.get(i);
 			if (screen == null) {
 				screenStack.remove(i);
 				continue;
 			}
-			screen.update();
-			if(coveredByOtherScreen) {
+			if (coveredByOtherScreen) {
 				remove(screen);
 			}
-			if(!screen.isOverlay()) {
+			if (!screen.isOverlay()) {
 				coveredByOtherScreen = true;
 			}
 		}
@@ -112,5 +112,17 @@ public class ScreenHandler {
 	public static void remove(Screen screen) {
 		screen.dispose();
 		screenStack.remove(screen);
+	}
+
+	/**
+	 * Removes the top screen and places input back into the new top screen.
+	 */
+	public static void removeTop() {
+		if (screenStack.size() == 1) {
+			return;
+		}
+
+		remove(screenStack.peek());
+		screenStack.peek().resume();
 	}
 }

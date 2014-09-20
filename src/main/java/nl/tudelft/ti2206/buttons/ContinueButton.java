@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.buttons;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.ScreenHandler;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -21,6 +22,7 @@ public class ContinueButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				TwentyFourtyGame.setState(GameState.CONTINUING);
+				ScreenHandler.removeTop();
 			}
 		});
 	}

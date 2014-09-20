@@ -62,6 +62,7 @@ public abstract class Screen implements Disposable {
 	 * Resumes the screen after a pause.
 	 */
 	public void resume() {
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	/**
