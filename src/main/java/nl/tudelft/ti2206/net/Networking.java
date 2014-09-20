@@ -46,7 +46,7 @@ public class Networking {
 	// private static ObjectOutputStream oOutputStream;
 
 	private static String lastError = "";
-	
+
 	private static Thread thread;
 
 	private static Mode mode;
@@ -97,44 +97,45 @@ public class Networking {
 
 		return initLocalAddresses();
 	}
-	
+
 	public static boolean isValidHost(String host) {
-		
+
 		if (isValidAddr(host))
 			return true;
-		
+
 		InetAddress address = null;
 		try {
 			address = InetAddress.getByName(host);
 		} catch (UnknownHostException e) {
 			return false;
-		} 
+		}
 		return isValidAddr(address.getHostAddress());
 	}
-	
+
 	public static boolean isValidAddr(String address) {
-	     if (address.matches("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$")) {
-	            String[] groups = address.split("\\.");
+		if (address
+				.matches("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$")) {
+			String[] groups = address.split("\\.");
 
-	            for (int i = 0; i <= 3; i++) {
-	                String segment = groups[i];
-	                if (segment == null || segment.length() <= 0) {
-	                    return false;
-	                }
+			for (int i = 0; i <= 3; i++) {
+				String segment = groups[i];
+				if (segment == null || segment.length() <= 0) {
+					return false;
+				}
 
-	                int value = 0;
-	                try {
-	                    value = Integer.parseInt(segment);
-	                } catch (NumberFormatException e) {
-	                    return false;
-	                }
-	                if (value > 255) {
-	                    return false;
-	                }
-	            }
-	            return true;
-	        }
-	        return false;        
+				int value = 0;
+				try {
+					value = Integer.parseInt(segment);
+				} catch (NumberFormatException e) {
+					return false;
+				}
+				if (value > 255) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public static void startServer() {
@@ -150,41 +151,43 @@ public class Networking {
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
 				serverSocketHint.reuseAddress = true;
-				
-				
+
 				try {
-				serverSocket = Gdx.net.newServerSocket(Protocol.TCP, PORT,
-						serverSocketHint);
-				
-				} 
-				catch(Exception e) {
-					//e.printStackTrace();
-					
+					serverSocket = Gdx.net.newServerSocket(Protocol.TCP, PORT,
+							serverSocketHint);
+
+				} catch (Exception e) {
+					// e.printStackTrace();
+
 					String msg = e.getMessage();
-					
-					if (msg.contains("server socket "))
-						msg = msg.replace("server socket ", "server\r\n");
-					
-					setLastError(msg);
+
+					if (msg != null) {
+
+						if (msg.contains("server socket "))
+							msg = msg.replace("server socket ", "server\r\n");
+
+						setLastError(msg);
+					}
 				}
-				
+
 				if (serverSocket != null) {
-				
+
 					setServerSocketInitialized(true);
-	
+
 					while (true) {
-						
+
 						socket = serverSocket.accept(null);
-						
+
 						if (socket != null) {
-						
+
 							setInitialized(true);
-							System.out.println("Accepted incoming connection from "
-									+ socket.getRemoteAddress());
-		
+							System.out
+									.println("Accepted incoming connection from "
+											+ socket.getRemoteAddress());
+
 							setInput(socket);
 							setOutput(socket);
-		
+
 							while (isConnected()) {
 								receiveLoop();
 							}
@@ -200,12 +203,12 @@ public class Networking {
 	public static void startClient(final String address) {
 		startClient(address, PORT);
 	}
-	
+
 	public static void startClient(final String address, final int port) {
-		
+
 		setMode(Mode.CLIENT);
 		setLastError("");
-		
+
 		thread = new Thread(new Runnable() {
 
 			@Override
@@ -216,33 +219,36 @@ public class Networking {
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
 				socketHints.keepAlive = true;
-				
-				try { 
-				socket = Gdx.net.newClientSocket(Protocol.TCP, address, port,
-						socketHints);
-				}
-				catch(Exception e) {
-					//e.printStackTrace();
-					
-					String msg = e.getMessage();
-					
-					if (msg.contains("socket connection "))
-						msg = msg.replace("socket connection ", "connection\r\n");
-					
-					setLastError(msg);
-				}
 
+				try {
+					socket = Gdx.net.newClientSocket(Protocol.TCP, address,
+							port, socketHints);
+				} catch (Exception e) {
+					// e.printStackTrace();
+
+					String msg = e.getMessage();
+
+					if (msg != null) {
+
+						if (msg.contains("socket connection "))
+							msg = msg.replace("socket connection ",
+									"connection\r\n");
+
+						setLastError(msg);
+
+					}
+				}
 
 				if (socket != null) {
-					
+
 					System.out.println("I'm connected to "
 							+ socket.getRemoteAddress());
-	
+
 					setInput(socket);
 					setOutput(socket);
-	
+
 					setInitialized(true);
-	
+
 					while (isConnected()) {
 						receiveLoop();
 					}
@@ -317,7 +323,42 @@ public class Networking {
 	}
 
 	private static void processResponse(Object object) {
+		if (object instanceof String) {
+			String response = (String) object;
 
+			if (response.startsWith("GRID[")) {
+				int closing = response.indexOf(']');
+
+				String strGrid = response.substring(4, closing);
+
+				System.out.println("received grid str = " + strGrid);
+
+			} else if (response.startsWith("MOVE[")) {
+
+				// int closing = response.indexOf(']');
+				char direction = response.charAt(5);
+
+				switch (direction) {
+				case 'U':
+					break;
+
+				case 'D':
+					break;
+
+				case 'R':
+					break;
+
+				case 'L':
+					break;
+
+				default:
+					System.out.println("Unknown direction: " + direction);
+					break;
+
+				}
+			}
+
+		}
 	}
 
 	public static String getRemoteAddress() {
@@ -329,10 +370,10 @@ public class Networking {
 	}
 
 	public static boolean isConnected() {
-		
+
 		if (!isInitialized())
 			return false;
-		
+
 		return socket.isConnected();
 	}
 
@@ -346,7 +387,7 @@ public class Networking {
 	}
 
 	public static void disconnect() {
-		
+
 		if (thread != null)
 			thread.stop();
 
