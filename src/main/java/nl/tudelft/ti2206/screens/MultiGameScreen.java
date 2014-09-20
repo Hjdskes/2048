@@ -4,6 +4,9 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
+import nl.tudelft.ti2206.handlers.LocalInputHandler;
+import nl.tudelft.ti2206.handlers.RemoteInputHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -47,5 +50,10 @@ public class MultiGameScreen extends Screen {
 
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
+		
+		LocalInputHandler localInput = new LocalInputHandler(localGrid);
+		
+		RemoteInputHandler remoteInput = new RemoteInputHandler(remoteGrid);
+		Networking.setRemoteInput(remoteInput);
 	}
 }

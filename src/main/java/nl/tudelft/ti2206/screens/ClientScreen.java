@@ -101,6 +101,8 @@ public class ClientScreen extends Screen {
 			label.setText("      Connected to host!");
 			ScreenHandler.add(new MultiGameScreen());
 			
+			
+			
 			// proceed
 		} else {
 
