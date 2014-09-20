@@ -118,6 +118,10 @@ public class ScreenHandler {
 	 * Removes the top screen and places input back into the new top screen.
 	 */
 	public static void removeTop() {
+		if (screenStack.size() == 1) {
+			return;
+		}
+
 		remove(screenStack.peek());
 		screenStack.peek().resume();
 	}
