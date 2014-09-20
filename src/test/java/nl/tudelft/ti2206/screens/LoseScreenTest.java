@@ -61,6 +61,7 @@ public class LoseScreenTest {
 		verify(stage).draw();
 	}
 
+	@Test
 	public void testIsOverlay() {
 		assertTrue(screen.isOverlay());
 	}
