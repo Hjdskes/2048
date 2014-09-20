@@ -55,6 +55,8 @@ public class Networking {
 	private static Thread thread;
 
 	private static Mode mode;
+	
+	private static boolean startReceived;
 
 	public static List<String> initalize() {
 		return initLocalAddresses();
@@ -333,7 +335,11 @@ public class Networking {
 
 	private static void processResponse(String response) {
 		System.out.println("str = " + response);
-		if (response.startsWith("GRID[")) {
+		if (response.startsWith("[START]"))
+		{
+			Networking.setStartReceived(true);
+		}
+		else if (response.startsWith("GRID[")) {
 			int closing = response.indexOf(']');
 
 			String strGrid = response.substring(5, closing);
@@ -406,6 +412,8 @@ public class Networking {
 
 	public static void disconnect() {
 
+		setStartReceived(false);
+		
 		if (thread != null)
 			thread.stop();
 
@@ -466,5 +474,13 @@ public class Networking {
 
 	public static void setRemoteInput(RemoteInputHandler remoteInput) {
 		Networking.remoteInput = remoteInput;
+	}
+
+	public static boolean isStartReceived() {
+		return startReceived;
+	}
+
+	public static void setStartReceived(boolean startReceived) {
+		Networking.startReceived = startReceived;
 	}
 }

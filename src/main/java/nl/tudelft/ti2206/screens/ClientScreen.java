@@ -99,7 +99,7 @@ public class ClientScreen extends Screen {
 
 		if (Networking.isConnected()) {
 			label.setText("      Connected to host!");
-			ScreenHandler.add(new MultiGameScreen());
+			ScreenHandler.add(new WaitScreen());
 			
 			
 			
