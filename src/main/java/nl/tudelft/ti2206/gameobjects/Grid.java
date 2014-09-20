@@ -24,14 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+
- * | 12| 13| 12| 14|
- * +---+---+---+---+
- * | 8 | 9 | 10| 11|
- * +---+---+---+---+
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+
- * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+ | 12| 13| 12| 14| +---+---+---+---+ | 8 | 9 | 10| 11|
+ * +---+---+---+---+ | 4 | 5 | 6 | 7 | +---+---+---+---+ | 0 | 1 | 2 | 3 |
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -214,11 +208,11 @@ public class Grid extends Actor {
 			highScore = score;
 		}
 
-		if (TwentyFourtyGame.isRunning() && highestTile == 2048) {
-			TwentyFourtyGame.setState(GameState.WON);
-		} else if (TwentyFourtyGame.isRunning() && getPossibleMoves() == 0) {
-			TwentyFourtyGame.setState(GameState.LOST);
-		}
+		// if (TwentyFourtyGame.isRunning() && highestTile == 2048) {
+		// TwentyFourtyGame.setState(GameState.WON);
+		// } else if (TwentyFourtyGame.isRunning() && getPossibleMoves() == 0) {
+		// TwentyFourtyGame.setState(GameState.LOST);
+		// }
 	}
 
 	/**
@@ -410,7 +404,7 @@ public class Grid extends Actor {
 
 	/**
 	 * Sets the TileHandler object used by the grid.
-	 *
+	 * 
 	 * @param tileHandler
 	 *            The TileHandler object to set.
 	 */
@@ -487,4 +481,31 @@ public class Grid extends Actor {
 			t.draw(batch, parentAlpha);
 		}
 	}
+
+	public static Grid fromString(String str) {
+		String[] split = str.split(",");
+
+		Grid newGrid = new Grid(true);
+		
+		int index = 0;
+		
+		for (String value : split) {
+			newGrid.setTile(index++, Integer.parseInt(value));
+		}
+		return newGrid;
+	}
+	
+	@Override
+	public String toString() {
+		String res = "";
+		for (int index = 0; index < 16; index++) {
+			
+			res += grid[index].getValue();
+			
+			if (index < 15) 
+				res += ",";
+		}
+		return res;
+	}
+
 }

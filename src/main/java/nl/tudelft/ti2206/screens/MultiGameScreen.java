@@ -24,7 +24,8 @@ public class MultiGameScreen extends Screen {
 
 	/** Constructs a new MultiGameScreen. */
 	public MultiGameScreen() {
-		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH, TwentyFourtyGame.GAME_HEIGHT, false);
+		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH,
+				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
 		localGroup = new Group();
 		remoteGroup = new Group();
@@ -38,7 +39,7 @@ public class MultiGameScreen extends Screen {
 		Grid localGrid = new Grid(false);
 		localGroup.addActor(new ScoreDisplay(localGrid));
 		localGroup.addActor(localGrid);
-		stage.addListener(new InputHandler(localGrid));
+		stage.addListener(new LocalInputHandler(localGrid));
 
 		/* Create our remote groups and actors. */
 		Grid remoteGrid = new Grid(true);
@@ -48,9 +49,7 @@ public class MultiGameScreen extends Screen {
 
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
-		
-		LocalInputHandler localInput = new LocalInputHandler(localGrid);
-		
+
 		RemoteInputHandler remoteInput = new RemoteInputHandler(remoteGrid);
 		Networking.setRemoteInput(remoteInput);
 	}

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 
 import com.badlogic.gdx.Gdx;
@@ -46,10 +47,8 @@ public class Networking {
 	private static DataOutputStream dOutputStream;
 	// private static ObjectInputStream oInputStream;
 	// private static ObjectOutputStream oOutputStream;
-	
+
 	private static RemoteInputHandler remoteInput;
-	
-	
 
 	private static String lastError = "";
 
@@ -267,7 +266,7 @@ public class Networking {
 
 	@SuppressWarnings("deprecation")
 	private static void receiveLoop() {
-		Object response;
+		String response;
 		try {
 
 			while (isConnected()
@@ -304,7 +303,11 @@ public class Networking {
 	}
 
 	public static void sendString(String str) {
-		System.out.println("sending str = " + str);
+		if (getMode() == Mode.SERVER)
+			System.out.println("[SERVER]: sending str = " + str);
+		else
+			System.out.println("[CLIENT]: sending str = " + str);
+
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
@@ -328,52 +331,52 @@ public class Networking {
 		}
 	}
 
-	private static void processResponse(Object object) {
-		if (object instanceof String) {
+	private static void processResponse(String response) {
+		System.out.println("str = " + response);
+		if (response.startsWith("GRID[")) {
+			int closing = response.indexOf(']');
+
+			String strGrid = response.substring(5, closing);
 			
-
+			if (remoteInput != null)
+				remoteInput.fillGrid(strGrid);
 			
-			String response = (String) object;
-			System.out.println("str = " + response);
-			if (response.startsWith("GRID[")) {
-				int closing = response.indexOf(']');
+			if (getMode() == Mode.SERVER)
+				System.out.println("[SERVER]: recv grid str = " + strGrid);
+			else
+				System.out.println("[CLIENT]: recv grid str = " + strGrid);
 
-				String strGrid = response.substring(4, closing);
-				
-				String[] tiles = strGrid.split(",");
+		} else if (response.startsWith("MOVE[")) {
 
-				System.out.println("received grid str = " + strGrid);
+			// int closing = response.indexOf(']');
+			char direction = response.charAt(5);
 
-			} else if (response.startsWith("MOVE[")) {
+			System.out.println("received dir = " + direction);
 
-				// int closing = response.indexOf(']');
-				char direction = response.charAt(5);
+			switch (direction) {
+			case 'U':
+				remoteInput.moveUp();
+				break;
 
-				switch (direction) {
-				case 'U':
-					remoteInput.moveUp();
-					break;
+			case 'D':
+				remoteInput.moveDown();
+				break;
 
-				case 'D':
-					remoteInput.moveDown();
-					break;
+			case 'R':
+				remoteInput.moveRight();
+				break;
 
-				case 'R':
-					remoteInput.moveRight();
-					break;
+			case 'L':
+				remoteInput.moveLeft();
+				break;
 
-				case 'L':
-					remoteInput.moveLeft();
-					break;
+			default:
+				System.out.println("Unknown direction: " + direction);
+				break;
 
-				default:
-					System.out.println("Unknown direction: " + direction);
-					break;
-
-				}
 			}
-
 		}
+
 	}
 
 	public static String getRemoteAddress() {

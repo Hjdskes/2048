@@ -24,30 +24,38 @@ public class LocalInputHandler extends InputListener {
 	public LocalInputHandler(Grid grid) {
 		this.grid = grid;
 		
-		Networking.sendString(grid.toString());
+		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
 	}
 
 	@Override
-	public boolean keyDown(InputEvent event, int keycode) {
-		System.out.println("got keydown");
+	public boolean keyDown(InputEvent event, int keycode) {	
+		
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			grid.move(Direction.DOWN);
-			Networking.sendString("MOVE[D]");
+			Networking.sendString("MOVE[D]\r\n");
+			sendGrid() ;
 			return true;
 		case Keys.DPAD_UP:
 			grid.move(Direction.UP);
-			Networking.sendString("MOVE[U]");
+			Networking.sendString("MOVE[U]\r\n");
+			sendGrid();
 			return true;
 		case Keys.DPAD_LEFT:
 			grid.move(Direction.LEFT);
-			Networking.sendString("MOVE[L]");
+			Networking.sendString("MOVE[L]\r\n");
+			sendGrid();
 			return true;
 		case Keys.DPAD_RIGHT:
 			grid.move(Direction.RIGHT);
-			Networking.sendString("MOVE[R]");
+			Networking.sendString("MOVE[R]\r\n");
+			sendGrid();
 			return true;
 		}
 		return false;
+	}
+	
+	private void sendGrid() {
+		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
 	}
 }
