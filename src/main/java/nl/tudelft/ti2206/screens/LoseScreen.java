@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
@@ -11,20 +12,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * and offers the ability to restart.
  */
 public class LoseScreen extends Screen {
+	/** */
+	private Image image;
+
 	/** The button used to restart the game. */
 	private RestartButton restartButton;
 
 	/** Constructs a new LoseScreen. */
 	public LoseScreen() {
 		stage = new Stage();
+		image = new Image(AssetHandler.getSkin(), "lostoverlay");
 		restartButton = new RestartButton();
+	}
+
+	/** Constructor used for mock insertion */
+	public LoseScreen(Stage stage, Image image, RestartButton restartButton) {
+		this.stage = stage;
+		this.image = image;
+		this.restartButton = restartButton;
 	}
 
 	@Override
 	public void create() {
 		super.create();
 
-		stage.addActor(new Image(AssetHandler.getSkin(), "lostoverlay"));
+		stage.addActor(image);
 		stage.addActor(restartButton);
 	}
 
