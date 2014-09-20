@@ -45,6 +45,8 @@ public class Networking {
 	// private static ObjectInputStream oInputStream;
 	// private static ObjectOutputStream oOutputStream;
 
+	private static String lastError = "";
+	
 	private static Thread thread;
 
 	private static Mode mode;
@@ -146,22 +148,28 @@ public class Networking {
 
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
+				serverSocketHint.reuseAddress = true;
 				serverSocket = Gdx.net.newServerSocket(Protocol.TCP, PORT,
 						serverSocketHint);
-
+				
 				setServerSocketInitialized(true);
 
 				while (true) {
+					
 					socket = serverSocket.accept(null);
-					setInitialized(true);
-					System.out.println("Accepted incoming connection from "
-							+ socket.getRemoteAddress());
-
-					setInput(socket);
-					setOutput(socket);
-
-					while (isConnected()) {
-						receiveLoop();
+					
+					if (socket != null) {
+					
+						setInitialized(true);
+						System.out.println("Accepted incoming connection from "
+								+ socket.getRemoteAddress());
+	
+						setInput(socket);
+						setOutput(socket);
+	
+						while (isConnected()) {
+							receiveLoop();
+						}
 					}
 				}
 			}
@@ -187,19 +195,31 @@ public class Networking {
 
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
+				socketHints.keepAlive = true;
+				
+				try { 
 				socket = Gdx.net.newClientSocket(Protocol.TCP, address, port,
 						socketHints);
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+					setLastError(e.getMessage());
+				}
 
-				System.out.println("I'm connected to "
-						+ socket.getRemoteAddress());
 
-				setInput(socket);
-				setOutput(socket);
-
-				setInitialized(true);
-
-				while (isConnected()) {
-					receiveLoop();
+				if (socket != null) {
+					
+					System.out.println("I'm connected to "
+							+ socket.getRemoteAddress());
+	
+					setInput(socket);
+					setOutput(socket);
+	
+					setInitialized(true);
+	
+					while (isConnected()) {
+						receiveLoop();
+					}
 				}
 			}
 
@@ -283,6 +303,10 @@ public class Networking {
 	}
 
 	public static boolean isConnected() {
+		
+		if (!isInitialized())
+			return false;
+		
 		return socket.isConnected();
 	}
 
@@ -340,5 +364,13 @@ public class Networking {
 
 	public static Mode getMode() {
 		return Networking.mode;
+	}
+
+	public static String getLastError() {
+		return lastError;
+	}
+
+	public static void setLastError(String lastError) {
+		Networking.lastError = lastError;
 	}
 }
