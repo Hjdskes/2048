@@ -246,11 +246,6 @@ public class Grid extends Actor {
 	 *            The direction in which is to be moved.
 	 */
 	public void move(Direction direction) {
-		/* If the game is not in running or continuing state, ignore the moves. */
-		if (TwentyFourtyGame.isLost() || TwentyFourtyGame.isWon()) {
-			return;
-		}
-
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
