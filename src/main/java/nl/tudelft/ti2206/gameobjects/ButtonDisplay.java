@@ -30,6 +30,19 @@ public class ButtonDisplay extends Group {
 	 * Loads all buttons and sets their event listeners and locations.
 	 */
 	public ButtonDisplay() {
+		createRestartButton();
+		createContinueButton();
+	}
+
+	/**
+	 * Constructor which takes the continue and restart button
+	 * 
+	 * @param continue and restart button.
+	 */
+	public ButtonDisplay(Button buttonContinue, Button buttonRestart) {
+		continueButton = buttonContinue;
+		restartButton = buttonRestart;
+
 		initRestartButton();
 		initContinueButton();
 	}
@@ -37,8 +50,12 @@ public class ButtonDisplay extends Group {
 	/**
 	 * Initializes the restart button.
 	 */
-	private void initRestartButton() {
+	private void createRestartButton() {
 		restartButton = new TextButton("Restart", AssetHandler.getSkin());
+		initRestartButton();
+	}
+
+	public void initRestartButton() {
 		restartButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -53,8 +70,12 @@ public class ButtonDisplay extends Group {
 	/**
 	 * Initializes the continue button.
 	 */
-	private void initContinueButton() {
+	private void createContinueButton() {
 		continueButton = new TextButton("Continue!", AssetHandler.getSkin());
+		initContinueButton();
+	}
+
+	public void initContinueButton() {
 		continueButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -66,6 +87,20 @@ public class ButtonDisplay extends Group {
 		continueButton.setVisible(false);
 
 		this.addActor(continueButton);
+	}
+
+	/**
+	 * @return continue button.
+	 */
+	public Button getContinueButton() {
+		return continueButton;
+	}
+
+	/**
+	 * @return restart button.
+	 */
+	public Button getRestartButton() {
+		return restartButton;
 	}
 
 	@Override
