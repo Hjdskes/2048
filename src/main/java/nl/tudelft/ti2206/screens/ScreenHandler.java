@@ -10,7 +10,7 @@ import com.badlogic.gdx.Gdx;
  * It keeps a stack of all our screens and draws them from top to bottom, which
  * enables us to draw transparent screens, such as, for example, the WinScreen.
  * 
- * Code copied from: http://gamedev.stackexchange.com/questions/75902/how-to-design-transparent-screen-in-libgdx
+ * Code based on: http://gamedev.stackexchange.com/questions/75902/how-to-design-transparent-screen-in-libgdx
  */
 public class ScreenHandler {
 	private static Stack<Screen> screenStack = new Stack<Screen>();

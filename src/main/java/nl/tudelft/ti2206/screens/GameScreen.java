@@ -1,14 +1,11 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
@@ -57,21 +54,12 @@ public class GameScreen extends Screen {
 		ProgressHandler.saveGame(grid);
 	}
 
-	//TODO: check if method is used
 	@Override
 	public void resize(int width, int height) {
-		/* Center camera: true. */
-		stage.getViewport().update(TwentyFourtyGame.GAME_WIDTH,
-				TwentyFourtyGame.GAME_HEIGHT, true);
 	}
 
 	@Override
 	public void update() {
 		super.update();
-		if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.WON) {
-			ScreenHandler.add(new WinScreen());
-		} else if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.LOST) {
-			ScreenHandler.add(new LoseScreen());
-		}
 	}
 }

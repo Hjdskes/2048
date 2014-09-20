@@ -21,7 +21,7 @@ public class Launcher {
 	 * @param args
 	 *            The command line arguments. These are ignored.
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		Launcher launcher = new Launcher();
 		launcher.launch();
 	}

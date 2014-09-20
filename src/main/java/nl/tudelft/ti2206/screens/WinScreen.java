@@ -32,4 +32,9 @@ public class WinScreen extends Screen {
 		stage.addActor(continueButton);
 		stage.addActor(restartButton);
 	}
+
+	@Override
+	public boolean isOverlay() {
+		return true;
+	}
 }

@@ -279,8 +279,9 @@ public class Grid extends Actor {
 	public void updateHighestTile() {
 		highestTile = 0;
 		for (Tile t : grid) {
-			if (t.getValue() > highestTile)
+			if (t.getValue() > highestTile) {
 				highestTile = t.getValue();
+			}
 		}
 	}
 
@@ -315,8 +316,9 @@ public class Grid extends Actor {
 				/* For all neighboring tiles, compare the values. */
 				for (Tile neighbor : neighbors) {
 					if (neighbor.getValue() == value
-							|| neighbor.getValue() == 0)
+							|| neighbor.getValue() == 0) {
 						moves++;
+					}
 				}
 			}
 		}

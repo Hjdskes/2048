@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class MultiGameScreen extends Screen {
-	private Stage stage;
 	private Group localGroup;
 	private Group remoteGroup;
 

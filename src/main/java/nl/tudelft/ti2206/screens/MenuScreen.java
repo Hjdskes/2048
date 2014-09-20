@@ -2,8 +2,6 @@ package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,9 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * singleplayer, hosting a game or connecting to another player.
  */
 public class MenuScreen extends Screen {
-	/** The stage which holds all Actors. */
-	private Stage stage;
-
 	/** The table used for positioning all Actors. */
 	private Table table;
 
@@ -41,17 +36,17 @@ public class MenuScreen extends Screen {
 		label = new Label("Choose your destiny!", AssetHandler.getSkin());
 		singlePlayer = new TextButton("Singleplayer", AssetHandler.getSkin());
 		hostGame = new TextButton("Host a game", AssetHandler.getSkin());
-		connect = new TextButton("Connect to your friend",
-				AssetHandler.getSkin());
+		connect = new TextButton("Join a game", AssetHandler.getSkin());
 	}
 
 	@Override
 	public void create() {
 		super.create();
-		table.add(label).padBottom(40).row();
-		table.add(singlePlayer).padBottom(20).row();
-		table.add(hostGame).padBottom(20).row();
+
+		table.add(label).padBottom(60).row();
+		table.add(singlePlayer).padBottom(60).row();
 		table.add(connect).padBottom(20).row();
+		table.add(hostGame).padBottom(20).row();
 
 		table.setFillParent(true);
 		stage.addActor(table);

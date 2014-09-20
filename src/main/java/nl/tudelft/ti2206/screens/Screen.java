@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Disposable;
 
 /**
  * An abstract class for screens.
+ * 
+ * Code based on: http://gamedev.stackexchange.com/questions/75902/how-to-design-transparent-screen-in-libgdx
  */
 public abstract class Screen implements Disposable {
 	protected Stage stage;
@@ -68,7 +70,8 @@ public abstract class Screen implements Disposable {
 	public void update() {
 		stage.act();
 	}
-	
+
+	@Override
 	public void dispose() {
 		stage.dispose();
 	}

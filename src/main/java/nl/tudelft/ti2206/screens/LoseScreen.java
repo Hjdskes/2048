@@ -27,4 +27,9 @@ public class LoseScreen extends Screen {
 		stage.addActor(new Image(AssetHandler.getSkin(), "lostoverlay"));
 		stage.addActor(restartButton);
 	}
+
+	@Override
+	public boolean isOverlay() {
+		return true;
+	}
 }
