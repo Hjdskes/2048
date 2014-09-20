@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.screens;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -9,7 +10,6 @@ import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.CancelButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.net.Networking;
 
 import org.junit.Before;
 import org.junit.Test;

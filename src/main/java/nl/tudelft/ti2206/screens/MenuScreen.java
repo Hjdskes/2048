@@ -39,16 +39,31 @@ public class MenuScreen extends Screen {
 		connect = new TextButton("Join a game", AssetHandler.getSkin());
 	}
 
+	/** Constuctor for testing purposes only. */
+	public MenuScreen(Stage stage, Table table, Label label, TextButton button) {
+		this.stage = stage;
+		this.table = table;
+		this.label = label;
+		this.singlePlayer = button;
+		this.hostGame = button;
+		this.connect = button;
+	}
+
 	@Override
 	public void create() {
 		super.create();
 
-		table.add(label).padBottom(60).row();
-		table.add(singlePlayer).padBottom(60).row();
-		table.add(connect).padBottom(20).row();
-		table.add(hostGame).padBottom(20).row();
+		table.add(label);
+		table.getCell(label).padBottom(60).row();
+		table.add(singlePlayer);
+		table.getCell(singlePlayer).padBottom(60).row();
+		table.add(connect);
+		table.getCell(connect).padBottom(20).row();
+		table.add(hostGame);
+		table.getCell(hostGame).padBottom(20).row();
 
 		table.setFillParent(true);
+		
 		stage.addActor(table);
 
 		singlePlayer.addListener(new ClickListener() {
