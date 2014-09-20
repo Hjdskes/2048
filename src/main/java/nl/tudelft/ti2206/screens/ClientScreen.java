@@ -15,10 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
  * The ClientScreen is the screen the client sees. It holds an entry field
  * for the IP address to which a connection should be made. 
  */
-public class ClientScreen implements Screen {
-	/** The stage which holds all Actors. */
-	private Stage stage;
-
+public class ClientScreen extends Screen {
 	/** The main label. */
 	private Label label;
 
@@ -54,7 +51,9 @@ public class ClientScreen implements Screen {
 	}
 
 	@Override
-	public void show() {
+	public void create() {
+		super.create();
+		
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
 		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6
 				* TwentyFourtyGame.GAP);
@@ -68,43 +67,5 @@ public class ClientScreen implements Screen {
 		stage.addActor(cancel);
 		stage.addActor(play);
 		play.setVisible(false);
-
-		Gdx.input.setInputProcessor(stage);
-	}
-
-	@Override
-	public void draw() {
-		/* Draw beige background in the screen. */
-		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.draw();
-	}
-
-	@Override
-	public boolean isOverlay() {
-		return false;
-	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
-	public void resume() {
-	}
-
-	@Override
-	public void update() {
-		stage.act();
-	}
-
-	@Override
-	public void dispose() {
-		stage.dispose();
 	}
 }

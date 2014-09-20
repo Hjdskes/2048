@@ -12,12 +12,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
- * The GameScreen is the screen for a singleplayer game. 
+ * The GameScreen is the screen for a singleplayer game.
  */
-public class GameScreen implements Screen {
-	/** The stage which holds all Actors. */
-	private Stage stage;
-
+public class GameScreen extends Screen {
 	/** The grid holding all the Tiles. */
 	private Grid grid;
 
@@ -45,29 +42,14 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public void show() {
-		Gdx.input.setInputProcessor(stage);
-
+	public void create() {
+		super.create();
 		stage.addListener(new InputHandler(grid));
 
 		/* Create the main group and pack everything in it. */
 		stage.addActor(grid);
 		stage.addActor(restartButton);
 		stage.addActor(scores);
-	}
-
-	@Override
-	public void draw() {
-		/* Draw beige background in the screen. */
-		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.draw();
-	}
-
-	@Override
-	public boolean isOverlay() {
-		return false;
 	}
 
 	@Override
@@ -83,21 +65,12 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public void resume() {
-	}
-
-	@Override
 	public void update() {
-		stage.act();
+		super.update();
 		if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.WON) {
 			ScreenHandler.add(new WinScreen());
 		} else if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.LOST) {
 			ScreenHandler.add(new LoseScreen());
 		}
-	}
-
-	@Override
-	public void dispose() {
-		stage.dispose();
 	}
 }

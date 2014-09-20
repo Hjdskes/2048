@@ -22,7 +22,7 @@ public class ScreenHandler {
 	 *            The screen.
 	 */
 	public static void add(Screen screen) {
-		screen.show();
+		screen.create();
 		screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		screenStack.push(screen);
 	}
