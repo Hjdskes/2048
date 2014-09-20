@@ -43,19 +43,6 @@ public class ClientScreen extends Screen {
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		cancel = new CancelButton();
 		play = new PlayButton();
-
-		play.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				String text = textField.getText();
-
-				if (Networking.isValidHost(text)) {
-					Networking.startClient(text);
-				} else
-					label.setText(StringConstants.HOST_INVALID);
-			}
-		});
-
 	}
 
 	/** Constructor used for mock insertion */
@@ -71,7 +58,9 @@ public class ClientScreen extends Screen {
 	@Override
 	public void create() {
 		super.create();
-		
+
+		addPlayButtonListener();
+
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
 		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6
 				* TwentyFourtyGame.GAP);
@@ -87,11 +76,25 @@ public class ClientScreen extends Screen {
 		play.setVisible(false);
 	}
 
+	/** Sets the listener for the playButton */
+	private void addPlayButtonListener() {
+		play.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				String text = textField.getText();
+
+				if (Networking.isValidHost(text)) {
+					Networking.startClient(text);
+				} else
+					label.setText(StringConstants.HOST_INVALID);
+			}
+		});
+	}
+
 	@Override
 	public void update() {
-
 		super.update();
-		
+
 		String text = textField.getText();
 
 		if (Networking.isConnected()) {
@@ -100,7 +103,7 @@ public class ClientScreen extends Screen {
 		} else {
 
 			String error = Networking.getLastError();
-			
+
 			if (error.compareTo("") != 0)
 				label.setText(error);
 			else if (text.compareTo("") == 0) {
