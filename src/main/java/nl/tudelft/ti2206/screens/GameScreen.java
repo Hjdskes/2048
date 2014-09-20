@@ -55,10 +55,6 @@ public class GameScreen extends Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
 	public void update() {
 		super.update();
 	}

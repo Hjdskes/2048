@@ -27,7 +27,7 @@ public abstract class Screen implements Disposable {
 		/* Draw beige background in the screen. */
 		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		stage.draw();
 	}
 

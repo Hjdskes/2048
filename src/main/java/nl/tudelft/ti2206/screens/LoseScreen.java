@@ -29,6 +29,11 @@ public class LoseScreen extends Screen {
 	}
 
 	@Override
+	public void draw() {
+		stage.draw();
+	}
+
+	@Override
 	public boolean isOverlay() {
 		return true;
 	}

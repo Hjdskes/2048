@@ -34,6 +34,11 @@ public class WinScreen extends Screen {
 	}
 
 	@Override
+	public void draw() {
+		stage.draw();
+	}
+
+	@Override
 	public boolean isOverlay() {
 		return true;
 	}
