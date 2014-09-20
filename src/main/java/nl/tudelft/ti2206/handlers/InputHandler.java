@@ -46,6 +46,7 @@ public class InputHandler extends InputListener {
 			grid.move(Direction.RIGHT);
 			return true;
 		case Keys.ESCAPE:
+			ProgressHandler.saveGame(grid);
 			ScreenHandler.add(new MenuScreen());
 			return true;
 		}
