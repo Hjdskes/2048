@@ -15,19 +15,25 @@ public class HostScreen implements Screen {
 	private Stage stage;
 	private Table table;
 	private Label label;
+	private Label remote;
+	private Label addresses;
 	private CancelButton cancel;
 	private PlayButton play;
 
 	public HostScreen() {
 		stage = new Stage();
 		table = new Table();
-		label = new Label("Your opponent's destiny\r\nlies beyond one of these:\r\n", AssetHandler.getSkin());
+		label = new Label(
+				"Your opponent's destiny\r\nlies beyond one of these:\r\n",
+				AssetHandler.getSkin());
+		remote = new Label("Waiting for connection...", AssetHandler.getSkin());
 		cancel = new CancelButton();
 		play = new PlayButton();
 	}
 
 	/** Constructor for injecting mock objects. For testing purposes only. */
-	public HostScreen(Stage stage, Table table, Label label, PlayButton play, CancelButton cancel) {
+	public HostScreen(Stage stage, Table table, Label label, PlayButton play,
+			CancelButton cancel) {
 		this.stage = stage;
 		this.table = new Table();
 		this.label = label;
@@ -37,13 +43,18 @@ public class HostScreen implements Screen {
 
 	@Override
 	public void create() {
+		// start hosting:
+		if (!Networking.isInitialized() || !Networking.isConnected())
+			Networking.startServer();
+
 		table.add(label).padTop(20).padBottom(20).row();
 
-		String addrList = Networking.strAddresses();
-		Label addresses = new Label(addrList, AssetHandler.getSkin());
-		
+		Label addresses = new Label(Networking.strAddresses(),
+				AssetHandler.getSkin());
+
 		table.add(label).padTop(20).padBottom(5).row();
 		table.add(addresses).padTop(5).padBottom(20).row();
+		table.add(remote).padTop(5).padBottom(20).row();
 
 		table.setFillParent(true);
 		stage.addActor(table);
@@ -82,6 +93,15 @@ public class HostScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+
+		if (Networking.isInitialized()) {
+			if (Networking.isConnected()) {
+				String addr = Networking.getRemoteAddress();
+				remote.setText("Remote: " + addr);
+			}
+		} else {
+			remote.setText("Waiting for connection..");
+		}
 	}
 
 	@Override
