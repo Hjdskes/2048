@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.gameobjects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -38,7 +39,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * from its index. It can move up or down by adding or subtracting 4 from its
  * index.
  */
-public class Grid extends Actor {
+public class Grid extends Actor implements Serializable {
 	/** This enumeration is used to indicate the direction of a movement. */
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT;
