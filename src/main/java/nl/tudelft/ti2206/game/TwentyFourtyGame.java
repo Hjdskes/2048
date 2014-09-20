@@ -1,13 +1,11 @@
 package nl.tudelft.ti2206.game;
 
-import java.util.Stack;
-
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.screens.ScreenHandler;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
 
 /**
  */
@@ -26,9 +24,6 @@ public class TwentyFourtyGame extends Game {
 		RUNNING, LOST, WON, CONTINUING
 	}
 
-	/** A stack of screens. */
-	private Stack<Screen> screens;
-
 	/** The current state of the game. */
 	private static GameState curState;
 
@@ -38,40 +33,21 @@ public class TwentyFourtyGame extends Game {
 		AssetHandler.load();
 		AssetHandler.loadSkinFile(Gdx.files.internal("src/main/resources/skin.json"));
 
-		screens = new Stack<Screen>();
-		addScreen(new MenuScreen());
+		/* Push a menu onto the screen stack. */
+		ScreenHandler.add(new MenuScreen());
+	}
+
+	@Override
+	public void render() {
+		super.render();
+		ScreenHandler.update();
+		ScreenHandler.draw();
 	}
 
 	@Override
 	public void dispose() {
-		getScreen().dispose();
+		ScreenHandler.dispose();
 		AssetHandler.dispose();
-		for (Screen screen : screens) {
-			if (screen == null) {
-				continue;
-			}
-			screen.dispose();
-		}
-		screens.clear();
-	}
-
-	public void addScreen(Screen screen) {
-		setScreen(screens.push(screen));
-		System.out.println(screens.size());
-	}
-
-	public void popScreen() {
-		if (screens.size() > 1) {
-			Screen screen = screens.pop();
-			setScreen(screens.peek());
-			screen.hide();
-			screen.dispose();
-			//setScreen(screens.get(screens.size()-1));
-			//screens.pop().dispose();
-			//setScreen(screens.peek());
-			//screen.dispose();
-		}
-		System.out.println(screens.size());
 	}
 
 	/**

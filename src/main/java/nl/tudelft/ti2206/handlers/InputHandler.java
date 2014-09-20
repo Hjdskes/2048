@@ -1,10 +1,10 @@
 package nl.tudelft.ti2206.handlers;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.screens.ScreenHandler;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -46,7 +46,7 @@ public class InputHandler extends InputListener {
 			grid.move(Direction.RIGHT);
 			return true;
 		case Keys.ESCAPE:
-			((TwentyFourtyGame) Gdx.app.getApplicationListener()).popScreen();
+			ScreenHandler.add(new MenuScreen());
 			return true;
 		}
 		return false;
