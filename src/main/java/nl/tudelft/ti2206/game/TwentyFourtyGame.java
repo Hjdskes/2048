@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.MenuScreen;
-import nl.tudelft.ti2206.screens.ConnectionLostScreen;
 import nl.tudelft.ti2206.screens.ScreenHandler;
 
 import com.badlogic.gdx.Game;
