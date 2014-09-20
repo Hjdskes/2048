@@ -19,13 +19,7 @@ public class ClientScreen implements Screen {
 	private TextButton cancel;
 	private TextButton play;
 
-	@Override
-	public void dispose() {
-		stage.dispose();
-	}
-
-	@Override
-	public void create() {
+	public ClientScreen() {
 		stage = new Stage();
 		label = new Label(
 				"   Enter the IP address to\nwhich you want to connect:",
@@ -33,7 +27,19 @@ public class ClientScreen implements Screen {
 		textField = new TextField("127.0.0.1", AssetHandler.getSkin());
 		cancel = new TextButton("Cancel", AssetHandler.getSkin());
 		play = new TextButton("Continue", AssetHandler.getSkin());
-
+	}
+	
+	/** Constructor used for mock insertion */
+	public ClientScreen(Stage stage, Label label, TextField field, TextButton button) {
+		this.stage = stage;
+		this.label = label;
+		this.textField = field;
+		this.cancel = button;
+		this.play = button;
+	}
+	
+	@Override
+	public void create() {
 		play.setVisible(false);
 
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
@@ -100,5 +106,10 @@ public class ClientScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+	}
+	
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 }

@@ -11,28 +11,38 @@ import nl.tudelft.ti2206.handlers.ProgressHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class GameScreen implements Screen {
 	private Stage stage;
 	private Grid grid;
+	private ScoreDisplay scores;
+	private OverlayDisplay overlays;
+	private ButtonDisplay buttons;
 
-	@Override
-	public void dispose() {
-		stage.dispose();
+	public GameScreen() {
+		stage = new Stage();
+		grid = ProgressHandler.loadGame();
+
+		scores = new ScoreDisplay(grid);
+		overlays = new OverlayDisplay();
+		buttons = new ButtonDisplay();
+	}
+
+	/** Constructor to insert Mock objects. For testing only */
+	public GameScreen(Stage stage, Grid grid, ScoreDisplay scores,
+			OverlayDisplay overlays, ButtonDisplay buttons) {
+		this.stage = stage;
+		this.grid = grid;
+		this.scores = scores;
+		this.overlays = overlays;
+		this.buttons = buttons;
 	}
 
 	@Override
 	public void create() {
-		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
 
-		/* Create our groups and actors. */
-		grid = ProgressHandler.loadGame();
 		stage.addListener(new InputHandler(grid));
-		ScoreDisplay scores = new ScoreDisplay(grid);
-		OverlayDisplay overlays = new OverlayDisplay();
-		ButtonDisplay buttons = new ButtonDisplay();
 
 		/* Create the main group and pack everything in it. */
 		stage.addActor(grid);
@@ -74,5 +84,10 @@ public class GameScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+	}
+
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 }
