@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.PlayButton;
-import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -22,8 +21,7 @@ public class WaitScreen extends Screen {
 		stage = new Stage();
 		table = new Table();
 		play = new PlayButton();
-		label = new Label("Press play when you´re ready!", AssetHandler.getSkin());
-
+		label = new Label("Press play when you're ready!", AssetHandler.getSkin());
 	}
 
 	@Override
@@ -55,9 +53,8 @@ public class WaitScreen extends Screen {
 
 		if (Networking.isConnected()) {
 			label.setText("Press play when you're ready!");
-		} else
+		} else {
 			label.setText("Connection lost.");
-
+		}
 	}
-
 }

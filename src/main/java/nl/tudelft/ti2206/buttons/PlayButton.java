@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.buttons;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 

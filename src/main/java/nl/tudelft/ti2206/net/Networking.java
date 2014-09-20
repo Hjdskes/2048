@@ -3,8 +3,6 @@ package nl.tudelft.ti2206.net;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -14,10 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 
 import com.badlogic.gdx.Gdx;
