@@ -55,7 +55,9 @@ public class HostScreen extends Screen {
 	public HostScreen(Stage stage, Table table, Label label, PlayButton play,
 			CancelButton cancel) {
 		this.stage = stage;
-		this.table = new Table();
+		this.table = table;
+		this.remote = label;
+		this.addresses = label;
 		this.label = label;
 		this.cancel = cancel;
 		this.play = play;
@@ -67,10 +69,13 @@ public class HostScreen extends Screen {
 		// start hosting if not already doing so:
 		if (!Networking.isInitialized() || !Networking.isConnected())
 			Networking.startServer();
-
-		table.add(label).padTop(20).padBottom(10).row();
-		table.add(addresses).padTop(10).padBottom(20).row();
-		table.add(remote).padTop(20).padBottom(50).row();
+		
+		table.add(label);
+		table.getCell(label).padTop(20).padBottom(10).row();
+		table.add(addresses);
+		table.getCell(addresses).padTop(10).padBottom(20).row();
+		table.add(remote);
+		table.getCell(remote).padTop(20).padBottom(50).row();
 
 		table.setFillParent(true);
 		stage.addActor(table);
