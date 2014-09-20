@@ -29,12 +29,13 @@ public class Networking {
 
 	private static List<String> addresses = new ArrayList<String>();
 
+	private static Socket socket;
+	private static boolean initialized = false;
+
 	private static DataInputStream dInputStream;
 	private static DataOutputStream dOutputStream;
 	private static ObjectInputStream oInputStream;
 	private static ObjectOutputStream oOutputStream;
-
-	private static boolean connected;
 
 	public static List<String> initalize() {
 		return initLocalAddresses();
@@ -74,7 +75,7 @@ public class Networking {
 	}
 
 	public static List<String> getLocalAddresses() {
-		
+
 		return initLocalAddresses();
 	}
 
@@ -92,7 +93,7 @@ public class Networking {
 						Protocol.TCP, PORT, serverSocketHint);
 
 				while (true) {
-					Socket socket = serverSocket.accept(null);
+					socket = serverSocket.accept(null);
 
 					System.out.println("Incoming connection from "
 							+ socket.getRemoteAddress());
@@ -100,13 +101,11 @@ public class Networking {
 					setInput(socket);
 					setOutput(socket);
 
-					connected = true;
+					setInitialized(true);
 
 					while (socket.isConnected()) {
 						receiveLoop();
 					}
-
-					connected = false;
 				}
 			}
 		}).start();
@@ -122,8 +121,8 @@ public class Networking {
 
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
-				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, address,
-						port, socketHints);
+				socket = Gdx.net.newClientSocket(Protocol.TCP, address, port,
+						socketHints);
 
 				System.out.println("I'm connected to "
 						+ socket.getRemoteAddress());
@@ -131,13 +130,11 @@ public class Networking {
 				setInput(socket);
 				setOutput(socket);
 
-				connected = true;
+				setInitialized(true);
 
 				while (socket.isConnected()) {
 					receiveLoop();
 				}
-
-				connected = false;
 			}
 
 		}).start();
@@ -167,7 +164,6 @@ public class Networking {
 			System.err.println("Error setting object input stream:");
 			e.printStackTrace();
 		}
-
 	}
 
 	private static void setOutput(Socket socket) {
@@ -211,7 +207,39 @@ public class Networking {
 
 	}
 
+	public static String getRemoteAddress() {
+		return socket.getRemoteAddress().replaceFirst("/", "");
+	}
+
+	public static Socket getSocket() {
+		return socket;
+	}
+
 	public static boolean isConnected() {
-		return connected;
+		return socket.isConnected();
+	}
+
+	public static boolean isInitialized() {
+		return initialized;
+	}
+
+	private static void setInitialized(boolean initialized) {
+		Networking.initialized = initialized;
+	}
+
+	public static void disconnect() {
+		if (isInitialized()) {
+			System.out.println("Disconnecting");
+			socket.dispose();
+			setInitialized(false);
+			try {
+				dInputStream.close();
+				dOutputStream.close();
+				oInputStream.close();
+				oOutputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

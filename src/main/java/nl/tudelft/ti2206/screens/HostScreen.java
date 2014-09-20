@@ -14,7 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class HostScreen implements Screen {
 	private Stage stage;
-
+	private Label label;
+	private Label remote;
+	private Label addresses;
 	@Override
 	public void dispose() {
 		stage.dispose();
@@ -24,17 +26,27 @@ public class HostScreen implements Screen {
 	public void create() {
 		stage = new Stage();
 		Table table = new Table();
-		Label label = new Label("Your opponent's destiny\r\nlies beyond one of these:\r\n", AssetHandler.getSkin());
+
+		label = new Label(
+				"Your opponent's destiny\r\nlies beyond one of these:\r\n",
+				AssetHandler.getSkin());
+		
+		remote = new Label("Waiting for connection...", AssetHandler.getSkin());
+
+		// start hosting:
+		if (!Networking.isInitialized() || !Networking.isConnected())
+			Networking.startServer();
+		
 		CancelButton cancel = new CancelButton();
 		PlayButton play = new PlayButton();
 
 		table.add(label).padTop(20).padBottom(20).row();
 
-		String addrList = Networking.strAddresses();
-		Label addresses = new Label(addrList, AssetHandler.getSkin());
+		Label addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());		
 		
 		table.add(label).padTop(20).padBottom(5).row();
 		table.add(addresses).padTop(5).padBottom(20).row();
+		table.add(remote).padTop(5).padBottom(20).row();
 
 		table.setFillParent(true);
 		stage.addActor(table);
@@ -73,5 +85,17 @@ public class HostScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+
+		if (Networking.isInitialized()) {
+			if (Networking.isConnected()) {
+				String addr = Networking.getRemoteAddress();
+				remote.setText("Remote: " + addr);
+				
+			}
+		} else {
+			remote.setText("Waiting for connection..");
+			
+		}
+
 	}
 }
