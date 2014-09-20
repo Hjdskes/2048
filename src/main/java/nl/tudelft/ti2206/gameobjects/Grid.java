@@ -43,7 +43,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class Grid extends Actor {
 	/** This enumeration is used to indicate the direction of a movement. */
 	public enum Direction {
-		UP, DOWN, LEFT, RIGHT;
+		DOWN, UP, LEFT, RIGHT;
 	}
 
 	/** The width of the Grid. */
@@ -71,7 +71,7 @@ public class Grid extends Actor {
 	private TextureRegion region;
 
 	/** The array containing all sixteen tiles. */
-	protected Tile[] grid;
+	private Tile[] grid;
 
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
@@ -101,7 +101,9 @@ public class Grid extends Actor {
 		this.grid = new Tile[NTILES];
 		this.tileHandler = new TileHandler(this);
 
-		initEmptyGrid();
+		for (int i = 0; i < grid.length; i++) {
+			grid[i] = new Tile(i, 0);
+		}
 		if (!isEmpty) {
 			initGrid();
 		}
@@ -120,7 +122,7 @@ public class Grid extends Actor {
 		this.grid = new Tile[NTILES];
 		this.tileHandler = new TileHandler(this);
 
-		for (int i = 0; i < NTILES; i++) {
+		for (int i = 0; i < grid.length; i++) {
 			grid[i] = new Tile(i, 0, skin, region);
 		}
 		if (!isEmpty) {
@@ -143,15 +145,6 @@ public class Grid extends Actor {
 		}
 		grid[loc1].setValue(initialValue());
 		grid[loc2].setValue(initialValue());
-	}
-
-	/**
-	 * Initializes the grid with empty tiles (value 0).
-	 */
-	private void initEmptyGrid() {
-		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile(i, 0);
-		}
 	}
 
 	/**
@@ -180,7 +173,7 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Sets an Tile's parameters by index.
+	 * Sets a Tile's parameters by index.
 	 * 
 	 * @param index
 	 *            The Tile's index on the grid.
@@ -412,18 +405,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Sets the values in the grid to the values provided.
-	 * 
-	 * @param values
-	 *            The new tile values.
-	 */
-	public void setTileValues(int[] values) {
-		for (int i = 0; i < grid.length; i++) {
-			grid[i].setValue(values[i]);
-		}
-	}
-
-	/**
 	 * Sets the highest tile to the value provided.
 	 * 
 	 * @param highest
@@ -484,12 +465,12 @@ public class Grid extends Actor {
 	@Override
 	public String toString() {
 		String res = "";
-		for (int index = 0; index < 16; index++) {
-
+		for (int index = 0; index < grid.length; index++) {
 			res += grid[index].getValue();
 
-			if (index < 15)
+			if (index < 15) {
 				res += ",";
+			}
 		}
 		return res;
 	}

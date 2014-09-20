@@ -72,7 +72,7 @@ public class TileHandler {
 	public void moveDown() {
 		offset = -4;
 		for (int i = 0; i < ROW_LENGTH; i++) {
-			moveAffected(i, Direction.UP);
+			moveAffected(i, Direction.DOWN);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class TileHandler {
 	public void moveUp() {
 		offset = 4;
 		for (int i = 3 * ROW_LENGTH; i < grid.length; i++) {
-			moveAffected(i, Direction.DOWN);
+			moveAffected(i, Direction.UP);
 		}
 	}
 
@@ -104,11 +104,6 @@ public class TileHandler {
 			return false;
 		}
 
-		/* If the Tile next to this Tile is empty, it can move */
-		if (grid[index + offset].isEmpty()) {
-			return true;
-		}
-
 		/*
 		 * If the Tile is at the edge of that direction, it cannot move.
 		 * For example, in | T - - - |, T cannot move to the left as it is
@@ -118,10 +113,15 @@ public class TileHandler {
 			return false;
 		} else if (dir == Direction.RIGHT && index % ROW_LENGTH == 3) {
 			return false;
-		} else if (dir == Direction.UP && index < COL_LENGTH) {
+		} else if (dir == Direction.DOWN && index < COL_LENGTH) {
 			return false;
-		} else if (dir == Direction.DOWN && index >= 3 * COL_LENGTH) {
+		} else if (dir == Direction.UP && index >= 3 * COL_LENGTH) {
 			return false;
+		}
+
+		/* If the Tile next to this Tile is empty, it can move */
+		if (grid[index + offset].isEmpty()) {
+			return true;
 		}
 
 		/*
@@ -175,23 +175,19 @@ public class TileHandler {
 	 * @return The value to add to the score.
 	 */
 	private void moveTile(int index) {
-		if (grid[index].isEmpty()) {
-			return;
-		} else if (grid[index + offset].getValue() == grid[index].getValue()) {
-			grid[index + offset].doubleValue();
-			scoreIncrement += grid[index + offset].getValue();
-			grid[index + offset].setMerged(true);
-			grid[index + offset].merge();
-			grid[index].reset();
-			isMoveMade = true;
-		} else if (grid[index + offset].isEmpty()) {
+		if (grid[index + offset].isEmpty()) {
 			grid[index + offset].setValue(grid[index].getValue());
 			if (grid[index].isMerged()) {
 				grid[index + offset].setMerged(true);
 			}
-			grid[index].reset();
-			isMoveMade = true;
+		} else if (grid[index + offset].getValue() == grid[index].getValue()) {
+			grid[index + offset].doubleValue();
+			grid[index + offset].setMerged(true);
+			grid[index + offset].merge();
+			scoreIncrement += grid[index + offset].getValue();
 		}
+		grid[index].reset();
+		isMoveMade = true;
 	}
 
 	/**
@@ -212,11 +208,11 @@ public class TileHandler {
 			for (int i = 0; i < ROW_LENGTH; i++) {
 				grid[index - i].setMerged(false);
 			}
-		} else if (dir == Direction.UP) {
+		} else if (dir == Direction.DOWN) {
 			for (int i = 0; i < COL_LENGTH; i++) {
 				grid[index + i * COL_LENGTH].setMerged(false);
 			}
-		} else if (dir == Direction.DOWN) {
+		} else if (dir == Direction.UP) {
 			for (int i = 0; i < COL_LENGTH; i++) {
 				grid[index - i * COL_LENGTH].setMerged(false);
 			}

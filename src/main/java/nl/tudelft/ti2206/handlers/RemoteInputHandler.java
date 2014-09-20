@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.handlers;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
-import nl.tudelft.ti2206.net.Networking;
 
 public class RemoteInputHandler {
 	private Grid grid;
@@ -38,7 +37,10 @@ public class RemoteInputHandler {
 	
 
 	public void setTileValues(int[] values) {
-		grid.setTileValues(values);
+		Tile[] tiles = grid.getTiles();
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i].setValue(values[i]);
+		}
 	}
 
 	public void move(Direction direction) {

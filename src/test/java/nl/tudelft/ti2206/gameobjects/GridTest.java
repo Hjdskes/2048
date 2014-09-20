@@ -302,26 +302,6 @@ public class GridTest {
 		assertEquals(height, 400);
 	}
 
-	/**
-	 * Tests if the setTileValue() method behaves correctly.
-	 */
-	@Test
-	public void testSetTileValues() {
-		int i = 2;
-		int[] values = new int[16];
-		for (int j = 0; j < 16; j++) {
-			values[j] = i;
-			i *= 2;
-		}
-		i = 2;
-		grid.setTileValues(values);
-		for (int j = 0; j < 16; j++) {
-			assertEquals(grid.getTiles()[j].getIndex(), j);
-			assertEquals(grid.getTiles()[j].getValue(), i);
-			i *= 2;
-		}
-	}
-
 	@Test
 	public void testAct() {
 		assertFalse(grid.getCurrentHighestTile() == 16);
