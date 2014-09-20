@@ -7,23 +7,21 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class WinScreen implements Screen {
 	private Stage stage;
-
-	@Override
-	public void dispose() {
-		stage.dispose();
+	private ContinueButton continueButton;
+	private RestartButton restartButton;
+	
+	public WinScreen() {
+		stage = new Stage();
+		restartButton = new RestartButton();
+		continueButton = new ContinueButton();
 	}
-
+	
 	@Override
 	public void create() {
-		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
-
-		RestartButton restartButton = new RestartButton();
-		ContinueButton continueButton = new ContinueButton();
 
 		stage.addActor(new Image(AssetHandler.getSkin(), "wonoverlay"));
 		stage.addActor(continueButton);
@@ -55,5 +53,10 @@ public class WinScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+	}
+	
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 }

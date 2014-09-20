@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.CancelButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
-
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -14,20 +13,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class HostScreen implements Screen {
 	private Stage stage;
+	private Table table;
+	private Label label;
+	private CancelButton cancel;
+	private PlayButton play;
 
-	@Override
-	public void dispose() {
-		stage.dispose();
+	public HostScreen() {
+		stage = new Stage();
+		table = new Table();
+		label = new Label("Your opponent's destiny\r\nlies beyond one of these:\r\n", AssetHandler.getSkin());
+		cancel = new CancelButton();
+		play = new PlayButton();
+	}
+
+	/** Constructor for injecting mock objects. For testing purposes only. */
+	public HostScreen(Stage stage, Table table, Label label, PlayButton play, CancelButton cancel) {
+		this.stage = stage;
+		this.table = new Table();
+		this.label = label;
+		this.cancel = cancel;
+		this.play = play;
 	}
 
 	@Override
 	public void create() {
-		stage = new Stage();
-		Table table = new Table();
-		Label label = new Label("Your opponent's destiny\r\nlies beyond one of these:\r\n", AssetHandler.getSkin());
-		CancelButton cancel = new CancelButton();
-		PlayButton play = new PlayButton();
-
 		table.add(label).padTop(20).padBottom(20).row();
 
 		String addrList = Networking.strAddresses();
@@ -73,5 +82,10 @@ public class HostScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+	}
+
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 }

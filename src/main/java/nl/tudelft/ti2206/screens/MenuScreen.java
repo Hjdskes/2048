@@ -19,13 +19,7 @@ public class MenuScreen implements Screen {
 	private TextButton hostGame;
 	private TextButton connect;
 
-	@Override
-	public void dispose() {
-		stage.dispose();
-	}
-
-	@Override
-	public void create() {
+	public MenuScreen() {
 		stage = new Stage();
 		table = new Table();
 		label = new Label("Choose your destiny!", AssetHandler.getSkin());
@@ -33,7 +27,10 @@ public class MenuScreen implements Screen {
 		hostGame = new TextButton("Host a game", AssetHandler.getSkin());
 		connect = new TextButton("Connect to your friend",
 				AssetHandler.getSkin());
-
+	}
+	
+	@Override
+	public void create() {
 		table.add(label).padBottom(40).row();
 		table.add(singlePlayer).padBottom(20).row();
 		table.add(hostGame).padBottom(20).row();
@@ -93,5 +90,10 @@ public class MenuScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+	}
+
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 }
