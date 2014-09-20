@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.gameobjects;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -38,8 +37,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * Now, a square on field 10 can move left or right by adding or subtracting 1
  * from its index. It can move up or down by adding or subtracting 4 from its
  * index.
+ * 
+ * The grid will draw all the Tiles it holds.
  */
-public class Grid extends Actor implements Serializable {
+public class Grid extends Actor {
 	/** This enumeration is used to indicate the direction of a movement. */
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT;
@@ -66,6 +67,9 @@ public class Grid extends Actor implements Serializable {
 	/** The highest value to start with. */
 	private static final int FOUR = 4;
 
+	/** The area of a Texture the Grid will use to draw itself. */
+	private TextureRegion region;
+
 	/** The array containing all sixteen tiles. */
 	protected Tile[] grid;
 
@@ -84,14 +88,11 @@ public class Grid extends Actor implements Serializable {
 	/** Keeps track of the current high score. */
 	private int highScore;
 
-	/** . */
-	private TextureRegion region;
-
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
 	 * 
 	 * @param isEmpty
-	 *            True if the grid should be empty.
+	 *            True if the grid should be empty, false otherwise.
 	 */
 	public Grid(boolean isEmpty) {
 		this.region = new TextureRegion(AssetHandler.getSkin().get("grid",
@@ -109,6 +110,17 @@ public class Grid extends Actor implements Serializable {
 		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
+	/**
+	 * Constructor for testing purposes: takes a Skin and a TextureRegion as
+	 * parameters to allow mocking.
+	 * 
+	 * @param isEmpty
+	 *            True if the grid should be empty, false otherwise.
+	 * @param skin
+	 *            The Skin object to retrieve all Drawables and styles from.
+	 * @param texture
+	 *            The Texture this Grid will use to draw itself.
+	 */
 	public Grid(boolean isEmpty, Skin skin, TextureRegion texture) {
 		this.region = texture;
 		this.random = new Random();

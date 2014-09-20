@@ -63,7 +63,7 @@ public class ProgressHandler {
 	}
 
 	/**
-	 * Loads the saved grid. If no grid is saved, returns a default grid.s
+	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 */
 	private static Grid loadGrid() {
 		String filledTiles = PreferenceHandler.getGrid();

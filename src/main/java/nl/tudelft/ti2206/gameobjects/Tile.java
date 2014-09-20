@@ -24,6 +24,21 @@ public class Tile extends Actor {
 	/** The base Tile y-coordinate. */
 	private static final int TILE_Y = 115;
 
+	/** The Skin to retrieve all Drawables from. */
+	private Skin skin;
+
+	// /** . */
+	// private ScaleToAction spawnAction;
+
+	// /** . */
+	// private ScaleToAction mergeAction;
+
+	/**
+	 * Defines a rectangular area of a texture, kind of like a viewport, on the
+	 * whole image.
+	 */
+	private TextureRegion region;
+
 	/** The value (e.g. 2, 4, 8, 16, ...). */
 	private int value;
 
@@ -32,17 +47,6 @@ public class Tile extends Actor {
 
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
-
-	private Skin skin;
-
-	// private ScaleToAction spawnAction;
-	// private ScaleToAction mergeAction;
-
-	/**
-	 * Defines a rectangular area of a texture, kind of like a viewport, on the
-	 * whole image.
-	 */
-	private TextureRegion region;
 
 	/**
 	 * Creates a new Tile with the given value.
@@ -64,6 +68,19 @@ public class Tile extends Actor {
 		// spawn();
 	}
 
+	/**
+	 * Constructor for testing purposes: takes a Skin and a TextureRegion as
+	 * parameters to allow mocking.
+	 * 
+	 * @param index
+	 *            The index into the Grid array.
+	 * @param value
+	 *            The value of the Tile.
+	 * @param skin
+	 *            The Skin object to retrieve all Drawables and styles from.
+	 * @param region
+	 *            The TextureRegion this Tile will use to draw itself.
+	 */
 	public Tile(int index, int value, Skin skin, TextureRegion region) {
 		this.value = value;
 		this.index = index;

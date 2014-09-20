@@ -57,7 +57,16 @@ public class ScoreDisplay extends Group {
 		group.addActor(highScoreLabel);
 		group.addActor(highestTileLabel);
 	}
-	
+
+	/**
+	 * Constructor for testing purposes: takes a Label parameter to allow
+	 * mocking.
+	 * 
+	 * @param grid
+	 *            A reference to the Grid.
+	 * @param label
+	 *            The label used to draw all strings.
+	 */
 	public ScoreDisplay(Grid grid, Label label) {
 		this.grid = grid;
 		group = new Group();
@@ -65,7 +74,7 @@ public class ScoreDisplay extends Group {
 		scoreLabel = label;
 		highScoreLabel = label;
 		highestTileLabel = label;
-		
+
 		initRegions();
 		setLabelStyles();
 		setLabelLocations();
@@ -98,16 +107,16 @@ public class ScoreDisplay extends Group {
 			}
 		};
 
-		highScoreLabel = new Label("0", AssetHandler.getSkin().get("white-text",
-				LabelStyle.class)) {
+		highScoreLabel = new Label("0", AssetHandler.getSkin().get(
+				"white-text", LabelStyle.class)) {
 			@Override
 			public void act(float delta) {
 				highScoreLabel.setText(Integer.toString(grid.getHighscore()));
 			}
 		};
 
-		highestTileLabel = new Label("0", AssetHandler.getSkin().get("white-text",
-				LabelStyle.class)) {
+		highestTileLabel = new Label("0", AssetHandler.getSkin().get(
+				"white-text", LabelStyle.class)) {
 			@Override
 			public void act(float delta) {
 				highestTileLabel.setText(Integer.toString(grid
@@ -148,8 +157,8 @@ public class ScoreDisplay extends Group {
 		highScoreLabel.setAlignment(Align.center);
 		highScoreLabel.setAlignment(Align.center);
 
-		highestTileLabel.setX(BASE_X + 2 * SCORE_TILE_WIDTH + 2 *  TwentyFourtyGame.GAP
-				+ highestTileRegion.getRegionWidth() / 2
+		highestTileLabel.setX(BASE_X + 2 * SCORE_TILE_WIDTH + 2
+				* TwentyFourtyGame.GAP + highestTileRegion.getRegionWidth() / 2
 				- scoreLabel.getWidth() / 2);
 		highestTileLabel.setY(LABEL_Y);
 		highestTileLabel.setAlignment(Align.center);
@@ -179,7 +188,7 @@ public class ScoreDisplay extends Group {
 	 * @return The x-coordinate of the high score tile.
 	 */
 	private int getHighScoreX() {
-		return BASE_X +  TwentyFourtyGame.GAP + SCORE_TILE_WIDTH;
+		return BASE_X + TwentyFourtyGame.GAP + SCORE_TILE_WIDTH;
 	}
 
 	/**
@@ -187,7 +196,7 @@ public class ScoreDisplay extends Group {
 	 * @return The x-coordinate for the tile displaying the highest value.
 	 */
 	private int getHighestTileX() {
-		return BASE_X + 2 *  TwentyFourtyGame.GAP + 2 * SCORE_TILE_WIDTH;
+		return BASE_X + 2 * TwentyFourtyGame.GAP + 2 * SCORE_TILE_WIDTH;
 	}
 
 	/**
@@ -195,7 +204,7 @@ public class ScoreDisplay extends Group {
 	 * @return The y-coordinate for all score tiles.
 	 */
 	private int getScoreY() {
-		return GRID_TOP +  TwentyFourtyGame.GAP;
+		return GRID_TOP + TwentyFourtyGame.GAP;
 	}
 
 	/**
