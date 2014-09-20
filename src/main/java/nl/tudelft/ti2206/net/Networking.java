@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nl.tudelft.ti2206.handlers.RemoteInputHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
@@ -44,6 +46,10 @@ public class Networking {
 	private static DataOutputStream dOutputStream;
 	// private static ObjectInputStream oInputStream;
 	// private static ObjectOutputStream oOutputStream;
+	
+	private static RemoteInputHandler remoteInput;
+	
+	
 
 	private static String lastError = "";
 
@@ -330,6 +336,8 @@ public class Networking {
 				int closing = response.indexOf(']');
 
 				String strGrid = response.substring(4, closing);
+				
+				String[] tiles = strGrid.split(",");
 
 				System.out.println("received grid str = " + strGrid);
 
@@ -340,15 +348,19 @@ public class Networking {
 
 				switch (direction) {
 				case 'U':
+					remoteInput.moveUp();
 					break;
 
 				case 'D':
+					remoteInput.moveDown();
 					break;
 
 				case 'R':
+					remoteInput.moveRight();
 					break;
 
 				case 'L':
+					remoteInput.moveLeft();
 					break;
 
 				default:
@@ -440,5 +452,13 @@ public class Networking {
 
 	public static void setLastError(String lastError) {
 		Networking.lastError = lastError;
+	}
+
+	public static RemoteInputHandler getRemoteInput() {
+		return remoteInput;
+	}
+
+	public static void setRemoteInput(RemoteInputHandler remoteInput) {
+		Networking.remoteInput = remoteInput;
 	}
 }
