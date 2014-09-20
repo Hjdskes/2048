@@ -61,7 +61,7 @@ public class GridTest {
 
 		tileHandler = mock(TileHandler.class);
 
-		grid = new Grid(false);
+		grid = new Grid(false, skin, region);
 		grid.setTileHandler(tileHandler);
 		TwentyFourtyGame.setState(GameState.RUNNING);
 	}

@@ -55,8 +55,8 @@ public class TileHandlerTest {
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 		AssetHandler.setSkin(skin);
 		
-		grid = new Grid(true);
-		emptyGrid = new Grid(true);
+		grid = new Grid(true, skin, region);
+		emptyGrid = new Grid(true, skin, region);
 		for (int i = 0; i < 16; i = i + 5) {
 			grid.getTiles()[i].setValue(8);
 		}

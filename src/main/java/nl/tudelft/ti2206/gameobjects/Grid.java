@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -23,8 +24,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ | 12| 13| 12| 14| +---+---+---+---+ | 8 | 9 | 10| 11|
- * +---+---+---+---+ | 4 | 5 | 6 | 7 | +---+---+---+---+ | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+
+ * | 12| 13| 12| 14|
+ * +---+---+---+---+
+ * | 8 | 9 | 10| 11|
+ * +---+---+---+---+
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+
+ * | 0 | 1 | 2 | 3 |
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -93,6 +100,23 @@ public class Grid extends Actor {
 		this.tileHandler = new TileHandler(this);
 
 		initEmptyGrid();
+		if (!isEmpty) {
+			initGrid();
+		}
+
+		/* After loading the grid, start the game. */
+		TwentyFourtyGame.setState(GameState.RUNNING);
+	}
+
+	public Grid(boolean isEmpty, Skin skin, TextureRegion texture) {
+		this.region = texture;
+		this.random = new Random();
+		this.grid = new Tile[NTILES];
+		this.tileHandler = new TileHandler(this);
+
+		for (int i = 0; i < NTILES; i++) {
+			grid[i] = new Tile(i, 0, skin, texture);
+		}
 		if (!isEmpty) {
 			initGrid();
 		}
