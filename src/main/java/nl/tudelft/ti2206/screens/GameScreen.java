@@ -89,11 +89,6 @@ public class GameScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
-		if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.WON) {
-			ScreenHandler.add(new WinScreen());
-		} else if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.LOST) {
-			ScreenHandler.add(new LoseScreen());
-		}
 	}
 
 	@Override
