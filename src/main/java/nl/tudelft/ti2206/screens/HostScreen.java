@@ -27,6 +27,7 @@ public class HostScreen implements Screen {
 				"Your opponent's destiny\r\nlies beyond one of these:\r\n",
 				AssetHandler.getSkin());
 		remote = new Label("Waiting for connection...", AssetHandler.getSkin());
+		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());
 		cancel = new CancelButton();
 		play = new PlayButton();
 	}
@@ -48,13 +49,8 @@ public class HostScreen implements Screen {
 			Networking.startServer();
 
 		table.add(label).padTop(20).padBottom(20).row();
-
-		Label addresses = new Label(Networking.strAddresses(),
-				AssetHandler.getSkin());
-
-		table.add(label).padTop(20).padBottom(5).row();
-		table.add(addresses).padTop(5).padBottom(20).row();
-		table.add(remote).padTop(5).padBottom(20).row();
+		table.add(addresses).padTop(10).padBottom(20).row();
+		table.add(remote).padTop(20).padBottom(50).row();
 
 		table.setFillParent(true);
 		stage.addActor(table);
@@ -101,6 +97,10 @@ public class HostScreen implements Screen {
 			}
 		} else {
 			remote.setText("Waiting for connection..");
+			label.setText("Connection established!");
+			// FIXME setText to?
+//			addresses.setText();
+			remote.setText("Let's play!");
 		}
 	}
 

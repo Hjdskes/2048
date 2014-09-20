@@ -158,23 +158,23 @@ public class Networking {
 	private static void setInput(Socket socket) {
 		dInputStream = new DataInputStream(socket.getInputStream());
 
-		try {
-			oInputStream = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			System.err.println("Error setting object input stream:");
-			e.printStackTrace();
-		}
+//		try {
+//			oInputStream = new ObjectInputStream(socket.getInputStream());
+//		} catch (IOException e) {
+//			System.err.println("Error setting object input stream:");
+//			e.printStackTrace();
+//		}
 	}
 
 	private static void setOutput(Socket socket) {
 		dOutputStream = new DataOutputStream(socket.getOutputStream());
 
-		try {
-			oOutputStream = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e) {
-			System.err.println("Error setting object output stream:");
-			e.printStackTrace();
-		}
+//		try {
+//			oOutputStream = new ObjectOutputStream(socket.getOutputStream());
+//		} catch (IOException e) {
+//			System.err.println("Error setting object output stream:");
+//			e.printStackTrace();
+//		}
 
 	}
 
