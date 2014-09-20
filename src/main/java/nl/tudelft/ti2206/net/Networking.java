@@ -36,40 +36,46 @@ public class Networking {
 
 	private static boolean connected;
 
-	public static void initalize() {
-		initIPv4Address();
-
-		System.out.println("Local IP addresses:");
-		System.out.println(listIPAdresses());
+	public static List<String> initalize() {
+		return initLocalAddresses();
 	}
 
-	private static void initIPv4Address() {
+	private static List<String> initLocalAddresses() {
 
-		try {
-			System.out.println("Enumerating network devices...");
-			Enumeration<NetworkInterface> interfaces = NetworkInterface
-					.getNetworkInterfaces();
-			for (NetworkInterface ni : Collections.list(interfaces)) {
-				for (InetAddress address : Collections.list(ni
-						.getInetAddresses())) {
-					if (address instanceof Inet4Address) {
-						if (!address.getHostAddress().equals("127.0.0.1")) {
-							addresses.add(address.getHostAddress());
+		if (addresses.isEmpty()) {
+
+			try {
+				System.out.println("Enumerating network devices...");
+				Enumeration<NetworkInterface> interfaces = NetworkInterface
+						.getNetworkInterfaces();
+				for (NetworkInterface ni : Collections.list(interfaces)) {
+					for (InetAddress address : Collections.list(ni
+							.getInetAddresses())) {
+						if (address instanceof Inet4Address) {
+							if (!address.getHostAddress().equals("127.0.0.1")) {
+								addresses.add(address.getHostAddress());
+							}
 						}
 					}
 				}
+			} catch (SocketException se) {
+				se.printStackTrace();
 			}
-		} catch (SocketException se) {
-			se.printStackTrace();
 		}
+		return addresses;
 	}
 
-	private static String listIPAdresses() {
+	public static String strAddresses() {
 		String res = "";
-		for (String address : addresses) {
-			res += address + "\n";
+		for (String address : getLocalAddresses()) {
+			res += address + "\r\n";
 		}
 		return res;
+	}
+
+	public static List<String> getLocalAddresses() {
+		
+		return initLocalAddresses();
 	}
 
 	public static void startServer() {

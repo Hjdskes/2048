@@ -1,6 +1,9 @@
 package nl.tudelft.ti2206.screens;
 
+import java.util.List;
+
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,6 +18,7 @@ public class HostScreen implements Screen {
 	private Stage stage;
 	private Table table;
 	private Label label;
+	private Label addresses;
 	private TextButton cancel;
 	private TextButton play;
 
@@ -27,11 +31,17 @@ public class HostScreen implements Screen {
 	public void create() {
 		stage = new Stage();
 		table = new Table();
-		label = new Label("Your IP Addresses:", AssetHandler.getSkin());
+
+		label = new Label("Your opponent's destiny\r\nlies beyond one of these:\r\n", AssetHandler.getSkin());
+		
+		String addrList = Networking.strAddresses();
+		addresses = new Label(addrList, AssetHandler.getSkin());
+		
 		cancel = new TextButton("Cancel", AssetHandler.getSkin());
 		play = new TextButton("Continue", AssetHandler.getSkin());
-
-		table.add(label).padTop(20).padBottom(20).row();
+		
+		table.add(label).padTop(20).padBottom(5).row();
+		table.add(addresses).padTop(5).padBottom(20).row();
 		table.add(cancel).padBottom(20).padLeft(20).row();
 		table.add(play).padRight(20).padBottom(20).row();
 
