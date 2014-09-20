@@ -3,11 +3,8 @@ package nl.tudelft.ti2206.gameobjects;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 /**
@@ -17,27 +14,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
  */
 public class ScoreDisplay extends Group {
 
-	/** Coordinates and offsets used to position the score tiles and labels. */
-	private static final int BASE_X = 100;
+	/** Coordinates and offsets used to position the labels. */
+	private static final int LABEL_X = 100;
 	private static final int LABEL_Y = 520;
-	private static final int SCORE_TILE_WIDTH = 140;
-	private static final int GRID_TOP = 500;
+	private static final int SCORE_WIDTH = 140;
+	private static final int HIGHEST_WIDTH = 90;
+	private static final int HEIGHT = 70;
 
 	/** The grid holding the tiles. */
 	private Grid grid;
-
-	/** The group holding all actors. */
-	private Group group;
 
 	/** Labels to display scores. */
 	private Label scoreLabel;
 	private Label highScoreLabel;
 	private Label highestTileLabel;
-
-	/** Textures to display score tiles. */
-	private TextureRegion scoreRegion;
-	private TextureRegion highScoreRegion;
-	private TextureRegion highestTileRegion;
 
 	/**
 	 * Creates a new ScoreDisplay object. Automatically creates all textures and
@@ -48,14 +38,13 @@ public class ScoreDisplay extends Group {
 	 */
 	public ScoreDisplay(Grid grid) {
 		this.grid = grid;
-		group = new Group();
 
-		initRegions();
 		initLabels();
+		setLabelLocations();
 
-		group.addActor(scoreLabel);
-		group.addActor(highScoreLabel);
-		group.addActor(highestTileLabel);
+		this.addActor(scoreLabel);
+		this.addActor(highScoreLabel);
+		this.addActor(highestTileLabel);
 	}
 
 	/**
@@ -69,28 +58,16 @@ public class ScoreDisplay extends Group {
 	 */
 	public ScoreDisplay(Grid grid, Label label) {
 		this.grid = grid;
-		group = new Group();
 
 		scoreLabel = label;
 		highScoreLabel = label;
 		highestTileLabel = label;
 
-		initRegions();
-		setLabelStyles();
 		setLabelLocations();
 
-		group.addActor(scoreLabel);
-		group.addActor(highScoreLabel);
-		group.addActor(highestTileLabel);
-	}
-
-	/**
-	 * Initializes all TextureRegions for the scores.
-	 */
-	private void initRegions() {
-		scoreRegion = AssetHandler.getSkin().getRegion("score");
-		highScoreRegion = AssetHandler.getSkin().getRegion("highscore");
-		highestTileRegion = AssetHandler.getSkin().getRegion("highest");
+		this.addActor(scoreLabel);
+		this.addActor(highScoreLabel);
+		this.addActor(highestTileLabel);
 	}
 
 	/**
@@ -99,45 +76,33 @@ public class ScoreDisplay extends Group {
 	 * update the scores.
 	 */
 	private void initLabels() {
-		scoreLabel = new Label("0", AssetHandler.getSkin().get("white-text",
-				LabelStyle.class)) {
+		scoreLabel = new Label("0", AssetHandler.getSkin(), "score") {
 			@Override
 			public void act(float delta) {
 				scoreLabel.setText(Integer.toString(grid.getScore()));
 			}
 		};
+		scoreLabel.setHeight(HEIGHT);
+		scoreLabel.setWidth(SCORE_WIDTH);
 
-		highScoreLabel = new Label("0", AssetHandler.getSkin().get(
-				"white-text", LabelStyle.class)) {
+		highScoreLabel = new Label("0", AssetHandler.getSkin(), "highscore") {
 			@Override
 			public void act(float delta) {
 				highScoreLabel.setText(Integer.toString(grid.getHighscore()));
 			}
 		};
+		highScoreLabel.setHeight(HEIGHT);
+		highScoreLabel.setWidth(SCORE_WIDTH);
 
-		highestTileLabel = new Label("0", AssetHandler.getSkin().get(
-				"white-text", LabelStyle.class)) {
+		highestTileLabel = new Label("0", AssetHandler.getSkin(), "highest") {
 			@Override
 			public void act(float delta) {
 				highestTileLabel.setText(Integer.toString(grid
 						.getCurrentHighestTile()));
 			}
 		};
-
-		setLabelStyles();
-		setLabelLocations();
-	}
-
-	/**
-	 * Sets the label styles and scale.
-	 */
-	private void setLabelStyles() {
-		scoreLabel.setStyle(AssetHandler.getSkin().get("white-text",
-				Label.LabelStyle.class));
-		highScoreLabel.setStyle(AssetHandler.getSkin().get("white-text",
-				Label.LabelStyle.class));
-		highestTileLabel.setStyle(AssetHandler.getSkin().get("white-text",
-				Label.LabelStyle.class));
+		highestTileLabel.setHeight(HEIGHT);
+		highestTileLabel.setWidth(HIGHEST_WIDTH);
 	}
 
 	/**
@@ -145,24 +110,18 @@ public class ScoreDisplay extends Group {
 	 * when a score changes.
 	 */
 	private void setLabelLocations() {
-		scoreLabel.setX(BASE_X + scoreRegion.getRegionWidth() / 2
-				- scoreLabel.getWidth() / 2);
+		scoreLabel.setX(LABEL_X);
 		scoreLabel.setY(LABEL_Y);
-		scoreLabel.setAlignment(Align.center);
+		scoreLabel.setAlignment(Align.bottom, Align.center);
 
-		highScoreLabel.setX(BASE_X + SCORE_TILE_WIDTH + TwentyFourtyGame.GAP
-				+ highScoreRegion.getRegionWidth() / 2
-				- highScoreLabel.getWidth() / 2);
+		highScoreLabel.setX(LABEL_X + SCORE_WIDTH + TwentyFourtyGame.GAP);
 		highScoreLabel.setY(LABEL_Y);
-		highScoreLabel.setAlignment(Align.center);
-		highScoreLabel.setAlignment(Align.center);
+		highScoreLabel.setAlignment(Align.bottom, Align.center);
 
-		highestTileLabel.setX(BASE_X + 2 * SCORE_TILE_WIDTH + 2
-				* TwentyFourtyGame.GAP + highestTileRegion.getRegionWidth() / 2
-				- scoreLabel.getWidth() / 2);
+		highestTileLabel.setX(LABEL_X + 2 * SCORE_WIDTH + 2
+				* TwentyFourtyGame.GAP);
 		highestTileLabel.setY(LABEL_Y);
-		highestTileLabel.setAlignment(Align.center);
-
+		highestTileLabel.setAlignment(Align.bottom, Align.center);
 	}
 
 	/**
@@ -174,47 +133,21 @@ public class ScoreDisplay extends Group {
 		scoreLabel.act(delta);
 		highScoreLabel.act(delta);
 		highestTileLabel.act(delta);
-		setLabelLocations();
 	}
 
 	/**
 	 * @return The x-coordinate of the score tile.
 	 */
-	private int getScoreX() {
-		return BASE_X;
+	@Override
+	public float getX() {
+		return LABEL_X;
 	}
 
 	/**
-	 * @return The x-coordinate of the high score tile.
-	 */
-	private int getHighScoreX() {
-		return BASE_X + TwentyFourtyGame.GAP + SCORE_TILE_WIDTH;
-	}
-
-	/**
-	 * 
-	 * @return The x-coordinate for the tile displaying the highest value.
-	 */
-	private int getHighestTileX() {
-		return BASE_X + 2 * TwentyFourtyGame.GAP + 2 * SCORE_TILE_WIDTH;
-	}
-
-	/**
-	 * 
 	 * @return The y-coordinate for all score tiles.
 	 */
-	private int getScoreY() {
-		return GRID_TOP + TwentyFourtyGame.GAP;
-	}
-
-	/**
-	 * Draws the Group and Textures. Drawing order is important.
-	 */
 	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(scoreRegion, getScoreX(), getScoreY());
-		batch.draw(highScoreRegion, getHighScoreX(), getScoreY());
-		batch.draw(highestTileRegion, getHighestTileX(), getScoreY());
-		group.draw(batch, parentAlpha);
+	public float getY() {
+		return LABEL_Y;
 	}
 }
