@@ -215,6 +215,7 @@ public class Networking {
 
 		setMode(Mode.CLIENT);
 		setLastError("");
+		setStartReceived(false);
 
 		thread = new Thread(new Runnable() {
 
@@ -337,6 +338,7 @@ public class Networking {
 		System.out.println("str = " + response);
 		if (response.startsWith("[START]"))
 		{
+			System.out.println("Start received");
 			Networking.setStartReceived(true);
 		}
 		else if (response.startsWith("GRID[")) {

@@ -24,11 +24,12 @@ public class LocalInputHandler extends InputListener {
 	public LocalInputHandler(Grid grid) {
 		this.grid = grid;
 		
-		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
 	}
 
 	@Override
-	public boolean keyDown(InputEvent event, int keycode) {	
+	public boolean keyDown(InputEvent event, int keycode) {
+		
+		
 		
 		switch (keycode) {
 		case Keys.DPAD_DOWN:

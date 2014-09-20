@@ -52,7 +52,5 @@ public class MultiGameScreen extends Screen {
 
 		RemoteInputHandler remoteInput = new RemoteInputHandler(remoteGrid);
 		Networking.setRemoteInput(remoteInput);
-		
-		Networking.sendString("GRID[" + localGrid.toString() + "]\r\n");
 	}
 }
