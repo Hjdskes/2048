@@ -330,8 +330,11 @@ public class Networking {
 
 	private static void processResponse(Object object) {
 		if (object instanceof String) {
-			String response = (String) object;
+			
 
+			
+			String response = (String) object;
+			System.out.println("str = " + response);
 			if (response.startsWith("GRID[")) {
 				int closing = response.indexOf(']');
 
