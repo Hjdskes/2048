@@ -16,14 +16,26 @@ public class RemoteInputHandler {
 	 */
 	public RemoteInputHandler(Grid grid) {
 		this.grid = grid;
-		
-		Networking.sendString(grid.toString());
 	}
 
 	public void setTiles(Tile[] tiles) {
 		for (int index = 0; index < 15; index += 1)
 			grid.setTile(index, tiles[index].getValue());
 	}
+	
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+	
+	public void fillGrid(String str) {
+		String[] split = str.split(",");
+
+		for (int index = 0; index < split.length; index += 1) {
+			grid.setTile(index, Integer.parseInt(split[index]));
+		}
+		
+	}
+	
 
 	public void setTileValues(int[] values) {
 		grid.setTileValues(values);

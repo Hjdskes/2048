@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 
 import com.badlogic.gdx.Gdx;
@@ -338,9 +339,9 @@ public class Networking {
 			if (response.startsWith("GRID[")) {
 				int closing = response.indexOf(']');
 
-				String strGrid = response.substring(4, closing);
+				String strGrid = response.substring(5, closing);
 				
-				String[] tiles = strGrid.split(",");
+				remoteInput.fillGrid(strGrid);
 
 				System.out.println("received grid str = " + strGrid);
 
@@ -349,6 +350,8 @@ public class Networking {
 				// int closing = response.indexOf(']');
 				char direction = response.charAt(5);
 
+				System.out.println("received dir = " + direction);
+				
 				switch (direction) {
 				case 'U':
 					remoteInput.moveUp();
