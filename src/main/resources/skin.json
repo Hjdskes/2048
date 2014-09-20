@@ -8,8 +8,10 @@
   },  
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {  
    default: { font: brownText },  
-   brown-text: { font: brownText },     
-   white-text: { font: whiteText },   
+   white-text: { font: whiteText }, 
+   score: { font: whiteText, background: score },
+   highscore: { font: whiteText, background: highscore },
+   highest: { font: whiteText, background: highest },  
   },  
   com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {  
    default: { font: whiteText, up: button, down: button, pressedOffsetY: -4 },  
