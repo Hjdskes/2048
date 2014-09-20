@@ -98,7 +98,9 @@ public class ClientScreen extends Screen {
 		String text = textField.getText();
 
 		if (Networking.isConnected()) {
-		label.setText("      Connected to host!");
+			label.setText("      Connected to host!");
+			ScreenHandler.add(new MultiGameScreen());
+			
 			// proceed
 		} else {
 

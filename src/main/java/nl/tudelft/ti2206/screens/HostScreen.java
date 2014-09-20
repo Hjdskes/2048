@@ -6,9 +6,11 @@ import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * The HostScreen is the screen the host sees. It will list his IP addresses, so
@@ -74,6 +76,20 @@ public class HostScreen extends Screen {
 		stage.addActor(table);
 		stage.addActor(cancel);
 		stage.addActor(play);
+		
+		addPlayButtonListener();
+		
+		
+	}
+	
+	/** Sets the listener for the playButton */
+	private void addPlayButtonListener() {
+		play.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				ScreenHandler.add(new MultiGameScreen());
+			}
+		});
 	}
 
 	@Override
