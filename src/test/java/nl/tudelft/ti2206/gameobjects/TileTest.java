@@ -11,6 +11,11 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -27,13 +32,20 @@ public class TileTest {
 	/** The object under test. */
 	private Tile tile;
 
+	/** TextureRegion object which we will mock. */
+	private static TextureRegion texture;
+
+	/** Batch object which will be mocked to test the draw method. */
+	private static Batch batch;
+
 	/**
 	 * Initializes the test object.
 	 */
 	@Before
 	public void setup() {
 		skin = mock(Skin.class);
-		TextureRegion texture = mock(TextureRegion.class);
+		batch = mock(Batch.class);
+		texture = mock(TextureRegion.class);
 		LabelStyle style = new LabelStyle();
 		style.font = mock(BitmapFont.class);
 		when(skin.get(LabelStyle.class)).thenReturn(style);
@@ -124,7 +136,7 @@ public class TileTest {
 		tile.doubleValue();
 		assertEquals(4, tile.getValue());
 	}
-	
+
 	/**
 	 * Tests if we can correctly set the index of the tile.
 	 */
@@ -133,19 +145,19 @@ public class TileTest {
 		tile.setIndex(2);
 		assertEquals(2, tile.getIndex());
 	}
-	
+
 	/**
 	 * Tests if the width and height is returned correctly.
 	 */
 	@Test
-	public void testWidthHeight() { 
+	public void testWidthHeight() {
 		int i = 81;
 		int width = (int) tile.getWidth();
 		int heigth = (int) tile.getHeight();
 		assertEquals(i, width);
 		assertEquals(i, heigth);
 	}
-	
+
 	/**
 	 * Tests if the getter of x and y are behaving correctly.
 	 */
@@ -156,23 +168,33 @@ public class TileTest {
 		int y = (int) tile.getY();
 		assertEquals(x, 211);
 		assertEquals(y, 211);
-		
+
 		tile.setIndex(14);
 		x = (int) tile.getX();
 		y = (int) tile.getY();
 		assertEquals(x, 307);
 		assertEquals(y, 403);
-		
+
 		tile.setIndex(0);
 		x = (int) tile.getX();
 		y = (int) tile.getY();
 		assertEquals(x, 115);
 		assertEquals(y, 115);
-		
-		tile.setIndex(8);
+
+		tile.setIndex(11);
 		x = (int) tile.getX();
 		y = (int) tile.getY();
-		assertEquals(x, 115);
+		assertEquals(x, 403);
 		assertEquals(y, 307);
+	}
+
+	/**
+	 * Tests if the draw calls the draw method of Batch.class.
+	 */
+	@Test
+	public void testDraw() {
+		tile.draw(batch, 1);
+		verify(batch).draw(eq(texture), anyInt(), anyInt(), anyInt(), anyInt(),
+				anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
 	}
 }

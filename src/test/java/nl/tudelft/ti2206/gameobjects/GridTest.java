@@ -29,7 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * Test suite for the Grid class.
- *
+ * 
  * @author group-21
  */
 public class GridTest {
@@ -102,6 +102,15 @@ public class GridTest {
 		grid.setTile(1, 4096);
 		grid.updateHighestTile();
 		assertEquals(4096, grid.getCurrentHighestTile());
+	}
+
+	/**
+	 * Tests if setHighScore() sets the highscore correctly.
+	 */
+	@Test
+	public void testSetHighScore() {
+		grid.setHighscore(345);
+		assertEquals(grid.getHighscore(), 345);
 	}
 
 	/**
@@ -291,5 +300,41 @@ public class GridTest {
 			}
 		}
 		assertEquals(2, tiles);
+	}
+
+	/**
+	 * Tests if the getters of x, y, width and height are returning the correct
+	 * values.
+	 */
+	@Test
+	public void testGetXYWidthHeight() {
+		int x = (int) grid.getX();
+		int y = (int) grid.getY();
+		int width = (int) grid.getWidth();
+		int height = (int) grid.getHeight();
+		assertEquals(x, 100);
+		assertEquals(y, 100);
+		assertEquals(width, 400);
+		assertEquals(height, 400);
+	}
+
+	/**
+	 * Tests if the setTileValue() method behaves correctly.
+	 */
+	@Test
+	public void testSetTileValues() {
+		int i = 2;
+		int[] values = new int[16];
+		for (int j = 0; j < 16; j++) {
+			values[j] = i;
+			i *= 2;
+		}
+		i = 2;
+		grid.setTileValues(values);
+		for (int j = 0; j < 16; j++) {
+			assertEquals(grid.getTiles()[j].getIndex(), j);
+			assertEquals(grid.getTiles()[j].getValue(), i);
+			i *= 2;
+		}
 	}
 }
