@@ -6,7 +6,6 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -34,10 +33,10 @@ public class Tile extends Actor {
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
 
-	private ScaleToAction spawnAction;
-	private ScaleToAction mergeAction;
-
 	private Skin skin;
+
+	// private ScaleToAction spawnAction;
+	// private ScaleToAction mergeAction;
 
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
@@ -57,14 +56,24 @@ public class Tile extends Actor {
 		this.value = value;
 		this.index = index;
 		this.isMerged = false;
-
 		this.skin = AssetHandler.getSkin();
-		this.region = skin.getRegion("tile" + value);
+		this.region = new TextureRegion();
 
 		setSprite(skin);
-		setActors();
+		// setActors();
+		// spawn();
+	}
 
-		spawn();
+	public Tile(int index, int value, Skin skin, TextureRegion region) {
+		this.value = value;
+		this.index = index;
+		this.isMerged = false;
+
+		this.skin = skin;
+		this.region = region;
+
+		setSprite(skin);
+		// setActors();
 	}
 
 	/**
@@ -154,43 +163,46 @@ public class Tile extends Actor {
 		setSprite(skin);
 	}
 
-	/**
-	 * Sets the size of the scale to 0.5, to trigger the spawn action.
-	 */
-	public void spawn() {
-		this.setScale(.5f);
-	}
-
-	/**
-	 * Sets the size of the scale to 1.4, to trigger the merge action.
-	 */
-	public void merge() {
-		this.setScale(1.4f);
-	}
+	// /**
+	// * Sets the size of the scale to 0.5, to trigger the spawn action.
+	// */
+	// public void spawn() {
+	// this.setScale(.5f);
+	// }
+	//
+	// /**
+	// * Sets the size of the scale to 1.4, to trigger the merge action.
+	// */
+	// public void merge() {
+	// this.setScale(1.4f);
+	// }
 
 	/**
 	 * Moves the TextureRegion to the new Texture, belonging to the current
 	 * value of the Tile.
+	 * 
+	 * @param skin
+	 *            The skin to get the sprite from.
 	 */
 	private void setSprite(Skin skin) {
 		region.setRegion(skin.getRegion("tile" + this.value));
 	}
 
-	/**
-	 * Sets the actions for the tile.
-	 */
-	private void setActors() {
-		spawnAction = new ScaleToAction();
-		spawnAction.setDuration(.3f);
-		spawnAction.setScale(1);
-
-		mergeAction = new ScaleToAction();
-		mergeAction.setDuration(.3f);
-		mergeAction.setScale(1);
-
-		this.addAction(spawnAction);
-		this.addAction(mergeAction);
-	}
+	// /**
+	// * Sets the actions for the tile.
+	// */
+	// private void setActors() {
+	// spawnAction = new ScaleToAction();
+	// spawnAction.setDuration(.3f);
+	// spawnAction.setScale(1);
+	//
+	// mergeAction = new ScaleToAction();
+	// mergeAction.setDuration(.3f);
+	// mergeAction.setScale(1);
+	//
+	// this.addAction(spawnAction);
+	// this.addAction(mergeAction);
+	// }
 
 	@Override
 	public float getX() {
@@ -250,11 +262,11 @@ public class Tile extends Actor {
 
 	@Override
 	public void act(float delta) {
-		if (getScaleX() < 1) {
-			spawnAction.act(delta);
-		} else if (getScaleX() > 1) {
-			mergeAction.act(delta);
-		}
+		// if (getScaleX() < 1) {
+		// spawnAction.act(delta);
+		// } else if (getScaleX() > 1) {
+		// mergeAction.act(delta);
+		// }
 
 		setSprite(skin);
 	}

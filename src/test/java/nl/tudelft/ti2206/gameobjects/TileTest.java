@@ -40,7 +40,7 @@ public class TileTest {
 		when(skin.getRegion(anyString())).thenReturn(texture);
 		AssetHandler.setSkin(skin);
 		new HeadlessLauncher().launch();
-		tile = new Tile(0, 0);
+		tile = new Tile(0, 0, skin, texture);
 	}
 
 	/**
