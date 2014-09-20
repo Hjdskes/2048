@@ -1,9 +1,8 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.gameobjects.ButtonDisplay;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.OverlayDisplay;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
@@ -16,26 +15,22 @@ public class GameScreen implements Screen {
 	private Stage stage;
 	private Grid grid;
 	private ScoreDisplay scores;
-	private OverlayDisplay overlays;
-	private ButtonDisplay buttons;
+	private RestartButton restartButton;
 
 	public GameScreen() {
 		stage = new Stage();
 		grid = ProgressHandler.loadGame();
-
+		restartButton = new RestartButton();
 		scores = new ScoreDisplay(grid);
-		overlays = new OverlayDisplay();
-		buttons = new ButtonDisplay();
 	}
 
-	/** Constructor to insert Mock objects. For testing only */
-	public GameScreen(Stage stage, Grid grid, ScoreDisplay scores,
-			OverlayDisplay overlays, ButtonDisplay buttons) {
+	/** Constructor to insert Mock objects. For testing only. */
+	public GameScreen(Stage stage, Grid grid, RestartButton button,
+			ScoreDisplay scores) {
 		this.stage = stage;
 		this.grid = grid;
+		this.restartButton = button;
 		this.scores = scores;
-		this.overlays = overlays;
-		this.buttons = buttons;
 	}
 
 	@Override
@@ -46,9 +41,8 @@ public class GameScreen implements Screen {
 
 		/* Create the main group and pack everything in it. */
 		stage.addActor(grid);
+		stage.addActor(restartButton);
 		stage.addActor(scores);
-		stage.addActor(overlays);
-		stage.addActor(buttons);
 	}
 
 	@Override
@@ -83,6 +77,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void update() {
+		if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.WON) {
+			ScreenHandler.add(new WinScreen());
+		}
 		stage.act();
 	}
 

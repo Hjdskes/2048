@@ -16,8 +16,6 @@ public class MultiGameScreen extends ScreenAdapter {
 	private Stage stage;
 	private Group localGroup;
 	private Group remoteGroup;
-//	private ButtonDisplay buttons;
-//	private OverlayDisplay overlays;
 
 	public MultiGameScreen() {
 		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH, TwentyFourtyGame.GAME_HEIGHT, false);
@@ -53,8 +51,6 @@ public class MultiGameScreen extends ScreenAdapter {
 		localGroup.addActor(new ScoreDisplay(localGrid));
 		localGroup.addActor(localGrid);
 		stage.addListener(new InputHandler(localGrid));
-//		overlays = new OverlayDisplay();
-//		buttons = new ButtonDisplay();
 
 		/* Create our remote groups and actors. */
 		Grid remoteGrid = new Grid(true);
@@ -65,12 +61,8 @@ public class MultiGameScreen extends ScreenAdapter {
 		remoteGroup.setX(600);
 		remoteGroup.setY(0);
 
-//		group.addActor(buttons);
-//		group.addActor(scores);
-//		group.addActor(overlays);
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
-//		stage.addActor(buttons);
 	}
 
 	@Override

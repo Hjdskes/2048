@@ -1,22 +1,19 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.buttons.CancelButton;
+import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class HostScreen implements Screen {
 	private Stage stage;
 	private Table table;
 	private Label label;
-	private TextButton cancel;
-	private TextButton play;
 
 	@Override
 	public void dispose() {
@@ -28,30 +25,17 @@ public class HostScreen implements Screen {
 		stage = new Stage();
 		table = new Table();
 		label = new Label("Your IP Addresses:", AssetHandler.getSkin());
-		cancel = new TextButton("Cancel", AssetHandler.getSkin());
-		play = new TextButton("Continue", AssetHandler.getSkin());
+		CancelButton cancel = new CancelButton();
+		PlayButton play = new PlayButton();
 
 		table.add(label).padTop(20).padBottom(20).row();
-		table.add(cancel).padBottom(20).padLeft(20).row();
-		table.add(play).padRight(20).padBottom(20).row();
 
 		table.setFillParent(true);
 		stage.addActor(table);
+		stage.addActor(cancel);
+		stage.addActor(play);
 
 		Gdx.input.setInputProcessor(stage);
-
-		cancel.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				ScreenHandler.add(new MenuScreen());
-			}
-		});
-		play.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				//ScreenHandler.add(new WaitScreen());
-			}
-		});
 	}
 
 	@Override

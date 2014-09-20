@@ -8,10 +8,9 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.gameobjects.ButtonDisplay;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.OverlayDisplay;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
@@ -53,9 +52,7 @@ public class GameScreenTest {
 	@Mock
 	private ScoreDisplay scores;
 	@Mock
-	private OverlayDisplay overlays;
-	@Mock
-	private ButtonDisplay buttons;
+	private RestartButton button;
 
 	private GameScreen screen;
 
@@ -66,7 +63,7 @@ public class GameScreenTest {
 		new HeadlessLauncher().launch();
 		AssetHandler.setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
-		screen = new GameScreen(stage, grid, scores, overlays, buttons);
+		screen = new GameScreen(stage, grid, button, scores);
 
 		Gdx.gl = gl;
 		Gdx.input = input;
@@ -97,8 +94,7 @@ public class GameScreenTest {
 		verify(stage).addListener(any(EventListener.class));
 		verify(stage).addActor(grid);
 		verify(stage).addActor(scores);
-		verify(stage).addActor(overlays);
-		verify(stage).addActor(buttons);
+		verify(stage).addActor(button);
 	}
 
 	/**

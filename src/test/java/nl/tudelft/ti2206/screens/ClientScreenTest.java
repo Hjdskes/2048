@@ -1,6 +1,10 @@
 package nl.tudelft.ti2206.screens;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import nl.tudelft.ti2206.buttons.CancelButton;
+import nl.tudelft.ti2206.buttons.PlayButton;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,11 +15,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class ClientScreenTest {
@@ -31,7 +33,9 @@ public class ClientScreenTest {
 	@Mock
 	private TextField field;
 	@Mock
-	private TextButton button;
+	private CancelButton cancelButton;
+	@Mock
+	private PlayButton playButton;
 	@Mock
 	private GL20 gl;
 	@Mock
@@ -45,14 +49,13 @@ public class ClientScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new ClientScreen(stage, label, field, button);
+		screen = new ClientScreen(stage, label, field, cancelButton, playButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-
 	}
 
 	/**
@@ -76,7 +79,7 @@ public class ClientScreenTest {
 	@Test
 	public void testCreate() {
 		screen.create();
-		verify(button).setVisible(false);
+		verify(playButton).setVisible(false);
 
 		verify(label).setX(anyInt());
 		verify(label).setY(anyInt());
@@ -86,10 +89,8 @@ public class ClientScreenTest {
 		verify(field).setY(anyInt());
 		verify(stage).addActor(field);
 
-		verify(button, times(2)).setX(anyInt());
-		verify(button, times(2)).setY(anyInt());
-		verify(button, times(2)).addListener(any(EventListener.class));
-		verify(stage, times(2)).addActor(button);
+		verify(stage).addActor(cancelButton);
+		verify(stage).addActor(playButton);
 	}
 	
 	/**
@@ -100,5 +101,4 @@ public class ClientScreenTest {
 		screen.dispose();
 		verify(stage).dispose();
 	}
-
 }

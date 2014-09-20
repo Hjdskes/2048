@@ -26,7 +26,7 @@ public class Launcher {
 		launcher.launch();
 	}
 
-	/**
+	/** 
 	 * Creates a new Launcher object. This object is automatically configured.
 	 */
 	public Launcher() {
