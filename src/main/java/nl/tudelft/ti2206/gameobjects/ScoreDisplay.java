@@ -48,29 +48,6 @@ public class ScoreDisplay extends Group {
 	}
 
 	/**
-	 * Constructor for testing purposes: takes a Label parameter to allow
-	 * mocking.
-	 * 
-	 * @param grid
-	 *            A reference to the Grid.
-	 * @param label
-	 *            The label used to draw all strings.
-	 */
-	public ScoreDisplay(Grid grid, Label label) {
-		this.grid = grid;
-
-		scoreLabel = label;
-		highScoreLabel = label;
-		highestTileLabel = label;
-
-		setLabelLocations();
-
-		this.addActor(scoreLabel);
-		this.addActor(highScoreLabel);
-		this.addActor(highestTileLabel);
-	}
-
-	/**
 	 * Initializes all Labels for the scores. It creates the label and sets its
 	 * style and location. Furthermore, the act method is declared to be able to
 	 * update the scores.
@@ -122,17 +99,6 @@ public class ScoreDisplay extends Group {
 				* TwentyFourtyGame.GAP);
 		highestTileLabel.setY(LABEL_Y);
 		highestTileLabel.setAlignment(Align.bottom, Align.center);
-	}
-
-	/**
-	 * Updates the scores and locations.
-	 */
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		scoreLabel.act(delta);
-		highScoreLabel.act(delta);
-		highestTileLabel.act(delta);
 	}
 
 	/**
