@@ -28,29 +28,34 @@ public class LocalInputHandler extends InputListener {
 	}
 
 	@Override
-	public boolean keyDown(InputEvent event, int keycode) {
-		System.out.println("got keydown");
-		
-		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
+	public boolean keyDown(InputEvent event, int keycode) {	
 		
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			grid.move(Direction.DOWN);
 			Networking.sendString("MOVE[D]\r\n");
+			sendGrid() ;
 			return true;
 		case Keys.DPAD_UP:
 			grid.move(Direction.UP);
 			Networking.sendString("MOVE[U]\r\n");
+			sendGrid();
 			return true;
 		case Keys.DPAD_LEFT:
 			grid.move(Direction.LEFT);
 			Networking.sendString("MOVE[L]\r\n");
+			sendGrid();
 			return true;
 		case Keys.DPAD_RIGHT:
 			grid.move(Direction.RIGHT);
 			Networking.sendString("MOVE[R]\r\n");
+			sendGrid();
 			return true;
 		}
 		return false;
+	}
+	
+	private void sendGrid() {
+		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
 	}
 }

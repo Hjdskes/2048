@@ -47,10 +47,8 @@ public class Networking {
 	private static DataOutputStream dOutputStream;
 	// private static ObjectInputStream oInputStream;
 	// private static ObjectOutputStream oOutputStream;
-	
+
 	private static RemoteInputHandler remoteInput;
-	
-	
 
 	private static String lastError = "";
 
@@ -268,7 +266,7 @@ public class Networking {
 
 	@SuppressWarnings("deprecation")
 	private static void receiveLoop() {
-		Object response;
+		String response;
 		try {
 
 			while (isConnected()
@@ -305,7 +303,11 @@ public class Networking {
 	}
 
 	public static void sendString(String str) {
-		System.out.println("sending str = " + str);
+		if (getMode() == Mode.SERVER)
+			System.out.println("[SERVER]: sending str = " + str);
+		else
+			System.out.println("[CLIENT]: sending str = " + str);
+
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
@@ -329,54 +331,52 @@ public class Networking {
 		}
 	}
 
-	private static void processResponse(Object object) {
-		if (object instanceof String) {
-			
+	private static void processResponse(String response) {
+		System.out.println("str = " + response);
+		if (response.startsWith("GRID[")) {
+			int closing = response.indexOf(']');
 
+			String strGrid = response.substring(5, closing);
 			
-			String response = (String) object;
-			System.out.println("str = " + response);
-			if (response.startsWith("GRID[")) {
-				int closing = response.indexOf(']');
-
-				String strGrid = response.substring(5, closing);
-				
+			if (remoteInput != null)
 				remoteInput.fillGrid(strGrid);
+			
+			if (getMode() == Mode.SERVER)
+				System.out.println("[SERVER]: recv grid str = " + strGrid);
+			else
+				System.out.println("[CLIENT]: recv grid str = " + strGrid);
 
-				System.out.println("received grid str = " + strGrid);
+		} else if (response.startsWith("MOVE[")) {
 
-			} else if (response.startsWith("MOVE[")) {
+			// int closing = response.indexOf(']');
+			char direction = response.charAt(5);
 
-				// int closing = response.indexOf(']');
-				char direction = response.charAt(5);
+			System.out.println("received dir = " + direction);
 
-				System.out.println("received dir = " + direction);
-				
-				switch (direction) {
-				case 'U':
-					remoteInput.moveUp();
-					break;
+			switch (direction) {
+			case 'U':
+				remoteInput.moveUp();
+				break;
 
-				case 'D':
-					remoteInput.moveDown();
-					break;
+			case 'D':
+				remoteInput.moveDown();
+				break;
 
-				case 'R':
-					remoteInput.moveRight();
-					break;
+			case 'R':
+				remoteInput.moveRight();
+				break;
 
-				case 'L':
-					remoteInput.moveLeft();
-					break;
+			case 'L':
+				remoteInput.moveLeft();
+				break;
 
-				default:
-					System.out.println("Unknown direction: " + direction);
-					break;
+			default:
+				System.out.println("Unknown direction: " + direction);
+				break;
 
-				}
 			}
-
 		}
+
 	}
 
 	public static String getRemoteAddress() {
