@@ -276,7 +276,7 @@ public class Networking {
 					&& (response = dInputStream.readLine()) != null) {
 				processResponse(response);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
