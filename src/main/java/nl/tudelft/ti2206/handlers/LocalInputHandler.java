@@ -23,13 +23,12 @@ public class LocalInputHandler extends InputListener {
 	 */
 	public LocalInputHandler(Grid grid) {
 		this.grid = grid;
+		sendGrid();
 		
 	}
 
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
-		
-		
 		
 		switch (keycode) {
 		case Keys.DPAD_DOWN:

@@ -92,7 +92,7 @@ public class HostScreen extends Screen {
 		play.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Networking.sendString("[START]\r\n");
+	//			Networking.sendString("[START]\r\n");
 				ScreenHandler.add(new MultiGameScreen());
 			}
 		});
