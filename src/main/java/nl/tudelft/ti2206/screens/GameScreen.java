@@ -34,7 +34,7 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public void create() {
+	public void show() {
 		Gdx.input.setInputProcessor(stage);
 
 		stage.addListener(new InputHandler(grid));

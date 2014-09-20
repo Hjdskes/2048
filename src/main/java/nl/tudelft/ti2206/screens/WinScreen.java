@@ -20,7 +20,7 @@ public class WinScreen implements Screen {
 	}
 	
 	@Override
-	public void create() {
+	public void show() {
 		Gdx.input.setInputProcessor(stage);
 
 		stage.addActor(new Image(AssetHandler.getSkin(), "wonoverlay"));

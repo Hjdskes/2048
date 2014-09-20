@@ -4,17 +4,25 @@ import java.util.Stack;
 
 import com.badlogic.gdx.Gdx;
 
+/**
+ * The ScreenHandler is responsible for managing all the screens.
+ * 
+ * It keeps a stack of all our screens and draws them from top to bottom, which
+ * enables us to draw transparent screens, such as, for example, the WinScreen.
+ * 
+ * Code copied from: http://gamedev.stackexchange.com/questions/75902/how-to-design-transparent-screen-in-libgdx
+ */
 public class ScreenHandler {
 	private static Stack<Screen> screenStack = new Stack<Screen>();
 
 	/**
-	 * Adds the specified screen to the service.
+	 * Adds the specified screen to the stack.
 	 *
 	 * @param screen
 	 *            The screen.
 	 */
 	public static void add(Screen screen) {
-		screen.create();
+		screen.show();
 		screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		screenStack.push(screen);
 	}
@@ -32,7 +40,7 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * Draws all screens in the service.
+	 * Draws all screens in the stack.
 	 */
 	public static void draw() {
 		for (Screen screen : screenStack) {
@@ -43,7 +51,7 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * Pauses all screens in the service.
+	 * Pauses all screens in the stack.
 	 */
 	public static void pause() {
 		for (Screen screen : screenStack) {
@@ -54,7 +62,7 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * Called when the game window is resized.
+	 * Resizes all screens in the stack
 	 *
 	 * @param width
 	 *            The new game window width (in pixels).
@@ -70,7 +78,7 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * Resumes all screens in the service.
+	 * Resumes all screens in the stack.
 	 */
 	public static void resume() {
 		for (Screen screen : screenStack) {
@@ -81,7 +89,7 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * Updates the screen service.
+	 * Updates all screens in the stack.
 	 */
 	public static void update() {
 		boolean coveredByOtherScreen = false;
@@ -100,7 +108,7 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * Removes the specified screen from the service.
+	 * Removes the specified screen from the stack.
 	 *
 	 * @param screen
 	 *            The screen.

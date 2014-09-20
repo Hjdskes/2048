@@ -7,9 +7,9 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public interface Screen extends Disposable {
     /**
-     * Called when the screen is created. Used for initialization.
+     * Called when the screen is shown. Used for initialization.
      */
-    public void create();
+    public void show();
 
     /**
      * Draws the screen.

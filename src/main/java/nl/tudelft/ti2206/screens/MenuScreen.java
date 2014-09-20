@@ -30,7 +30,7 @@ public class MenuScreen implements Screen {
 	}
 	
 	@Override
-	public void create() {
+	public void show() {
 		table.add(label).padBottom(40).row();
 		table.add(singlePlayer).padBottom(20).row();
 		table.add(hostGame).padBottom(20).row();

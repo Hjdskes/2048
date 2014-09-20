@@ -74,11 +74,11 @@ public class ClientScreenTest {
 	}
 
 	/**
-	 * Tests if all the required methods are called when create() is called.
+	 * Tests if all the required methods are called when show() is called.
 	 */
 	@Test
 	public void testCreate() {
-		screen.create();
+		screen.show();
 		verify(playButton).setVisible(false);
 
 		verify(label).setX(anyInt());

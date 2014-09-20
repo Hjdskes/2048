@@ -85,11 +85,11 @@ public class GameScreenTest {
 	}
 
 	/**
-	 * Tests if all required methods are called on screen.create().
+	 * Tests if all required methods are called on screen.show().
 	 */
 	@Test
 	public void testCreate() {
-		screen.create();
+		screen.show();
 		verify(input).setInputProcessor(stage);
 		verify(stage).addListener(any(EventListener.class));
 		verify(stage).addActor(grid);

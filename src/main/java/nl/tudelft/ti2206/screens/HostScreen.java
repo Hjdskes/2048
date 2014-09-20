@@ -46,7 +46,7 @@ public class HostScreen implements Screen {
 	}
 
 	@Override
-	public void create() {
+	public void show() {
 		// start hosting if not already doing so:
 		if (!Networking.isInitialized() || !Networking.isConnected())
 			Networking.startServer();

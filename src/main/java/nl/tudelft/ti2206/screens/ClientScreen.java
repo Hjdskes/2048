@@ -40,7 +40,7 @@ public class ClientScreen implements Screen {
 	}
 
 	@Override
-	public void create() {
+	public void show() {
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
 		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6
 				* TwentyFourtyGame.GAP);
