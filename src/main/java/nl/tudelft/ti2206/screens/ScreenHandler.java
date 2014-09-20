@@ -86,6 +86,7 @@ public class ScreenHandler {
 	 * Updates all screens in the stack.
 	 */
 	public static void update() {
+		boolean coveredByOtherScreen = false;
 		for (int i = screenStack.size() - 1; i >= 0; i--) {
 			Screen screen = screenStack.get(i);
 			if (screen == null) {
@@ -93,6 +94,12 @@ public class ScreenHandler {
 				continue;
 			}
 			screen.update();
+			if(coveredByOtherScreen) {
+				remove(screen);
+			}
+			if(!screen.isOverlay()) {
+				coveredByOtherScreen = true;
+			}
 		}
 	}
 
