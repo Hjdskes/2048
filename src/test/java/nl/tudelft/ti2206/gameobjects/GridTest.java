@@ -4,11 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 
@@ -21,8 +18,11 @@ import nl.tudelft.ti2206.handlers.TileHandler;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -38,22 +38,27 @@ public class GridTest {
 	private static final int FOUR = 4;
 	/** The object under test. */
 	private Grid grid;
-	private TileHandler tileHandler;
 
-	private static Skin skin;
-	private static Texture texture;
-	private static TextureRegion region;
+	@Mock
+	private TileHandler tileHandler;
+	@Mock
+	private Skin skin;
+	@Mock
+	private Texture texture;
+	@Mock
+	private TextureRegion region;
+	@Mock
+	private Batch batch;
 
 	/**
 	 * Initializes all the mocks and creates the test object.
 	 */
 	@Before
 	public void setup() {
+		MockitoAnnotations.initMocks(this);
 		new HeadlessLauncher().launch();
 
 		skin = mock(Skin.class);
-		texture = mock(Texture.class);
-		region = mock(TextureRegion.class);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 		when(skin.getRegion(anyString())).thenReturn(region);
 		AssetHandler.setSkin(skin);
@@ -315,5 +320,40 @@ public class GridTest {
 			assertEquals(grid.getTiles()[j].getValue(), i);
 			i *= 2;
 		}
+	}
+
+	@Test
+	public void testAct() {
+		assertFalse(grid.getCurrentHighestTile() == 16);
+		grid.setTile(0, 16);
+		grid.setScore(grid.getHighscore() + 1);
+
+		grid.act(.15f);
+
+		assertTrue(grid.getCurrentHighestTile() == 16);
+		assertTrue(grid.getHighscore() == grid.getScore());
+	}
+
+	@Test
+	public void testDraw() {
+		grid.draw(batch, 1);
+		// verify grid is drawn
+		verify(batch).draw(eq(region), anyInt(), anyInt(), anyInt(), anyInt());
+		// verify tiles are drawn
+		verify(batch, times(16)).draw(eq(region), anyInt(), anyInt(), anyInt(),
+				anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
+	}
+
+	@Test
+	public void testFromString() {
+		
+	}
+
+	@Test
+	public void testToString() {
+		grid = new Grid(true, skin, region);
+		assertEquals("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", grid.toString());
+		grid.setTile(0, 2);
+		assertEquals("2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", grid.toString());
 	}
 }

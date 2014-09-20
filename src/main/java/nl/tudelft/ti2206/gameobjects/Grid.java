@@ -24,8 +24,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ | 12| 13| 12| 14| +---+---+---+---+ | 8 | 9 | 10| 11|
- * +---+---+---+---+ | 4 | 5 | 6 | 7 | +---+---+---+---+ | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+ 
+ * | 12| 13| 12| 14|
+ * +---+---+---+---+ 
+ * | 8 | 9 | 10| 11|
+ * +---+---+---+---+ 
+ * | 4 | 5 | 6 | 7 | 
+ * +---+---+---+---+ 
+ * | 0 | 1 | 2 | 3 |
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -105,15 +111,8 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Constructor for testing purposes: takes a Skin and a TextureRegion as
-	 * parameters to allow mocking.
-	 * 
-	 * @param isEmpty
-	 *            True if the grid should be empty, false otherwise.
-	 * @param skin
-	 *            The Skin object to retrieve all Drawables and styles from.
-	 * @param texture
-	 *            The Texture this Grid will use to draw itself.
+	 * Constructor for testing purposes: takes a Skin, a TextureRegion and a
+	 * Tile as parameters to allow mocking.
 	 */
 	public Grid(boolean isEmpty, Skin skin, TextureRegion texture) {
 		this.region = texture;
@@ -122,7 +121,7 @@ public class Grid extends Actor {
 		this.tileHandler = new TileHandler(this);
 
 		for (int i = 0; i < NTILES; i++) {
-			grid[i] = new Tile(i, 0, skin, texture);
+			grid[i] = new Tile(i, 0, skin, region);
 		}
 		if (!isEmpty) {
 			initGrid();
@@ -482,30 +481,16 @@ public class Grid extends Actor {
 		}
 	}
 
-	public static Grid fromString(String str) {
-		String[] split = str.split(",");
-
-		Grid newGrid = new Grid(true);
-		
-		int index = 0;
-		
-		for (String value : split) {
-			newGrid.setTile(index++, Integer.parseInt(value));
-		}
-		return newGrid;
-	}
-	
 	@Override
 	public String toString() {
 		String res = "";
 		for (int index = 0; index < 16; index++) {
-			
+
 			res += grid[index].getValue();
-			
-			if (index < 15) 
+
+			if (index < 15)
 				res += ",";
 		}
 		return res;
 	}
-
 }
