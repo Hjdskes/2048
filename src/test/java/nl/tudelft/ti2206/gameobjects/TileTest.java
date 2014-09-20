@@ -116,17 +116,6 @@ public class TileTest {
 	}
 
 	/**
-	 * Tests if resetValue() correctly resets the value of the tile.
-	 */
-	@Test
-	public void testResetValue() {
-		tile.setValue(10);
-		assertEquals(10, tile.getValue());
-		tile.resetValue();
-		assertEquals(0, tile.getValue());
-	}
-
-	/**
 	 * Tests if doubleValue() correctly doubles the value of the tile.
 	 */
 	@Test

@@ -58,15 +58,16 @@ public class Tile extends Actor {
 	 *            The value of the Tile.
 	 */
 	public Tile(int index, int value) {
-		this.value = value;
-		this.index = index;
-		this.isMerged = false;
 		this.skin = AssetHandler.getSkin();
 		this.region = new TextureRegion();
 
-		setSprite(skin);
+		setValue(value);
+		setIndex(index);
+		setMerged(false);
+
 		if (value > 0) {
-			System.out.println("Tile: I'm spawning with a value bigger than zero!");
+			System.out
+					.println("Tile: I'm spawning with a value bigger than zero!");
 			spawn();
 		}
 	}
@@ -85,14 +86,11 @@ public class Tile extends Actor {
 	 *            The TextureRegion this Tile will use to draw itself.
 	 */
 	public Tile(int index, int value, Skin skin, TextureRegion region) {
-		this.value = value;
-		this.index = index;
-		this.isMerged = false;
-
 		this.skin = skin;
 		this.region = region;
-
-		setSprite(skin);
+		setValue(value);
+		setIndex(index);
+		setMerged(false);
 	}
 
 	/**
@@ -103,7 +101,7 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Sets the value of the Tile.
+	 * Sets the value of the Tile and updates its sprite.
 	 * 
 	 * @param value
 	 *            The new value.
@@ -155,18 +153,14 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Resets the value of the Tile.
-	 */
-	public void resetValue() {
-		this.value = 0;
-	}
-
-	/**
 	 * Resets the Tile to its default state.
 	 */
 	public void reset() {
-		resetValue();
+		setValue(0);
 		isMerged = false;
+		if (mergeAction != null) {
+			mergeAction.finish();
+		}
 	}
 
 	/**
@@ -174,12 +168,10 @@ public class Tile extends Actor {
 	 */
 	public void doubleValue() {
 		if (this.isEmpty()) {
-			value = 2;
+			setValue(2);
 		} else {
-			value *= 2;
+			setValue(value * 2);
 		}
-
-		setSprite(skin);
 	}
 
 	/**
@@ -216,6 +208,22 @@ public class Tile extends Actor {
 	}
 
 	@Override
+	public void act(float delta) {
+		if (getScaleX() > 1) {
+			mergeAction.act(delta);
+		} else if (getScaleX() < 1) {
+			spawnAction.act(delta);
+		}
+	}
+
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		batch.draw(region, getX() + getXOffset(), getY() + getYOffset(),
+				getOriginX(), getOriginY(), getWidth(), getHeight(),
+				getScaleX(), getScaleY(), 0);
+	}
+
+	@Override
 	public float getX() {
 		switch (this.index % 4) {
 		case 1:
@@ -246,16 +254,14 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * @return The Y offset for the y coordinate, depending on the current
-	 *         scale.
+	 * @return The offset for the x-coordinate, depending on the current scale.
 	 */
 	private float getXOffset() {
 		return getWidth() / 2 - getWidth() * getScaleX() / 2;
 	}
 
 	/**
-	 * @return The Y offset for the y coordinate, depending on the current
-	 *         scale.
+	 * @return The offset for the y-coordinate, depending on the current scale.
 	 */
 	private float getYOffset() {
 		return getHeight() / 2 - getHeight() * getScaleY() / 2;
@@ -269,23 +275,5 @@ public class Tile extends Actor {
 	@Override
 	public float getHeight() {
 		return TILE_HEIGHT;
-	}
-
-	@Override
-	public void act(float delta) {
-		if (getScaleX() > 1) {
-			mergeAction.act(delta);
-		} else if (getScaleX() < 1) {
-			spawnAction.act(delta);
-		}
-
-		setSprite(skin);
-	}
-
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(region, getX() + getXOffset(), getY() + getYOffset(),
-				getOriginX(), getOriginY(), getWidth(), getHeight(),
-				getScaleX(), getScaleY(), 0);
 	}
 }
