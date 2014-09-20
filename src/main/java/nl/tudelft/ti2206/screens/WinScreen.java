@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * and offers the ability to restart or continue playing.
  */
 public class WinScreen extends Screen {
+	/** The transparent background image. */
+	private Image image;
+
 	/** The button used to put the game into continuing state. */
 	private ContinueButton continueButton;
 
@@ -21,14 +24,24 @@ public class WinScreen extends Screen {
 	/** Constructs a new WinScreen. */
 	public WinScreen() {
 		stage = new Stage();
+		image = new Image(AssetHandler.getSkin(), "wonoverlay");
 		restartButton = new RestartButton();
 		continueButton = new ContinueButton();
+	}
+
+	/** Constructor used for mock insertion */
+	public WinScreen(Stage stage, Image image, RestartButton restartButton,
+			ContinueButton continueButton) {
+		this.stage = stage;
+		this.image = image;
+		this.restartButton = restartButton;
+		this.continueButton = continueButton;
 	}
 
 	@Override
 	public void create() {
 		super.create();
-		stage.addActor(new Image(AssetHandler.getSkin(), "wonoverlay"));
+		stage.addActor(image);
 		stage.addActor(continueButton);
 		stage.addActor(restartButton);
 	}
