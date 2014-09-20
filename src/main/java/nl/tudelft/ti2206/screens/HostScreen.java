@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.CancelButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
+import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -42,10 +43,10 @@ public class HostScreen implements Screen {
 		stage = new Stage();
 		table = new Table();
 		label = new Label(
-				"Your opponent's destiny\r\nlies beyond one of these:\r\n",
+				StringConstants.OPPONENT_DESTINY,
 				AssetHandler.getSkin());
 		
-		remote = new Label("Waiting for connection...", AssetHandler.getSkin());
+		remote = new Label(StringConstants.CONNECTION_WAITING, AssetHandler.getSkin());
 		
 		// show addresses to user to share with opponent:
 		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());
@@ -117,18 +118,18 @@ public class HostScreen implements Screen {
 				// get remote address:
 				String addr = Networking.getRemoteAddress();
 				
-				label.setText("Connection established!");
+				label.setText(StringConstants.CONNECTION_ESTABLISHED);
 				
 				// show remote address to user:
 				addresses.setText(addr);
 				
-				remote.setText("Let's play!");
+				remote.setText(StringConstants.LETS_PLAY);
 				
 				// make play button visible:
 				play.setVisible(true);
 			}
 		} else {
-			remote.setText("Waiting for connection...");
+			remote.setText(StringConstants.CONNECTION_WAITING);
 			play.setVisible(false);
 		}
 	}

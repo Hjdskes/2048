@@ -3,10 +3,8 @@ package nl.tudelft.ti2206.net;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -98,7 +96,7 @@ public class Networking {
 				while (true) {
 					socket = serverSocket.accept(null);
 
-					System.out.println("Incoming connection from "
+					System.out.println("Accepted incoming connection from "
 							+ socket.getRemoteAddress());
 
 					setInput(socket);
@@ -230,7 +228,8 @@ public class Networking {
 		System.out.println("setting initialized to " + initialized);
 		Networking.initialized = initialized;
 	}
-
+	
+	
 	public static void disconnect() {
 		if (isInitialized()) {
 			System.out.println("disconnect(): disconnecting...");
