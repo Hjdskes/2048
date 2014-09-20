@@ -53,9 +53,4 @@ public class GameScreen extends Screen {
 	public void pause() {
 		ProgressHandler.saveGame(grid);
 	}
-
-	@Override
-	public void update() {
-		super.update();
-	}
 }
