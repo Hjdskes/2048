@@ -42,11 +42,11 @@ public class HostScreen implements Screen {
 
 		table.add(label).padTop(20).padBottom(20).row();
 
-		Label addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());		
+		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());		
 		
 		table.add(label).padTop(20).padBottom(5).row();
-		table.add(addresses).padTop(5).padBottom(20).row();
-		table.add(remote).padTop(5).padBottom(20).row();
+		table.add(addresses).padTop(10).padBottom(20).row();
+		table.add(remote).padTop(20).padBottom(50).row();
 
 		table.setFillParent(true);
 		stage.addActor(table);
@@ -89,11 +89,12 @@ public class HostScreen implements Screen {
 		if (Networking.isInitialized()) {
 			if (Networking.isConnected()) {
 				String addr = Networking.getRemoteAddress();
-				remote.setText("Remote: " + addr);
-				
+				label.setText("Connection established!");
+				addresses.setText(addr);
+				remote.setText("Let's play!");
 			}
 		} else {
-			remote.setText("Waiting for connection..");
+			remote.setText("Waiting for connection...");
 			
 		}
 
