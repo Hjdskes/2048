@@ -1,11 +1,14 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
@@ -47,6 +50,19 @@ public class GameScreen extends Screen {
 		stage.addActor(grid);
 		stage.addActor(restartButton);
 		stage.addActor(scores);
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (grid.getCurrentHighestTile() == 2048 && !TwentyFourtyGame.isContinuing()) {
+			TwentyFourtyGame.setState(GameState.WON);
+			ScreenHandler.add(new WinScreen());
+		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
+			TwentyFourtyGame.setState(GameState.LOST);
+			ScreenHandler.add(new LoseScreen());
+		}
 	}
 
 	@Override

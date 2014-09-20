@@ -1,10 +1,8 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.screens.LoseScreen;
 import nl.tudelft.ti2206.screens.MenuScreen;
 import nl.tudelft.ti2206.screens.ScreenHandler;
-import nl.tudelft.ti2206.screens.WinScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -77,11 +75,6 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
-		if (state == GameState.WON) {
-			ScreenHandler.add(new WinScreen());
-		} else if (state == GameState.LOST) {
-			ScreenHandler.add(new LoseScreen());
-		}
 		curState = state;
 	}
 
