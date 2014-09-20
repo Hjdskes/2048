@@ -11,13 +11,27 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
+/**
+ * The ClientScreen is the screen the client sees. It holds an entry field
+ * for the IP address to which a connection should be made. 
+ */
 public class ClientScreen implements Screen {
+	/** The stage which holds all Actors. */
 	private Stage stage;
+
+	/** The main label. */
 	private Label label;
+
+	/** The TextField for the IP address. */
 	private TextField textField;
+
+	/** The button to cancel and go back to the main menu. */
 	private CancelButton cancel;
+
+	/** button to start the game when a connection has been made. */
 	private PlayButton play;
 
+	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
 

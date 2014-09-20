@@ -11,15 +11,33 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+/**
+ * The HostScreen is the screen the host sees. It will list his IP addresses,
+ * so he can easily pass those on to the client. 
+ */
 public class HostScreen implements Screen {
+	/** The stage which holds all Actors. */
 	private Stage stage;
+
+	/** The table used for positioning all Actors. */
 	private Table table;
+
+	/** The main label. */
 	private Label label;
+
+	/** The label with displaying the connection status. */
 	private Label remote;
+
+	/** The label listing all addresses. */
 	private Label addresses;
+
+	/** The button to cancel and go back to the main menu. */
 	private CancelButton cancel;
+
+	/** The button to start the game when a connection has been made. */
 	private PlayButton play;
 
+	/** Constructs a new HostScreen. */
 	public HostScreen() {
 		stage = new Stage();
 		table = new Table();

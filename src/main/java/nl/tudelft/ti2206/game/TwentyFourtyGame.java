@@ -8,6 +8,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
 /**
+ * The main game class. It keeps track of the screens via the ScreenHandler and
+ * of the game state.
+ * 
+ * It also calls, via the ScreenHandler, the update and draw methods on all the
+ * actors.
  */
 public class TwentyFourtyGame extends Game {
 	/** The width of the game */
@@ -31,9 +36,10 @@ public class TwentyFourtyGame extends Game {
 	public void create() {
 		/* Load all our assets. */
 		AssetHandler.load();
-		AssetHandler.loadSkinFile(Gdx.files.internal("src/main/resources/skin.json"));
+		AssetHandler.loadSkinFile(Gdx.files
+				.internal("src/main/resources/skin.json"));
 
-		/* Push a menu onto the screen stack. */
+		/* Push a menu screen onto the screen stack. */
 		ScreenHandler.add(new MenuScreen());
 	}
 
@@ -48,6 +54,11 @@ public class TwentyFourtyGame extends Game {
 	public void dispose() {
 		ScreenHandler.dispose();
 		AssetHandler.dispose();
+	}
+
+	@Override
+	public void resize (int width, int height) {
+		ScreenHandler.resize(width, height);
 	}
 
 	/**

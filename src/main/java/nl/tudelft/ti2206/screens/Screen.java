@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.screens;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
- * An abstract screen class.
+ * An interface for screens.
  */
 public interface Screen extends Disposable {
     /**

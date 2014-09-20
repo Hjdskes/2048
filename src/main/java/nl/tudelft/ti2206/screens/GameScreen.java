@@ -11,12 +11,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+/**
+ * The GameScreen is the screen for a singleplayer game. 
+ */
 public class GameScreen implements Screen {
+	/** The stage which holds all Actors. */
 	private Stage stage;
+
+	/** The grid holding all the Tiles. */
 	private Grid grid;
+
+	/** The score tiles above the Grid. */
 	private ScoreDisplay scores;
+
+	/** The button to restart the current game. */
 	private RestartButton restartButton;
 
+	/** Constructs a new GameScreen. */
 	public GameScreen() {
 		stage = new Stage();
 		grid = ProgressHandler.loadGame();
@@ -77,10 +88,12 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void update() {
+		stage.act();
 		if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.WON) {
 			ScreenHandler.add(new WinScreen());
+		} else if (TwentyFourtyGame.getState() == TwentyFourtyGame.GameState.LOST) {
+			ScreenHandler.add(new LoseScreen());
 		}
-		stage.act();
 	}
 
 	@Override

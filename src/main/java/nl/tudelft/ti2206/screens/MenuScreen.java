@@ -11,14 +11,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * The MenuScreen is used on start-up, to have the user choose between
+ * singleplayer, hosting a game or connecting to another player.
+ */
 public class MenuScreen implements Screen {
+	/** The stage which holds all Actors. */
 	private Stage stage;
+
+	/** The table used for positioning all Actors. */
 	private Table table;
+
+	/** The main label. */
 	private Label label;
+
+	/** The button to launch a singleplayer game. */
 	private TextButton singlePlayer;
+
+	/** The button to go to the host menu. */
 	private TextButton hostGame;
+
+	/** The button to go to the client menu. */
 	private TextButton connect;
 
+	/** Constructs a new MenuScreen. */
 	public MenuScreen() {
 		stage = new Stage();
 		table = new Table();
@@ -28,7 +44,7 @@ public class MenuScreen implements Screen {
 		connect = new TextButton("Connect to your friend",
 				AssetHandler.getSkin());
 	}
-	
+
 	@Override
 	public void show() {
 		table.add(label).padBottom(40).row();
