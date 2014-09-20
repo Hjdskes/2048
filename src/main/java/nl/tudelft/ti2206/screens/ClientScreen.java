@@ -9,8 +9,6 @@ import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -21,10 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * The ClientScreen is the screen the client sees. It holds an entry field for
  * the IP address to which a connection should be made.
  */
-public class ClientScreen implements Screen {
-	/** The stage which holds all Actors. */
-	private Stage stage;
-
+public class ClientScreen extends Screen {
 	/** The main label. */
 	private Label label;
 
@@ -74,7 +69,9 @@ public class ClientScreen implements Screen {
 	}
 
 	@Override
-	public void show() {
+	public void create() {
+		super.create();
+		
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
 		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6
 				* TwentyFourtyGame.GAP);
@@ -88,40 +85,13 @@ public class ClientScreen implements Screen {
 		stage.addActor(cancel);
 		stage.addActor(play);
 		play.setVisible(false);
-
-		Gdx.input.setInputProcessor(stage);
-	}
-
-	@Override
-	public void draw() {
-		/* Draw beige background in the screen. */
-		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.draw();
-	}
-
-	@Override
-	public boolean isOverlay() {
-		return false;
-	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
-	public void resume() {
 	}
 
 	@Override
 	public void update() {
-		stage.act();
 
+		super.update();
+		
 		String text = textField.getText();
 
 		if (Networking.isConnected()) {
@@ -139,10 +109,5 @@ public class ClientScreen implements Screen {
 				play.setVisible(true);
 			}
 		}
-	}
-
-	@Override
-	public void dispose() {
-		stage.dispose();
 	}
 }

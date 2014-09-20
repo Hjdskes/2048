@@ -6,20 +6,15 @@ import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
- * The HostScreen is the screen the host sees. It will list his IP addresses,
- * so he can easily pass those on to the client. 
+ * The HostScreen is the screen the host sees. It will list his IP addresses, so
+ * he can easily pass those on to the client.
  */
-public class HostScreen implements Screen {
-	/** The stage which holds all Actors. */
-	private Stage stage;
-
+public class HostScreen extends Screen {
 	/** The table used for positioning all Actors. */
 	private Table table;
 
@@ -42,12 +37,12 @@ public class HostScreen implements Screen {
 	public HostScreen() {
 		stage = new Stage();
 		table = new Table();
-		label = new Label(
-				StringConstants.OPPONENT_DESTINY,
+		label = new Label(StringConstants.OPPONENT_DESTINY,
 				AssetHandler.getSkin());
-		
-		remote = new Label(StringConstants.CONNECTION_WAITING, AssetHandler.getSkin());
-		
+
+		remote = new Label(StringConstants.CONNECTION_WAITING,
+				AssetHandler.getSkin());
+
 		// show addresses to user to share with opponent:
 		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());
 		cancel = new CancelButton();
@@ -65,7 +60,8 @@ public class HostScreen implements Screen {
 	}
 
 	@Override
-	public void show() {
+	public void create() {
+		super.create();
 		// start hosting if not already doing so:
 		if (!Networking.isInitialized() || !Networking.isConnected())
 			Networking.startServer();
@@ -78,53 +74,25 @@ public class HostScreen implements Screen {
 		stage.addActor(table);
 		stage.addActor(cancel);
 		stage.addActor(play);
-
-		Gdx.input.setInputProcessor(stage);
-	}
-
-	@Override
-	public void draw() {
-		/* Draw beige background in the screen. */
-		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.draw();
-	}
-
-	@Override
-	public boolean isOverlay() {
-		return false;
-	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
-	public void resume() {
 	}
 
 	@Override
 	public void update() {
-		stage.act();
+		super.update();
 
 		if (Networking.isInitialized()) {
 			if (Networking.isConnected()) {
 				// remote user is connected
 				// get remote address:
 				String addr = Networking.getRemoteAddress();
-				
+
 				label.setText(StringConstants.CONNECTION_ESTABLISHED);
-				
+
 				// show remote address to user:
 				addresses.setText(addr);
-				
+
 				remote.setText(StringConstants.LETS_PLAY);
-				
+
 				// make play button visible:
 				play.setVisible(true);
 			}
@@ -132,10 +100,5 @@ public class HostScreen implements Screen {
 			remote.setText(StringConstants.CONNECTION_WAITING);
 			play.setVisible(false);
 		}
-	}
-
-	@Override
-	public void dispose() {
-		stage.dispose();
 	}
 }
