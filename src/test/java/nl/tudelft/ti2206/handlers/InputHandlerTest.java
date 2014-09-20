@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
@@ -81,16 +80,6 @@ public class InputHandlerTest {
 		handler.keyDown(null, Keys.DPAD_RIGHT);
 		verify(grid).move(Direction.RIGHT);
 	}
-
-//	/**
-//	 * Make sure the move method is called with the correct parameter when the
-//	 * escape key is pressed.
-//	 */
-//	@Test
-//	public void testKeyDownEscape() {
-//		handler.keyDown(null, Keys.ESCAPE);
-//		verify(grid).restart();
-//	}
 
 	/**
 	 * Make sure the keyDown method returns false when the key is invalid.
