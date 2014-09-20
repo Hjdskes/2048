@@ -67,7 +67,8 @@ public class ScoreDisplay extends Group {
 		highestTileLabel = label;
 		
 		initRegions();
-		initLabels();
+		setLabelStyles();
+		setLabelLocations();
 
 		group.addActor(scoreLabel);
 		group.addActor(highScoreLabel);

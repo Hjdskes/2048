@@ -27,7 +27,9 @@ public class ClientScreen implements Screen {
 	@Override
 	public void create() {
 		stage = new Stage();
-		label = new Label("   Enter the IP address to\nwhich you want to connect:", AssetHandler.getSkin());
+		label = new Label(
+				"   Enter the IP address to\nwhich you want to connect:",
+				AssetHandler.getSkin());
 		textField = new TextField("127.0.0.1", AssetHandler.getSkin());
 		cancel = new TextButton("Cancel", AssetHandler.getSkin());
 		play = new TextButton("Continue", AssetHandler.getSkin());
@@ -35,10 +37,12 @@ public class ClientScreen implements Screen {
 		play.setVisible(false);
 
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
-		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6 * TwentyFourtyGame.GAP);
+		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6
+				* TwentyFourtyGame.GAP);
 		stage.addActor(label);
 
-		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2 - textField.getPrefWidth() / 2);
+		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2
+				- textField.getPrefWidth() / 2);
 		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
 		stage.addActor(textField);
 
@@ -46,7 +50,8 @@ public class ClientScreen implements Screen {
 		cancel.setY(5 * TwentyFourtyGame.GAP);
 		stage.addActor(cancel);
 
-		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth() / 2);
+		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth()
+				/ 2);
 		play.setY(5 * TwentyFourtyGame.GAP);
 		stage.addActor(play);
 
