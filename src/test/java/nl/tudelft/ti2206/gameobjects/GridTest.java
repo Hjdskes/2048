@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -157,26 +156,6 @@ public class GridTest {
 		}
 
 		assertEquals(endTiles, tiles);
-	}
-
-	/**
-	 * Tests if a move is correctly not made because the game has been won.
-	 */
-	@Test
-	public void testMoveImpossibleWhenWon() {
-		TwentyFourtyGame.setState(GameState.WON);
-		grid.move(Direction.LEFT);
-		verify(tileHandler, times(0)).moveLeft();
-	}
-
-	/**
-	 * Tests if a move is correctly not made because the game has been lost.
-	 */
-	@Test
-	public void testMoveImpossibleWhenLost() {
-		TwentyFourtyGame.setState(GameState.LOST);
-		grid.move(Direction.LEFT);
-		verify(tileHandler, times(0)).moveLeft();
 	}
 
 	/**
