@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.screens;
 
-import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
