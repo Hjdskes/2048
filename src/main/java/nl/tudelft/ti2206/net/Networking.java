@@ -23,23 +23,37 @@ import com.badlogic.gdx.net.SocketHints;
 
 public class Networking {
 
+	public enum Mode {
+		NONE, CLIENT, SERVER
+	}
+	
 	private static final int PORT = 2526;
 
 	private static List<String> addresses = new ArrayList<String>();
 
 	private static Socket socket;
+	private static ServerSocket serverSocket;
+	
 	private static boolean initialized = false;
+	private static boolean sSocketInitialized = false;
 
 	private static DataInputStream dInputStream;
 	private static DataOutputStream dOutputStream;
 	private static ObjectInputStream oInputStream;
 	private static ObjectOutputStream oOutputStream;
+	
+	private static Thread serverThread;
+	private static Thread clientThread;
+
+	private static Mode mode;
 
 	public static List<String> initalize() {
 		return initLocalAddresses();
 	}
+
 	/**
 	 * Create a list of local IP addresses.
+	 * 
 	 * @return list
 	 */
 	private static List<String> initLocalAddresses() {
@@ -81,7 +95,10 @@ public class Networking {
 	}
 
 	public static void startServer() {
-		new Thread(new Runnable() {
+		
+		setMode(Mode.SERVER);
+		
+		serverThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -90,30 +107,34 @@ public class Networking {
 
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
-				ServerSocket serverSocket = Gdx.net.newServerSocket(
+				serverSocket = Gdx.net.newServerSocket(
 						Protocol.TCP, PORT, serverSocketHint);
-
+				
+				setServerSocketInitialized(true);
+				
 				while (true) {
 					socket = serverSocket.accept(null);
-
+					setInitialized(true);
 					System.out.println("Accepted incoming connection from "
 							+ socket.getRemoteAddress());
 
 					setInput(socket);
 					setOutput(socket);
 
-					setInitialized(true);
-
 					while (isConnected()) {
 						receiveLoop();
 					}
 				}
 			}
-		}).start();
+		});
+		serverThread.start();
 	}
 
 	public static void startClient(final String address, final int port) {
-		new Thread(new Runnable() {
+		
+		setMode(Mode.CLIENT);
+		
+		clientThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -138,7 +159,8 @@ public class Networking {
 				}
 			}
 
-		}).start();
+		});
+		clientThread.start();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -159,23 +181,23 @@ public class Networking {
 	private static void setInput(Socket socket) {
 		dInputStream = new DataInputStream(socket.getInputStream());
 
-//		try {
-//			oInputStream = new ObjectInputStream(socket.getInputStream());
-//		} catch (IOException e) {
-//			System.err.println("Error setting object input stream:");
-//			e.printStackTrace();
-//		}
+		// try {
+		// oInputStream = new ObjectInputStream(socket.getInputStream());
+		// } catch (IOException e) {
+		// System.err.println("Error setting object input stream:");
+		// e.printStackTrace();
+		// }
 	}
 
 	private static void setOutput(Socket socket) {
 		dOutputStream = new DataOutputStream(socket.getOutputStream());
 
-//		try {
-//			oOutputStream = new ObjectOutputStream(socket.getOutputStream());
-//		} catch (IOException e) {
-//			System.err.println("Error setting object output stream:");
-//			e.printStackTrace();
-//		}
+		// try {
+		// oOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		// } catch (IOException e) {
+		// System.err.println("Error setting object output stream:");
+		// e.printStackTrace();
+		// }
 
 	}
 
@@ -225,12 +247,25 @@ public class Networking {
 	}
 
 	private static void setInitialized(boolean initialized) {
-		System.out.println("setting initialized to " + initialized);
+		System.out.println("setting socket initialized to " + initialized);
 		Networking.initialized = initialized;
 	}
-	
-	
+
 	public static void disconnect() {
+		
+		if (getMode() == Mode.CLIENT)
+			clientThread.stop();
+	
+		if (getMode() == Mode.SERVER)
+		{
+			serverThread.stop();
+		
+			if (isServerSocketInitialized()) {
+				serverSocket.dispose();
+				setServerSocketInitialized(false);
+			}
+		}
+		
 		if (isInitialized()) {
 			System.out.println("disconnect(): disconnecting...");
 			socket.dispose();
@@ -238,14 +273,30 @@ public class Networking {
 			try {
 				dInputStream.close();
 				dOutputStream.close();
-				oInputStream.close();
-				oOutputStream.close();
+				//oInputStream.close();
+				//oOutputStream.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {
+			System.out.println("disconnect(): client socket not initialized");
 		}
-		else {
-			System.out.println("disconnect(): not initialized");
-		}
+	}
+
+	public static boolean isServerSocketInitialized() {
+		return sSocketInitialized;
+	}
+
+	public static void setServerSocketInitialized(boolean sSocketInitialized) {
+		System.out.println("setting serverSocket initialized to " + sSocketInitialized);
+		Networking.sSocketInitialized = sSocketInitialized;
+	}
+	
+	public static void setMode(Mode mode) {
+		Networking.mode = mode;
+	}
+	
+	public static Mode getMode() {
+		return Networking.mode;
 	}
 }
