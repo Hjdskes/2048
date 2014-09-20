@@ -5,6 +5,7 @@ import java.util.List;
 import nl.tudelft.ti2206.buttons.CancelButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -15,8 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * The ClientScreen is the screen the client sees. It holds an entry field
- * for the IP address to which a connection should be made. 
+ * The ClientScreen is the screen the client sees. It holds an entry field for
+ * the IP address to which a connection should be made.
  */
 public class ClientScreen extends Screen {
 	/** The main label. */
@@ -35,27 +36,26 @@ public class ClientScreen extends Screen {
 	public ClientScreen() {
 		stage = new Stage();
 
-		label = new Label(
-				"  Enter your opponent's\r\nhostname or IP address: ",
+		label = new Label(StringConstants.OPPONENT_HOSTADDR,
 				AssetHandler.getSkin());
-		
+
 		List<String> addresses = Networking.getLocalAddresses();
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		cancel = new CancelButton();
 		play = new PlayButton();
-		
+
 		play.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				String text = textField.getText();
-				
-				if (Networking.isValidHost(text))
+
+				if (Networking.isValidHost(text)) {
 					Networking.startClient(text);
-				else
-					label.setText("Invalid host!");
+				} else
+					label.setText(StringConstants.HOST_INVALID);
 			}
 		});
-		
+
 	}
 
 	/** Constructor used for mock insertion */
@@ -89,16 +89,25 @@ public class ClientScreen extends Screen {
 
 	@Override
 	public void update() {
+
 		super.update();
 		
 		String text = textField.getText();
-		
-		if (text.compareTo("") == 0) {
-			label.setText("   Enter the IP address to\nwhich you want to connect:");
-			play.setVisible(false);
-		}
-		else { 
-			play.setVisible(true);
+
+		if (Networking.isConnected()) {
+			// proceed
+		} else {
+
+			String error = Networking.getLastError();
+			
+			if (error.compareTo("") != 0)
+				label.setText(error);
+			else if (text.compareTo("") == 0) {
+				label.setText(StringConstants.OPPONENT_HOSTADDR);
+				play.setVisible(false);
+			} else {
+				play.setVisible(true);
+			}
 		}
 	}
 }
