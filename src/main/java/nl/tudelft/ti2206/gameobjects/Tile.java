@@ -211,8 +211,10 @@ public class Tile extends Actor {
 	public void act(float delta) {
 		if (getScaleX() > 1) {
 			mergeAction.act(delta);
-		} else if (getScaleX() < 1) {
+		} else if (getScaleX() < 1 && !isEmpty()) {
 			spawnAction.act(delta);
+		} else if (getScaleX() < 1) {
+			setScale(1);
 		}
 	}
 

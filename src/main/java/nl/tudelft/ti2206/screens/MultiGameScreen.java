@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.screens;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
-import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.net.Networking;
