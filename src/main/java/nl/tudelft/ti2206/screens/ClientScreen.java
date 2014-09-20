@@ -22,10 +22,33 @@ public class ClientScreen extends ScreenAdapter {
 
 	public ClientScreen() {
 		stage = new Stage();
-		label = new Label("   Enter the IP address to\nwhich you want to connect:", AssetHandler.getSkin());
+		label = new Label(
+				"   Enter the IP address to\nwhich you want to connect:",
+				AssetHandler.getSkin());
 		textField = new TextField("127.0.0.1", AssetHandler.getSkin());
 		cancel = new TextButton("Cancel", AssetHandler.getSkin());
 		play = new TextButton("Continue", AssetHandler.getSkin());
+	}
+
+	/**
+	 * Constructor for mock insertion only.
+	 * 
+	 * @param stage
+	 *            The mock object for a Stage.
+	 * @param label
+	 *            The mock object for a Label.
+	 * @param field
+	 *            The mock object for a TextField.
+	 * @param button
+	 *            The mock object for a TextButton.
+	 */
+	public ClientScreen(Stage stage, Label label, TextField field,
+			TextButton button) {
+		this.stage = stage;
+		this.label = label;
+		this.textField = field;
+		this.cancel = button;
+		this.play = button;
 	}
 
 	@Override
@@ -45,10 +68,12 @@ public class ClientScreen extends ScreenAdapter {
 		play.setVisible(false);
 
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
-		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6 * TwentyFourtyGame.GAP);
+		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6
+				* TwentyFourtyGame.GAP);
 		stage.addActor(label);
 
-		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2 - textField.getPrefWidth() / 2);
+		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2
+				- textField.getPrefWidth() / 2);
 		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
 		stage.addActor(textField);
 
@@ -56,7 +81,8 @@ public class ClientScreen extends ScreenAdapter {
 		cancel.setY(5 * TwentyFourtyGame.GAP);
 		stage.addActor(cancel);
 
-		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth() / 2);
+		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth()
+				/ 2);
 		play.setY(5 * TwentyFourtyGame.GAP);
 		stage.addActor(play);
 
@@ -70,8 +96,8 @@ public class ClientScreen extends ScreenAdapter {
 		play.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//((TwentyFourtyGame) Gdx.app.getApplicationListener())
-				//		.addScreen(new WaitScreen());
+				// ((TwentyFourtyGame) Gdx.app.getApplicationListener())
+				// .addScreen(new WaitScreen());
 			}
 		});
 

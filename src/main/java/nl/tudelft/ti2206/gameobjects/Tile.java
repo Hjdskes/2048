@@ -36,7 +36,7 @@ public class Tile extends Actor {
 
 	private ScaleToAction spawnAction;
 	private ScaleToAction mergeAction;
-	
+
 	private Skin skin;
 
 	/**
@@ -198,9 +198,9 @@ public class Tile extends Actor {
 		case 1:
 			return TILE_X + TILE_WIDTH + TwentyFourtyGame.GAP;
 		case 2:
-			return TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame. GAP);
+			return TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame.GAP);
 		case 3:
-			return TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame. GAP);
+			return TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame.GAP);
 		case 0: /* Fallthrough. */
 		default:
 			return TILE_X;
@@ -212,11 +212,11 @@ public class Tile extends Actor {
 		if (index < 4) {
 			return TILE_Y;
 		} else if (index < 8) {
-			return TILE_Y + TILE_HEIGHT + TwentyFourtyGame. GAP;
+			return TILE_Y + TILE_HEIGHT + TwentyFourtyGame.GAP;
 		} else if (index < 12) {
-			return TILE_Y + 2 * (TILE_HEIGHT + TwentyFourtyGame. GAP);
+			return TILE_Y + 2 * (TILE_HEIGHT + TwentyFourtyGame.GAP);
 		} else if (index < 16) {
-			return TILE_Y + 3 * (TILE_HEIGHT + TwentyFourtyGame. GAP);
+			return TILE_Y + 3 * (TILE_HEIGHT + TwentyFourtyGame.GAP);
 		} else {
 			return TILE_Y;
 		}
