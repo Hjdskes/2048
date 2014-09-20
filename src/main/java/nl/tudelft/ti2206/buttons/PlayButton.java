@@ -13,15 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class PlayButton extends TextButton {
 	public PlayButton() {
-		super("Play!", AssetHandler.getSkin());
+		super("Connnect", AssetHandler.getSkin());
 		this.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - this.getPrefWidth() / 2);
 		this.setY(5 * TwentyFourtyGame.GAP);
 
-		this.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				//ScreenHandler.add(new WaitScreen());
-			}
-		});
+
 	}
 }

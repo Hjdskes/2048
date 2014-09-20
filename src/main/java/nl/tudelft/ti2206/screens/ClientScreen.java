@@ -1,15 +1,20 @@
 package nl.tudelft.ti2206.screens;
 
+import java.util.List;
+
 import nl.tudelft.ti2206.buttons.CancelButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * The ClientScreen is the screen the client sees. It holds an entry field
@@ -36,11 +41,26 @@ public class ClientScreen implements Screen {
 		stage = new Stage();
 
 		label = new Label(
-				"   Enter the IP address to\nwhich you want to connect:",
+				"  Enter your opponent's\r\nhostname or IP address: ",
 				AssetHandler.getSkin());
-		textField = new TextField("127.0.0.1", AssetHandler.getSkin());
+		
+		List<String> addresses = Networking.getLocalAddresses();
+		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		cancel = new CancelButton();
 		play = new PlayButton();
+		
+		play.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				String text = textField.getText();
+				
+				if (Networking.isValidHost(text))
+					Networking.startClient(text);
+				else
+					label.setText("Invalid host!");
+			}
+		});
+		
 	}
 
 	/** Constructor used for mock insertion */
@@ -101,6 +121,16 @@ public class ClientScreen implements Screen {
 	@Override
 	public void update() {
 		stage.act();
+		
+		String text = textField.getText();
+		
+		if (text.compareTo("") == 0) {
+			label.setText("   Enter the IP address to\nwhich you want to connect:");
+			play.setVisible(false);
+		}
+		else { 
+			play.setVisible(true);
+		}
 	}
 
 	@Override
