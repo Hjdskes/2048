@@ -21,7 +21,7 @@ public class WaitScreen extends Screen {
 		stage = new Stage();
 		table = new Table();
 		play = new PlayButton();
-		label = new Label("Press play when ready!", AssetHandler.getSkin());
+		label = new Label("Press play when you're ready!", AssetHandler.getSkin());
 	}
 
 	@Override
@@ -42,7 +42,6 @@ public class WaitScreen extends Screen {
 		play.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("CLICK!");
 				ScreenHandler.add(new MultiGameScreen());
 			}
 		});
