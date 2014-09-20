@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -27,11 +28,11 @@ public class Tile extends Actor {
 	/** The Skin to retrieve all Drawables from. */
 	private Skin skin;
 
-	// /** . */
-	// private ScaleToAction spawnAction;
+	/** The Action used to perform a spawn animation. */
+	private ScaleToAction spawnAction;
 
-	// /** . */
-	// private ScaleToAction mergeAction;
+	/** The Action used to perform a merge animation. */
+	private ScaleToAction mergeAction;
 
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
@@ -64,8 +65,10 @@ public class Tile extends Actor {
 		this.region = new TextureRegion();
 
 		setSprite(skin);
-		// setActors();
-		// spawn();
+		if (value > 0) {
+			System.out.println("Tile: I'm spawning with a value bigger than zero!");
+			spawn();
+		}
 	}
 
 	/**
@@ -90,7 +93,6 @@ public class Tile extends Actor {
 		this.region = region;
 
 		setSprite(skin);
-		// setActors();
 	}
 
 	/**
@@ -180,19 +182,27 @@ public class Tile extends Actor {
 		setSprite(skin);
 	}
 
-	// /**
-	// * Sets the size of the scale to 0.5, to trigger the spawn action.
-	// */
-	// public void spawn() {
-	// this.setScale(.5f);
-	// }
-	//
-	// /**
-	// * Sets the size of the scale to 1.4, to trigger the merge action.
-	// */
-	// public void merge() {
-	// this.setScale(1.4f);
-	// }
+	/**
+	 * Initializes a new spawn animation.
+	 */
+	public void spawn() {
+		this.setScale(0.6f);
+		spawnAction = new ScaleToAction();
+		spawnAction.setScale(1f);
+		spawnAction.setDuration(.3f);
+		this.addAction(spawnAction);
+	}
+
+	/**
+	 * Initializes a new merge animation.
+	 */
+	public void merge() {
+		this.setScale(1.4f);
+		mergeAction = new ScaleToAction();
+		mergeAction.setScale(1f);
+		mergeAction.setDuration(.3f);
+		this.addAction(mergeAction);
+	}
 
 	/**
 	 * Moves the TextureRegion to the new Texture, belonging to the current
@@ -204,22 +214,6 @@ public class Tile extends Actor {
 	private void setSprite(Skin skin) {
 		region.setRegion(skin.getRegion("tile" + this.value));
 	}
-
-	// /**
-	// * Sets the actions for the tile.
-	// */
-	// private void setActors() {
-	// spawnAction = new ScaleToAction();
-	// spawnAction.setDuration(.3f);
-	// spawnAction.setScale(1);
-	//
-	// mergeAction = new ScaleToAction();
-	// mergeAction.setDuration(.3f);
-	// mergeAction.setScale(1);
-	//
-	// this.addAction(spawnAction);
-	// this.addAction(mergeAction);
-	// }
 
 	@Override
 	public float getX() {
@@ -279,11 +273,11 @@ public class Tile extends Actor {
 
 	@Override
 	public void act(float delta) {
-		// if (getScaleX() < 1) {
-		// spawnAction.act(delta);
-		// } else if (getScaleX() > 1) {
-		// mergeAction.act(delta);
-		// }
+		if (getScaleX() > 1) {
+			mergeAction.act(delta);
+		} else if (getScaleX() < 1) {
+			spawnAction.act(delta);
+		}
 
 		setSprite(skin);
 	}

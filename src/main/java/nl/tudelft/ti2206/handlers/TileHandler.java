@@ -181,6 +181,7 @@ public class TileHandler {
 			grid[index + offset].doubleValue();
 			scoreIncrement += grid[index + offset].getValue();
 			grid[index + offset].setMerged(true);
+			grid[index + offset].merge();
 			grid[index].reset();
 			isMoveMade = true;
 		} else if (grid[index + offset].isEmpty()) {

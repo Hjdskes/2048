@@ -270,7 +270,9 @@ public class Grid extends Actor {
 
 		if (tileHandler.isMoveMade()) {
 			setScore(score + tileHandler.getScoreIncrement());
-			setTile(getRandomEmptyLocation(), initialValue());
+			int location = getRandomEmptyLocation();
+			setTile(location, initialValue());
+			grid[location].spawn();
 		}
 
 		tileHandler.reset();
