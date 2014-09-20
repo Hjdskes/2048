@@ -10,11 +10,15 @@ import com.badlogic.gdx.Gdx;
  * It keeps a stack of all our screens and draws them from top to bottom, which
  * enables us to draw transparent screens, such as, for example, the WinScreen.
  * 
- * Code based on: http://gamedev.stackexchange.com/questions/75902/how-to-design-transparent-screen-in-libgdx
  */
 public class ScreenHandler {
 	private static Stack<Screen> screenStack = new Stack<Screen>();
 
+	/** Sets the stack. Used for testing. */
+	public static void setScreenStack(Stack<Screen> screens) {
+		screenStack = screens;
+	}
+	
 	/**
 	 * Adds the specified screen to the stack.
 	 *
@@ -32,8 +36,6 @@ public class ScreenHandler {
 	 * */
 	public static void dispose() {
 		for (Screen screen : screenStack) {
-			if (screen == null)
-				continue;
 			screen.dispose();
 		}
 		screenStack.clear();
@@ -44,8 +46,6 @@ public class ScreenHandler {
 	 */
 	public static void draw() {
 		for (Screen screen : screenStack) {
-			if (screen == null)
-				continue;
 			screen.draw();
 		}
 	}
@@ -55,8 +55,6 @@ public class ScreenHandler {
 	 */
 	public static void pause() {
 		for (Screen screen : screenStack) {
-			if (screen == null)
-				continue;
 			screen.pause();
 		}
 	}
@@ -71,8 +69,6 @@ public class ScreenHandler {
 	 */
 	public static void resize(int width, int height) {
 		for (Screen screen : screenStack) {
-			if (screen == null)
-				continue;
 			screen.resize(width, height);
 		}
 	}
@@ -82,8 +78,6 @@ public class ScreenHandler {
 	 */
 	public static void resume() {
 		for (Screen screen : screenStack) {
-			if (screen == null)
-				continue;
 			screen.resume();
 		}
 	}
@@ -92,7 +86,6 @@ public class ScreenHandler {
 	 * Updates all screens in the stack.
 	 */
 	public static void update() {
-		boolean coveredByOtherScreen = false;
 		for (int i = screenStack.size() - 1; i >= 0; i--) {
 			Screen screen = screenStack.get(i);
 			if (screen == null) {
@@ -100,10 +93,6 @@ public class ScreenHandler {
 				continue;
 			}
 			screen.update();
-			if (coveredByOtherScreen)
-				remove(screen);
-			if (!screen.isOverlay())
-				coveredByOtherScreen = true;
 		}
 	}
 
@@ -113,7 +102,7 @@ public class ScreenHandler {
 	 * @param screen
 	 *            The screen.
 	 */
-	private static void remove(Screen screen) {
+	public static void remove(Screen screen) {
 		screen.dispose();
 		screenStack.remove(screen);
 	}
