@@ -69,7 +69,7 @@ public class MenuScreen extends Screen {
 		singlePlayer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				ScreenHandler.add(new MultiGameScreen());
+				ScreenHandler.add(new GameScreen());
 			}
 		});
 		hostGame.addListener(new ClickListener() {
