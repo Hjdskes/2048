@@ -10,16 +10,12 @@ import nl.tudelft.ti2206.handlers.ProgressHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class GameScreen implements Screen {
 	private Stage stage;
-	private Group group;
-	private ButtonDisplay buttons;
-	private ScoreDisplay scores;
-	private OverlayDisplay overlays;
+	private Grid grid;
 
 	@Override
 	public void dispose() {
@@ -32,21 +28,16 @@ public class GameScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		/* Create our groups and actors. */
-		Grid grid = ProgressHandler.loadGame();
-		grid.setName("Grid");
+		grid = ProgressHandler.loadGame();
 		stage.addListener(new InputHandler(grid));
-		scores = new ScoreDisplay(grid);
-		overlays = new OverlayDisplay();
-		buttons = new ButtonDisplay();
+		ScoreDisplay scores = new ScoreDisplay(grid);
+		OverlayDisplay overlays = new OverlayDisplay();
+		ButtonDisplay buttons = new ButtonDisplay();
 
 		/* Create the main group and pack everything in it. */
-		group = new Group();
-		group.addActor(grid);
-
-		group.addActor(buttons);
-		group.addActor(scores);
-		group.addActor(overlays);
-		stage.addActor(group);
+		stage.addActor(grid);
+		stage.addActor(scores);
+		stage.addActor(overlays);
 		stage.addActor(buttons);
 	}
 
@@ -66,7 +57,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void pause() {
-		ProgressHandler.saveGame((Grid) group.findActor("Grid"));
+		ProgressHandler.saveGame(grid);
 	}
 
 	@Override
