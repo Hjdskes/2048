@@ -26,7 +26,10 @@ public class HostScreen implements Screen {
 		label = new Label(
 				"Your opponent's destiny\r\nlies beyond one of these:\r\n",
 				AssetHandler.getSkin());
+		
 		remote = new Label("Waiting for connection...", AssetHandler.getSkin());
+		
+		// show addresses to user to share with opponent:
 		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());
 		cancel = new CancelButton();
 		play = new PlayButton();
@@ -44,11 +47,11 @@ public class HostScreen implements Screen {
 
 	@Override
 	public void create() {
-		// start hosting:
+		// start hosting if not already doing so:
 		if (!Networking.isInitialized() || !Networking.isConnected())
 			Networking.startServer();
 
-		table.add(label).padTop(20).padBottom(20).row();
+		table.add(label).padTop(20).padBottom(10).row();
 		table.add(addresses).padTop(10).padBottom(20).row();
 		table.add(remote).padTop(20).padBottom(50).row();
 
@@ -92,15 +95,23 @@ public class HostScreen implements Screen {
 
 		if (Networking.isInitialized()) {
 			if (Networking.isConnected()) {
+				// remote user is connected
+				// get remote address:
 				String addr = Networking.getRemoteAddress();
-				remote.setText("Remote: " + addr);
+				
+				label.setText("Connection established!");
+				
+				// show remote address to user:
+				addresses.setText(addr);
+				
+				remote.setText("Let's play!");
+				
+				// make play button visible:
+				play.setVisible(true);
 			}
 		} else {
-			remote.setText("Waiting for connection..");
-			label.setText("Connection established!");
-			// FIXME setText to?
-//			addresses.setText();
-			remote.setText("Let's play!");
+			remote.setText("Waiting for connection...");
+			play.setVisible(false);
 		}
 	}
 

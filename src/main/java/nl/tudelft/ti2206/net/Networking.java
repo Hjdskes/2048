@@ -40,7 +40,10 @@ public class Networking {
 	public static List<String> initalize() {
 		return initLocalAddresses();
 	}
-
+	/**
+	 * Create a list of local IP addresses.
+	 * @return list
+	 */
 	private static List<String> initLocalAddresses() {
 
 		if (addresses.isEmpty()) {
@@ -103,7 +106,7 @@ public class Networking {
 
 					setInitialized(true);
 
-					while (socket.isConnected()) {
+					while (isConnected()) {
 						receiveLoop();
 					}
 				}
@@ -132,7 +135,7 @@ public class Networking {
 
 				setInitialized(true);
 
-				while (socket.isConnected()) {
+				while (isConnected()) {
 					receiveLoop();
 				}
 			}
@@ -224,12 +227,13 @@ public class Networking {
 	}
 
 	private static void setInitialized(boolean initialized) {
+		System.out.println("setting initialized to " + initialized);
 		Networking.initialized = initialized;
 	}
 
 	public static void disconnect() {
 		if (isInitialized()) {
-			System.out.println("Disconnecting");
+			System.out.println("disconnect(): disconnecting...");
 			socket.dispose();
 			setInitialized(false);
 			try {
@@ -240,6 +244,9 @@ public class Networking {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		else {
+			System.out.println("disconnect(): not initialized");
 		}
 	}
 }
