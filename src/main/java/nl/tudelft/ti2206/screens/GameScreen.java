@@ -57,6 +57,7 @@ public class GameScreen extends Screen {
 		ProgressHandler.saveGame(grid);
 	}
 
+	//TODO: check if method is used
 	@Override
 	public void resize(int width, int height) {
 		/* Center camera: true. */

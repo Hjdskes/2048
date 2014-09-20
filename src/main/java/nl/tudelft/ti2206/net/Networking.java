@@ -9,10 +9,13 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
@@ -24,26 +27,25 @@ import com.badlogic.gdx.net.SocketHints;
 public class Networking {
 
 	public enum Mode {
-		NONE, CLIENT, SERVER
+		CLIENT, SERVER
 	}
-	
+
 	private static final int PORT = 2526;
 
 	private static List<String> addresses = new ArrayList<String>();
 
 	private static Socket socket;
 	private static ServerSocket serverSocket;
-	
+
 	private static boolean initialized = false;
 	private static boolean sSocketInitialized = false;
 
 	private static DataInputStream dInputStream;
 	private static DataOutputStream dOutputStream;
-	private static ObjectInputStream oInputStream;
-	private static ObjectOutputStream oOutputStream;
-	
-	private static Thread serverThread;
-	private static Thread clientThread;
+	// private static ObjectInputStream oInputStream;
+	// private static ObjectOutputStream oOutputStream;
+
+	private static Thread thread;
 
 	private static Mode mode;
 
@@ -93,12 +95,49 @@ public class Networking {
 
 		return initLocalAddresses();
 	}
+	
+	public static boolean isValidHost(String host) {
+		
+		if (isValidAddr(host))
+			return true;
+		
+		InetAddress address = null;
+		try {
+			address = InetAddress.getByName(host);
+		} catch (UnknownHostException e) {
+			return false;
+		} 
+		return isValidAddr(address.getHostAddress());
+	}
+	
+	public static boolean isValidAddr(String address) {
+	     if (address.matches("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$")) {
+	            String[] groups = address.split("\\.");
+
+	            for (int i = 0; i <= 3; i++) {
+	                String segment = groups[i];
+	                if (segment == null || segment.length() <= 0) {
+	                    return false;
+	                }
+
+	                int value = 0;
+	                try {
+	                    value = Integer.parseInt(segment);
+	                } catch (NumberFormatException e) {
+	                    return false;
+	                }
+	                if (value > 255) {
+	                    return false;
+	                }
+	            }
+	            return true;
+	        }
+	        return false;        
+	}
 
 	public static void startServer() {
-		
 		setMode(Mode.SERVER);
-		
-		serverThread = new Thread(new Runnable() {
+		thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -107,11 +146,11 @@ public class Networking {
 
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
-				serverSocket = Gdx.net.newServerSocket(
-						Protocol.TCP, PORT, serverSocketHint);
-				
+				serverSocket = Gdx.net.newServerSocket(Protocol.TCP, PORT,
+						serverSocketHint);
+
 				setServerSocketInitialized(true);
-				
+
 				while (true) {
 					socket = serverSocket.accept(null);
 					setInitialized(true);
@@ -127,14 +166,19 @@ public class Networking {
 				}
 			}
 		});
-		serverThread.start();
+		thread.start();
+
 	}
 
+	public static void startClient(final String address) {
+		startClient(address, PORT);
+	}
+	
 	public static void startClient(final String address, final int port) {
 		
 		setMode(Mode.CLIENT);
 		
-		clientThread = new Thread(new Runnable() {
+		thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -160,7 +204,7 @@ public class Networking {
 			}
 
 		});
-		clientThread.start();
+		thread.start();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -217,12 +261,12 @@ public class Networking {
 	public static void sendObject(Object object) {
 		System.out.println("sending obj = " + object);
 		if (isConnected()) {
-			try {
-				oOutputStream.writeObject(object + "\r\n");
-			} catch (IOException e) {
-				System.err.println("Unable to send object:");
-				e.printStackTrace();
-			}
+			// try {
+			// oOutputStream.writeObject(object + "\r\n");
+			// } catch (IOException e) {
+			// System.err.println("Unable to send object:");
+			// e.printStackTrace();
+			// }
 		}
 	}
 
@@ -252,20 +296,17 @@ public class Networking {
 	}
 
 	public static void disconnect() {
-		
-		if (getMode() == Mode.CLIENT)
-			clientThread.stop();
-	
-		if (getMode() == Mode.SERVER)
-		{
-			serverThread.stop();
-		
+
+		thread.stop();
+
+		if (getMode() == Mode.SERVER) {
+
 			if (isServerSocketInitialized()) {
 				serverSocket.dispose();
 				setServerSocketInitialized(false);
 			}
 		}
-		
+
 		if (isInitialized()) {
 			System.out.println("disconnect(): disconnecting...");
 			socket.dispose();
@@ -273,8 +314,8 @@ public class Networking {
 			try {
 				dInputStream.close();
 				dOutputStream.close();
-				//oInputStream.close();
-				//oOutputStream.close();
+				// oInputStream.close();
+				// oOutputStream.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -288,14 +329,15 @@ public class Networking {
 	}
 
 	public static void setServerSocketInitialized(boolean sSocketInitialized) {
-		System.out.println("setting serverSocket initialized to " + sSocketInitialized);
+		System.out.println("setting serverSocket initialized to "
+				+ sSocketInitialized);
 		Networking.sSocketInitialized = sSocketInitialized;
 	}
-	
+
 	public static void setMode(Mode mode) {
 		Networking.mode = mode;
 	}
-	
+
 	public static Mode getMode() {
 		return Networking.mode;
 	}
