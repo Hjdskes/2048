@@ -5,7 +5,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.CancelButton;
+import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
 
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class ClientScreenTest {
 	@Mock
 	private TextField field;
 	@Mock
-	private CancelButton cancelButton;
+	private MenuButton menuButton;
 	@Mock
 	private PlayButton playButton;
 	@Mock
@@ -52,7 +52,7 @@ public class ClientScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new ClientScreen(stage, label, field, cancelButton, playButton);
+		screen = new ClientScreen(stage, label, field, menuButton, playButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
@@ -94,7 +94,7 @@ public class ClientScreenTest {
 		verify(field).setY(anyInt());
 		verify(stage).addActor(field);
 
-		verify(stage).addActor(cancelButton);
+		verify(stage).addActor(menuButton);
 		verify(stage).addActor(playButton);
 	}
 	

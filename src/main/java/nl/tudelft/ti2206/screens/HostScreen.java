@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
-import nl.tudelft.ti2206.buttons.CancelButton;
+import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -30,7 +30,7 @@ public class HostScreen extends Screen {
 	private Label addresses;
 
 	/** The button to cancel and go back to the main menu. */
-	private CancelButton cancel;
+	private MenuButton cancel;
 
 	/** The button to start the game when a connection has been made. */
 	private PlayButton play;
@@ -47,13 +47,13 @@ public class HostScreen extends Screen {
 
 		// show addresses to user to share with opponent:
 		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());
-		cancel = new CancelButton();
+		cancel = new MenuButton();
 		play = new PlayButton();
 	}
 
 	/** Constructor for injecting mock objects. For testing purposes only. */
 	public HostScreen(Stage stage, Table table, Label label, PlayButton play,
-			CancelButton cancel) {
+			MenuButton cancel) {
 		this.stage = stage;
 		this.table = table;
 		this.remote = label;
