@@ -71,7 +71,6 @@ public class Networking {
 	/** The current mode of operation. */
 	private static Mode mode;
 
-	
 	/**
 	 * @return A list of local IP addresses.
 	 */
@@ -84,6 +83,7 @@ public class Networking {
 				for (NetworkInterface ni : Collections.list(interfaces)) {
 					for (InetAddress address : Collections.list(ni
 							.getInetAddresses())) {
+						// ignore localhost
 						if (address instanceof Inet4Address) {
 							if (!address.getHostAddress().equals("127.0.0.1")) {
 								addresses.add(address.getHostAddress());
@@ -311,7 +311,7 @@ public class Networking {
 		if (!str.endsWith("\r\n")) {
 			str += "\r\n";
 		}
-		
+
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
@@ -420,15 +420,16 @@ public class Networking {
 	/**
 	 * Sets the mode of operation (server or client).
 	 * 
-	 * @param mode Client or Server.
+	 * @param mode
+	 *            Client or Server.
 	 */
 	public static void setMode(Mode mode) {
 		Networking.mode = mode;
 	}
 
 	/**
-	 * @return The current mode of operation: Server or Client.
-	 * Get mode of operation.
+	 * @return The current mode of operation: Server or Client. Get mode of
+	 *         operation.
 	 */
 	public static Mode getMode() {
 		return Networking.mode;
@@ -444,7 +445,8 @@ public class Networking {
 	/**
 	 * Sets the error message of the last error that has occurred.
 	 * 
-	 * @param lastError The error message to set.
+	 * @param lastError
+	 *            The error message to set.
 	 */
 	public static void setLastError(String lastError) {
 		if (lastError.contains("server socket ")) {
@@ -466,7 +468,8 @@ public class Networking {
 	/**
 	 * Set the RemoteInputHandler.
 	 * 
-	 * @param remoteInput The RemoteInputHandler to set.
+	 * @param remoteInput
+	 *            The RemoteInputHandler to set.
 	 */
 	public static void setRemoteInput(RemoteInputHandler remoteInput) {
 		Networking.remoteInput = remoteInput;
@@ -520,12 +523,12 @@ public class Networking {
 			System.out.println("disconnect(): client socket not initialized");
 		}
 	}
-	
+
 	/** For testing purposes only! */
 	public static void setSocket(Socket mockSocket) {
 		socket = mockSocket;
 	}
-	
+
 	/** For testing purposes only! */
 	public static void setAddresses(ArrayList<String> spyAddresses) {
 		addresses = spyAddresses;
