@@ -200,14 +200,12 @@ public class Networking {
 				if (serverSocket != null) {
 
 					setServerSocketInitialized(true);
-					
+
 					socket = serverSocket.accept(null);
 
 					if (socket != null) {
 
 						setInitialized(true);
-						System.out.println("Accepted incoming connection from "
-								+ socket.getRemoteAddress());
 
 						setInput(socket);
 						setOutput(socket);
@@ -251,6 +249,8 @@ public class Networking {
 
 			@Override
 			public void run() {
+
+				System.out.println("Starting client, connecting to " + address + ":" + port);
 
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
@@ -367,36 +367,36 @@ public class Networking {
 	 *            the response message.
 	 */
 	private static void processResponse(String response) {
-		System.out.println("str = " + response);
+
+		// ignore responses if remoteInput is not set
+		if (remoteInput == null)
+			return;
 
 		int closing = response.indexOf(']');
 
 		if (response.startsWith("STATE[")) {
 			String strstate = response.substring(6, closing);
 
-			if (remoteInput != null) {
-
-				switch (strstate) {
-				case "WON":
-					remoteInput.setState(GameState.WON);
-					break;
-				case "LOST":
-					remoteInput.setState(GameState.LOST);
-					break;
-				default:
-					// remoteInput.setState(GameState.RUNNING);
-					break;
-				}
+			switch (strstate) {
+			case "WON":
+				remoteInput.setState(GameState.WON);
+				break;
+			case "LOST":
+				remoteInput.setState(GameState.LOST);
+				break;
+			default:
+				// remoteInput.setState(GameState.RUNNING);
+				break;
 			}
 		} else if (response.startsWith("GRID[")) {
 
-			String strGrid = response.substring(5, closing);
-
-			if (remoteInput != null)
-				remoteInput.fillGrid(strGrid);
+			remoteInput.fillGrid(response.substring(5, closing));
 
 		} else if (response.startsWith("MOVE[")) {
 
+			// don't need the closing tag's position here as it's the first
+			// character
+			// after MOVE[ (position 5)
 			char direction = response.charAt(5);
 
 			switch (direction) {
@@ -423,25 +423,27 @@ public class Networking {
 			}
 		}
 	}
-	
+
 	/**
 	 * Get the remote address.
+	 * 
 	 * @return the address string.
 	 */
 	public static String getRemoteAddress() {
 		return socket.getRemoteAddress().replaceFirst("/", "");
 	}
-	
-//	/**
-//	 * Get the socket that's currently in use.
-//	 * @return
-//	 */
-//	public static Socket getSocket() {
-//		return socket;
-//	}
-	
+
+	// /**
+	// * Get the socket that's currently in use.
+	// * @return
+	// */
+	// public static Socket getSocket() {
+	// return socket;
+	// }
+
 	/**
 	 * Check if socket is currently connected.
+	 * 
 	 * @return true if connected
 	 */
 	public static boolean isConnected() {
@@ -454,34 +456,38 @@ public class Networking {
 
 		return socket.isConnected();
 	}
-	
+
 	/**
 	 * Check if client socket is initialized.
+	 * 
 	 * @return true if client socket initialized
 	 */
 	public static boolean isInitialized() {
 		return initialized;
 	}
-	
+
 	/**
 	 * Set if client socket initialized.
+	 * 
 	 * @param initialized
 	 */
 	private static void setInitialized(boolean initialized) {
-//		System.out.println("setting socket initialized to " + initialized);
+		// System.out.println("setting socket initialized to " + initialized);
 		Networking.initialized = initialized;
 	}
-	
+
 	/**
 	 * Check if server socket is initialized.
+	 * 
 	 * @return true if server socket initialized
 	 */
 	public static boolean isServerSocketInitialized() {
 		return sSocketInitialized;
 	}
-	
+
 	/**
 	 * Set if server socket is initialized
+	 * 
 	 * @param sSocketInitialized
 	 */
 	public static void setServerSocketInitialized(boolean sSocketInitialized) {
@@ -489,33 +495,37 @@ public class Networking {
 				+ sSocketInitialized);
 		Networking.sSocketInitialized = sSocketInitialized;
 	}
-	
+
 	/**
 	 * Set mode of operation (server or client).
+	 * 
 	 * @param mode
 	 */
 	public static void setMode(Mode mode) {
 		Networking.mode = mode;
 	}
-	
+
 	/**
 	 * Get mode of operation.
+	 * 
 	 * @return server or client
 	 */
 	public static Mode getMode() {
 		return Networking.mode;
 	}
-	
+
 	/**
 	 * Get the error message for the last error that has occured.
+	 * 
 	 * @return error message
 	 */
 	public static String getLastError() {
 		return lastError;
 	}
-	
+
 	/**
 	 * Set the error message of the last error that has occured.
+	 * 
 	 * @param lastError
 	 */
 	public static void setLastError(String lastError) {
@@ -526,42 +536,46 @@ public class Networking {
 		if (lastError.contains("socket connection "))
 			lastError = lastError.replace("socket connection ",
 					"connection\r\n");
-		
+
 		Networking.lastError = lastError;
 	}
-	
+
 	/**
 	 * Get the remote input handler object.
+	 * 
 	 * @return remote input handler object
 	 */
 	public static RemoteInputHandler getRemoteInput() {
 		return remoteInput;
 	}
-	
+
 	/**
 	 * Set the remote input handler object
+	 * 
 	 * @param remoteInput
 	 */
 	public static void setRemoteInput(RemoteInputHandler remoteInput) {
 		Networking.remoteInput = remoteInput;
 	}
-	
+
 	/**
 	 * Check if connection has been lost.
+	 * 
 	 * @return true if connection is lost
 	 */
 	public static boolean isConnectionLost() {
 		return connectionLost;
 	}
-	
+
 	/**
 	 * Set if connection has been lost.
-	 * @param connectionLost true if connection has been lost
+	 * 
+	 * @param connectionLost
+	 *            true if connection has been lost
 	 */
 	public static void setConnectionLost(boolean connectionLost) {
 		Networking.connectionLost = connectionLost;
 	}
-	
 
 	/**
 	 * Disconnect all sockets and clean up.
@@ -570,6 +584,8 @@ public class Networking {
 
 		if (thread != null)
 			thread.stop();
+
+		setRemoteInput(null);
 
 		if (getMode() == Mode.SERVER) {
 
