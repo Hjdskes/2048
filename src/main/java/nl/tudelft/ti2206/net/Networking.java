@@ -29,8 +29,10 @@ public class Networking {
 		CLIENT, SERVER
 	}
 
+	/** Portnumber is hardcoded for user's convenience. */
 	private static final int PORT = 2526;
-
+	
+	
 	private static List<String> addresses = new ArrayList<String>();
 
 	private static Socket socket;
@@ -347,6 +349,10 @@ public class Networking {
 	 *            the string
 	 */
 	public static void sendString(String str) {
+		
+		if (!str.endsWith("\r\n"))
+				str += "\r\n";
+		
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
@@ -367,7 +373,9 @@ public class Networking {
 	 *            the response message.
 	 */
 	private static void processResponse(String response) {
-
+		
+		System.out.println("incoming message = " + response);
+		
 		// ignore responses if remoteInput is not set
 		if (remoteInput == null)
 			return;

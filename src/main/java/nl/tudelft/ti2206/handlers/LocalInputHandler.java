@@ -26,6 +26,10 @@ public class LocalInputHandler extends InputListener {
 		sendGrid();
 		
 	}
+	
+	private void sendGrid() {
+		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
+	}
 
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
@@ -55,7 +59,4 @@ public class LocalInputHandler extends InputListener {
 		return false;
 	}
 	
-	private void sendGrid() {
-		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
-	}
 }
