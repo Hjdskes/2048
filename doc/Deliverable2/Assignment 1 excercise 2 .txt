@@ -1,0 +1,71 @@
+> 2.1: What is the difference between aggregation and composition? Where are composition and aggregation
+> used in your project? Describe the classes and explain how these associations work (2 pts).
+
+To explain this we need two systems or objects that consist of different parts. 
+As an example we take a car and a car dealership. In the case of the car, its parts make the car.
+There is no car without wheels. This is composition.
+In the other case, a car dealership, it's parts do not compose the dealership. If one of the cars
+goes missing or is replaced with a totally different car the dealership's function is not hindered. 
+
+#Relations:
+
+##Aggregation:
+A grid consists of Tiles and a TileHandler. A grid consists of 16 tiles that can be moved
+with the help of a TileMover. The relation is an aggregation because a grid can still exist without the Tiles of the TileHandler.
+
+## Composition:
+GameScreen contains a GameWorld, inputHandler and a GameRenderer. It is the main game screen where everything is rendered.
+The GameScreen contains the game loop and controls the other classes. GameRenderer is needed to render all the parts of the screen.
+GameWorld gives the option to manage the game states and the InputHandler to manage different input events. GameScreen is a composition
+because its parts each play a role in a mechanism that cannot function without the other parts.  
+
+
+> 2.2: Draw the class diagrams for all the hierarchies in your source code. Explain why you created these
+> hierarchies and classify their type (e.g., “Is-a” and “Polymorphism”). Considering the lectures, are
+> there hierarchies that should be removed? Explain and implement any necessary change (2 pts).
+
+The program has three hierarchies: The SimpleBUtton, Grid and Tile hierarchy.
+
+The simple button abstract class sets the methods that all the other buttons use and forces them to implement an
+onClick method. Since the RestartButton and the ContinueButton can pass the IS-A SimpleButton aswell as IS-A 
+RestartButton or a ContinueButton test, we can consider these objects polymorphic.
+
+To implement animated tiles and grid we used the Model-View-Controller design pattern to increase readability.  
+Further in the development we have merged AnimatedTile and AnimatedGrid with Grid and Tile. Grid and Tile extend
+libgdx' Actor, which with the help of Stage help us to animate our tiles.
+
+The multiplayer version of the game has different hierarchies:
+Every screen in the screen package extend the Screen class. Just like the Button classes, 
+their objects are polymorphic. Just like the other abstract classes Screen helps us to force a format
+and set standard methods that every other screen-type class can use.
+
+
+> 2.3 Where do you use if or case statements in your source code? Refactor them (e.g., using double
+> dispatch) so that they are not necessary anymore, and describe your refactoring. If they cannot be
+> refactored (very rare case!) explain why (10 pts).
+
+#The following classes contain if or case statements:
+
+screens:
+* ClientScreen
+* GameScreen
+* HostScreen
+* MultiGameScreen
+* ScreenHandler
+* WaitScreen
+
+net:
+* Networking
+
+handlers:
+* TileHandler
+* ProgressHandler
+* PreferenceHandler
+* LocalInputHandler
+
+gameobjects:
+* Tile
+* Grid
+
+game:
+* Launcher
