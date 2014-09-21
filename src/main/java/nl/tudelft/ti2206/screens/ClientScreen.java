@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
@@ -74,6 +75,8 @@ public class ClientScreen extends Screen {
 		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- textField.getWidth() / 2);
 		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
+		textField.setCursorPosition(Align.right);
+		stage.setKeyboardFocus(textField);
 		stage.addActor(textField);
 
 		stage.addActor(menu);
