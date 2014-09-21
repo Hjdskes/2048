@@ -57,8 +57,8 @@ public class NetWorkingTest {
 
 	@Test
 	public void testIsValidHost() {
+		assertFalse(Networking.isValidHost("192,"));
 		assertTrue(Networking.isValidHost("192.168.2.1"));
-		assertFalse(Networking.isValidHost("192."));
 		assertTrue(Networking.isValidHost("10.0.0.2"));
 		// host name taken from javadoc
 		assertTrue(Networking.isValidHost("java.sun.com"));
