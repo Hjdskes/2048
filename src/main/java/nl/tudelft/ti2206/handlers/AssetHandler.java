@@ -46,6 +46,7 @@ public class AssetHandler {
 				TextureAtlas.class);
 		manager.load("src/main/resources/images/scoretiles/scoretiles.atlas",
 				TextureAtlas.class);
+		manager.load("src/main/resources/images/cursor.png", Texture.class);
 		manager.load("src/main/resources/images/button.png", Texture.class);
 		manager.load("src/main/resources/images/grid.png", Texture.class);
 		manager.load("src/main/resources/images/lostoverlay.png", Texture.class);
@@ -83,6 +84,7 @@ public class AssetHandler {
 		skin.addRegions(icons);
 		skin.addRegions(tiles);
 		skin.addRegions(scoretiles);
+		skin.add("cursor", manager.get("src/main/resources/images/cursor.png", Texture.class));
 		skin.add("button", manager.get("src/main/resources/images/button.png", Texture.class));
 		skin.add("grid", manager.get("src/main/resources/images/grid.png", Texture.class));
 		skin.add("lostoverlay", manager.get(

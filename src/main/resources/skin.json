@@ -17,6 +17,6 @@
    default: { font: whiteText, up: button, down: button, pressedOffsetY: -4 },  
   }, 
   com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: { 
-   default: { font: whiteText, fontColor: { r: 1, g: 1, b: 1, a: 1 }, background: button },
+   default: { font: whiteText, fontColor: { r: 1, g: 1, b: 1, a: 1 }, background: button, cursor: cursor },
   }
 } 
