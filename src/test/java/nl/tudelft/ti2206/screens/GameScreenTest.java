@@ -70,7 +70,7 @@ public class GameScreenTest {
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-		
+
 		when(stage.getViewport()).thenReturn(viewPort);
 	}
 
