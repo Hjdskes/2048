@@ -71,6 +71,7 @@ public class Networking {
 	/** The current mode of operation. */
 	private static Mode mode;
 
+	
 	/**
 	 * @return A list of local IP addresses.
 	 */
@@ -101,8 +102,9 @@ public class Networking {
 	 * @return A list (string) all local addresses.
 	 */
 	public static String localAddresses() {
+		initLocalAddresses();
 		String res = "";
-		for (String address : initLocalAddresses()) {
+		for (String address : addresses) {
 			res += address + "\r\n";
 		}
 		return res;
@@ -394,7 +396,7 @@ public class Networking {
 	 * @param initialized
 	 *            The state to set: true for connected, false for disconnected.
 	 */
-	private static void setInitialized(boolean initialized) {
+	protected static void setInitialized(boolean initialized) {
 		Networking.initialized = initialized;
 	}
 
@@ -517,5 +519,15 @@ public class Networking {
 		} else {
 			System.out.println("disconnect(): client socket not initialized");
 		}
+	}
+	
+	/** For testing purposes only! */
+	public static void setSocket(Socket mockSocket) {
+		socket = mockSocket;
+	}
+	
+	/** For testing purposes only! */
+	public static void setAddresses(ArrayList<String> spyAddresses) {
+		addresses = spyAddresses;
 	}
 }

@@ -80,7 +80,7 @@ public class InputHandlerTest {
 		handler.keyDown(null, Keys.DPAD_RIGHT);
 		verify(grid).move(Direction.RIGHT);
 	}
-
+	
 	/**
 	 * Make sure the keyDown method returns false when the key is invalid.
 	 */
