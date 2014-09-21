@@ -20,14 +20,42 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class MultiGameScreen extends Screen {
 	private Grid localGrid;
 	private Grid remoteGrid;
-
+	private Label you;
+	private Label opponent;
+	private Group localGroup;
+	private Group remoteGroup;
+	private ScoreDisplay localScores;
+	private ScoreDisplay remoteScores;
+	
 	/** Constructs a new MultiGameScreen. */
 	public MultiGameScreen() {
 		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH,
 				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
+		
 		localGrid = new Grid(false);
 		remoteGrid = new Grid(true);
+		
+		you = new Label("You", AssetHandler.getSkin());
+		opponent = new Label("Opponent", AssetHandler.getSkin());
+		
+		localGroup = new Group();
+		remoteGroup = new Group();
+		
+		localScores = new ScoreDisplay(localGrid);
+		remoteScores = new ScoreDisplay(remoteGrid);
+	}
+	
+	public MultiGameScreen(Stage stage, Grid grid, Label label, Group group, ScoreDisplay scores) {
+		this.stage = stage;
+		this.localGrid = grid;
+		this.remoteGrid = grid;
+		this.you = label;
+		this.opponent = label;
+		this.localGroup = group;
+		this.remoteGroup = group;
+		this.localScores = scores;
+		this.remoteScores = scores;
 	}
 
 	@Override
@@ -35,21 +63,17 @@ public class MultiGameScreen extends Screen {
 		super.create();
 
 		/* Create our local groups and actors. */
-		Group localGroup = new Group();
-		Label you = new Label("You", AssetHandler.getSkin());
 		you.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		you.setY(2.5f * TwentyFourtyGame.GAP);
-		localGroup.addActor(new ScoreDisplay(localGrid));
+		localGroup.addActor(localScores);
 		localGroup.addActor(localGrid);
 		localGroup.addActor(you);
 		stage.addListener(new LocalInputHandler(localGrid));
 
 		/* Create our remote groups and actors. */
-		Group remoteGroup = new Group();
-		Label opponent = new Label("Opponent", AssetHandler.getSkin());
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
-		remoteGroup.addActor(new ScoreDisplay(remoteGrid));
+		remoteGroup.addActor(remoteScores);
 		remoteGroup.addActor(remoteGrid);
 		remoteGroup.addActor(opponent);
 		remoteGroup.setX(600);
