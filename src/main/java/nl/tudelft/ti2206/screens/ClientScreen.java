@@ -20,6 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * the IP address to which a connection should be made.
  */
 public class ClientScreen extends Screen {
+	/** The maximum length allowed for an IP address. */
+	private static final int MAX_LENGTH = 20;
+
 	/** The main label. */
 	private Label label;
 
@@ -64,8 +67,10 @@ public class ClientScreen extends Screen {
 				* TwentyFourtyGame.GAP);
 		stage.addActor(label);
 
+		textField.setWidth(TwentyFourtyGame.GAME_WIDTH / 3);
+		textField.setMaxLength(MAX_LENGTH);
 		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2
-				- textField.getPrefWidth() / 2);
+				- textField.getWidth() / 2);
 		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
 		stage.addActor(textField);
 
