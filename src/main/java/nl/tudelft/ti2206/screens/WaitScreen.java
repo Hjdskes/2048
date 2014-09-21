@@ -19,10 +19,9 @@ public class WaitScreen extends Screen {
 	}
 
 	/** Constructor for testing purposes. */
-	public WaitScreen(Stage stage, Table table, PlayButton button, Label label) {
+	public WaitScreen(Stage stage, Table table, Label label) {
 		this.stage = stage;
 		this.table = table;
-		this.play = button;
 		this.label = label;
 	}
 	

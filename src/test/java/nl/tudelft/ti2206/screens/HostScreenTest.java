@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.screens;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -8,7 +7,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.Before;
@@ -20,7 +18,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -45,8 +42,6 @@ public class HostScreenTest {
 	@Mock
 	private TextField field;
 	@Mock
-	private PlayButton playButton;
-	@Mock
 	private MenuButton menuButton;
 	@Mock
 	private GL20 gl;
@@ -61,7 +56,7 @@ public class HostScreenTest {
 		Skin skin = mock(Skin.class);
 		AssetHandler.setSkin(skin);
 		
-		screen = new HostScreen(stage, table, label, playButton, menuButton);
+		screen = new HostScreen(stage, table, label, menuButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
@@ -93,9 +88,6 @@ public class HostScreenTest {
 
 		verify(stage).addActor(table); 
 		verify(stage).addActor(menuButton);
-		verify(stage).addActor(playButton);
-		
-		verify(playButton).addListener(any(EventListener.class));
 
 		verify(input).setInputProcessor(stage);
 	}

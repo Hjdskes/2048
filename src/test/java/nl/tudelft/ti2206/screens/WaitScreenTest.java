@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.screens;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -43,8 +41,6 @@ public class WaitScreenTest {
 	@Mock
 	private TextField field;
 	@Mock
-	private PlayButton button;
-	@Mock
 	private GL20 gl;
 	@Mock
 	private Input input;
@@ -54,7 +50,7 @@ public class WaitScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new WaitScreen(stage, table, button, label);
+		screen = new WaitScreen(stage, table, label);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
@@ -71,7 +67,6 @@ public class WaitScreenTest {
 		when(buttonCell.row()).thenReturn(buttonCell);
 
 		when(table.getCell(label)).thenReturn(labelCell);
-		when(table.getCell(button)).thenReturn(buttonCell);
 	}
 
 	@Test
@@ -89,15 +84,5 @@ public class WaitScreenTest {
 		verify(table).setFillParent(true);
 		
 		verify(stage).addActor(table);
-		verify(stage).addActor(button);
-		
-		verify(button).addListener(any(EventListener.class));
-	}
-
-	@Test
-	public void testUpdate() {
-		screen.update();
-		verify(stage).act();
-		verify(label).setText("Connection lost.");
 	}
 }
