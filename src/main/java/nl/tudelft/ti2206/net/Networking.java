@@ -3,8 +3,6 @@ package nl.tudelft.ti2206.net;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -14,10 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 
 import com.badlogic.gdx.Gdx;
@@ -56,7 +51,7 @@ public class Networking {
 
 	private static Mode mode;
 	
-	private static boolean startReceived;
+//	private static boolean startReceived;
 
 	public static List<String> initalize() {
 		return initLocalAddresses();
@@ -181,7 +176,7 @@ public class Networking {
 
 					setServerSocketInitialized(true);
 
-					while (true) {
+					// while (true) {
 
 						socket = serverSocket.accept(null);
 
@@ -199,7 +194,7 @@ public class Networking {
 								receiveLoop();
 							}
 						}
-					}
+					// }
 				}
 			}
 		});
@@ -215,7 +210,7 @@ public class Networking {
 
 		setMode(Mode.CLIENT);
 		setLastError("");
-		setStartReceived(false);
+		//setStartReceived(false);
 
 		thread = new Thread(new Runnable() {
 
@@ -336,12 +331,13 @@ public class Networking {
 
 	private static void processResponse(String response) {
 		System.out.println("str = " + response);
-		if (response.startsWith("[START]"))
-		{
-			System.out.println("Start received");
-			Networking.setStartReceived(true);
-		}
-		else if (response.startsWith("GRID[")) {
+//		if (response.startsWith("[START]"))
+//		{
+//			System.out.println("Start received");
+//			Networking.setStartReceived(true);
+//		}
+//		else
+		if (response.startsWith("GRID[")) {
 			int closing = response.indexOf(']');
 
 			String strGrid = response.substring(5, closing);
@@ -414,7 +410,7 @@ public class Networking {
 
 	public static void disconnect() {
 
-		setStartReceived(false);
+		//setStartReceived(false);
 		
 		if (thread != null)
 			thread.stop();
@@ -477,12 +473,12 @@ public class Networking {
 	public static void setRemoteInput(RemoteInputHandler remoteInput) {
 		Networking.remoteInput = remoteInput;
 	}
-
-	public static boolean isStartReceived() {
-		return startReceived;
-	}
-
-	public static void setStartReceived(boolean startReceived) {
-		Networking.startReceived = startReceived;
-	}
+//
+//	public static boolean isStartReceived() {
+//		return startReceived;
+//	}
+//
+//	public static void setStartReceived(boolean startReceived) {
+//		Networking.startReceived = startReceived;
+//	}
 }
