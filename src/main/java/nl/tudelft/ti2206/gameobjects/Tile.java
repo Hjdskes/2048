@@ -64,12 +64,6 @@ public class Tile extends Actor {
 		setValue(value);
 		setIndex(index);
 		setMerged(false);
-
-		if (value > 0) {
-			System.out
-					.println("Tile: I'm spawning with a value bigger than zero!");
-			spawn();
-		}
 	}
 
 	/**
