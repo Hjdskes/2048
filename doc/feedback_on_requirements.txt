@@ -1,6 +1,0 @@
-- I do not see the difference between the Requirements Analysis and the actual requirements.
-- Formalize your description of the requirements (see real-world example example_requirement.pdf).
-- Make the requirements traceable by assigning a unique identifier to each of them.
-- The order of the requirements is random (I want to read the requirements from A to Z and only build on knowledge from previous requirements).
-- "The	game	should	be	able	to	be	both	started (...) by the user" is a non-requirement, who else would it start?
-- Overall, your requirements are a bit too inprecise and therefore difficult to verify (e.g. the use of Java. -> Which version?)
