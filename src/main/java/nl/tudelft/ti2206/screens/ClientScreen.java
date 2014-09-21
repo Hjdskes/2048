@@ -35,10 +35,8 @@ public class ClientScreen extends Screen {
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
-
 		label = new Label(StringConstants.OPPONENT_HOSTADDR,
 				AssetHandler.getSkin());
-
 		List<String> addresses = Networking.getLocalAddresses();
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		menu = new MenuButton();
@@ -96,21 +94,15 @@ public class ClientScreen extends Screen {
 		super.update();
 
 		String text = textField.getText();
-
 		if (Networking.isConnected()) {
 			label.setText("      Connected to host!");
 			ScreenHandler.add(new WaitScreen());
-			
-			
-			
-			// proceed
 		} else {
-
 			String error = Networking.getLastError();
 
-			if (error.compareTo("") != 0)
+			if (error.compareTo("") != 0) {
 				label.setText(error);
-			else if (text.compareTo("") == 0) {
+			} else if (text.compareTo("") == 0) {
 				label.setText(StringConstants.OPPONENT_HOSTADDR);
 				play.setVisible(false);
 			} else {

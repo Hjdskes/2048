@@ -1,27 +1,21 @@
 package nl.tudelft.ti2206.screens;
 
-import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class WaitScreen extends Screen {
 	/** The main label. */
 	private Label label;
 	private Table table;
 
-	private PlayButton play;
-
 	public WaitScreen() {
 		stage = new Stage();
 		table = new Table();
-		play = new PlayButton();
-		label = new Label("Press play when you're ready!", AssetHandler.getSkin());
+		label = new Label("Waiting for connection...", AssetHandler.getSkin());
 	}
 
 	@Override
@@ -33,18 +27,6 @@ public class WaitScreen extends Screen {
 
 		table.setFillParent(true);
 		stage.addActor(table);
-		stage.addActor(play);
-
-		addPlayButtonListener();
-	}
-
-	private void addPlayButtonListener() {
-		play.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				ScreenHandler.add(new MultiGameScreen());
-			}
-		});
 	}
 
 	@Override
@@ -52,9 +34,7 @@ public class WaitScreen extends Screen {
 		super.update();
 
 		if (Networking.isConnected()) {
-			label.setText("Press play when you're ready!");
-		} else {
-			label.setText("Connection lost.");
+			ScreenHandler.add(new MultiGameScreen());
 		}
 	}
 }
