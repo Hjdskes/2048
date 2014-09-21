@@ -1,14 +1,13 @@
 package nl.tudelft.ti2206.handlers;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,7 +45,7 @@ public class AssetHandlerTest {
 		AssetHandler.setSkin(skin);
 
 		textureAtlas = mock(TextureAtlas.class);
-		stub(manager.get(anyString(), eq(TextureAtlas.class))).toReturn(textureAtlas);
+		when(manager.get(anyString(), eq(TextureAtlas.class))).thenReturn(textureAtlas);
 	}
 
 	/**
@@ -69,6 +68,11 @@ public class AssetHandlerTest {
 		verify(skin, times(4)).addRegions(textureAtlas);
 	}
 
+	@Test
+	public void testGetSkin() {
+		assertEquals(skin, AssetHandler.getSkin());
+	}
+	
 	/**
 	 * Tests if the manager is disposed.
 	 */
