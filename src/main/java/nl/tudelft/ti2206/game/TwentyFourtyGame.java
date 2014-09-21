@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.ScreenHandler;
 
 import com.badlogic.gdx.Game;
@@ -31,7 +32,18 @@ public class TwentyFourtyGame extends Game {
 
 	/** The current state of the game. */
 	private static GameState curState;
+	
+	/** The screen to start with. */
+	private Screen screen;
 
+	public TwentyFourtyGame() {
+		screen = new MenuScreen();
+	}
+	
+	public TwentyFourtyGame(Screen screen) {
+		this.screen = screen;
+	}
+	
 	@Override
 	public void create() {
 		/* Load all our assets. */
@@ -40,7 +52,7 @@ public class TwentyFourtyGame extends Game {
 				.internal("src/main/resources/skin.json"));
 
 		/* Push a menu screen onto the screen stack. */
-		ScreenHandler.add(new MenuScreen());
+		ScreenHandler.add(screen);
 	}
 
 	@Override
@@ -60,7 +72,7 @@ public class TwentyFourtyGame extends Game {
 	public void resize (int width, int height) {
 		ScreenHandler.resize(width, height);
 	}
-
+	
 	/**
 	 * @return The current game state.
 	 */
