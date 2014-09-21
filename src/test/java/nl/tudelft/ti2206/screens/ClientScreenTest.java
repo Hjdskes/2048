@@ -6,7 +6,6 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.buttons.PlayButton;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class ClientScreenTest {
@@ -38,7 +38,7 @@ public class ClientScreenTest {
 	@Mock
 	private MenuButton menuButton;
 	@Mock
-	private PlayButton playButton;
+	private TextButton playButton;
 	@Mock
 	private GL20 gl;
 	@Mock
@@ -84,6 +84,8 @@ public class ClientScreenTest {
 	public void testCreate() {
 		screen.create();
 		verify(playButton).setVisible(false);
+		verify(playButton).setX(anyInt());
+		verify(playButton).setY(anyInt());
 		verify(playButton).addListener(any(EventListener.class));
 
 		verify(label).setX(anyInt());
