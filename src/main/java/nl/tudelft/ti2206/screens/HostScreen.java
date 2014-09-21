@@ -49,7 +49,7 @@ public class HostScreen extends Screen {
 		remote = new Label(CONNECTION_WAITING, AssetHandler.getSkin());
 
 		/* Show addresses to user to share with opponent. */
-		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());
+		addresses = new Label(Networking.localAddresses(), AssetHandler.getSkin());
 		cancel = new MenuButton();
 	}
 
