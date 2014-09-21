@@ -44,8 +44,9 @@ public class GameScreen extends Screen {
 	public void create() {
 		super.create();
 		stage.addListener(new InputHandler(grid));
-
+		
 		/* Create the main group and pack everything in it. */
+		grid.setName("Grid");
 		stage.addActor(grid);
 		stage.addActor(restartButton);
 		stage.addActor(scores);
