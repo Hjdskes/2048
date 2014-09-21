@@ -19,8 +19,6 @@ The GameScreen contains the game loop and controls the other classes. GameRender
 GameWorld gives the option to manage the game states and the InputHandler to manage different input events. GameScreen is a composition
 because its parts each play a role in a mechanism that cannot function without the other parts.  
 
-The GameScreen in the multiplayer version of the game contains a ScoreDisplay, Grid and a libgdx Stage instead of the GameWorld and
-inputHandler. With the new changes to the class the relation is still a Composition. 
 
 > 2.2: Draw the class diagrams for all the hierarchies in your source code. Explain why you created these
 > hierarchies and classify their type (e.g., “Is-a” and “Polymorphism”). Considering the lectures, are
@@ -42,7 +40,7 @@ their objects are polymorphic. Just like the other abstract classes Screen helps
 and set standard methods that every other screen-type class can use.
 
 
-> 2.3: Where do you use if or case statements in your source code? Refactor them (e.g., using double
+> 2.3 Where do you use if or case statements in your source code? Refactor them (e.g., using double
 > dispatch) so that they are not necessary anymore, and describe your refactoring. If they cannot be
 > refactored (very rare case!) explain why (10 pts).
 
