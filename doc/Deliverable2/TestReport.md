@@ -46,9 +46,9 @@ many bugs but it did make us feel confident that our code works.
 
 We have used EclEmma to measure our coverage by three different metrics:
 
-1. Our line coverage is %.
-2. Our branch coverage is %.
-3. Our instruction coverage is %.
+1. Our line coverage is 72.1%.
+2. Our branch coverage is 69.4%.
+3. Our instruction coverage is 72.1%.
 
 While these results are less than what we achieved with the first deliverable, 
 we feel that we have tested our code extensively. The parts of the code we have
