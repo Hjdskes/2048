@@ -88,6 +88,10 @@ public class MultiGameScreen extends Screen {
 	public void update() {
 		super.update();
 
+		if (Networking.isConnectionLost()) {
+			ScreenHandler.add(new ConnectionLostScreen());
+		}
+
 		if (localGrid.getCurrentHighestTile() == 2048
 				|| (remoteGrid.isFull() && remoteGrid.getPossibleMoves() == 0)) {
 			TwentyFourtyGame.setState(GameState.WON);
