@@ -46,6 +46,7 @@ public class MultiGameScreen extends Screen {
 		remoteScores = new ScoreDisplay(remoteGrid);
 	}
 	
+	/** Constructor for testing purposes only */
 	public MultiGameScreen(Stage stage, Grid grid, Label label, Group group, ScoreDisplay scores) {
 		this.stage = stage;
 		this.localGrid = grid;
