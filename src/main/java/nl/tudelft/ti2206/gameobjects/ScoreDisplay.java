@@ -41,11 +41,19 @@ public class ScoreDisplay extends Group {
 
 		initLabels();
 		setLabelLocations();
-
-		this.addActor(scoreLabel);
-		this.addActor(highScoreLabel);
-		this.addActor(highestTileLabel);
+		addLabelsToGroup();
 	}
+	
+	/** Constructor for testing purposes only */
+	 public ScoreDisplay(Grid mockGrid, Label mockLabel) {
+		 this.grid = mockGrid;
+		 this.scoreLabel = mockLabel;
+		 this.highScoreLabel = mockLabel;
+		 this.highestTileLabel = mockLabel;
+		 
+		 addLabelsToGroup();
+		 setLabelLocations();
+	 }
 
 	/**
 	 * Initializes all Labels for the scores. It creates the label and sets its
@@ -101,6 +109,13 @@ public class ScoreDisplay extends Group {
 		highestTileLabel.setAlignment(Align.bottom, Align.center);
 	}
 
+	/** Adds the score labels to the group */
+	private void addLabelsToGroup() {
+		this.addActor(scoreLabel);
+		this.addActor(highScoreLabel);
+		this.addActor(highestTileLabel);
+	}
+	
 	/**
 	 * @return The x-coordinate of the score tile.
 	 */
