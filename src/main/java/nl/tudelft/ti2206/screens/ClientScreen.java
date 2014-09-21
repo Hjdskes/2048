@@ -4,7 +4,6 @@ import java.util.List;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -21,6 +20,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * the IP address to which a connection should be made.
  */
 public class ClientScreen extends Screen {
+	/** The text for the main label. */
+	public static final String OPPONENT_HOSTADDR = "  Enter your opponent's\r\nhostname or IP address: ";
+
+	/** Error message for an invalid address. */
+	public static final String HOST_INVALID = "Invalid host!";
+
 	/** The maximum length allowed for an IP address. */
 	private static final int MAX_LENGTH = 20;
 
@@ -39,8 +44,7 @@ public class ClientScreen extends Screen {
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
-		label = new Label(StringConstants.OPPONENT_HOSTADDR,
-				AssetHandler.getSkin());
+		label = new Label(OPPONENT_HOSTADDR, AssetHandler.getSkin());
 		List<String> addresses = Networking.getLocalAddresses();
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		menu = new MenuButton();
@@ -61,7 +65,8 @@ public class ClientScreen extends Screen {
 	public void create() {
 		super.create();
 
-		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth() / 2);
+		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth()
+				/ 2);
 		play.setY(5 * TwentyFourtyGame.GAP);
 		addPlayButtonListener();
 
@@ -70,10 +75,10 @@ public class ClientScreen extends Screen {
 				* TwentyFourtyGame.GAP);
 		stage.addActor(label);
 
-		textField.setWidth(TwentyFourtyGame.GAME_WIDTH / 3);
+		textField.setWidth(TwentyFourtyGame.GAME_WIDTH / 2);
 		textField.setMaxLength(MAX_LENGTH);
-		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2
-				- textField.getWidth() / 2);
+		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2 - textField.getWidth()
+				/ 2);
 		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
 		textField.setCursorPosition(Align.right);
 		stage.setKeyboardFocus(textField);
@@ -93,8 +98,9 @@ public class ClientScreen extends Screen {
 
 				if (Networking.isValidHost(text)) {
 					Networking.startClient(text);
-				} else
-					label.setText(StringConstants.HOST_INVALID);
+				} else {
+					label.setText(HOST_INVALID);
+				}
 			}
 		});
 	}
@@ -113,7 +119,7 @@ public class ClientScreen extends Screen {
 			if (error.compareTo("") != 0) {
 				label.setText(error);
 			} else if (text.compareTo("") == 0) {
-				label.setText(StringConstants.OPPONENT_HOSTADDR);
+				label.setText(OPPONENT_HOSTADDR);
 				play.setVisible(false);
 			} else {
 				play.setVisible(true);
