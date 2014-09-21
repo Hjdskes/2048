@@ -329,7 +329,7 @@ public class Networking {
 	 */
 	private static void processResponse(String response) {
 		
-		System.out.println("incoming message = " + response);
+		// System.out.println("incoming message = " + response);
 		
 		// ignore responses if remoteInput is not set
 		if (remoteInput == null)
