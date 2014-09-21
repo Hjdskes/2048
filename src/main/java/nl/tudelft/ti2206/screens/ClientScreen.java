@@ -70,7 +70,7 @@ public class ClientScreen extends Screen {
 				* TwentyFourtyGame.GAP);
 		stage.addActor(label);
 
-		textField.setWidth(TwentyFourtyGame.GAME_WIDTH / 3);
+		textField.setWidth(TwentyFourtyGame.GAME_WIDTH / 2);
 		textField.setMaxLength(MAX_LENGTH);
 		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- textField.getWidth() / 2);
