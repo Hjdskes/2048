@@ -159,4 +159,27 @@ public class ScreenHandlerTest {
 		assertFalse(screens.contains(screen));
 	}
 	
+	@Test
+	public void testRemoveTopWhen1Screen() {
+		// reset the screen stack and add 1 screen to it
+		screens.clear();
+		ScreenHandler.add(screen);
+		// Reset the screen to remove any method invocation counters
+		reset(screen);
+		
+		ScreenHandler.removeTop();
+		// make sure nothing happens
+		verifyNoMoreInteractions(screen);
+	}
+	
+	@Test
+	public void testRemoveTopWhenMoreScreens() {
+		screens.clear();
+		screens.add(screen);
+		screens.add(screen);
+		
+		ScreenHandler.removeTop();
+		verify(screen).resume();
+	}
+	
 }
