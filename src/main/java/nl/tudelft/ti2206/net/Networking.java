@@ -47,6 +47,8 @@ public class Networking {
 	private static RemoteInputHandler remoteInput;
 
 	private static String lastError = "";
+	
+	private static boolean connectionLost = false;
 
 	private static Thread thread;
 
@@ -144,6 +146,8 @@ public class Networking {
 	public static void startServer() {
 		setMode(Mode.SERVER);
 		setLastError("");
+		setConnectionLost(false);
+		
 		thread = new Thread(new Runnable() {
 
 			@Override
@@ -210,6 +214,7 @@ public class Networking {
 
 		setMode(Mode.CLIENT);
 		setLastError("");
+		setConnectionLost(false);
 		// setStartReceived(false);
 
 		thread = new Thread(new Runnable() {
@@ -272,6 +277,7 @@ public class Networking {
 				processResponse(response);
 			}
 		} catch (Exception e) {
+			setConnectionLost(true);
 			e.printStackTrace();
 		}
 
@@ -311,6 +317,8 @@ public class Networking {
 				dOutputStream.writeBytes(str);
 				// dOutputStream.writeChars(str);
 			} catch (IOException e) {
+				setConnectionLost(true);
+				
 				System.err.println("Unable to send string:");
 				e.printStackTrace();
 			}
@@ -415,6 +423,9 @@ public class Networking {
 
 	public static boolean isConnected() {
 
+		if (isConnectionLost())
+			return false;
+		
 		if (!isInitialized())
 			return false;
 
@@ -503,4 +514,12 @@ public class Networking {
 	// public static void setStartReceived(boolean startReceived) {
 	// Networking.startReceived = startReceived;
 	// }
+
+	public static boolean isConnectionLost() {
+		return connectionLost;
+	}
+
+	public static void setConnectionLost(boolean connectionLost) {
+		Networking.connectionLost = connectionLost;
+	}
 }
