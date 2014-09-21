@@ -24,6 +24,14 @@ public class WaitScreen extends Screen {
 		label = new Label("Press play when you're ready!", AssetHandler.getSkin());
 	}
 
+	/** Constructor for testing purposes. */
+	public WaitScreen(Stage stage, Table table, PlayButton button, Label label) {
+		this.stage = stage;
+		this.table = table;
+		this.play = button;
+		this.label = label;
+	}
+	
 	@Override
 	public void create() {
 		super.create();
