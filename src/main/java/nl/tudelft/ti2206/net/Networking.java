@@ -324,12 +324,14 @@ public class Networking {
 	 *            The response message.
 	 */
 	private static void processResponse(String response) {
-		System.out.println("str = " + response);
+
+		// ignore responses if remoteInput is not set
+		if (remoteInput == null)
+			return;
 
 		int closing = response.indexOf(']');
 		if (response.startsWith("GRID[")) {
 			String strGrid = response.substring(5, closing);
-
 			if (remoteInput != null) {
 				remoteInput.fillGrid(strGrid);
 			}
@@ -431,6 +433,7 @@ public class Networking {
 
 	/**
 	 * @return The current mode of operation: Server or Client.
+	 * Get mode of operation.
 	 */
 	public static Mode getMode() {
 		return Networking.mode;
@@ -499,6 +502,8 @@ public class Networking {
 		if (thread != null) {
 			thread.stop();
 		}
+
+		setRemoteInput(null);
 
 		if (getMode() == Mode.SERVER) {
 			if (isServerSocketInitialized()) {
