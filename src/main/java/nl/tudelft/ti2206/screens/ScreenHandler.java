@@ -9,9 +9,9 @@ import com.badlogic.gdx.Gdx;
  * 
  * It keeps a stack of all our screens and draws them from top to bottom, which
  * enables us to draw transparent screens, such as, for example, the WinScreen.
- * 
  */
 public class ScreenHandler {
+	/** The stack containing all the screens. */
 	private static Stack<Screen> screenStack = new Stack<Screen>();
 
 	/** Sets the stack. Used for testing. */

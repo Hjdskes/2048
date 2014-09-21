@@ -7,11 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+/**
+ * The WaitScreen is displayed when the client has to wait for the connection
+ * to be made.
+ */
 public class WaitScreen extends Screen {
 	/** The main label. */
 	private Label label;
 	private Table table;
 
+	/** Constructs a new WaitScreen. */
 	public WaitScreen() {
 		stage = new Stage();
 		table = new Table();

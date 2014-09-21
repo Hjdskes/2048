@@ -38,34 +38,34 @@ public class Networking {
 	/** The list containing all local IP addresses. */
 	private static List<String> addresses = new ArrayList<String>();
 
-	/** . */
+	/** Current socket. */
 	private static Socket socket;
 
-	/** . */
+	/** Server socket. */
 	private static ServerSocket serverSocket;
 
-	/** . */
+	/** Socket is initialized or not. */
 	private static boolean initialized = false;
 
-	/** . */
+	/** Server socket is initialized. */
 	private static boolean sSocketInitialized = false;
 
-	/** . */
+	/** DataStream for input. */
 	private static DataInputStream dInputStream;
 
-	/** . */
+	/** DataStream for output. */
 	private static DataOutputStream dOutputStream;
 
 	/** The RemoteInputHandler controls the opponent's Grid. */
 	private static RemoteInputHandler remoteInput;
 
-	/** String indicating the last occured error. */
+	/** String indicating the last occurred error. */
 	private static String lastError = "";
 
 	/** True if the connection has been lost. */
 	private static boolean connectionLost = false;
 
-	/** . */
+	/** Current running thread. */
 	private static Thread thread;
 
 	/** The current mode of operation. */
@@ -306,6 +306,10 @@ public class Networking {
 	 *            The string to send.
 	 */
 	public static void sendString(String str) {
+		if (!str.endsWith("\r\n")) {
+			str += "\r\n";
+		}
+		
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
@@ -324,17 +328,14 @@ public class Networking {
 	 *            The response message.
 	 */
 	private static void processResponse(String response) {
-
-		// ignore responses if remoteInput is not set
-		if (remoteInput == null)
+		if (remoteInput == null) {
 			return;
+		}
 
 		int closing = response.indexOf(']');
 		if (response.startsWith("GRID[")) {
 			String strGrid = response.substring(5, closing);
-			if (remoteInput != null) {
-				remoteInput.fillGrid(strGrid);
-			}
+			remoteInput.fillGrid(strGrid);
 		} else if (response.startsWith("MOVE[")) {
 			char direction = response.charAt(5);
 
@@ -364,14 +365,6 @@ public class Networking {
 	public static String getRemoteAddress() {
 		return socket.getRemoteAddress().replaceFirst("/", "");
 	}
-
-	// /**
-	// * Get the socket that's currently in use.
-	// * @return
-	// */
-	// public static Socket getSocket() {
-	// return socket;
-	// }
 
 	/**
 	 * @return True if the socket is currently connected, false otherwise.
