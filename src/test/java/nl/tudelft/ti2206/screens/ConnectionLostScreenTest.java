@@ -31,13 +31,13 @@ public class ConnectionLostScreenTest {
 	@Mock
 	private Input input;
 	
-	private MultiLoseScreen screen;
+	private ConnectionLostScreen screen;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		Gdx.input = input;
-		screen = new MultiLoseScreen(stage, image, button);
+		screen = new ConnectionLostScreen(stage, image, button);
 	}
 
 	@Test

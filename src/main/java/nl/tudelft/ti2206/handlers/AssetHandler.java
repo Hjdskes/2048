@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.handlers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,8 +23,7 @@ public class AssetHandler {
 	 * @return true If the manager is done, false otherwise.
 	 */
 	public static boolean isLibraryInitialized() {
-		/* The check for Gdx.app is required to test on headless mode. */
-		return Gdx.app != null && manager.update();
+		return manager.update();
 	}
 
 	/**
@@ -51,8 +49,12 @@ public class AssetHandler {
 		manager.load("src/main/resources/images/grid.png", Texture.class);
 		manager.load("src/main/resources/images/lostoverlay.png", Texture.class);
 		manager.load("src/main/resources/images/wonoverlay.png", Texture.class);
-		manager.load("src/main/resources/images/multilostoverlay.png", Texture.class);
-		manager.load("src/main/resources/images/multiwonoverlay.png", Texture.class);
+		manager.load("src/main/resources/images/multilostoverlay.png",
+				Texture.class);
+		manager.load("src/main/resources/images/multiwonoverlay.png",
+				Texture.class);
+		manager.load("src/main/resources/images/connectionlostoverlay.png",
+				Texture.class);
 
 		/*
 		 * Instruct the asset manager to load everything in its queue, block
@@ -84,17 +86,24 @@ public class AssetHandler {
 		skin.addRegions(icons);
 		skin.addRegions(tiles);
 		skin.addRegions(scoretiles);
-		skin.add("cursor", manager.get("src/main/resources/images/cursor.png", Texture.class));
-		skin.add("button", manager.get("src/main/resources/images/button.png", Texture.class));
-		skin.add("grid", manager.get("src/main/resources/images/grid.png", Texture.class));
+		skin.add("cursor", manager.get("src/main/resources/images/cursor.png",
+				Texture.class));
+		skin.add("button", manager.get("src/main/resources/images/button.png",
+				Texture.class));
+		skin.add("grid", manager.get("src/main/resources/images/grid.png",
+				Texture.class));
 		skin.add("lostoverlay", manager.get(
 				"src/main/resources/images/lostoverlay.png", Texture.class));
 		skin.add("wonoverlay", manager.get(
 				"src/main/resources/images/wonoverlay.png", Texture.class));
-		skin.add("multilostoverlay", manager.get(
-				"src/main/resources/images/multilostoverlay.png", Texture.class));
+		skin.add("multilostoverlay", manager
+				.get("src/main/resources/images/multilostoverlay.png",
+						Texture.class));
 		skin.add("multiwonoverlay", manager.get(
 				"src/main/resources/images/multiwonoverlay.png", Texture.class));
+		skin.add("connectionlostoverlay", manager.get(
+				"src/main/resources/images/connectionlostoverlay.png",
+				Texture.class));
 	}
 
 	/**
@@ -120,10 +129,10 @@ public class AssetHandler {
 	}
 
 	/**
-	 * Sets the Skin to be used by the AssetHandler. Needed for the
-	 * headless application which is used for DevHub. Since DevHub cannot make
-	 * use of GL related classes, it is necessary to test the AssetHandler in a
-	 * very specific way. See {@link AssetHandlerTest}.
+	 * Sets the Skin to be used by the AssetHandler. Needed for the headless
+	 * application which is used for DevHub. Since DevHub cannot make use of GL
+	 * related classes, it is necessary to test the AssetHandler in a very
+	 * specific way. See {@link AssetHandlerTest}.
 	 * 
 	 * @param newSkin
 	 *            The Skin to be used by the AssetHandler.
@@ -133,10 +142,11 @@ public class AssetHandler {
 	}
 
 	/**
-	 * Makes the Skin load a file that contains all resources.
-	 * Required for headless testing.
+	 * Makes the Skin load a file that contains all resources. Required for
+	 * headless testing.
 	 * 
-	 * @param file The file containing the resources.
+	 * @param file
+	 *            The file containing the resources.
 	 */
 	public static void loadSkinFile(FileHandle file) {
 		skin.load(file);
