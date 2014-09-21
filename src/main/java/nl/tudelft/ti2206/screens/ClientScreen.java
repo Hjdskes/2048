@@ -20,6 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * the IP address to which a connection should be made.
  */
 public class ClientScreen extends Screen {
+	/** The maximum length allowed for an IP address. */
+	private static final int MAX_LENGTH = 20;
+
 	/** The main label. */
 	private Label label;
 
@@ -35,10 +38,8 @@ public class ClientScreen extends Screen {
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
-
 		label = new Label(StringConstants.OPPONENT_HOSTADDR,
 				AssetHandler.getSkin());
-
 		List<String> addresses = Networking.getLocalAddresses();
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		menu = new MenuButton();
@@ -66,8 +67,10 @@ public class ClientScreen extends Screen {
 				* TwentyFourtyGame.GAP);
 		stage.addActor(label);
 
+		textField.setWidth(TwentyFourtyGame.GAME_WIDTH / 3);
+		textField.setMaxLength(MAX_LENGTH);
 		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2
-				- textField.getPrefWidth() / 2);
+				- textField.getWidth() / 2);
 		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
 		stage.addActor(textField);
 
@@ -96,21 +99,15 @@ public class ClientScreen extends Screen {
 		super.update();
 
 		String text = textField.getText();
-
 		if (Networking.isConnected()) {
 			label.setText("      Connected to host!");
 			ScreenHandler.add(new WaitScreen());
-			
-			
-			
-			// proceed
 		} else {
-
 			String error = Networking.getLastError();
 
-			if (error.compareTo("") != 0)
+			if (error.compareTo("") != 0) {
 				label.setText(error);
-			else if (text.compareTo("") == 0) {
+			} else if (text.compareTo("") == 0) {
 				label.setText(StringConstants.OPPONENT_HOSTADDR);
 				play.setVisible(false);
 			} else {

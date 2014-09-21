@@ -2,12 +2,9 @@ package nl.tudelft.ti2206.screens;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.buttons.PlayButton;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
-public class HostScreenTest {
+public class WaitScreenTest {
 
 	@Mock
 	private Skin skin;
@@ -36,74 +33,56 @@ public class HostScreenTest {
 	@Mock
 	private Table table;
 	@Mock
-	private Cell<Label> cell;
+	private Cell<Label> labelCell;
+	@Mock
+	private Cell<PlayButton> buttonCell;
 	@Mock
 	private Label label;
 	@Mock
 	private TextField field;
 	@Mock
-	private MenuButton menuButton;
-	@Mock
 	private GL20 gl;
 	@Mock
 	private Input input;
 
-	private HostScreen screen;
+	private WaitScreen screen;
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		Skin skin = mock(Skin.class);
-		AssetHandler.setSkin(skin);
-		
-		screen = new HostScreen(stage, table, label, menuButton);
+		screen = new WaitScreen(stage, table, label);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-		
-		when(cell.padTop(anyInt())).thenReturn(cell);
-		when(cell.padBottom(anyInt())).thenReturn(cell);
-		when(cell.row()).thenReturn(cell);
-		
-		when(table.getCell(label)).thenReturn(cell);
-	}
 
-	@Test
-	public void testDispose() {
-		screen.dispose();
-		verify(stage).dispose();
+		when(labelCell.padTop(anyInt())).thenReturn(labelCell);
+		when(labelCell.padBottom(anyInt())).thenReturn(labelCell);
+		when(labelCell.row()).thenReturn(labelCell);
+
+		when(buttonCell.padTop(anyInt())).thenReturn(buttonCell);
+		when(buttonCell.padBottom(anyInt())).thenReturn(buttonCell);
+		when(buttonCell.row()).thenReturn(buttonCell);
+
+		when(table.getCell(label)).thenReturn(labelCell);
 	}
 
 	@Test
 	public void testCreate() {
 		screen.create();
-
-		verify(table, times(3)).add(label);
-		verify(cell, times(3)).padTop(anyInt());
-		verify(cell, times(3)).padBottom(anyInt());
-		verify(cell, times(3)).row();
-
-		verify(stage).addActor(table); 
-		verify(stage).addActor(menuButton);
-
-		verify(input).setInputProcessor(stage);
-	}
-
-	@Test
-	public void testDraw() {
-		screen.draw();
-		verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
-		verify(gl).glClear(anyInt());
 		
-		verify(stage).draw();
-	}
-
-	@Test
-	public void testUpdate() {
-		screen.update();
-		verify(stage).act();
+		verify(input).setInputProcessor(stage);
+		
+		verify(table).add(label);
+		verify(table).getCell(label);
+		verify(labelCell).padTop(anyInt());
+		verify(labelCell).padBottom(anyInt());
+		verify(labelCell).row();
+		
+		verify(table).setFillParent(true);
+		
+		verify(stage).addActor(table);
 	}
 }

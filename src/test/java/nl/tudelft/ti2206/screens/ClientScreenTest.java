@@ -92,6 +92,8 @@ public class ClientScreenTest {
 
 		verify(field).setX(anyInt());
 		verify(field).setY(anyInt());
+		verify(field).setWidth(anyInt());
+		verify(field).setMaxLength(anyInt());
 		verify(stage).addActor(field);
 
 		verify(stage).addActor(menuButton);
