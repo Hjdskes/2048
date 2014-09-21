@@ -45,7 +45,7 @@ public class ClientScreen extends Screen {
 	public ClientScreen() {
 		stage = new Stage();
 		label = new Label(OPPONENT_HOSTADDR, AssetHandler.getSkin());
-		List<String> addresses = Networking.getLocalAddresses();
+		List<String> addresses = Networking.initLocalAddresses();
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		menu = new MenuButton();
 		play = new TextButton("Play!", AssetHandler.getSkin());
