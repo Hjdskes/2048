@@ -9,7 +9,7 @@ goes missing or is replaced with a totally different car the dealership's functi
 
 #Relations:
 
-##Aggregation:
+## Aggregation:
 A grid consists of Tiles and a TileHandler. A grid consists of 16 tiles that can be moved
 with the help of a TileMover. The relation is an aggregation because a grid can still exist without the Tiles of the TileHandler.
 
@@ -21,6 +21,11 @@ because its parts each play a role in a mechanism that cannot function without t
 
 The GameScreen in the multiplayer version of the game contains a ScoreDisplay, Grid and a libgdx Stage instead of the GameWorld and
 inputHandler. With the new changes to the class the relation is still a Composition. 
+
+Further we have more Screens that have a composition relation with their objects. If we take HostScreen as an example we can see
+that it consists of a menubutton and a libgdx' table among other objects. The combination of the objects makes HostScreen what it is
+and removal of one of these objects will hinder HostScreen's function. Most of the screens in the nl.tudelft.ti2206.screens package 
+share this relation. Except for the Screen and ScreenHandler class.     
 
 > 2.2: Draw the class diagrams for all the hierarchies in your source code. Explain why you created these
 > hierarchies and classify their type (e.g., “Is-a” and “Polymorphism”). Considering the lectures, are
@@ -71,3 +76,14 @@ gameobjects:
 
 game:
 * Launcher
+
+We were able to make some minor changes to the code such as:
+Instead of:
+if (score > highScore) {
+		highScore = score;
+}
+we can use:
+highscore = Math.max(highscore, score);
+
+But we found that in other cases such as the move method in Grid or other similair instances that
+refactoring the cases or if impossible or was ruining our code.
