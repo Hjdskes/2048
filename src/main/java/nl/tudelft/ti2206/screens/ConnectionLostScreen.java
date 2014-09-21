@@ -23,6 +23,13 @@ public class ConnectionLostScreen extends Screen {
 		label = new Label("Connection lost...", AssetHandler.getSkin());
 		okButton = new TextButton("OK", AssetHandler.getSkin());
 	}
+	
+	/** Constructor for testing purposes. */
+	public ConnectionLostScreen(Stage stage, Label label, TextButton button) {
+		this.stage = stage;
+		this.label = label;
+		this.okButton = button;
+	}
 
 	@Override
 	public void create() {
