@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -14,13 +13,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  * he can easily pass those on to the client.
  */
 public class HostScreen extends Screen {
+	/** The string used in the label of the remote. */
+	public static final String LETS_PLAY = "Let's play!";
+
+	/** Text displayed when waiting for a connection. */
+	public static final String CONNECTION_WAITING = "Waiting for connection...";
+
+	/** Text displayed when a connection is established. */
+	public static final String CONNECTION_ESTABLISHED = "Connection established!";
+
+	/** The text for the main label. */
+	public static final String OPPONENT_DESTINY = "Your opponent's destiny\r\nlies beyond one of these:\r\n";
+
 	/** The table used for positioning all Actors. */
 	private Table table;
 
 	/** The main label. */
 	private Label label;
 
-	/** The label with displaying the connection status. */
+	/** The label displaying the connection status. */
 	private Label remote;
 
 	/** The label listing all addresses. */
@@ -33,11 +44,9 @@ public class HostScreen extends Screen {
 	public HostScreen() {
 		stage = new Stage();
 		table = new Table();
-		label = new Label(StringConstants.OPPONENT_DESTINY,
-				AssetHandler.getSkin());
+		label = new Label(OPPONENT_DESTINY, AssetHandler.getSkin());
 
-		remote = new Label(StringConstants.CONNECTION_WAITING,
-				AssetHandler.getSkin());
+		remote = new Label(CONNECTION_WAITING, AssetHandler.getSkin());
 
 		/* Show addresses to user to share with opponent. */
 		addresses = new Label(Networking.strAddresses(), AssetHandler.getSkin());
@@ -62,7 +71,7 @@ public class HostScreen extends Screen {
 		if (!Networking.isInitialized() || !Networking.isConnected()) {
 			Networking.startServer();
 		}
-		
+
 		table.add(label);
 		table.getCell(label).padTop(20).padBottom(10).row();
 		table.add(addresses);
@@ -81,8 +90,8 @@ public class HostScreen extends Screen {
 
 		if (Networking.isServerSocketInitialized()) {
 			if (Networking.isConnected()) {
-				label.setText(StringConstants.CONNECTION_ESTABLISHED);
-				remote.setText(StringConstants.LETS_PLAY);
+				label.setText(CONNECTION_ESTABLISHED);
+				remote.setText(LETS_PLAY);
 
 				/* Remote user is connected, show remote address. */
 				String addr = Networking.getRemoteAddress();
@@ -98,7 +107,7 @@ public class HostScreen extends Screen {
 				}
 			}
 		} else {
-			remote.setText(StringConstants.CONNECTION_WAITING);
+			remote.setText(CONNECTION_WAITING);
 		}
 	}
 }
