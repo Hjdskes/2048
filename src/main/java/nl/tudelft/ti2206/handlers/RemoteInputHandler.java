@@ -1,75 +1,66 @@
 package nl.tudelft.ti2206.handlers;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.gameobjects.Tile;
 
+/**
+ * The RemoteInputHandler processes input events that come from
+ * over the network.
+ */
 public class RemoteInputHandler {
+	/**
+	 * A reference to the remote Grid, so the called objects can interact with
+	 * it.
+	 */
 	private Grid grid;
 
 	/**
-	 * Creates a new InputHandler instance.
+	 * Creates a new RemoteInputHandler instance.
 	 * 
 	 * @param grid
-	 *            A reference to the current Grid.
+	 *            A reference to the remote Grid.
 	 */
 	public RemoteInputHandler(Grid grid) {
 		this.grid = grid;
 	}
 
-	public void setTiles(Tile[] tiles) {
-		for (int index = 0; index < 15; index += 1)
-			grid.setTile(index, tiles[index].getValue());
-	}
-	
-	public void setGrid(Grid grid) {
-		this.grid = grid;
-	}
-	
-	public void fillGrid(String str) {
-		String[] split = str.split(",");
+	/**
+	 * Fills the remote Grid with the tiles provided in the string.
+	 * @param tiles The string describing all the Tiles.
+	 */
+	public void fillGrid(String tiles) {
+		String[] split = tiles.split(",");
 
-		for (int index = 0; index < split.length; index += 1) {
+		for (int index = 0; index < split.length; index++) {
 			grid.setTile(index, Integer.parseInt(split[index]));
 		}
-		
-	}
-	
-
-	public void setTileValues(int[] values) {
-		Tile[] tiles = grid.getTiles();
-		for (int i = 0; i < tiles.length; i++) {
-			tiles[i].setValue(values[i]);
-		}
 	}
 
-	public void move(Direction direction) {
-		grid.move(direction);
-	}
-	
+	/**
+	 * Performs a move upwards on the remote Grid.
+	 */
 	public void moveUp() {
 		grid.move(Direction.UP);
-
 	}
 
+	/**
+	 * Performs a move downwards on the remote Grid.
+	 */
 	public void moveDown() {
 		grid.move(Direction.DOWN);
-
 	}
 
+	/**
+	 * Performs a move to the right on the remote Grid.
+	 */
 	public void moveRight() {
 		grid.move(Direction.RIGHT);
-
 	}
 
+	/**
+	 * Performs a move to the left on the remote Grid.
+	 */
 	public void moveLeft() {
 		grid.move(Direction.LEFT);
-	}
-	
-	public void setState(GameState state) {
-		TwentyFourtyGame.setState(state);
-		
 	}
 }

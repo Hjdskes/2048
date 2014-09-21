@@ -59,7 +59,7 @@ public class Networking {
 	/** The RemoteInputHandler controls the opponent's Grid. */
 	private static RemoteInputHandler remoteInput;
 
-	/** String indicating the last occured error. */
+	/** String indicating the last occurred error. */
 	private static String lastError = "";
 
 	/** True if the connection has been lost. */
@@ -324,17 +324,14 @@ public class Networking {
 	 *            The response message.
 	 */
 	private static void processResponse(String response) {
-
-		// ignore responses if remoteInput is not set
-		if (remoteInput == null)
+		if (remoteInput == null) {
 			return;
+		}
 
 		int closing = response.indexOf(']');
 		if (response.startsWith("GRID[")) {
 			String strGrid = response.substring(5, closing);
-			if (remoteInput != null) {
-				remoteInput.fillGrid(strGrid);
-			}
+			remoteInput.fillGrid(strGrid);
 		} else if (response.startsWith("MOVE[")) {
 			char direction = response.charAt(5);
 
