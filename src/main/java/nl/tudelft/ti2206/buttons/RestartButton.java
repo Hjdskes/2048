@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * A button to restart the current game.
  */
 public class RestartButton extends TextButton {
-	
 	public RestartButton() {
 		super("Restart", AssetHandler.getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);

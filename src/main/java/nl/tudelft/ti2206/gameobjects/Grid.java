@@ -199,12 +199,6 @@ public class Grid extends Actor {
 		if (score > highScore) {
 			highScore = score;
 		}
-
-		// if (TwentyFourtyGame.isRunning() && highestTile == 2048) {
-		// TwentyFourtyGame.setState(GameState.WON);
-		// } else if (TwentyFourtyGame.isRunning() && getPossibleMoves() == 0) {
-		// TwentyFourtyGame.setState(GameState.LOST);
-		// }
 	}
 
 	/**
