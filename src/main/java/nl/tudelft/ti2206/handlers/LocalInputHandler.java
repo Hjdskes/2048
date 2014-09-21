@@ -29,7 +29,7 @@ public class LocalInputHandler extends InputListener {
 		this.grid = grid;
 		sendGrid();
 	}
-
+	
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
 		switch (keycode) {

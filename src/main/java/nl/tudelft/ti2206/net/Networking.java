@@ -32,28 +32,28 @@ public class Networking {
 		CLIENT, SERVER
 	}
 
-	/** The default port to connect to. */
+	/** Portnumber is hardcoded for user's convenience. */
 	private static final int PORT = 2526;
 
 	/** The list containing all local IP addresses. */
 	private static List<String> addresses = new ArrayList<String>();
 
-	/** . */
+	/** Current socket. */
 	private static Socket socket;
 
-	/** . */
+	/** Server socket. */
 	private static ServerSocket serverSocket;
 
-	/** . */
+	/** Socket is initialized or not. */
 	private static boolean initialized = false;
 
-	/** . */
+	/** Server socket is initialized. */
 	private static boolean sSocketInitialized = false;
 
-	/** . */
+	/** DataStream for input. */
 	private static DataInputStream dInputStream;
 
-	/** . */
+	/** DataStream for output. */
 	private static DataOutputStream dOutputStream;
 
 	/** The RemoteInputHandler controls the opponent's Grid. */
@@ -65,7 +65,7 @@ public class Networking {
 	/** True if the connection has been lost. */
 	private static boolean connectionLost = false;
 
-	/** . */
+	/** Current running thread. */
 	private static Thread thread;
 
 	/** The current mode of operation. */
@@ -306,6 +306,10 @@ public class Networking {
 	 *            The string to send.
 	 */
 	public static void sendString(String str) {
+		
+		if (!str.endsWith("\r\n"))
+				str += "\r\n";
+		
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
