@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 
 import com.badlogic.gdx.Gdx;
@@ -50,8 +51,8 @@ public class Networking {
 	private static Thread thread;
 
 	private static Mode mode;
-	
-//	private static boolean startReceived;
+
+	// private static boolean startReceived;
 
 	public static List<String> initalize() {
 		return initLocalAddresses();
@@ -178,22 +179,21 @@ public class Networking {
 
 					// while (true) {
 
-						socket = serverSocket.accept(null);
+					socket = serverSocket.accept(null);
 
-						if (socket != null) {
+					if (socket != null) {
 
-							setInitialized(true);
-							System.out
-									.println("Accepted incoming connection from "
-											+ socket.getRemoteAddress());
+						setInitialized(true);
+						System.out.println("Accepted incoming connection from "
+								+ socket.getRemoteAddress());
 
-							setInput(socket);
-							setOutput(socket);
+						setInput(socket);
+						setOutput(socket);
 
-							while (isConnected()) {
-								receiveLoop();
-							}
+						while (isConnected()) {
+							receiveLoop();
 						}
+					}
 					// }
 				}
 			}
@@ -210,7 +210,7 @@ public class Networking {
 
 		setMode(Mode.CLIENT);
 		setLastError("");
-		//setStartReceived(false);
+		// setStartReceived(false);
 
 		thread = new Thread(new Runnable() {
 
@@ -331,20 +331,42 @@ public class Networking {
 
 	private static void processResponse(String response) {
 		System.out.println("str = " + response);
-//		if (response.startsWith("[START]"))
-//		{
-//			System.out.println("Start received");
-//			Networking.setStartReceived(true);
-//		}
-//		else
-		if (response.startsWith("GRID[")) {
-			int closing = response.indexOf(']');
+		// if (response.startsWith("[START]"))
+		// {
+		// System.out.println("Start received");
+		// Networking.setStartReceived(true);
+		// }
+		// else
+
+		int closing = response.indexOf(']');
+
+		if (response.startsWith("STATE[")) {
+			String strstate = response.substring(5, closing);
+
+			if (remoteInput != null) {
+
+				switch (strstate) {
+				case "WON":
+					remoteInput.setState(GameState.WON);
+					break;
+				case "LOST":
+					remoteInput.setState(GameState.LOST);
+					break;
+				default:
+					remoteInput.setState(GameState.RUNNING);
+					break;
+				}
+			}
+
+		}
+
+		else if (response.startsWith("GRID[")) {
 
 			String strGrid = response.substring(5, closing);
-			
+
 			if (remoteInput != null)
 				remoteInput.fillGrid(strGrid);
-			
+
 			if (getMode() == Mode.SERVER)
 				System.out.println("[SERVER]: recv grid str = " + strGrid);
 			else
@@ -410,8 +432,8 @@ public class Networking {
 
 	public static void disconnect() {
 
-		//setStartReceived(false);
-		
+		// setStartReceived(false);
+
 		if (thread != null)
 			thread.stop();
 
@@ -473,12 +495,12 @@ public class Networking {
 	public static void setRemoteInput(RemoteInputHandler remoteInput) {
 		Networking.remoteInput = remoteInput;
 	}
-//
-//	public static boolean isStartReceived() {
-//		return startReceived;
-//	}
-//
-//	public static void setStartReceived(boolean startReceived) {
-//		Networking.startReceived = startReceived;
-//	}
+	//
+	// public static boolean isStartReceived() {
+	// return startReceived;
+	// }
+	//
+	// public static void setStartReceived(boolean startReceived) {
+	// Networking.startReceived = startReceived;
+	// }
 }

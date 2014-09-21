@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.handlers;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
@@ -64,5 +66,10 @@ public class RemoteInputHandler {
 
 	public void moveLeft() {
 		grid.move(Direction.LEFT);
+	}
+	
+	public void setState(GameState state) {
+		TwentyFourtyGame.setState(state);
+		
 	}
 }
