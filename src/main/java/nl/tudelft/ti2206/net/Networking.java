@@ -341,7 +341,7 @@ public class Networking {
 		int closing = response.indexOf(']');
 
 		if (response.startsWith("STATE[")) {
-			String strstate = response.substring(5, closing);
+			String strstate = response.substring(6, closing);
 
 			if (remoteInput != null) {
 
@@ -353,7 +353,7 @@ public class Networking {
 					remoteInput.setState(GameState.LOST);
 					break;
 				default:
-					remoteInput.setState(GameState.RUNNING);
+				//	remoteInput.setState(GameState.RUNNING);
 					break;
 				}
 			}
