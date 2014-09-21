@@ -24,10 +24,10 @@ public class MultiWinScreen extends Screen {
 	}
 
 	/** Constructor used for mock insertion */
-	public MultiWinScreen(Stage stage, Image image, MenuButton cancelButton) {
+	public MultiWinScreen(Stage stage, Image image, MenuButton menuButton) {
 		this.stage = stage;
 		this.image = image;
-		this.menuButton = cancelButton;
+		this.menuButton = menuButton;
 	}
 
 	@Override

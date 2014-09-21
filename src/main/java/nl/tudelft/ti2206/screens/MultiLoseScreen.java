@@ -24,10 +24,10 @@ public class MultiLoseScreen extends Screen {
 	}
 
 	/** Constructor used for mock insertion */
-	public MultiLoseScreen(Stage stage, Image image, MenuButton cancelButton) {
+	public MultiLoseScreen(Stage stage, Image image, MenuButton menuButton) {
 		this.stage = stage;
 		this.image = image;
-		this.menuButton = cancelButton;
+		this.menuButton = menuButton;
 	}
 
 	@Override
