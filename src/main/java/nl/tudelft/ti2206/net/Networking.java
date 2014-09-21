@@ -32,7 +32,7 @@ public class Networking {
 		CLIENT, SERVER
 	}
 
-	/** Portnumber is hardcoded for user's convenience. */
+	/** The default port to connect to. */
 	private static final int PORT = 2526;
 
 	/** The list containing all local IP addresses. */
@@ -306,9 +306,9 @@ public class Networking {
 	 *            The string to send.
 	 */
 	public static void sendString(String str) {
-		
-		if (!str.endsWith("\r\n"))
-				str += "\r\n";
+		if (!str.endsWith("\r\n")) {
+			str += "\r\n";
+		}
 		
 		if (isConnected()) {
 			try {
