@@ -366,14 +366,6 @@ public class Networking {
 		return socket.getRemoteAddress().replaceFirst("/", "");
 	}
 
-	// /**
-	// * Get the socket that's currently in use.
-	// * @return
-	// */
-	// public static Socket getSocket() {
-	// return socket;
-	// }
-
 	/**
 	 * @return True if the socket is currently connected, false otherwise.
 	 */
