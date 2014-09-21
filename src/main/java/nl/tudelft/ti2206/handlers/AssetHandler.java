@@ -50,6 +50,8 @@ public class AssetHandler {
 		manager.load("src/main/resources/images/grid.png", Texture.class);
 		manager.load("src/main/resources/images/lostoverlay.png", Texture.class);
 		manager.load("src/main/resources/images/wonoverlay.png", Texture.class);
+		manager.load("src/main/resources/images/multilostoverlay.png", Texture.class);
+		manager.load("src/main/resources/images/multiwinoverlay.png", Texture.class);
 
 		/*
 		 * Instruct the asset manager to load everything in its queue, block
@@ -87,6 +89,10 @@ public class AssetHandler {
 				"src/main/resources/images/lostoverlay.png", Texture.class));
 		skin.add("wonoverlay", manager.get(
 				"src/main/resources/images/wonoverlay.png", Texture.class));
+		skin.add("multilostoverlay", manager.get(
+				"src/main/resources/images/multilostoverlay.png", Texture.class));
+		skin.add("multiwonoverlay", manager.get(
+				"src/main/resources/images/multiwonoverlay.png", Texture.class));
 	}
 
 	/**

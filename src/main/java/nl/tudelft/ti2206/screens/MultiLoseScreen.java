@@ -19,8 +19,7 @@ public class MultiLoseScreen extends Screen {
 	/** Constructs a new MultiLoseScreen. */
 	public MultiLoseScreen() {
 		stage = new Stage();
-		image = new Image(AssetHandler.getSkin(), "lostoverlay");
-		//image = new Image(AssetHandler.getSkin(), "multilostoverlay");
+		image = new Image(AssetHandler.getSkin(), "multilostoverlay");
 		menuButton = new MenuButton();
 	}
 
