@@ -1,7 +1,9 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -31,6 +33,10 @@ public class MenuScreen extends Screen {
 
 	/** Constructs a new MenuScreen. */
 	public MenuScreen() {
+		/* To resize the display when we get back to the menu from a
+		 * multiplayer session. */
+		Gdx.graphics.setDisplayMode(TwentyFourtyGame.GAME_WIDTH,
+				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
 		table = new Table();
 		label = new Label("Choose your destiny!", AssetHandler.getSkin());
