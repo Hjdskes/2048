@@ -4,7 +4,6 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.PlayButton;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +34,6 @@ public class WaitScreenTest {
 	@Mock
 	private Cell<Label> labelCell;
 	@Mock
-	private Cell<PlayButton> buttonCell;
-	@Mock
 	private Label label;
 	@Mock
 	private TextField field;
@@ -61,10 +58,6 @@ public class WaitScreenTest {
 		when(labelCell.padTop(anyInt())).thenReturn(labelCell);
 		when(labelCell.padBottom(anyInt())).thenReturn(labelCell);
 		when(labelCell.row()).thenReturn(labelCell);
-
-		when(buttonCell.padTop(anyInt())).thenReturn(buttonCell);
-		when(buttonCell.padBottom(anyInt())).thenReturn(buttonCell);
-		when(buttonCell.row()).thenReturn(buttonCell);
 
 		when(table.getCell(label)).thenReturn(labelCell);
 	}
