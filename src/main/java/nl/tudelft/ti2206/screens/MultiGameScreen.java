@@ -57,14 +57,14 @@ public class MultiGameScreen extends Screen {
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
 
-		RemoteInputHandler remoteInput = new RemoteInputHandler(remoteGrid);
-		Networking.setRemoteInput(remoteInput);
+		Networking.setRemoteInput(new RemoteInputHandler(remoteGrid));
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
+		// dit werkte though:
 		if (TwentyFourtyGame.getState() == GameState.WON) {
 			ScreenHandler.add(new MultiWinScreen());
 		} else if (TwentyFourtyGame.getState() == GameState.LOST) {
