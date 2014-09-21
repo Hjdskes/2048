@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.CancelButton;
+import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
@@ -47,7 +47,7 @@ public class HostScreenTest {
 	@Mock
 	private PlayButton playButton;
 	@Mock
-	private CancelButton cancelButton;
+	private MenuButton menuButton;
 	@Mock
 	private GL20 gl;
 	@Mock
@@ -61,7 +61,7 @@ public class HostScreenTest {
 		Skin skin = mock(Skin.class);
 		AssetHandler.setSkin(skin);
 		
-		screen = new HostScreen(stage, table, label, playButton, cancelButton);
+		screen = new HostScreen(stage, table, label, playButton, menuButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
@@ -92,7 +92,7 @@ public class HostScreenTest {
 		verify(cell, times(3)).row();
 
 		verify(stage).addActor(table); 
-		verify(stage).addActor(cancelButton);
+		verify(stage).addActor(menuButton);
 		verify(stage).addActor(playButton);
 		
 		verify(playButton).addListener(any(EventListener.class));

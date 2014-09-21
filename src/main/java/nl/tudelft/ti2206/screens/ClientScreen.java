@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.screens;
 
 import java.util.List;
 
-import nl.tudelft.ti2206.buttons.CancelButton;
+import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.StringConstants;
@@ -27,7 +27,7 @@ public class ClientScreen extends Screen {
 	private TextField textField;
 
 	/** The button to cancel and go back to the main menu. */
-	private CancelButton cancel;
+	private MenuButton menu;
 
 	/** button to start the game when a connection has been made. */
 	private PlayButton play;
@@ -41,17 +41,17 @@ public class ClientScreen extends Screen {
 
 		List<String> addresses = Networking.getLocalAddresses();
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
-		cancel = new CancelButton();
+		menu = new MenuButton();
 		play = new PlayButton();
 	}
 
 	/** Constructor used for mock insertion */
 	public ClientScreen(Stage stage, Label label, TextField field,
-			CancelButton cancelButton, PlayButton playButton) {
+			MenuButton menuButton, PlayButton playButton) {
 		this.stage = stage;
 		this.label = label;
 		this.textField = field;
-		this.cancel = cancelButton;
+		this.menu = menuButton;
 		this.play = playButton;
 	}
 
@@ -71,7 +71,7 @@ public class ClientScreen extends Screen {
 		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
 		stage.addActor(textField);
 
-		stage.addActor(cancel);
+		stage.addActor(menu);
 		stage.addActor(play);
 		play.setVisible(false);
 	}
