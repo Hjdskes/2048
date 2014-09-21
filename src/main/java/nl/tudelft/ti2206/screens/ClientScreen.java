@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.screens;
 import java.util.List;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.buttons.PlayButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.StringConstants;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -12,6 +11,7 @@ import nl.tudelft.ti2206.net.Networking;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -32,8 +32,8 @@ public class ClientScreen extends Screen {
 	/** The button to cancel and go back to the main menu. */
 	private MenuButton menu;
 
-	/** button to start the game when a connection has been made. */
-	private PlayButton play;
+	/** The button to start the game when a connection has been made. */
+	private TextButton play;
 
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
@@ -43,12 +43,12 @@ public class ClientScreen extends Screen {
 		List<String> addresses = Networking.getLocalAddresses();
 		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
 		menu = new MenuButton();
-		play = new PlayButton();
+		play = new TextButton("Play!", AssetHandler.getSkin());
 	}
 
 	/** Constructor used for mock insertion */
 	public ClientScreen(Stage stage, Label label, TextField field,
-			MenuButton menuButton, PlayButton playButton) {
+			MenuButton menuButton, TextButton playButton) {
 		this.stage = stage;
 		this.label = label;
 		this.textField = field;
@@ -60,6 +60,8 @@ public class ClientScreen extends Screen {
 	public void create() {
 		super.create();
 
+		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth() / 2);
+		play.setY(5 * TwentyFourtyGame.GAP);
 		addPlayButtonListener();
 
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
