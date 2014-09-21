@@ -66,20 +66,16 @@ public class MultiGameScreen extends Screen {
 		super.update();
 
 		if (TwentyFourtyGame.getState() == GameState.WON) {
-			Networking.disconnect();
 			ScreenHandler.add(new MultiWinScreen());
 		} else if (TwentyFourtyGame.getState() == GameState.LOST) {
-			Networking.disconnect();
 			ScreenHandler.add(new MultiLoseScreen());
 		} else if (localGrid.getCurrentHighestTile() == 2048) {
 			TwentyFourtyGame.setState(GameState.WON);
 			Networking.sendString("STATE[" + GameState.LOST + "]\r\n");
-			Networking.disconnect();
 			ScreenHandler.add(new MultiWinScreen());
 		} else if (localGrid.isFull() && localGrid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(GameState.LOST);
 			Networking.sendString("STATE[" + GameState.WON + "]\r\n");
-			Networking.disconnect();
 			ScreenHandler.add(new MultiLoseScreen());
 		}
 	}
