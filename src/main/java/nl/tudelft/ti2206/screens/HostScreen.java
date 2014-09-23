@@ -131,6 +131,7 @@ public class HostScreen extends Screen implements Observer {
 	
 	@Override
 	public void dispose() {
+		stage.dispose();
 		networking.deleteObserver(this);
 	}
 }

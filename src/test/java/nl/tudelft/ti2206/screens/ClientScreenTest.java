@@ -105,9 +105,9 @@ public class ClientScreenTest {
 	/**
 	 * Tests if the stage is disposed when the screen is disposed.
 	 */
-//	@Test
-//	public void testDispose() {
-//		screen.dispose();
-//		verify(stage).dispose();
-//	}
+	@Test
+	public void testDispose() {
+		screen.dispose();
+		verify(stage).dispose();
+	}
 }
