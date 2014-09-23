@@ -45,7 +45,7 @@ public class WaitScreen extends Screen {
 	public void update() {
 		super.update();
 
-		if (Networking.isConnected()) {
+		if (Networking.getInstance().isConnected()) {
 			ScreenHandler.add(new MultiGameScreen());
 		}
 	}

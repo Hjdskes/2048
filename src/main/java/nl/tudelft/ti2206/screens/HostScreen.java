@@ -23,7 +23,7 @@ public class HostScreen extends Screen {
 	public static final String CONNECTION_ESTABLISHED = "Connection established!";
 
 	/** The text for the main label. */
-	public static final String OPPONENT_DESTINY = "Your opponent's destiny\r\nlies beyond one of these:\r\n";
+	public static final String OPPONENT_DESTINY = "Your opponent's destinylies beyond one of these:";
 
 	/** The table used for positioning all Actors. */
 	private Table table;
@@ -43,6 +43,10 @@ public class HostScreen extends Screen {
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 	
+	/** The singleton Networking instance. */ 
+	private static Networking networking = Networking.getInstance();
+	
+	
 	/** Constructs a new HostScreen. */
 	public HostScreen() {
 		stage = new Stage();
@@ -52,7 +56,7 @@ public class HostScreen extends Screen {
 		remote = new Label(CONNECTION_WAITING, assetHandler.getSkin());
 
 		/* Show addresses to user to share with opponent. */
-		addresses = new Label(Networking.localAddresses(), assetHandler.getSkin());
+		addresses = new Label(networking.localAddresses(), assetHandler.getSkin());
 		cancel = new MenuButton();
 	}
 
@@ -71,8 +75,8 @@ public class HostScreen extends Screen {
 		super.create();
 
 		/* Start hosting if not already doing so. */
-		if (!Networking.isInitialized() || !Networking.isConnected()) {
-			Networking.startServer();
+		if (!networking.isInitialized() || !networking.isConnected()) {
+			networking.startServer();
 		}
 
 		table.add(label);
@@ -91,19 +95,19 @@ public class HostScreen extends Screen {
 	public void update() {
 		super.update();
 
-		if (Networking.isServerSocketInitialized()) {
-			if (Networking.isConnected()) {
+		if (networking.isServerSocketInitialized()) {
+			if (networking.isConnected()) {
 				label.setText(CONNECTION_ESTABLISHED);
 				remote.setText(LETS_PLAY);
 
 				/* Remote user is connected, show remote address. */
-				String addr = Networking.getRemoteAddress();
+				String addr = networking.getRemoteAddress();
 				addresses.setText(addr);
 
-				Networking.sendString("[START]\r\n");
+				networking.sendString("[START]");
 				ScreenHandler.add(new MultiGameScreen());
 			} else {
-				String error = Networking.getLastError();
+				String error = networking.getLastError();
 
 				if (error.compareTo("") != 0) {
 					label.setText(error);

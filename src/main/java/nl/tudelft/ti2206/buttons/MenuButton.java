@@ -22,7 +22,7 @@ public class MenuButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Networking.disconnect();
+				Networking.getInstance().disconnect();
 				ScreenHandler.add(new MenuScreen());
 			}
 		});

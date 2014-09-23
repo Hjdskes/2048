@@ -27,54 +27,65 @@ import com.badlogic.gdx.net.SocketHints;
  * It is suitable for being both a client and the server.
  */
 public class Networking {
+	/** A singleton reference to this class. */
+	private static Networking instance = new Networking();
+	
 	/** Enumeration indicating the mode of operation for the current game. */
 	public enum Mode {
 		CLIENT, SERVER
 	}
 
 	/** The default port to connect to. */
-	private static final int PORT = 2526;
+	private final int PORT = 2526;
 
 	/** The list containing all local IP addresses. */
-	private static List<String> addresses = new ArrayList<String>();
+	private List<String> addresses = new ArrayList<String>();
 
 	/** Current socket. */
-	private static Socket socket;
+	private Socket socket;
 
 	/** Server socket. */
-	private static ServerSocket serverSocket;
+	private ServerSocket serverSocket;
 
 	/** Socket is initialized or not. */
-	private static boolean initialized = false;
+	private boolean initialized = false;
 
 	/** Server socket is initialized. */
-	private static boolean sSocketInitialized = false;
+	private boolean sSocketInitialized = false;
 
 	/** DataStream for input. */
-	private static DataInputStream dInputStream;
+	private DataInputStream dInputStream;
 
 	/** DataStream for output. */
-	private static DataOutputStream dOutputStream;
+	private DataOutputStream dOutputStream;
 
 	/** The RemoteInputHandler controls the opponent's Grid. */
-	private static RemoteInputHandler remoteInput;
+	private RemoteInputHandler remoteInput;
 
 	/** String indicating the last occurred error. */
-	private static String lastError = "";
+	private String lastError = "";
 
 	/** True if the connection has been lost. */
-	private static boolean connectionLost = false;
+	private boolean connectionLost = false;
 
 	/** Current running thread. */
-	private static Thread thread;
+	private Thread thread;
 
 	/** The current mode of operation. */
-	private static Mode mode;
+	private Mode mode;
 
+	
+	/** Overrides the default constructor. */
+	private Networking() {}
+
+	public static Networking getInstance() {
+		return instance;
+	}
+	
 	/**
 	 * @return A list of local IP addresses.
 	 */
-	public static List<String> initLocalAddresses() {
+	public List<String> initLocalAddresses() {
 		if (addresses.isEmpty()) {
 			try {
 				System.out.println("Enumerating network devices...");
@@ -101,7 +112,7 @@ public class Networking {
 	/**
 	 * @return A list (string) all local addresses.
 	 */
-	public static String localAddresses() {
+	public String localAddresses() {
 		initLocalAddresses();
 		String res = "";
 		for (String address : addresses) {
@@ -117,7 +128,7 @@ public class Networking {
 	 *            The hostname or IP address.
 	 * @return True if host is valid, false otherwise.
 	 */
-	public static boolean isValidHost(String host) {
+	public boolean isValidHost(String host) {
 		if (isValidAddr(host)) {
 			return true;
 		}
@@ -138,7 +149,7 @@ public class Networking {
 	 *            The string to check.
 	 * @return True if the address is a valid IPv4 address, false otherwise.
 	 */
-	public static boolean isValidAddr(String address) {
+	public boolean isValidAddr(String address) {
 		if (address
 				.matches("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$")) {
 			String[] groups = address.split("\\.");
@@ -167,7 +178,7 @@ public class Networking {
 	/**
 	 * Starts a server thread (listening on socket).
 	 */
-	public static void startServer() {
+	public void startServer() {
 		setMode(Mode.SERVER);
 		setLastError("");
 		setConnectionLost(false);
@@ -215,7 +226,7 @@ public class Networking {
 	 * @param address
 	 *            The address to connect to.
 	 */
-	public static void startClient(final String address) {
+	public void startClient(final String address) {
 		startClient(address, PORT);
 	}
 
@@ -227,7 +238,7 @@ public class Networking {
 	 * @param port
 	 *            The port number.
 	 */
-	public static void startClient(final String address, final int port) {
+	public void startClient(final String address, final int port) {
 		setMode(Mode.CLIENT);
 		setLastError("");
 		setConnectionLost(false);
@@ -268,7 +279,7 @@ public class Networking {
 	 * Handles all incoming messages.
 	 */
 	@SuppressWarnings("deprecation")
-	private static void receiveLoop() {
+	private void receiveLoop() {
 		String response;
 		try {
 			while (isConnected()
@@ -287,7 +298,7 @@ public class Networking {
 	 * @param socket
 	 *            The socket.
 	 */
-	private static void setInput(Socket socket) {
+	private void setInput(Socket socket) {
 		dInputStream = new DataInputStream(socket.getInputStream());
 	}
 
@@ -297,7 +308,7 @@ public class Networking {
 	 * @param socket
 	 *            The socket.
 	 */
-	private static void setOutput(Socket socket) {
+	private void setOutput(Socket socket) {
 		dOutputStream = new DataOutputStream(socket.getOutputStream());
 	}
 
@@ -307,7 +318,7 @@ public class Networking {
 	 * @param str
 	 *            The string to send.
 	 */
-	public static void sendString(String str) {
+	public void sendString(String str) {
 		if (!str.endsWith("\r\n")) {
 			str += "\r\n";
 		}
@@ -329,7 +340,7 @@ public class Networking {
 	 * @param response
 	 *            The response message.
 	 */
-	private static void processResponse(String response) {
+	private void processResponse(String response) {
 		if (remoteInput == null) {
 			return;
 		}
@@ -364,14 +375,14 @@ public class Networking {
 	/**
 	 * @return The remote address string.
 	 */
-	public static String getRemoteAddress() {
+	public String getRemoteAddress() {
 		return socket.getRemoteAddress().replaceFirst("/", "");
 	}
 
 	/**
 	 * @return True if the socket is currently connected, false otherwise.
 	 */
-	public static boolean isConnected() {
+	public boolean isConnected() {
 
 		if (isConnectionLost())
 			return false;
@@ -386,7 +397,7 @@ public class Networking {
 	 * @return True if client socket initialized is initialized, false
 	 *         otherwise.
 	 */
-	public static boolean isInitialized() {
+	public boolean isInitialized() {
 		return initialized;
 	}
 
@@ -396,14 +407,14 @@ public class Networking {
 	 * @param initialized
 	 *            The state to set: true for connected, false for disconnected.
 	 */
-	protected static void setInitialized(boolean initialized) {
-		Networking.initialized = initialized;
+	protected void setInitialized(boolean initialized) {
+		this.initialized = initialized;
 	}
 
 	/**
 	 * @return True if the server socket is initialized.
 	 */
-	public static boolean isServerSocketInitialized() {
+	public boolean isServerSocketInitialized() {
 		return sSocketInitialized;
 	}
 
@@ -413,8 +424,8 @@ public class Networking {
 	 * @param initialized
 	 *            The state to set: true for connected, false for disconnected.
 	 */
-	public static void setServerSocketInitialized(boolean sSocketInitialized) {
-		Networking.sSocketInitialized = sSocketInitialized;
+	public void setServerSocketInitialized(boolean sSocketInitialized) {
+		this.sSocketInitialized = sSocketInitialized;
 	}
 
 	/**
@@ -423,22 +434,22 @@ public class Networking {
 	 * @param mode
 	 *            Client or Server.
 	 */
-	public static void setMode(Mode mode) {
-		Networking.mode = mode;
+	public void setMode(Mode mode) {
+		this.mode = mode;
 	}
 
 	/**
 	 * @return The current mode of operation: Server or Client. Get mode of
 	 *         operation.
 	 */
-	public static Mode getMode() {
-		return Networking.mode;
+	public Mode getMode() {
+		return mode;
 	}
 
 	/**
 	 * @return The error message for the last error that has occurred.
 	 */
-	public static String getLastError() {
+	public String getLastError() {
 		return lastError;
 	}
 
@@ -448,20 +459,20 @@ public class Networking {
 	 * @param lastError
 	 *            The error message to set.
 	 */
-	public static void setLastError(String lastError) {
+	public void setLastError(String lastError) {
 		if (lastError.contains("server socket ")) {
 			lastError = lastError.replace("server socket ", "server\r\n");
 		} else if (lastError.contains("socket connection ")) {
 			lastError = lastError.replace("socket connection ",
 					"connection\r\n");
 		}
-		Networking.lastError = lastError;
+		this.lastError = lastError;
 	}
 
 	/**
 	 * @return The RemoteInputHandler.
 	 */
-	public static RemoteInputHandler getRemoteInput() {
+	public RemoteInputHandler getRemoteInput() {
 		return remoteInput;
 	}
 
@@ -471,14 +482,14 @@ public class Networking {
 	 * @param remoteInput
 	 *            The RemoteInputHandler to set.
 	 */
-	public static void setRemoteInput(RemoteInputHandler remoteInput) {
-		Networking.remoteInput = remoteInput;
+	public void setRemoteInput(RemoteInputHandler remoteInput) {
+		this.remoteInput = remoteInput;
 	}
 
 	/**
 	 * @return True if the connection has been lost, false otherwise.
 	 */
-	public static boolean isConnectionLost() {
+	public boolean isConnectionLost() {
 		return connectionLost;
 	}
 
@@ -488,15 +499,15 @@ public class Networking {
 	 * @param connectionLost
 	 *            True if the connection has been lost.
 	 */
-	public static void setConnectionLost(boolean connectionLost) {
-		Networking.connectionLost = connectionLost;
+	public void setConnectionLost(boolean connectionLost) {
+		this.connectionLost = connectionLost;
 	}
 
 	/**
 	 * Disconnects all sockets and cleans up.
 	 */
 	@SuppressWarnings("deprecation")
-	public static void disconnect() {
+	public void disconnect() {
 		if (thread != null) {
 			thread.stop();
 		}
@@ -525,12 +536,12 @@ public class Networking {
 	}
 
 	/** For testing purposes only! */
-	public static void setSocket(Socket mockSocket) {
+	public void setSocket(Socket mockSocket) {
 		socket = mockSocket;
 	}
 
 	/** For testing purposes only! */
-	public static void setAddresses(ArrayList<String> spyAddresses) {
+	public void setAddresses(ArrayList<String> spyAddresses) {
 		addresses = spyAddresses;
 	}
 }

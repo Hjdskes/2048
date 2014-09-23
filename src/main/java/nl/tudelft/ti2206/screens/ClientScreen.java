@@ -44,11 +44,14 @@ public class ClientScreen extends Screen {
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
+	/** The singleton Networking instance. */ 
+	private static Networking networking = Networking.getInstance();
+	
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
 		label = new Label(OPPONENT_HOSTADDR, assetHandler.getSkin());
-		List<String> addresses = Networking.initLocalAddresses();
+		List<String> addresses = networking.initLocalAddresses();
 		textField = new TextField(addresses.get(0), assetHandler.getSkin());
 		menu = new MenuButton();
 		play = new TextButton("Play!", assetHandler.getSkin());
@@ -99,8 +102,8 @@ public class ClientScreen extends Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				String text = textField.getText();
 
-				if (Networking.isValidHost(text)) {
-					Networking.startClient(text);
+				if (networking.isValidHost(text)) {
+					networking.startClient(text);
 				} else {
 					label.setText(HOST_INVALID);
 				}
@@ -113,11 +116,11 @@ public class ClientScreen extends Screen {
 		super.update();
 
 		String text = textField.getText();
-		if (Networking.isConnected()) {
+		if (networking.isConnected()) {
 			label.setText("      Connected to host!");
 			ScreenHandler.add(new WaitScreen());
 		} else {
-			String error = Networking.getLastError();
+			String error = networking.getLastError();
 
 			if (error.compareTo("") != 0) {
 				label.setText(error);

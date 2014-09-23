@@ -26,6 +26,9 @@ public class NetWorkingTest {
 	private static Socket socket;
 	private static RemoteInputHandler handler;
 
+	/** The singleton Networking instance. */ 
+	private static Networking networking = Networking.getInstance();
+	
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		ArrayList<String> addresses = new ArrayList<String>();
@@ -34,7 +37,7 @@ public class NetWorkingTest {
 		socket = mock(Socket.class);
 		handler = mock(RemoteInputHandler.class);
 
-		Networking.setAddresses(spyList);
+		networking.setAddresses(spyList);
 	}
 
 	@Test
@@ -44,7 +47,7 @@ public class NetWorkingTest {
 
 		assertEquals(0, spyList.size());
 		when(spyList.isEmpty()).thenReturn(true);
-		Networking.initLocalAddresses();
+		networking.initLocalAddresses();
 		verify(spyList, atLeast(0)).add(anyString());
 	}
 
@@ -52,98 +55,98 @@ public class NetWorkingTest {
 	public void testLocalAddresses() {
 		spyList.add("10.0.0.1");
 		spyList.add("192.168.2.1");
-		assertEquals("10.0.0.1\r\n192.168.2.1\r\n", Networking.localAddresses());
+		assertEquals("10.0.0.1\r\n192.168.2.1\r\n", networking.localAddresses());
 	}
 
 	@Test
 	public void testIsValidHost() {
-		assertFalse(Networking.isValidHost("192,"));
-		assertTrue(Networking.isValidHost("192.168.2.1"));
-		assertTrue(Networking.isValidHost("10.0.0.2"));
+		assertFalse(networking.isValidHost("192,"));
+		assertTrue(networking.isValidHost("192.168.2.1"));
+		assertTrue(networking.isValidHost("10.0.0.2"));
 		// host name taken from javadoc
-		assertTrue(Networking.isValidHost("java.sun.com"));
+		assertTrue(networking.isValidHost("java.sun.com"));
 	}
 
 	@Test
 	public void testIsValidAddr() {
-		assertFalse(Networking.isValidAddr(""));
-		assertFalse(Networking.isValidAddr("add.res.s"));
-		assertFalse(Networking.isValidAddr("280.100.0.2"));
-		assertFalse(Networking.isValidAddr("192.uhh.122.???"));
-		assertTrue(Networking.isValidAddr("10.0.0.2"));
+		assertFalse(networking.isValidAddr(""));
+		assertFalse(networking.isValidAddr("add.res.s"));
+		assertFalse(networking.isValidAddr("280.100.0.2"));
+		assertFalse(networking.isValidAddr("192.uhh.122.???"));
+		assertTrue(networking.isValidAddr("10.0.0.2"));
 	}
 
 
 	@Test
 	public void testGetRemoteAddress() {
 		when(socket.getRemoteAddress()).thenReturn("/192.168.1.1:2526");
-		Networking.setSocket(socket);
-		String res = Networking.getRemoteAddress();
+		networking.setSocket(socket);
+		String res = networking.getRemoteAddress();
 		assertEquals("192.168.1.1:2526", res);
 	}
 
 	@Test
 	public void testIsConnected() {
-		Networking.setSocket(socket);
+		networking.setSocket(socket);
 		when(socket.isConnected()).thenReturn(true);
 		
-		Networking.setConnectionLost(true);
-		assertFalse(Networking.isConnected());
-		Networking.setConnectionLost(false);
+		networking.setConnectionLost(true);
+		assertFalse(networking.isConnected());
+		networking.setConnectionLost(false);
 		
-		Networking.setInitialized(false);
-		assertFalse(Networking.isConnected());
+		networking.setInitialized(false);
+		assertFalse(networking.isConnected());
 		
-		Networking.setInitialized(true);
-		assertTrue(Networking.isConnected());
+		networking.setInitialized(true);
+		assertTrue(networking.isConnected());
 	}
 
 	@Test
 	public void testIsInitialized() {
-		Networking.setInitialized(true);
-		assertTrue(Networking.isInitialized());
-		Networking.setInitialized(false);
-		assertFalse(Networking.isInitialized());
+		networking.setInitialized(true);
+		assertTrue(networking.isInitialized());
+		networking.setInitialized(false);
+		assertFalse(networking.isInitialized());
 	}
 
 	@Test
 	public void testSetServerSocketInitialized() {
-		Networking.setServerSocketInitialized(true);
-		assertTrue(Networking.isServerSocketInitialized());
-		Networking.setServerSocketInitialized(false);
-		assertFalse(Networking.isServerSocketInitialized());
+		networking.setServerSocketInitialized(true);
+		assertTrue(networking.isServerSocketInitialized());
+		networking.setServerSocketInitialized(false);
+		assertFalse(networking.isServerSocketInitialized());
 	}
 
 	@Test
 	public void testSetMode() {
-		Networking.setMode(Mode.CLIENT);
-		assertEquals(Mode.CLIENT, Networking.getMode());
+		networking.setMode(Mode.CLIENT);
+		assertEquals(Mode.CLIENT, networking.getMode());
 	}
 
 	@Test
 	public void testSetLastError() {
-		Networking.setLastError("server socket ");
-		assertEquals("server\r\n", Networking.getLastError());
-		Networking.setLastError("socket connection ");
-		assertEquals("connection\r\n", Networking.getLastError());
+		networking.setLastError("server socket ");
+		assertEquals("server\r\n", networking.getLastError());
+		networking.setLastError("socket connection ");
+		assertEquals("connection\r\n", networking.getLastError());
 	}
 
 	@Test
 	public void testGetRemoteInput() {
-		Networking.setRemoteInput(handler);
-		assertEquals(handler, Networking.getRemoteInput());
+		networking.setRemoteInput(handler);
+		assertEquals(handler, networking.getRemoteInput());
 	}
 
 	@Test
 	public void testSetRemoteInput() {
-		Networking.setRemoteInput(handler);
-		assertEquals(handler, Networking.getRemoteInput());
+		networking.setRemoteInput(handler);
+		assertEquals(handler, networking.getRemoteInput());
 	}
 
 	@Test
 	public void testDisconnect() {
 		// Disconnect, and make sure no exceptions are thrown.
-		Networking.disconnect();
+		networking.disconnect();
 	}
 
 }

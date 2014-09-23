@@ -13,6 +13,10 @@ import nl.tudelft.ti2206.net.Networking;
  * another instance.
  */
 public class LocalInputHandler extends InputListener {
+
+	/** The singleton Networking instance. */ 
+	private static Networking networking = Networking.getInstance();
+	
 	/**
 	 * A reference to the local Grid, so the called objects can interact with
 	 * it.
@@ -35,22 +39,22 @@ public class LocalInputHandler extends InputListener {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			grid.move(Direction.DOWN);
-			Networking.sendString("MOVE[D]\r\n");
+			networking.sendString("MOVE[D]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_UP:
 			grid.move(Direction.UP);
-			Networking.sendString("MOVE[U]\r\n");
+			networking.sendString("MOVE[U]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_LEFT:
 			grid.move(Direction.LEFT);
-			Networking.sendString("MOVE[L]\r\n");
+			networking.sendString("MOVE[L]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_RIGHT:
 			grid.move(Direction.RIGHT);
-			Networking.sendString("MOVE[R]\r\n");
+			networking.sendString("MOVE[R]");
 			sendGrid();
 			return true;
 		}
@@ -61,6 +65,6 @@ public class LocalInputHandler extends InputListener {
 	 * Sends the local Grid over the network.
 	 */
 	private void sendGrid() {
-		Networking.sendString("GRID[" + grid.toString() + "]\r\n");
+		networking.sendString("GRID[" + grid.toString() + "]");
 	}
 }

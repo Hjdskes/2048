@@ -30,6 +30,10 @@ public class MultiGameScreen extends Screen {
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 	
+	/** The singleton Networking instance. */ 
+	private static Networking networking = Networking.getInstance();
+	
+	
 	/** Constructs a new MultiGameScreen. */
 	public MultiGameScreen() {
 		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH,
@@ -85,14 +89,14 @@ public class MultiGameScreen extends Screen {
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
 
-		Networking.setRemoteInput(new RemoteInputHandler(remoteGrid));
+		networking.setRemoteInput(new RemoteInputHandler(remoteGrid));
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
-		if (Networking.isConnectionLost()) {
+		if (networking.isConnectionLost()) {
 			ScreenHandler.add(new ConnectionLostScreen());
 		}
 
