@@ -43,7 +43,7 @@ public class MultiGameScreen extends Screen {
 		stage = new Stage();
 		
 		localGrid = new Grid(false);
-		remoteGrid = new Grid(true);
+		remoteGrid = new Grid(false);
 		
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Opponent", assetHandler.getSkin());
@@ -53,6 +53,9 @@ public class MultiGameScreen extends Screen {
 		
 		localScores = new ScoreDisplay(localGrid);
 		remoteScores = new ScoreDisplay(remoteGrid);
+		
+		remoteInput = new RemoteInputHandler(remoteGrid);
+		networking.addObserver(remoteInput);
 	}
 	
 	/** Constructor for testing purposes only */
@@ -78,7 +81,8 @@ public class MultiGameScreen extends Screen {
 		localGroup.addActor(localScores);
 		localGroup.addActor(localGrid);
 		localGroup.addActor(you);
-		stage.addListener(new LocalInputHandler(localGrid));
+
+		
 
 		/* Create our remote groups and actors. */
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
@@ -91,9 +95,9 @@ public class MultiGameScreen extends Screen {
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
 		
-		remoteInput = new RemoteInputHandler(remoteGrid);
+
 		
-		networking.addObserver(remoteInput);
+		stage.addListener(new LocalInputHandler(localGrid));
 	}
 
 	@Override

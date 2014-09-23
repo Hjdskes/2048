@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.handlers;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.badlogic.gdx.Gdx;
+
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.net.Networking;
@@ -20,6 +22,8 @@ public class RemoteInputHandler implements Observer {
 
 	/** The singleton Networking instance. */
 	private static Networking networking = Networking.getInstance();
+	
+	private String className = this.getClass().getName();
 
 	/**
 	 * Creates a new RemoteInputHandler instance.
@@ -79,7 +83,7 @@ public class RemoteInputHandler implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg instanceof String) {
 			String input = (String) arg;
-			System.out.println("INFO: update received: " + input);
+			Gdx.app.debug(className, "update received: " + input);
 			handleRemoteInput(input);
 		}
 	}
@@ -103,25 +107,20 @@ public class RemoteInputHandler implements Observer {
 	public void handleRemoteInput(String str) {
 
 		int closing = str.indexOf(']');
-	//	System.out.println("INFO: handleInput: closing bracket @ " + closing);
 		
 		if (closing == -1) {
-			System.err
-					.println("ERROR: Protocol parsing failed, no closing bracket found (-1).");
+			Gdx.app.error(className, "Protocol parsing failed, no closing bracket found (-1).");
 		} else if (str.startsWith("GRID[")) {
 			String strGrid = str.substring(5, closing);
 
 			if (validateGrid(strGrid)) {
 				fillGrid(strGrid);
-		//		System.out.println("INFO: New grid set.");
+				Gdx.app.debug(className, "New remote grid set.");
 			} else {
-				System.err
-						.println("ERROR: Protocol parsing failed, malformed grid string: " + strGrid);
+				Gdx.app.error(className, "Protocol parsing failed, malformed remote grid string: " + strGrid);
 			}
 		} else if (str.startsWith("MOVE[") && closing == 6) {
 			char direction = str.charAt(5);
-
-		//	System.out.println("INFO: handling move to " + direction);
 			
 			switch (direction) {
 			case 'U':
@@ -137,13 +136,12 @@ public class RemoteInputHandler implements Observer {
 				moveLeft();
 				break;
 			default:
-				System.err.println("ERROR: Unknown direction parameter in protocol: "
+				Gdx.app.error(className, "Unknown remote direction parameter in protocol: "
 								+ direction);
 				break;
 			}
 		} else {
-			System.err
-					.println("ERROR: Unrecognised string in protocol: " + str + ", closing tag is at " + closing);
+			Gdx.app.error(className, "Unrecognised remote string in protocol: " + str + ", closing tag is at position " + closing);
 		}
 	}
 

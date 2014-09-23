@@ -109,7 +109,6 @@ public class HostScreen extends Screen implements Observer {
 				String addr = networking.getRemoteAddress();
 				addresses.setText(addr);
 
-				//networking.sendString("[START]");
 				ScreenHandler.add(new MultiGameScreen());
 			} else {
 				String error = networking.getLastError();

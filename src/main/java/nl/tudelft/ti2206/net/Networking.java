@@ -33,7 +33,7 @@ public class Networking extends Observable {
 
 	/** Enumeration indicating the mode of operation for the current game. */
 	public enum Mode {
-		CLIENT, SERVER
+		NONE, CLIENT, SERVER
 	}
 
 	/** The default port to connect to. */
@@ -71,10 +71,12 @@ public class Networking extends Observable {
 
 	/** The current mode of operation. */
 	private Mode mode;
+	
+	private String className = this.getClass().getName();
 
 	/** Overrides the default constructor. */
 	private Networking() {
-
+		setMode(Mode.NONE);
 	}
 
 	public static Networking getInstance() {
@@ -87,7 +89,7 @@ public class Networking extends Observable {
 	public List<String> initLocalAddresses() {
 		if (addresses.isEmpty()) {
 			try {
-				System.out.println("INFO: Enumerating network devices...");
+				Gdx.app.log(className + "/" + getMode(), "Enumerating network devices...");
 				Enumeration<NetworkInterface> interfaces = NetworkInterface
 						.getNetworkInterfaces();
 				for (NetworkInterface ni : Collections.list(interfaces)) {
@@ -186,7 +188,7 @@ public class Networking extends Observable {
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("INFO: Starting server on port " + PORT);
+				Gdx.app.log(className + "/" + getMode(), "Starting server on port " + PORT);
 
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
@@ -210,6 +212,8 @@ public class Networking extends Observable {
 					if (clientSocket != null) {
 						setStreams(clientSocket);
 						setInitialized(true);
+						
+						Gdx.app.log(className + "/" + getMode(), "connection accepted from " + getRemoteAddress());
 
 						while (isConnected()) {
 							receiveLoop();
@@ -250,7 +254,7 @@ public class Networking extends Observable {
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
 				socketHints.keepAlive = true;
-				System.out.println("INFO: Starting client on port " + port);
+				Gdx.app.log(className + "/" + getMode(), "Starting client on port " + port);
 				try {
 					clientSocket = Gdx.net.newClientSocket(Protocol.TCP,
 							address, port, socketHints);
@@ -338,6 +342,8 @@ public class Networking extends Observable {
 	 */
 	public void sendString(String str, boolean newLine) {
 
+		Gdx.app.debug(className + "/" + getMode(), "Sending string: " + str);		
+		
 		if (newLine && !str.endsWith("\r\n")) {
 			str += "\r\n";
 		}
@@ -345,6 +351,7 @@ public class Networking extends Observable {
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
+				
 			} catch (IOException e) {
 				setConnectionLost(true);
 				disconnect();
@@ -361,8 +368,8 @@ public class Networking extends Observable {
 	 */
 	private void processResponse(String response) {
 
-		System.out.println("INFO: Networking::processResponse(" + response
-				+ ")");
+		Gdx.app.debug(className + "/" + getMode(), "Networking::processResponse(" + response
+				+ ") sending to " + countObservers() + " registered observers");
 
 		setChanged();
 		notifyObservers(response);
@@ -406,8 +413,9 @@ public class Networking extends Observable {
 	protected void setInitialized(boolean initialized) {
 
 		if (initialized) {
-			System.out.println("INFO: Networking socket initialized.");
+			Gdx.app.log(className + "/" + getMode(), "Client socket initialized");
 			setChanged();
+			notifyObservers();
 		}
 
 		this.initialized = initialized;
@@ -454,7 +462,7 @@ public class Networking extends Observable {
 	public String getLastError() {
 		return lastError;
 	}
-
+	
 	/**
 	 * Sets the error message of the last error that has occurred.
 	 * 
@@ -488,7 +496,7 @@ public class Networking extends Observable {
 		this.connectionLost = connectionLost;
 
 		if (connectionLost) {
-			System.out.println("INFO: Networking: Connection lost.");
+			Gdx.app.log(className + "/" + getMode(), "Connection lost.");
 		}
 	}
 
@@ -498,7 +506,7 @@ public class Networking extends Observable {
 	@SuppressWarnings("deprecation")
 	public void disconnect() {
 
-		System.out.println("INFO: Networking::disconnect();");
+		Gdx.app.log(className + "/" + getMode(), "disconnect();");
 
 		if (thread != null) {
 			thread.stop();
@@ -521,9 +529,10 @@ public class Networking extends Observable {
 				e.printStackTrace();
 			}
 		} else {
-			System.out
-					.println("INFO: Networking::disconnect(): client socket not initialized");
+			Gdx.app.debug(className + "/" + getMode(), "disconnect(): client socket not initialized");
 		}
+		
+		setMode(Mode.NONE);
 	}
 
 	/** For testing purposes only! */
