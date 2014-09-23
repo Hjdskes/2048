@@ -12,7 +12,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
-import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.net.Networking.Mode;
 
 import org.junit.BeforeClass;
@@ -24,7 +23,6 @@ public class NetWorkingTest {
 
 	private static ArrayList<String> spyList;
 	private static Socket socket;
-	private static RemoteInputHandler handler;
 
 	/** The singleton Networking instance. */ 
 	private static Networking networking = Networking.getInstance();
@@ -35,7 +33,6 @@ public class NetWorkingTest {
 		spyList = spy(addresses);
 		
 		socket = mock(Socket.class);
-		handler = mock(RemoteInputHandler.class);
 
 		networking.setAddresses(spyList);
 	}
@@ -130,18 +127,6 @@ public class NetWorkingTest {
 		networking.setLastError("socket connection ");
 		assertEquals("connection\r\n", networking.getLastError());
 	}
-
-//	@Test
-//	public void testGetRemoteInput() {
-//		networking.setRemoteInput(handler);
-//		assertEquals(handler, networking.getRemoteInput());
-//	}
-//
-//	@Test
-//	public void testSetRemoteInput() {
-//		networking.setRemoteInput(handler);
-//		assertEquals(handler, networking.getRemoteInput());
-//	}
 
 	@Test
 	public void testDisconnect() {
