@@ -30,7 +30,7 @@ import com.badlogic.gdx.net.SocketHints;
 public class Networking extends Observable {
 	/** A singleton reference to this class. */
 	private static Networking instance = new Networking();
-	
+
 	/** Enumeration indicating the mode of operation for the current game. */
 	public enum Mode {
 		CLIENT, SERVER
@@ -72,23 +72,22 @@ public class Networking extends Observable {
 	/** The current mode of operation. */
 	private Mode mode;
 
-	
 	/** Overrides the default constructor. */
 	private Networking() {
-		
+
 	}
 
 	public static Networking getInstance() {
 		return instance;
 	}
-	
+
 	/**
 	 * @return A list of local IP addresses.
 	 */
 	public List<String> initLocalAddresses() {
 		if (addresses.isEmpty()) {
 			try {
-				System.out.println("Enumerating network devices...");
+				System.out.println("INFO: Enumerating network devices...");
 				Enumeration<NetworkInterface> interfaces = NetworkInterface
 						.getNetworkInterfaces();
 				for (NetworkInterface ni : Collections.list(interfaces)) {
@@ -202,12 +201,18 @@ public class Networking extends Observable {
 					}
 				}
 
-				if (clientSocket != null) {
-					setStreams(clientSocket);
-					setInitialized(true);
+				if (serverSocket != null) {
 
-					while (isConnected()) {
-						receiveLoop();
+					setServerSocketInitialized(true);
+					clientSocket = serverSocket.accept(null);
+
+					if (clientSocket != null) {
+						setStreams(clientSocket);
+						setInitialized(true);
+
+						while (isConnected()) {
+							receiveLoop();
+						}
 					}
 				}
 			}
@@ -244,10 +249,10 @@ public class Networking extends Observable {
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
 				socketHints.keepAlive = true;
-
+				System.out.println("INFO: Starting client on port " + port);
 				try {
-					clientSocket = Gdx.net.newClientSocket(Protocol.TCP, address,
-							port, socketHints);
+					clientSocket = Gdx.net.newClientSocket(Protocol.TCP,
+							address, port, socketHints);
 				} catch (Exception e) {
 					String msg = e.getMessage();
 					if (msg != null) {
@@ -282,15 +287,15 @@ public class Networking extends Observable {
 			}
 		} catch (Exception e) {
 			setConnectionLost(true);
-		//	e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
-	
+
 	private void setStreams(Socket socket) {
-		
+
 		if (socket == null)
 			return;
-		
+
 		setInputStream(socket.getInputStream());
 		setOutputStream(socket.getOutputStream());
 	}
@@ -314,21 +319,24 @@ public class Networking extends Observable {
 	private void setOutputStream(OutputStream outputStream) {
 		dOutputStream = new DataOutputStream(outputStream);
 	}
-	
+
 	/**
 	 * Sends a string to output stream. Appends newline if not yet present.
 	 */
 	public void sendString(String str) {
 		sendString(str, true);
 	}
-	
+
 	/**
 	 * Sends a string to output stream.
-	 * @param str the string to send
-	 * @param newLine append newline
+	 * 
+	 * @param str
+	 *            the string to send
+	 * @param newLine
+	 *            append newline
 	 */
 	public void sendString(String str, boolean newLine) {
-		
+
 		if (newLine && !str.endsWith("\r\n")) {
 			str += "\r\n";
 		}
@@ -351,9 +359,10 @@ public class Networking extends Observable {
 	 *            The response message.
 	 */
 	private void processResponse(String response) {
-		
-		System.out.println("INFO: Networking::processResponse(" + response + ")");
-		
+
+		System.out.println("INFO: Networking::processResponse(" + response
+				+ ")");
+
 		setChanged();
 		notifyObservers(response);
 	}
@@ -394,11 +403,12 @@ public class Networking extends Observable {
 	 *            The state to set: true for connected, false for disconnected.
 	 */
 	protected void setInitialized(boolean initialized) {
-		
+
 		if (initialized) {
+			System.out.println("INFO: Networking socket initialized.");
 			setChanged();
 		}
-		
+
 		this.initialized = initialized;
 	}
 
@@ -475,8 +485,8 @@ public class Networking extends Observable {
 	 */
 	public void setConnectionLost(boolean connectionLost) {
 		this.connectionLost = connectionLost;
-		
-		if (connectionLost){
+
+		if (connectionLost) {
 			System.out.println("INFO: Networking: Connection lost.");
 		}
 	}
@@ -486,13 +496,13 @@ public class Networking extends Observable {
 	 */
 	@SuppressWarnings("deprecation")
 	public void disconnect() {
-		
+
 		System.out.println("INFO: Networking::disconnect();");
-		
+
 		if (thread != null) {
 			thread.stop();
 		}
-		
+
 		if (getMode() == Mode.SERVER) {
 			if (isServerSocketInitialized()) {
 				serverSocket.dispose();
@@ -510,7 +520,8 @@ public class Networking extends Observable {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("INFO: Networking::disconnect(): client socket not initialized");
+			System.out
+					.println("INFO: Networking::disconnect(): client socket not initialized");
 		}
 	}
 

@@ -80,7 +80,7 @@ public class RemoteInputHandler implements Observer {
 		if (arg instanceof String) {
 			String input = (String) arg;
 			System.out.println("INFO: update received: " + input);
-			handleInput(input);
+			handleRemoteInput(input);
 		}
 	}
 	
@@ -96,11 +96,11 @@ public class RemoteInputHandler implements Observer {
 	}
 
 	/**
-	 * Parse the network input and process it.
+	 * Parse the remote input and process it.
 	 * 
 	 * @param str
 	 */
-	public void handleInput(String str) {
+	public void handleRemoteInput(String str) {
 
 		int closing = str.indexOf(']');
 		System.out.println("INFO: handleInput: closing bracket @ " + closing);
