@@ -15,7 +15,7 @@ Group: 21
 | User Story 1 | 1.1 | Jente         | Medium | Difficult    | Yes | The actual
 implementation was simple, although before we could do this we had to re-write
 the entire codebase. |
-|              | 1.2 | Jente         | Medium | actual?      | Yes | The actual
+|              | 1.2 | Jente         | Medium | Difficult      | Yes | The actual
 implementation was simple, although before we could do this we had to re-write
 the entire codebase. |
 | User Story 2 | 2.1 | Jochem        | Medium | Medium      | Yes | None. |
