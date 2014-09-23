@@ -23,10 +23,12 @@ public class GameScreen extends Screen {
 	/** The button to restart the current game. */
 	private RestartButton restartButton;
 
+	private ProgressHandler progressHandler = ProgressHandler.getInstance();
+
 	/** Constructs a new GameScreen. */
 	public GameScreen() {
 		stage = new Stage();
-		grid = ProgressHandler.loadGame();
+		grid = progressHandler.loadGame();
 		restartButton = new RestartButton();
 		scores = new ScoreDisplay(grid);
 	}
@@ -44,7 +46,7 @@ public class GameScreen extends Screen {
 	public void create() {
 		super.create();
 		stage.addListener(new InputHandler(grid));
-		
+
 		/* Create the main group and pack everything in it. */
 		grid.setName("Grid");
 		stage.addActor(grid);
@@ -56,7 +58,8 @@ public class GameScreen extends Screen {
 	public void update() {
 		super.update();
 
-		if (grid.getCurrentHighestTile() == 2048 && !TwentyFourtyGame.isContinuing()) {
+		if (grid.getCurrentHighestTile() == 2048
+				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(GameState.WON);
 			ScreenHandler.add(new WinScreen());
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
@@ -67,6 +70,6 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void pause() {
-		ProgressHandler.saveGame(grid);
+		progressHandler.saveGame(grid);
 	}
 }

@@ -8,6 +8,21 @@ import nl.tudelft.ti2206.gameobjects.Tile;
  * saved game.
  */
 public class ProgressHandler {
+
+	/** A singleton reference to the this class. */
+	private static ProgressHandler instance = new ProgressHandler();
+
+	/** A PrefenceHanlder singleton instance. */
+	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
+
+	/** Overrides the default constructor. */
+	private ProgressHandler() {
+	}
+
+	public static ProgressHandler getInstance() {
+		return instance;
+	}
+
 	/**
 	 * Calls saveGrid to save the current grid and uses the PreferenceHandler to
 	 * save the current score, high score and highest tile value ever reached.
@@ -15,19 +30,19 @@ public class ProgressHandler {
 	 * @param grid
 	 *            The Grid to save its' current state.
 	 */
-	public static void saveGame(Grid grid) {
+	public void saveGame(Grid grid) {
 		int highest = grid.getCurrentHighestTile();
 		int highscore = grid.getHighscore();
 		int score = grid.getScore();
 
 		saveGrid(grid);
-		PreferenceHandler.setScore(score);
+		prefsHandler.setScore(score);
 
-		if (highest > PreferenceHandler.getHighestTile()) {
-			PreferenceHandler.setHighest(highest);
+		if (highest > prefsHandler.getHighestTile()) {
+			prefsHandler.setHighest(highest);
 		}
-		if (highscore > PreferenceHandler.getHighscore()) {
-			PreferenceHandler.setHighscore(highscore);
+		if (highscore > prefsHandler.getHighscore()) {
+			prefsHandler.setHighscore(highscore);
 		}
 	}
 
@@ -35,21 +50,21 @@ public class ProgressHandler {
 	 * Loads the saved grid, score, high score and highest tile value ever
 	 * reached.
 	 */
-	public static Grid loadGame() {
+	public Grid loadGame() {
 		Grid grid = loadGrid();
-		grid.setHighestTile(PreferenceHandler.getHighestTile());
-		grid.setHighscore(PreferenceHandler.getHighscore());
-		grid.setScore(PreferenceHandler.getScore());
+		grid.setHighestTile(prefsHandler.getHighestTile());
+		grid.setHighscore(prefsHandler.getHighscore());
+		grid.setScore(prefsHandler.getScore());
 		return grid;
 	}
 
 	/**
-	 * Calls the PreferenceHandler to save the current grid.
+	 * Calls the prefsHandler to save the current grid.
 	 * 
 	 * @param grid
 	 *            The grid to store.
 	 */
-	private static void saveGrid(Grid grid) {
+	private void saveGrid(Grid grid) {
 		String state = "";
 
 		Tile[] tiles = grid.getTiles();
@@ -59,14 +74,14 @@ public class ProgressHandler {
 			}
 		}
 
-		PreferenceHandler.setGrid(state);
+		prefsHandler.setGrid(state);
 	}
 
 	/**
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 */
-	private static Grid loadGrid() {
-		String filledTiles = PreferenceHandler.getGrid();
+	private Grid loadGrid() {
+		String filledTiles = prefsHandler.getGrid();
 		/*
 		 * If no grid is saved, return a default one. Else, fill the grid with
 		 * the saved tiles.

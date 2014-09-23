@@ -16,12 +16,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
- * A test class for the ProgressHandler.
+ * A test class for the progressHandler.
  * 
  * @author group-21
  */
 public class ProgressHandlerTest {
-	
+
+	/** A singleton reference to the PreferenceHandler. */
+	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
+	/** A singleton reference to the progressHandler. */
+	private ProgressHandler progressHandler = ProgressHandler.getInstance();
+
 	private Grid grid;
 
 	/**
@@ -48,7 +53,7 @@ public class ProgressHandlerTest {
 		 * Clear the saved data to make sure the test case can use its own grid,
 		 * score, etc.
 		 */
-		PreferenceHandler.getPrefs().clear();
+		prefsHandler.getPrefs().clear();
 		grid = new Grid(true, skin, region);
 	}
 
@@ -62,8 +67,8 @@ public class ProgressHandlerTest {
 
 		String saveString = "0,2\n1,4\n";
 
-		ProgressHandler.saveGame(grid);
-		assertEquals(saveString, PreferenceHandler.getGrid());
+		progressHandler.saveGame(grid);
+		assertEquals(saveString, prefsHandler.getGrid());
 	}
 
 	/**
@@ -76,9 +81,9 @@ public class ProgressHandlerTest {
 		grid.setScore(score);
 		grid.setHighestTile(highestTile);
 
-		ProgressHandler.saveGame(grid);
+		progressHandler.saveGame(grid);
 
-		assertEquals(score, PreferenceHandler.getScore());
-		assertEquals(highestTile, PreferenceHandler.getHighestTile());
+		assertEquals(score, prefsHandler.getScore());
+		assertEquals(highestTile, prefsHandler.getHighestTile());
 	}
 }

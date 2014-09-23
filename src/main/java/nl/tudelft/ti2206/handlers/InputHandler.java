@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
  */
 public class InputHandler extends InputListener {
 	/**
-	 * A reference to the current Grid, so the called objects can interact
-	 * with it.
+	 * A reference to the current Grid, so the called objects can interact with
+	 * it.
 	 */
 	private Grid grid;
 
@@ -46,7 +46,7 @@ public class InputHandler extends InputListener {
 			grid.move(Direction.RIGHT);
 			return true;
 		case Keys.ESCAPE:
-			ProgressHandler.saveGame(grid);
+			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.add(new MenuScreen());
 			return true;
 		}
