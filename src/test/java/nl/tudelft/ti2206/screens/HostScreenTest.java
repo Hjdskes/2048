@@ -71,11 +71,11 @@ public class HostScreenTest {
 		when(table.getCell(label)).thenReturn(cell);
 	}
 
-	@Test
-	public void testDispose() {
-		screen.dispose();
-		verify(stage).dispose();
-	}
+//	@Test
+//	public void testDispose() {
+//		screen.dispose();
+//		verify(stage).dispose();
+//	}
 
 	@Test
 	public void testCreate() {
