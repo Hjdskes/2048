@@ -89,10 +89,10 @@ public class RemoteInputHandler implements Observer {
 	 * @param str
 	 * @return
 	 */
-	public boolean validGrid(String str) {
+	public boolean validateGrid(String str) {
 		
 		return (str.matches("\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+") &&
-		(str.length() - str.replace(",", "").length()) == 15);
+				(str.length() - str.replace(",", "").length()) == 15);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class RemoteInputHandler implements Observer {
 	public void handleRemoteInput(String str) {
 
 		int closing = str.indexOf(']');
-		System.out.println("INFO: handleInput: closing bracket @ " + closing);
+	//	System.out.println("INFO: handleInput: closing bracket @ " + closing);
 		
 		if (closing == -1) {
 			System.err
@@ -111,9 +111,9 @@ public class RemoteInputHandler implements Observer {
 		} else if (str.startsWith("GRID[")) {
 			String strGrid = str.substring(5, closing);
 
-			if (validGrid(strGrid)) {
+			if (validateGrid(strGrid)) {
 				fillGrid(strGrid);
-				System.out.println("INFO: New grid set.");
+		//		System.out.println("INFO: New grid set.");
 			} else {
 				System.err
 						.println("ERROR: Protocol parsing failed, malformed grid string: " + strGrid);
@@ -121,7 +121,7 @@ public class RemoteInputHandler implements Observer {
 		} else if (str.startsWith("MOVE[") && closing == 6) {
 			char direction = str.charAt(5);
 
-			System.out.println("INFO: handling move to " + direction);
+		//	System.out.println("INFO: handling move to " + direction);
 			
 			switch (direction) {
 			case 'U':
