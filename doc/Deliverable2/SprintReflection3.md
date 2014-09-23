@@ -9,9 +9,9 @@ Group: 21
 |              | 1.2 | Paul & Arthur | Easy | Easy | Yes | We changed and merged a lot of classes |
 |              | 1.3 | Paul & Arthur | Easy | Medium | Yes | We used UMLet to make the UML |
 |              | 1.4 | Paul & Arthur | Easy | Medium | Yes | We used UMLet to make the sequence diagram |
-| Assignment 2 | 2.1 | Arthur        | Easy | actual effort? | Yes | notes? |
-|              | 2.2 | Arthur        | Easy | actual effort? | Yes | notes? |
-|              | 2.3 | Paul & Arthur | Difficult | actual?   | No  | notes? |
+| Assignment 2 | 2.1 | Arthur        | Easy | Easy  | Yes | None. |
+|              | 2.2 | Arthur        | Easy | Easy  | Yes | None. |
+|              | 2.3 | Paul & Arthur | Difficult | Difficult   | Yes | There were no cases where we could apply double dispatch.|
 | User Story 1 | 1.1 | Jente         | Medium | Difficult    | Yes | The actual
 implementation was simple, although before we could do this we had to re-write
 the entire codebase. |
