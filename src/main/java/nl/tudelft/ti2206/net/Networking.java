@@ -89,7 +89,7 @@ public class Networking extends Observable {
 	public List<String> initLocalAddresses() {
 		if (addresses.isEmpty()) {
 			try {
-				Gdx.app.log(className + "/" + getMode(), "Enumerating network devices...");
+				Gdx.app.log(className + "/" + getMode(), "Enumerating network interfaces...");
 				Enumeration<NetworkInterface> interfaces = NetworkInterface
 						.getNetworkInterfaces();
 				for (NetworkInterface ni : Collections.list(interfaces)) {

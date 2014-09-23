@@ -1,12 +1,10 @@
 package nl.tudelft.ti2206.game;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
- /** This class launches an instance of TwentyFourtyGame. */
+/** This class launches an instance of TwentyFourtyGame. */
 public class Launcher {
 	/** The width of the game window. */
 	private static final int WIDTH = 600;
@@ -24,14 +22,12 @@ public class Launcher {
 	 *            The command line arguments. These are ignored.
 	 */
 	public static void main(String[] args) {
-		
-		
-		
+
 		Launcher launcher = new Launcher();
 		launcher.launch();
 	}
 
-	/** 
+	/**
 	 * Creates a new Launcher object. This object is automatically configured.
 	 */
 	public Launcher() {
