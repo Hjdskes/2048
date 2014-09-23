@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.net;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -12,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-
-import nl.tudelft.ti2206.handlers.RemoteInputHandler;
+import java.util.Observable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
@@ -26,7 +27,7 @@ import com.badlogic.gdx.net.SocketHints;
  * The Networking class is used to set up a connection when playing multiplayer.
  * It is suitable for being both a client and the server.
  */
-public class Networking {
+public class Networking extends Observable {
 	/** A singleton reference to this class. */
 	private static Networking instance = new Networking();
 	
@@ -42,7 +43,7 @@ public class Networking {
 	private List<String> addresses = new ArrayList<String>();
 
 	/** Current socket. */
-	private Socket socket;
+	private Socket clientSocket;
 
 	/** Server socket. */
 	private ServerSocket serverSocket;
@@ -59,9 +60,6 @@ public class Networking {
 	/** DataStream for output. */
 	private DataOutputStream dOutputStream;
 
-	/** The RemoteInputHandler controls the opponent's Grid. */
-	private RemoteInputHandler remoteInput;
-
 	/** String indicating the last occurred error. */
 	private String lastError = "";
 
@@ -76,7 +74,9 @@ public class Networking {
 
 	
 	/** Overrides the default constructor. */
-	private Networking() {}
+	private Networking() {
+		
+	}
 
 	public static Networking getInstance() {
 		return instance;
@@ -186,7 +186,7 @@ public class Networking {
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Starting server on port " + PORT);
+				System.out.println("INFO: Starting server on port " + PORT);
 
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
@@ -202,17 +202,12 @@ public class Networking {
 					}
 				}
 
-				if (serverSocket != null) {
-					setServerSocketInitialized(true);
-					socket = serverSocket.accept(null);
-					if (socket != null) {
-						setInitialized(true);
-						setInput(socket);
-						setOutput(socket);
+				if (clientSocket != null) {
+					setStreams(clientSocket);
+					setInitialized(true);
 
-						while (isConnected()) {
-							receiveLoop();
-						}
+					while (isConnected()) {
+						receiveLoop();
 					}
 				}
 			}
@@ -251,7 +246,7 @@ public class Networking {
 				socketHints.keepAlive = true;
 
 				try {
-					socket = Gdx.net.newClientSocket(Protocol.TCP, address,
+					clientSocket = Gdx.net.newClientSocket(Protocol.TCP, address,
 							port, socketHints);
 				} catch (Exception e) {
 					String msg = e.getMessage();
@@ -260,9 +255,8 @@ public class Networking {
 					}
 				}
 
-				if (socket != null) {
-					setInput(socket);
-					setOutput(socket);
+				if (clientSocket != null) {
+					setStreams(clientSocket);
 					setInitialized(true);
 
 					while (isConnected()) {
@@ -288,38 +282,54 @@ public class Networking {
 			}
 		} catch (Exception e) {
 			setConnectionLost(true);
-			e.printStackTrace();
+		//	e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Sets input streams by socket.
-	 * 
-	 * @param socket
-	 *            The socket.
-	 */
-	private void setInput(Socket socket) {
-		dInputStream = new DataInputStream(socket.getInputStream());
+	
+	private void setStreams(Socket socket) {
+		
+		if (socket == null)
+			return;
+		
+		setInputStream(socket.getInputStream());
+		setOutputStream(socket.getOutputStream());
 	}
 
 	/**
-	 * Sets output streams by socket.
+	 * Sets input streams.
 	 * 
-	 * @param socket
+	 * @param inputStream
 	 *            The socket.
 	 */
-	private void setOutput(Socket socket) {
-		dOutputStream = new DataOutputStream(socket.getOutputStream());
+	private void setInputStream(InputStream inputStream) {
+		dInputStream = new DataInputStream(inputStream);
 	}
 
 	/**
-	 * Sends a string to the output stream.
+	 * Sets output streams.
 	 * 
-	 * @param str
-	 *            The string to send.
+	 * @param outputStream
+	 *            The socket.
+	 */
+	private void setOutputStream(OutputStream outputStream) {
+		dOutputStream = new DataOutputStream(outputStream);
+	}
+	
+	/**
+	 * Sends a string to output stream. Appends newline if not yet present.
 	 */
 	public void sendString(String str) {
-		if (!str.endsWith("\r\n")) {
+		sendString(str, true);
+	}
+	
+	/**
+	 * Sends a string to output stream.
+	 * @param str the string to send
+	 * @param newLine append newline
+	 */
+	public void sendString(String str, boolean newLine) {
+		
+		if (newLine && !str.endsWith("\r\n")) {
 			str += "\r\n";
 		}
 
@@ -328,8 +338,8 @@ public class Networking {
 				dOutputStream.writeBytes(str);
 			} catch (IOException e) {
 				setConnectionLost(true);
-				System.err.println("Unable to send string:");
-				e.printStackTrace();
+				disconnect();
+				System.err.println("ERROR: Unable to send string:" + str);
 			}
 		}
 	}
@@ -341,42 +351,18 @@ public class Networking {
 	 *            The response message.
 	 */
 	private void processResponse(String response) {
-		if (remoteInput == null) {
-			return;
-		}
-
-		int closing = response.indexOf(']');
-		if (response.startsWith("GRID[")) {
-			String strGrid = response.substring(5, closing);
-			remoteInput.fillGrid(strGrid);
-		} else if (response.startsWith("MOVE[")) {
-			char direction = response.charAt(5);
-
-			switch (direction) {
-			case 'U':
-				remoteInput.moveUp();
-				break;
-			case 'D':
-				remoteInput.moveDown();
-				break;
-			case 'R':
-				remoteInput.moveRight();
-				break;
-			case 'L':
-				remoteInput.moveLeft();
-				break;
-			default:
-				System.err.println("Unknown direction: " + direction);
-				break;
-			}
-		}
+		
+		System.out.println("INFO: Networking::processResponse(" + response + ")");
+		
+		setChanged();
+		notifyObservers(response);
 	}
 
 	/**
 	 * @return The remote address string.
 	 */
 	public String getRemoteAddress() {
-		return socket.getRemoteAddress().replaceFirst("/", "");
+		return clientSocket.getRemoteAddress().replaceFirst("/", "");
 	}
 
 	/**
@@ -390,7 +376,7 @@ public class Networking {
 		if (!isInitialized())
 			return false;
 
-		return socket.isConnected();
+		return clientSocket.isConnected();
 	}
 
 	/**
@@ -408,6 +394,11 @@ public class Networking {
 	 *            The state to set: true for connected, false for disconnected.
 	 */
 	protected void setInitialized(boolean initialized) {
+		
+		if (initialized) {
+			setChanged();
+		}
+		
 		this.initialized = initialized;
 	}
 
@@ -470,23 +461,6 @@ public class Networking {
 	}
 
 	/**
-	 * @return The RemoteInputHandler.
-	 */
-	public RemoteInputHandler getRemoteInput() {
-		return remoteInput;
-	}
-
-	/**
-	 * Set the RemoteInputHandler.
-	 * 
-	 * @param remoteInput
-	 *            The RemoteInputHandler to set.
-	 */
-	public void setRemoteInput(RemoteInputHandler remoteInput) {
-		this.remoteInput = remoteInput;
-	}
-
-	/**
 	 * @return True if the connection has been lost, false otherwise.
 	 */
 	public boolean isConnectionLost() {
@@ -501,6 +475,10 @@ public class Networking {
 	 */
 	public void setConnectionLost(boolean connectionLost) {
 		this.connectionLost = connectionLost;
+		
+		if (connectionLost){
+			System.out.println("INFO: Networking: Connection lost.");
+		}
 	}
 
 	/**
@@ -508,12 +486,13 @@ public class Networking {
 	 */
 	@SuppressWarnings("deprecation")
 	public void disconnect() {
+		
+		System.out.println("INFO: Networking::disconnect();");
+		
 		if (thread != null) {
 			thread.stop();
 		}
-
-		setRemoteInput(null);
-
+		
 		if (getMode() == Mode.SERVER) {
 			if (isServerSocketInitialized()) {
 				serverSocket.dispose();
@@ -522,7 +501,7 @@ public class Networking {
 		}
 
 		if (isInitialized()) {
-			socket.dispose();
+			clientSocket.dispose();
 			setInitialized(false);
 			try {
 				dInputStream.close();
@@ -531,13 +510,13 @@ public class Networking {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("disconnect(): client socket not initialized");
+			System.out.println("INFO: Networking::disconnect(): client socket not initialized");
 		}
 	}
 
 	/** For testing purposes only! */
 	public void setSocket(Socket mockSocket) {
-		socket = mockSocket;
+		clientSocket = mockSocket;
 	}
 
 	/** For testing purposes only! */

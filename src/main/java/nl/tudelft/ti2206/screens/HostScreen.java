@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.screens;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
@@ -12,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  * The HostScreen is the screen the host sees. It will list his IP addresses, so
  * he can easily pass those on to the client.
  */
-public class HostScreen extends Screen {
+public class HostScreen extends Screen implements Observer {
 	/** The string used in the label of the remote. */
 	public static final String LETS_PLAY = "Let's play!";
 
@@ -58,6 +61,8 @@ public class HostScreen extends Screen {
 		/* Show addresses to user to share with opponent. */
 		addresses = new Label(networking.localAddresses(), assetHandler.getSkin());
 		cancel = new MenuButton();
+		
+		networking.addObserver(this);
 	}
 
 	/** Constructor for injecting mock objects. For testing purposes only. */
@@ -104,7 +109,7 @@ public class HostScreen extends Screen {
 				String addr = networking.getRemoteAddress();
 				addresses.setText(addr);
 
-				networking.sendString("[START]");
+				//networking.sendString("[START]");
 				ScreenHandler.add(new MultiGameScreen());
 			} else {
 				String error = networking.getLastError();
@@ -116,5 +121,11 @@ public class HostScreen extends Screen {
 		} else {
 			remote.setText(CONNECTION_WAITING);
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+			
 	}
 }

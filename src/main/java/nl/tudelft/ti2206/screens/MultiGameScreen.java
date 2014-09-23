@@ -88,8 +88,8 @@ public class MultiGameScreen extends Screen {
 
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
-
-		networking.setRemoteInput(new RemoteInputHandler(remoteGrid));
+		
+		networking.addObserver(new RemoteInputHandler(remoteGrid));
 	}
 
 	@Override

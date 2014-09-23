@@ -131,17 +131,17 @@ public class NetWorkingTest {
 		assertEquals("connection\r\n", networking.getLastError());
 	}
 
-	@Test
-	public void testGetRemoteInput() {
-		networking.setRemoteInput(handler);
-		assertEquals(handler, networking.getRemoteInput());
-	}
-
-	@Test
-	public void testSetRemoteInput() {
-		networking.setRemoteInput(handler);
-		assertEquals(handler, networking.getRemoteInput());
-	}
+//	@Test
+//	public void testGetRemoteInput() {
+//		networking.setRemoteInput(handler);
+//		assertEquals(handler, networking.getRemoteInput());
+//	}
+//
+//	@Test
+//	public void testSetRemoteInput() {
+//		networking.setRemoteInput(handler);
+//		assertEquals(handler, networking.getRemoteInput());
+//	}
 
 	@Test
 	public void testDisconnect() {

@@ -1,18 +1,25 @@
 package nl.tudelft.ti2206.handlers;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.net.Networking;
 
 /**
- * The RemoteInputHandler processes input events that come from
- * over the network.
+ * The RemoteInputHandler processes input events that come from over the
+ * network.
  */
-public class RemoteInputHandler {
+public class RemoteInputHandler implements Observer {
 	/**
 	 * A reference to the remote Grid, so the called objects can interact with
 	 * it.
 	 */
 	private Grid grid;
+
+	/** The singleton Networking instance. */
+	private static Networking networking = Networking.getInstance();
 
 	/**
 	 * Creates a new RemoteInputHandler instance.
@@ -22,11 +29,15 @@ public class RemoteInputHandler {
 	 */
 	public RemoteInputHandler(Grid grid) {
 		this.grid = grid;
+
+		networking.addObserver(this);
 	}
 
 	/**
 	 * Fills the remote Grid with the tiles provided in the string.
-	 * @param tiles The string describing all the Tiles.
+	 * 
+	 * @param tiles
+	 *            The string describing all the Tiles.
 	 */
 	public void fillGrid(String tiles) {
 		String[] split = tiles.split(",");
@@ -63,4 +74,77 @@ public class RemoteInputHandler {
 	public void moveLeft() {
 		grid.move(Direction.LEFT);
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (arg instanceof String) {
+			String input = (String) arg;
+			System.out.println("INFO: update received: " + input);
+			handleInput(input);
+		}
+	}
+	
+	/**
+	 * Check if string representation of Grid is valid (contains 15 commas).
+	 * @param str
+	 * @return
+	 */
+	public boolean validGrid(String str) {
+		
+		return (str.matches("\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+") &&
+		(str.length() - str.replace(",", "").length()) == 15);
+	}
+
+	/**
+	 * Parse the network input and process it.
+	 * 
+	 * @param str
+	 */
+	public void handleInput(String str) {
+
+		int closing = str.indexOf(']');
+		System.out.println("INFO: handleInput: closing bracket @ " + closing);
+		
+		if (closing == -1) {
+			System.err
+					.println("ERROR: Protocol parsing failed, no closing bracket found (-1).");
+		} else if (str.startsWith("GRID[")) {
+			String strGrid = str.substring(5, closing);
+
+			if (validGrid(strGrid)) {
+				fillGrid(strGrid);
+				System.out.println("INFO: New grid set.");
+			} else {
+				System.err
+						.println("ERROR: Protocol parsing failed, malformed grid string: " + strGrid);
+			}
+		} else if (str.startsWith("MOVE[") && closing == 6) {
+			char direction = str.charAt(5);
+
+			System.out.println("INFO: handling move to " + direction);
+			
+			switch (direction) {
+			case 'U':
+				moveUp();
+				break;
+			case 'D':
+				moveDown();
+				break;
+			case 'R':
+				moveRight();
+				break;
+			case 'L':
+				moveLeft();
+				break;
+			default:
+				System.err.println("ERROR: Unknown direction parameter in protocol: "
+								+ direction);
+				break;
+			}
+		} else {
+			System.err
+					.println("ERROR: Unrecognised string in protocol: " + str + ", closing tag is at " + closing);
+		}
+	}
+
 }
