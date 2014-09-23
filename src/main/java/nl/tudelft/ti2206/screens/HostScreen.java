@@ -128,4 +128,9 @@ public class HostScreen extends Screen implements Observer {
 		// TODO Auto-generated method stub
 			
 	}
+	
+	@Override
+	public void dispose() {
+		networking.deleteObserver(this);
+	}
 }

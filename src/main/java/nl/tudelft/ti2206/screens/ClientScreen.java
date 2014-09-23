@@ -145,4 +145,9 @@ public class ClientScreen extends Screen implements Observer {
 	public void update(Observable o, Object arg) {
 	
 	}
+	
+	@Override
+	public void dispose() {
+		networking.deleteObserver(this);
+	}
 }
