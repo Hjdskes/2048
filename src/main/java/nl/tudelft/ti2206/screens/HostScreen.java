@@ -40,16 +40,19 @@ public class HostScreen extends Screen {
 	/** The button to cancel and go back to the main menu. */
 	private MenuButton cancel;
 
+	/** The singleton AssetHandler instance used to access our assets. */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
+	
 	/** Constructs a new HostScreen. */
 	public HostScreen() {
 		stage = new Stage();
 		table = new Table();
-		label = new Label(OPPONENT_DESTINY, AssetHandler.getSkin());
+		label = new Label(OPPONENT_DESTINY, assetHandler.getSkin());
 
-		remote = new Label(CONNECTION_WAITING, AssetHandler.getSkin());
+		remote = new Label(CONNECTION_WAITING, assetHandler.getSkin());
 
 		/* Show addresses to user to share with opponent. */
-		addresses = new Label(Networking.localAddresses(), AssetHandler.getSkin());
+		addresses = new Label(Networking.localAddresses(), assetHandler.getSkin());
 		cancel = new MenuButton();
 	}
 

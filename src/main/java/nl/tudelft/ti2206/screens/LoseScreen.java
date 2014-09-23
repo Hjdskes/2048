@@ -20,7 +20,7 @@ public class LoseScreen extends Screen {
 	/** Constructs a new LoseScreen. */
 	public LoseScreen() {
 		stage = new Stage();
-		image = new Image(AssetHandler.getSkin(), "lostoverlay");
+		image = new Image(AssetHandler.getInstance().getSkin(), "lostoverlay");
 		restartButton = new RestartButton();
 	}
 

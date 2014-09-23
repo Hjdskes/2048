@@ -32,12 +32,15 @@ public class TwentyFourtyGame extends Game {
 	/** The current state of the game. */
 	private static GameState curState;
 	
+	/** The AssetHanlder instance */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
+	
 	@Override
 	public void create() {
 		
 		/* Load all our assets. */
-		AssetHandler.load();
-		AssetHandler.loadSkinFile(Gdx.files
+		assetHandler.load();
+		assetHandler.loadSkinFile(Gdx.files
 				.internal("src/main/resources/skin.json"));
 
 		/* Push a menu screen onto the screen stack. */
@@ -54,7 +57,7 @@ public class TwentyFourtyGame extends Game {
 	@Override
 	public void dispose() {
 		ScreenHandler.dispose();
-		AssetHandler.dispose();
+		assetHandler.dispose();
 	}
 
 	@Override

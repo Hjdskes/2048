@@ -60,7 +60,7 @@ public class GameScreenTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		new HeadlessLauncher().launch();
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 		screen = new GameScreen(stage, grid, button, scores);
 

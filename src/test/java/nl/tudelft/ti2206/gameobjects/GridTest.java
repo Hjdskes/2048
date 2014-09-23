@@ -61,7 +61,7 @@ public class GridTest {
 		skin = mock(Skin.class);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 		when(skin.getRegion(anyString())).thenReturn(region);
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 
 		tileHandler = mock(TileHandler.class);
 

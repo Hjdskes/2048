@@ -19,7 +19,7 @@ public class ConnectionLostScreen extends Screen {
 	/** Constructs a new ConnectionLostScreen. */
 	public ConnectionLostScreen() {
 		stage = new Stage();
-		image = new Image(AssetHandler.getSkin(), "connectionlostoverlay");
+		image = new Image(AssetHandler.getInstance().getSkin(), "connectionlostoverlay");
 		menuButton = new MenuButton();
 	}
 

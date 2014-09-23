@@ -20,7 +20,7 @@ public class WaitScreen extends Screen {
 	public WaitScreen() {
 		stage = new Stage();
 		table = new Table();
-		label = new Label("Waiting for connection...", AssetHandler.getSkin());
+		label = new Label("Waiting for connection...", AssetHandler.getInstance().getSkin());
 	}
 
 	/** Constructor for testing purposes. */

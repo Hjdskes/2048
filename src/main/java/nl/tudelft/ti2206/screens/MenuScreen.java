@@ -31,6 +31,9 @@ public class MenuScreen extends Screen {
 	/** The button to go to the client menu. */
 	private TextButton connect;
 
+	/** The singleton AssetHandler instance used to access our assets. */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
+	
 	/** Constructs a new MenuScreen. */
 	public MenuScreen() {
 		/* To resize the display when we get back to the menu from a
@@ -39,10 +42,10 @@ public class MenuScreen extends Screen {
 				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
 		table = new Table();
-		label = new Label("Choose your destiny!", AssetHandler.getSkin());
-		singlePlayer = new TextButton("Singleplayer", AssetHandler.getSkin());
-		hostGame = new TextButton("Host a game", AssetHandler.getSkin());
-		connect = new TextButton("Join a game", AssetHandler.getSkin());
+		label = new Label("Choose your destiny!", assetHandler.getSkin());
+		singlePlayer = new TextButton("Singleplayer", assetHandler.getSkin());
+		hostGame = new TextButton("Host a game", assetHandler.getSkin());
+		connect = new TextButton("Join a game", assetHandler.getSkin());
 	}
 
 	/** Constuctor for testing purposes only. */

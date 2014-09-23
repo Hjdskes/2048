@@ -11,19 +11,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * the game requires.
  */
 public class AssetHandler {
+	/** The unique singleton instance of this class */
+	private static AssetHandler instance = new AssetHandler();
+	
 	/** The AssetManager is used to load and get all our textures and font. */
-	private static AssetManager manager = new AssetManager();
+	private AssetManager manager = new AssetManager();
 
 	/** The Skin contains all our textures and fonts. */
-	private static Skin skin = new Skin();
+	private Skin skin = new Skin();
 
+	
 	/**
-	 * Checks if the manager is done loading all the textures and font.
-	 * 
-	 * @return true If the manager is done, false otherwise.
+	 * Overrides the default constructor.
 	 */
-	public static boolean isLibraryInitialized() {
-		return manager.update();
+	private AssetHandler() {}
+	
+	
+	/**
+	 * @return The singleton instance of this class.
+	 */
+	public static AssetHandler getInstance() {
+		return instance;
 	}
 
 	/**
@@ -32,7 +40,7 @@ public class AssetHandler {
 	 * 
 	 * Blocks until the AssetManager is done.
 	 */
-	public static void load() {
+	public void load() {
 		/*
 		 * Queue all of these items for loading, order does not really matter I
 		 * think, since we wait for everything to be done anyway.
@@ -69,7 +77,7 @@ public class AssetHandler {
 	/**
 	 * Uses the AssetManager to get all the textures and fonts into the Skin.
 	 */
-	private static void setupSkin() {
+	private void setupSkin() {
 		TextureAtlas fonts = manager.get(
 				"src/main/resources/fonts/fonts.atlas", TextureAtlas.class);
 		TextureAtlas icons = manager.get(
@@ -111,7 +119,7 @@ public class AssetHandler {
 	 * 
 	 * @return The Skin object.
 	 */
-	public static Skin getSkin() {
+	public Skin getSkin() {
 		return skin;
 	}
 
@@ -124,7 +132,7 @@ public class AssetHandler {
 	 * @param assetManager
 	 *            The AssetManager to be used by the AssetHandler.
 	 */
-	public static void setAssetManager(AssetManager assetManager) {
+	public void setAssetManager(AssetManager assetManager) {
 		manager = assetManager;
 	}
 
@@ -137,7 +145,7 @@ public class AssetHandler {
 	 * @param newSkin
 	 *            The Skin to be used by the AssetHandler.
 	 */
-	public static void setSkin(Skin newSkin) {
+	public void setSkin(Skin newSkin) {
 		skin = newSkin;
 	}
 
@@ -148,14 +156,14 @@ public class AssetHandler {
 	 * @param file
 	 *            The file containing the resources.
 	 */
-	public static void loadSkinFile(FileHandle file) {
+	public void loadSkinFile(FileHandle file) {
 		skin.load(file);
 	}
 
 	/**
 	 * Disposes of all the textures, the font and the AssetManager.
 	 */
-	public static void dispose() {
+	public void dispose() {
 		manager.dispose();
 	}
 }

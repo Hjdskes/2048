@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class RestartButton extends TextButton {
 	public RestartButton() {
-		super("Restart", AssetHandler.getSkin());
+		super("Restart", AssetHandler.getInstance().getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);
 		this.setY(TwentyFourtyGame.GAP);
 

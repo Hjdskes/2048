@@ -19,7 +19,7 @@ public class MultiWinScreen extends Screen {
 	/** Constructs a new MultiWinScreen. */
 	public MultiWinScreen() {
 		stage = new Stage();
-		image = new Image(AssetHandler.getSkin(), "multiwonoverlay");
+		image = new Image(AssetHandler.getInstance().getSkin(), "multiwonoverlay");
 		menuButton = new MenuButton();
 	}
 

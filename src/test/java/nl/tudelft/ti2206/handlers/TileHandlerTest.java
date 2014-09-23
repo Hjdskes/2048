@@ -53,7 +53,7 @@ public class TileHandlerTest {
 		TextureRegion region = mock(TextureRegion.class);
 		when(skin.getRegion(anyString())).thenReturn(region);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 		
 		grid = new Grid(true, skin, region);
 		emptyGrid = new Grid(true, skin, region);

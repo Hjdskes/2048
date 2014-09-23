@@ -29,6 +29,9 @@ public class AssetHandlerTest {
 	/** A mock for the TextureAtlas object. */
 	private static TextureAtlas textureAtlas;
 
+	/** The singleton AssetHandler instance used to access our assets. */
+	private static AssetHandler assetHandler = AssetHandler.getInstance();
+	
 	/**
 	 * Sets up the test environment. Mockito is used extensively to prevent GL
 	 * related classes and methods from throwing NullPointerExceptions when
@@ -39,21 +42,13 @@ public class AssetHandlerTest {
 		new HeadlessLauncher().launch();
 
 		manager = mock(AssetManager.class);
-		AssetHandler.setAssetManager(manager);
+		assetHandler.setAssetManager(manager);
 
 		skin = mock(Skin.class);
-		AssetHandler.setSkin(skin);
+		assetHandler.setSkin(skin);
 
 		textureAtlas = mock(TextureAtlas.class);
 		when(manager.get(anyString(), eq(TextureAtlas.class))).thenReturn(textureAtlas);
-	}
-
-	/**
-	 * Tests if isLibraryInitialized() behaves correctly.
-	 */
-	@Test
-	public void testIsLibraryInitialized() {
-		assertFalse(AssetHandler.isLibraryInitialized());
 	}
 
 	/**
@@ -63,14 +58,14 @@ public class AssetHandlerTest {
 	 */
 	@Test
 	public void testLoad() {
-		AssetHandler.load();
+		assetHandler.load();
 		verify(manager, times(4)).load(anyString(), eq(TextureAtlas.class));
 		verify(skin, times(4)).addRegions(textureAtlas);
 	}
 
 	@Test
 	public void testGetSkin() {
-		assertEquals(skin, AssetHandler.getSkin());
+		assertEquals(skin, assetHandler.getSkin());
 	}
 	
 	/**
@@ -78,7 +73,7 @@ public class AssetHandlerTest {
 	 */
 	@Test
 	public void testDispose() {
-		AssetHandler.dispose();
+		assetHandler.dispose();
 		verify(manager).dispose();
 	}
 }

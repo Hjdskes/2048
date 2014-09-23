@@ -54,7 +54,7 @@ public class HostScreenTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		Skin skin = mock(Skin.class);
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 		
 		screen = new HostScreen(stage, table, label, menuButton);
 		Gdx.gl = gl;

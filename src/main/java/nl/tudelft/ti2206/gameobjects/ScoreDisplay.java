@@ -28,6 +28,9 @@ public class ScoreDisplay extends Group {
 	private Label scoreLabel;
 	private Label highScoreLabel;
 	private Label highestTileLabel;
+	
+	/** The singleton AssetHandler instance used to access our assets. */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
 
 	/**
 	 * Creates a new ScoreDisplay object. Automatically creates all textures and
@@ -61,7 +64,7 @@ public class ScoreDisplay extends Group {
 	 * update the scores.
 	 */
 	private void initLabels() {
-		scoreLabel = new Label("0", AssetHandler.getSkin(), "score") {
+		scoreLabel = new Label("0", assetHandler.getSkin(), "score") {
 			@Override
 			public void act(float delta) {
 				scoreLabel.setText(Integer.toString(grid.getScore()));
@@ -70,7 +73,7 @@ public class ScoreDisplay extends Group {
 		scoreLabel.setHeight(HEIGHT);
 		scoreLabel.setWidth(SCORE_WIDTH);
 
-		highScoreLabel = new Label("0", AssetHandler.getSkin(), "highscore") {
+		highScoreLabel = new Label("0", assetHandler.getSkin(), "highscore") {
 			@Override
 			public void act(float delta) {
 				highScoreLabel.setText(Integer.toString(grid.getHighscore()));
@@ -79,7 +82,7 @@ public class ScoreDisplay extends Group {
 		highScoreLabel.setHeight(HEIGHT);
 		highScoreLabel.setWidth(SCORE_WIDTH);
 
-		highestTileLabel = new Label("0", AssetHandler.getSkin(), "highest") {
+		highestTileLabel = new Label("0", assetHandler.getSkin(), "highest") {
 			@Override
 			public void act(float delta) {
 				highestTileLabel.setText(Integer.toString(grid

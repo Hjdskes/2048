@@ -40,15 +40,18 @@ public class ClientScreen extends Screen {
 
 	/** The button to start the game when a connection has been made. */
 	private TextButton play;
+	
+	/** The singleton AssetHandler instance used to access our assets. */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
 
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
-		label = new Label(OPPONENT_HOSTADDR, AssetHandler.getSkin());
+		label = new Label(OPPONENT_HOSTADDR, assetHandler.getSkin());
 		List<String> addresses = Networking.initLocalAddresses();
-		textField = new TextField(addresses.get(0), AssetHandler.getSkin());
+		textField = new TextField(addresses.get(0), assetHandler.getSkin());
 		menu = new MenuButton();
-		play = new TextButton("Play!", AssetHandler.getSkin());
+		play = new TextButton("Play!", assetHandler.getSkin());
 	}
 
 	/** Constructor used for mock insertion */

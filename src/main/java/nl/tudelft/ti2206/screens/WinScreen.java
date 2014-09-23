@@ -24,7 +24,7 @@ public class WinScreen extends Screen {
 	/** Constructs a new WinScreen. */
 	public WinScreen() {
 		stage = new Stage();
-		image = new Image(AssetHandler.getSkin(), "wonoverlay");
+		image = new Image(AssetHandler.getInstance().getSkin(), "wonoverlay");
 		restartButton = new RestartButton();
 		continueButton = new ContinueButton();
 	}

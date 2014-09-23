@@ -27,6 +27,9 @@ public class MultiGameScreen extends Screen {
 	private ScoreDisplay localScores;
 	private ScoreDisplay remoteScores;
 	
+	/** The singleton AssetHandler instance used to access our assets. */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
+	
 	/** Constructs a new MultiGameScreen. */
 	public MultiGameScreen() {
 		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH,
@@ -36,8 +39,8 @@ public class MultiGameScreen extends Screen {
 		localGrid = new Grid(false);
 		remoteGrid = new Grid(true);
 		
-		you = new Label("You", AssetHandler.getSkin());
-		opponent = new Label("Opponent", AssetHandler.getSkin());
+		you = new Label("You", assetHandler.getSkin());
+		opponent = new Label("Opponent", assetHandler.getSkin());
 		
 		localGroup = new Group();
 		remoteGroup = new Group();

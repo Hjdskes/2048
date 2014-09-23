@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class MenuButton extends TextButton {
 	public MenuButton() {
-		super("Menu", AssetHandler.getSkin());
+		super("Menu", AssetHandler.getInstance().getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 4 - this.getPrefWidth() / 2);
 		this.setY(5 * TwentyFourtyGame.GAP);
 

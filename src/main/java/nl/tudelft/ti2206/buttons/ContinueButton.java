@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class ContinueButton extends TextButton {
 	public ContinueButton() {
-		super("Continue!", AssetHandler.getSkin());
+		super("Continue!", AssetHandler.getInstance().getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - getPrefWidth() / 2);
 		this.setY(this.getPrefHeight() + 2 * TwentyFourtyGame.GAP);
 

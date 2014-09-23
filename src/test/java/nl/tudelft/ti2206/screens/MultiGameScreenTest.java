@@ -52,7 +52,7 @@ public class MultiGameScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 
 		screen = new MultiGameScreen(stage, grid, label, group, scores);

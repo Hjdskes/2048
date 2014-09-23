@@ -58,7 +58,7 @@ public class Tile extends Actor {
 	 *            The value of the Tile.
 	 */
 	public Tile(int index, int value) {
-		this.skin = AssetHandler.getSkin();
+		this.skin = AssetHandler.getInstance().getSkin();
 		this.region = new TextureRegion();
 
 		setValue(value);

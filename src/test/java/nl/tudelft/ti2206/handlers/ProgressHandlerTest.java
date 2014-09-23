@@ -39,7 +39,7 @@ public class ProgressHandlerTest {
 	@Before
 	public void reinitGrid() {
 		Skin skin = mock(Skin.class);
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 		TextureRegion region = mock(TextureRegion.class);
 		when(skin.getRegion(anyString())).thenReturn(region);
 		Texture texture = mock(Texture.class);
@@ -81,30 +81,4 @@ public class ProgressHandlerTest {
 		assertEquals(score, PreferenceHandler.getScore());
 		assertEquals(highestTile, PreferenceHandler.getHighestTile());
 	}
-
-//	/**
-//	 * Tests if a game is loaded correctly. This includes loading the grid.
-//	 */
-//	@Test
-//	public void testLoadGame() {
-//		grid.setTile(0, 2);
-//		grid.setTile(1, 4);
-//
-//		/* Save the game. */
-//		ProgressHandler.saveGame(grid);
-//
-//		/* Copy current scores. */
-//		int score = grid.getScore();
-//		int highestTile = grid.getCurrentHighestTile();
-//		int possibleMoves = grid.getPossibleMoves();
-//
-//		/* Reset world. */
-//		grid.restart();
-//
-//		/* Load the saved game and make sure everything is loaded correctly. */
-//		grid = ProgressHandler.loadGame();
-//		assertEquals(score, grid.getScore());
-//		assertEquals(highestTile, grid.getCurrentHighestTile());
-//		assertEquals(possibleMoves, grid.getPossibleMoves());
-//	}
 }

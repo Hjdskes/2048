@@ -50,7 +50,7 @@ public class TileTest {
 		style.font = mock(BitmapFont.class);
 		when(skin.get(LabelStyle.class)).thenReturn(style);
 		when(skin.getRegion(anyString())).thenReturn(texture);
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 		new HeadlessLauncher().launch();
 		tile = new Tile(0, 0, skin, texture);
 	}

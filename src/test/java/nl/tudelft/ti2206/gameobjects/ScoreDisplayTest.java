@@ -40,7 +40,7 @@ public class ScoreDisplayTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		AssetHandler.setSkin(skin);
+		AssetHandler.getInstance().setSkin(skin);
 
 		style.font = font;
 

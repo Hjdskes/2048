@@ -95,7 +95,7 @@ public class Grid extends Actor {
 	 *            True if the grid should be empty, false otherwise.
 	 */
 	public Grid(boolean isEmpty) {
-		this.region = new TextureRegion(AssetHandler.getSkin().get("grid",
+		this.region = new TextureRegion(AssetHandler.getInstance().getSkin().get("grid",
 				Texture.class));
 		this.random = new Random();
 		this.grid = new Tile[NTILES];
