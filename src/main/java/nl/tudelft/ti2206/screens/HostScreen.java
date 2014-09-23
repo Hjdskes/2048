@@ -23,7 +23,7 @@ public class HostScreen extends Screen {
 	public static final String CONNECTION_ESTABLISHED = "Connection established!";
 
 	/** The text for the main label. */
-	public static final String OPPONENT_DESTINY = "Your opponent's destinylies beyond one of these:";
+	public static final String OPPONENT_DESTINY = "Your opponent's destiny\r\nlies beyond one of these:";
 
 	/** The table used for positioning all Actors. */
 	private Table table;
