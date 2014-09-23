@@ -148,7 +148,10 @@ public class ClientScreen extends Screen implements Observer {
 	
 	@Override
 	public void dispose() {
-		stage.dispose();
+		// dispose the stage:
+		super.dispose();
+		
+		// remove screen object from networking observer list
 		networking.deleteObserver(this);
 	}
 }

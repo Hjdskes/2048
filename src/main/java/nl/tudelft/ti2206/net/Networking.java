@@ -121,7 +121,8 @@ public class Networking extends Observable {
 	}
 
 	/**
-	 * Checks if a host is valid by address or by name.
+	 * Checks if a host is valid by address or by name. This method can be very slow
+	 * as it uses the system's DNS.
 	 * 
 	 * @param host
 	 *            The hostname or IP address.
