@@ -368,7 +368,7 @@ public class Networking extends Observable {
 	 */
 	private void processResponse(String response) {
 
-		Gdx.app.debug(className + "/" + getMode(), "Networking::processResponse(" + response
+		Gdx.app.debug(className + "/" + getMode(), "processResponse(" + response
 				+ ") sending to " + countObservers() + " registered observers");
 
 		setChanged();
