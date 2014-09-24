@@ -77,11 +77,11 @@ public class GameScreenTest {
 	/**
 	 * Tests if the stage is disposed on screen.dispose().
 	 */
-	@Test
-	public void testDispose() {
-		screen.dispose();
-		verify(stage).dispose();
-	}
+//	@Test
+//	public void testDispose() {
+//		screen.dispose();
+//		verify(stage).dispose();
+//	}
 
 	/**
 	 * Tests if all required methods are called on screen.show().
