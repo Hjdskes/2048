@@ -257,7 +257,6 @@ public class Grid extends Actor {
 	 * Updates the highest Tile value present in the grid.
 	 */
 	public void updateHighestTile() {
-		highestTile = 0;
 		for (Tile t : grid) {
 			if (t.getValue() > highestTile) {
 				highestTile = t.getValue();
