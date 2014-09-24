@@ -69,7 +69,8 @@ public class GameScreen extends Screen {
 	}
 
 	@Override
-	public void pause() {
+	public void dispose() {
 		progressHandler.saveGame(grid);
+		super.dispose();
 	}
 }
