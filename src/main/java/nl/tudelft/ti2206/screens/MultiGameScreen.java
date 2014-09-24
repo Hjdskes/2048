@@ -33,6 +33,8 @@ public class MultiGameScreen extends Screen {
 	/** The singleton Networking instance. */ 
 	private static Networking networking = Networking.getInstance();
 	
+	private RemoteInputHandler remoteInput;
+	
 	
 	/** Constructs a new MultiGameScreen. */
 	public MultiGameScreen() {
@@ -41,7 +43,7 @@ public class MultiGameScreen extends Screen {
 		stage = new Stage();
 		
 		localGrid = new Grid(false);
-		remoteGrid = new Grid(true);
+		remoteGrid = new Grid(false);
 		
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Opponent", assetHandler.getSkin());
@@ -51,6 +53,9 @@ public class MultiGameScreen extends Screen {
 		
 		localScores = new ScoreDisplay(localGrid);
 		remoteScores = new ScoreDisplay(remoteGrid);
+		
+		remoteInput = new RemoteInputHandler(remoteGrid);
+		networking.addObserver(remoteInput);
 	}
 	
 	/** Constructor for testing purposes only */
@@ -76,7 +81,8 @@ public class MultiGameScreen extends Screen {
 		localGroup.addActor(localScores);
 		localGroup.addActor(localGrid);
 		localGroup.addActor(you);
-		stage.addListener(new LocalInputHandler(localGrid));
+
+		
 
 		/* Create our remote groups and actors. */
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
@@ -89,7 +95,9 @@ public class MultiGameScreen extends Screen {
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
 		
-		networking.addObserver(new RemoteInputHandler(remoteGrid));
+
+		
+		stage.addListener(new LocalInputHandler(localGrid));
 	}
 
 	@Override
@@ -110,4 +118,10 @@ public class MultiGameScreen extends Screen {
 			ScreenHandler.add(new MultiLoseScreen());
 		}
 	}
+	
+	@Override
+	public void dispose() {
+		networking.deleteObserver(remoteInput);
+	}
+
 }

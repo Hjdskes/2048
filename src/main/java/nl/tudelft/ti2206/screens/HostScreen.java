@@ -109,7 +109,6 @@ public class HostScreen extends Screen implements Observer {
 				String addr = networking.getRemoteAddress();
 				addresses.setText(addr);
 
-				//networking.sendString("[START]");
 				ScreenHandler.add(new MultiGameScreen());
 			} else {
 				String error = networking.getLastError();
@@ -127,5 +126,14 @@ public class HostScreen extends Screen implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 			
+	}
+	
+	@Override
+	public void dispose() {
+		// dispose the stage:
+		super.dispose();
+		
+		// remove screen object from networking observer list
+		networking.deleteObserver(this);
 	}
 }

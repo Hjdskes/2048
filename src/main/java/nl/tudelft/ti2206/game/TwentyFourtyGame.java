@@ -4,6 +4,7 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.MenuScreen;
 import nl.tudelft.ti2206.screens.ScreenHandler;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
@@ -45,6 +46,8 @@ public class TwentyFourtyGame extends Game {
 
 		/* Push a menu screen onto the screen stack. */
 		ScreenHandler.add(new MenuScreen());
+		
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
 
 	@Override

@@ -124,7 +124,7 @@ public class ClientScreen extends Screen implements Observer {
 		String text = textField.getText();
 		if (networking.isConnected()) {
 			label.setText("      Connected to host!");
-			ScreenHandler.add(new WaitScreen());
+			ScreenHandler.add(new MultiGameScreen());
 		} else {
 			String error = networking.getLastError();
 
@@ -144,5 +144,14 @@ public class ClientScreen extends Screen implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 	
+	}
+	
+	@Override
+	public void dispose() {
+		// dispose the stage:
+		super.dispose();
+		
+		// remove screen object from networking observer list
+		networking.deleteObserver(this);
 	}
 }
