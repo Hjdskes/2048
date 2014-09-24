@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.net.Networking.Mode;
 
 import org.junit.BeforeClass;
@@ -29,6 +30,8 @@ public class NetWorkingTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() {
+		new HeadlessLauncher().launch();
+
 		ArrayList<String> addresses = new ArrayList<String>();
 		spyList = spy(addresses);
 		
