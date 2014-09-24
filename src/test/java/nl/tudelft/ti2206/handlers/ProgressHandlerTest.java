@@ -23,9 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class ProgressHandlerTest {
 
 	/** A singleton reference to the PreferenceHandler. */
-	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
+	private static PreferenceHandler prefsHandler; 
 	/** A singleton reference to the progressHandler. */
-	private ProgressHandler progressHandler = ProgressHandler.getInstance();
+	private static ProgressHandler progressHandler;
 
 	private Grid grid;
 
@@ -35,6 +35,8 @@ public class ProgressHandlerTest {
 	@BeforeClass
 	public static void init() {
 		new HeadlessLauncher().launch();
+		prefsHandler = PreferenceHandler.getInstance();
+		progressHandler = ProgressHandler.getInstance();
 	}
 
 	/**

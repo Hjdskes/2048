@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -14,17 +14,16 @@ import org.junit.Test;
 public class PreferenceHandlerTest {
 
 	/** A singleton reference to the PreferenceHandler. */
-	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
+	private static PreferenceHandler prefsHandler; 
 
 	/**
-	 * Sets up the test environment.
+	 * Launches a headless game to enable file I/O.
 	 */
-	@Before
-	public void setup() {
-		HeadlessLauncher launcher = new HeadlessLauncher();
-		launcher.launch();
+	@BeforeClass
+	public static void init() {
+		new HeadlessLauncher().launch();
+		prefsHandler = PreferenceHandler.getInstance();
 	}
-
 	/**
 	 * Tests if the scores are correctly initialized when they aren't present.
 	 */

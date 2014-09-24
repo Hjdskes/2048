@@ -211,7 +211,11 @@ public class Grid extends Actor {
 			t.reset();
 		}
 		initGrid();
+		
+		/* Recalculate the current highestTile. */
+		highestTile = 0;
 		updateHighestTile();
+		
 		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
