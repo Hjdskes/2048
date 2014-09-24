@@ -4,6 +4,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +47,7 @@ public class WaitScreenTest {
 
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		screen = new WaitScreen(stage, table, label);
 		Gdx.gl = gl;

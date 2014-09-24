@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
@@ -20,6 +21,7 @@ public class RemoteInputHandlerTest {
 	
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		handler = new RemoteInputHandler(grid);
 	}

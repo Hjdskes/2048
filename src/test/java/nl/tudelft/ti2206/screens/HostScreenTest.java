@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.MenuButton;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.Before;
@@ -52,6 +53,7 @@ public class HostScreenTest {
 
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		Skin skin = mock(Skin.class);
 		AssetHandler.getInstance().setSkin(skin);

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.MenuButton;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +52,7 @@ public class ClientScreenTest {
 	 */
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		screen = new ClientScreen(stage, label, field, menuButton, playButton);
 		Gdx.gl = gl;
