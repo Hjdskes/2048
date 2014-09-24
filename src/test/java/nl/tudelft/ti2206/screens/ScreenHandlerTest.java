@@ -181,5 +181,4 @@ public class ScreenHandlerTest {
 		ScreenHandler.removeTop();
 		verify(screen).resume();
 	}
-	
 }
