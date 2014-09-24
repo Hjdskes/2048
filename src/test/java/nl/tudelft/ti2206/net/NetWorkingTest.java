@@ -31,6 +31,7 @@ public class NetWorkingTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		new HeadlessLauncher().launch();
+
 		ArrayList<String> addresses = new ArrayList<String>();
 		spyList = spy(addresses);
 		
