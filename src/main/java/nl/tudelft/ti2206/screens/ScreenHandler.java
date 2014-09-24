@@ -121,4 +121,15 @@ public class ScreenHandler {
 		remove(screenStack.peek());
 		screenStack.peek().resume();
 	}
+
+	/**
+	 * @param index The index of the Screen to return.
+	 * @return The Screen at index index.
+	 */
+	public static Screen get(int index) {
+		if (index < 0 || index > screenStack.size()) {
+			return null;
+		}
+		return screenStack.get(index);
+	}
 }

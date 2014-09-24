@@ -76,4 +76,11 @@ public abstract class Screen implements Disposable {
 	public void dispose() {
 		stage.dispose();
 	}
+
+	/**
+	 * @return The stage.
+	 */
+	public Stage getStage() {
+		return stage;
+	}
 }
