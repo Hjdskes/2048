@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 
@@ -21,6 +22,7 @@ public class LocalInputHandlerTest {
 
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		handler = new LocalInputHandler(grid);
 	}

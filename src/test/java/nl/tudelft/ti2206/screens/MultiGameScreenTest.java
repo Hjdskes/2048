@@ -8,6 +8,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -51,6 +52,7 @@ public class MultiGameScreenTest {
 	/** Sets up all mock objects and the object under test */
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
