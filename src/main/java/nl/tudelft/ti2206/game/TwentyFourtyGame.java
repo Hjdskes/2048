@@ -32,16 +32,20 @@ public class TwentyFourtyGame extends Game {
 
 	/** The current state of the game. */
 	private static GameState curState;
-	
+
 	/** The AssetHanlder instance */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
-	
+
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
-	
+
 	@Override
 	public void create() {
-		
+		/* Logging when the game is created */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(this.getClass().getSimpleName(),
+				"Skin is loaded and menu screen is launched.");
+
 		/* Load all our assets. */
 		assetHandler.load();
 		assetHandler.loadSkinFile(Gdx.files
@@ -49,7 +53,7 @@ public class TwentyFourtyGame extends Game {
 
 		/* Push a menu screen onto the screen stack. */
 		screenHandler.add(new MenuScreen());
-		
+
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
 
@@ -64,13 +68,18 @@ public class TwentyFourtyGame extends Game {
 	public void dispose() {
 		screenHandler.dispose();
 		assetHandler.dispose();
+		
+		/* Logging when the game is closed. */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(this.getClass().getSimpleName(), "Game is closed.");
+
 	}
 
 	@Override
-	public void resize (int width, int height) {
+	public void resize(int width, int height) {
 		screenHandler.resize(width, height);
 	}
-	
+
 	/**
 	 * @return The current game state.
 	 */

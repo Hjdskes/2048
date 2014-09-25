@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.handlers;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
 
@@ -44,6 +47,18 @@ public class ProgressHandler {
 		if (highscore > prefsHandler.getHighscore()) {
 			prefsHandler.setHighscore(highscore);
 		}
+
+		/* Logging when the grid is saved */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(
+				this.getClass().getSimpleName(),
+				"Saved the game with the grid: " + grid.toString()
+						+ ". Highscore: "
+						+ Integer.toString(prefsHandler.getHighscore())
+						+ ". Highest tile: "
+						+ Integer.toString(prefsHandler.getHighestTile())
+						+ ". Score: "
+						+ Integer.toString(prefsHandler.getScore()) + ".");
 	}
 
 	/**
@@ -55,6 +70,19 @@ public class ProgressHandler {
 		grid.setHighestTile(prefsHandler.getHighestTile());
 		grid.setHighscore(prefsHandler.getHighscore());
 		grid.setScore(prefsHandler.getScore());
+
+		/* Logging when the grid is loaded */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(
+				this.getClass().getSimpleName(),
+				"Loaded the game with the grid: " + grid.toString()
+						+ ". Highscore: "
+						+ Integer.toString(prefsHandler.getHighscore())
+						+ ". Highest tile: "
+						+ Integer.toString(prefsHandler.getHighestTile())
+						+ ". Score: "
+						+ Integer.toString(prefsHandler.getScore()) + ".");
+
 		return grid;
 	}
 

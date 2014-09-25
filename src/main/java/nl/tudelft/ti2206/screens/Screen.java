@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -8,15 +9,21 @@ import com.badlogic.gdx.utils.Disposable;
 /**
  * An abstract class for screens.
  * 
- * Code based on: http://gamedev.stackexchange.com/questions/75902/how-to-design-transparent-screen-in-libgdx
+ * Code based on:
+ * http://gamedev.stackexchange.com/questions/75902/how-to-design-
+ * transparent-screen-in-libgdx
  */
 public abstract class Screen implements Disposable {
 	protected Stage stage;
-	
+
 	/**
 	 * Called when the screen is shown. Used for initialization.
 	 */
 	public void create() {
+		/* Logging when the screen is created */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(this.getClass().getSimpleName(), "created");
+		
 		Gdx.input.setInputProcessor(stage);
 	}
 
@@ -34,7 +41,7 @@ public abstract class Screen implements Disposable {
 	/**
 	 * Determines if the screen is an overlay or not. Overlays will not cause
 	 * screens below it to automatically exit.
-	 *
+	 * 
 	 * @return True if the screen is an overlay, false otherwise.
 	 */
 	public boolean isOverlay() {
@@ -49,7 +56,7 @@ public abstract class Screen implements Disposable {
 
 	/**
 	 * Called when the screen is resized.
-	 *
+	 * 
 	 * @param width
 	 *            The new game window width (in pixels).
 	 * @param height

@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -23,7 +24,7 @@ public class RemoteInputHandler implements Observer {
 	/** The singleton Networking instance. */
 	private static Networking networking = Networking.getInstance();
 	
-	private String className = this.getClass().getName();
+	private String className = this.getClass().getSimpleName();
 
 	/**
 	 * Creates a new RemoteInputHandler instance.
@@ -55,6 +56,11 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move upwards on the remote Grid.
 	 */
 	public void moveUp() {
+		/* Logging the move of the remote player. */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(this.getClass().getSimpleName(),
+				"Move is made in the direction UP");
+		
 		grid.move(Direction.UP);
 	}
 
@@ -62,6 +68,11 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move downwards on the remote Grid.
 	 */
 	public void moveDown() {
+		/* Logging the move of the remote player. */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(this.getClass().getSimpleName(),
+				"Move is made in the direction DOWN");
+		
 		grid.move(Direction.DOWN);
 	}
 
@@ -69,6 +80,11 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the right on the remote Grid.
 	 */
 	public void moveRight() {
+		/* Logging the move of the remote player. */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(this.getClass().getSimpleName(),
+				"Move is made in the direction RIGHT");
+		
 		grid.move(Direction.RIGHT);
 	}
 
@@ -76,6 +92,11 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the left on the remote Grid.
 	 */
 	public void moveLeft() {
+		/* Logging the move of the remote player. */
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.log(this.getClass().getSimpleName(),
+				"Move is made in the direction LEFT");
+		
 		grid.move(Direction.LEFT);
 	}
 

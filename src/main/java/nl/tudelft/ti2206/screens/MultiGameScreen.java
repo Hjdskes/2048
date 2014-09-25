@@ -10,6 +10,7 @@ import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,43 +28,43 @@ public class MultiGameScreen extends Screen {
 	private Group remoteGroup;
 	private ScoreDisplay localScores;
 	private ScoreDisplay remoteScores;
-	
+
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
-	
-	/** The singleton Networking instance. */ 
+
+	/** The singleton Networking instance. */
 	private static Networking networking = Networking.getInstance();
-	
+
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
-	
+
 	private RemoteInputHandler remoteInput;
-	
-	
+
 	/** Constructs a new MultiGameScreen. */
 	public MultiGameScreen() {
 		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH,
 				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
-		
+
 		localGrid = new Grid(false);
 		remoteGrid = new Grid(false);
-		
+
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Opponent", assetHandler.getSkin());
-		
+
 		localGroup = new Group();
 		remoteGroup = new Group();
-		
+
 		localScores = new ScoreDisplay(localGrid);
 		remoteScores = new ScoreDisplay(remoteGrid);
-		
+
 		remoteInput = new RemoteInputHandler(remoteGrid);
 		networking.addObserver(remoteInput);
 	}
-	
+
 	/** Constructor for testing purposes only */
-	public MultiGameScreen(Stage stage, Grid grid, Label label, Group group, ScoreDisplay scores) {
+	public MultiGameScreen(Stage stage, Grid grid, Label label, Group group,
+			ScoreDisplay scores) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.remoteGrid = grid;
@@ -86,8 +87,6 @@ public class MultiGameScreen extends Screen {
 		localGroup.addActor(localGrid);
 		localGroup.addActor(you);
 
-		
-
 		/* Create our remote groups and actors. */
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
@@ -98,9 +97,7 @@ public class MultiGameScreen extends Screen {
 
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
-		
 
-		
 		stage.addListener(new LocalInputHandler(localGrid));
 	}
 
@@ -114,15 +111,27 @@ public class MultiGameScreen extends Screen {
 
 		if (localGrid.getCurrentHighestTile() == 2048
 				|| (remoteGrid.isFull() && remoteGrid.getPossibleMoves() == 0)) {
+			/* Logging when the local player wins the game */
+			Gdx.app.setLogLevel(Application.LOG_INFO);
+			Gdx.app.log(this.getClass().getSimpleName(),
+					"Local player won the multiplayer game. The score of the local player: "
+							+ Integer.toString(localGrid.getScore()));
+
 			TwentyFourtyGame.setState(GameState.WON);
 			screenHandler.add(new MultiWinScreen());
 		} else if ((localGrid.isFull() && localGrid.getPossibleMoves() == 0)
 				|| remoteGrid.getCurrentHighestTile() == 2048) {
+			/* Logging when the local player loses the game */
+			Gdx.app.setLogLevel(Application.LOG_INFO);
+			Gdx.app.log(this.getClass().getSimpleName(),
+					"Local player lost the multiplayer game. The score of the remote player: "
+							+ Integer.toString(remoteGrid.getScore()));
+
 			TwentyFourtyGame.setState(GameState.LOST);
 			screenHandler.add(new MultiLoseScreen());
 		}
 	}
-	
+
 	@Override
 	public void dispose() {
 		networking.deleteObserver(remoteInput);
