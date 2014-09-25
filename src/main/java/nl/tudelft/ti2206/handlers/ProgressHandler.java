@@ -49,7 +49,6 @@ public class ProgressHandler {
 		}
 
 		/* Logging when the grid is saved */
-		Gdx.app.setLogLevel(Application.LOG_INFO);
 		Gdx.app.log(
 				this.getClass().getSimpleName(),
 				"Saved the game with the grid: " + grid.toString()
@@ -72,7 +71,6 @@ public class ProgressHandler {
 		grid.setScore(prefsHandler.getScore());
 
 		/* Logging when the grid is loaded */
-		Gdx.app.setLogLevel(Application.LOG_INFO);
 		Gdx.app.log(
 				this.getClass().getSimpleName(),
 				"Loaded the game with the grid: " + grid.toString()

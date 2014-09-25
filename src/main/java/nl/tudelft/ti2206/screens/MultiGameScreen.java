@@ -112,7 +112,6 @@ public class MultiGameScreen extends Screen {
 		if (localGrid.getCurrentHighestTile() == 2048
 				|| (remoteGrid.isFull() && remoteGrid.getPossibleMoves() == 0)) {
 			/* Logging when the local player wins the game */
-			Gdx.app.setLogLevel(Application.LOG_INFO);
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Local player won the multiplayer game. The score of the local player: "
 							+ Integer.toString(localGrid.getScore()));

@@ -24,7 +24,6 @@ public class ContinueButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				/* Logging when the game is continuing */
-				Gdx.app.setLogLevel(Application.LOG_INFO);
 				Gdx.app.log(this.getClass().getSimpleName(), "Game is continuing.");
 
 				TwentyFourtyGame.setState(GameState.CONTINUING);

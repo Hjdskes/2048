@@ -70,7 +70,6 @@ public class GameScreen extends Screen {
 		if (grid.getCurrentHighestTile() == 2048
 				&& !TwentyFourtyGame.isContinuing()) {
 			/* Logging when the game is won. */
-			Gdx.app.setLogLevel(Application.LOG_INFO);
 			Gdx.app.log(this.getClass().getName(),
 					"Game is won, the final grid: " + grid.toString()
 							+ " and with the score " + grid.getScore() + ".");	
@@ -79,7 +78,6 @@ public class GameScreen extends Screen {
 			screenHandler.add(new WinScreen());
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			/* Logging when the game is lost. */
-			Gdx.app.setLogLevel(Application.LOG_INFO);
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Game is lost, the final grid: " + grid.toString()
 							+ " and with the score " + grid.getScore() + ".");	
