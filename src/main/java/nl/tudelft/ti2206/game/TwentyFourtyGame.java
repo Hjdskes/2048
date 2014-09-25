@@ -33,7 +33,7 @@ public class TwentyFourtyGame extends Game {
 	/** The current state of the game. */
 	private static GameState curState;
 
-	/** The AssetHanlder instance */
+	/** The AssetHandler instance. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
 	/** The singleton reference to the ScreenHandler class. */
@@ -41,8 +41,7 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void create() {
-		/* Logging when the game is created */
-		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		Gdx.app.log(this.getClass().getSimpleName(),
 				"Skin is loaded and menu screen is launched.");
 
@@ -53,8 +52,6 @@ public class TwentyFourtyGame extends Game {
 
 		/* Push a menu screen onto the screen stack. */
 		screenHandler.add(new MenuScreen());
-
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
 
 	@Override
@@ -68,11 +65,7 @@ public class TwentyFourtyGame extends Game {
 	public void dispose() {
 		screenHandler.dispose();
 		assetHandler.dispose();
-		
-		/* Logging when the game is closed. */
-		Gdx.app.setLogLevel(Application.LOG_INFO);
-		Gdx.app.log(this.getClass().getSimpleName(), "Game is closed.");
-
+		Gdx.app.log(this.getClass().getName(), "Closing game...");
 	}
 
 	@Override
@@ -94,6 +87,7 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
+		Gdx.app.log("TwentyFourtyGame", "Changing game state to " + state);
 		curState = state;
 	}
 
