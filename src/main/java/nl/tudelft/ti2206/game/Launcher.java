@@ -14,6 +14,9 @@ public class Launcher {
 
 	/** The height of the game window. */
 	private static final int HEIGHT = 600;
+	
+	/** The name of the file to log to. */
+	private static final String logFile = "2048.log";
 
 	/** The configuration for the game window. */
 	LwjglApplicationConfiguration config;
@@ -43,7 +46,7 @@ public class Launcher {
 	 */
 	private void configure() {
 		try {
-			System.setOut(new PrintStream("log.txt"));
+			System.setOut(new PrintStream(logFile));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

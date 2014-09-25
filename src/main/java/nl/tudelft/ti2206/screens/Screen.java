@@ -21,7 +21,6 @@ public abstract class Screen implements Disposable {
 	 */
 	public void create() {
 		/* Logging when the screen is created */
-		Gdx.app.setLogLevel(Application.LOG_INFO);
 		Gdx.app.log(this.getClass().getSimpleName(), "created");
 		
 		Gdx.input.setInputProcessor(stage);
