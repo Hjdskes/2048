@@ -72,7 +72,7 @@ public class Networking extends Observable {
 	/** The current mode of operation. */
 	private Mode mode;
 	
-	private String className = this.getClass().getName();
+	private String className = this.getClass().getSimpleName();
 
 	/** Overrides the default constructor. */
 	private Networking() {
