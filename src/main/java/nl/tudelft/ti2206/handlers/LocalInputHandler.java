@@ -41,7 +41,6 @@ public class LocalInputHandler extends InputListener {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			/* Logging the move of the local player. */
-			Gdx.app.setLogLevel(Application.LOG_INFO);
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Move is made in the direction DOWN");
 
@@ -51,7 +50,6 @@ public class LocalInputHandler extends InputListener {
 			return true;
 		case Keys.DPAD_UP:
 			/* Logging the move of the local player. */
-			Gdx.app.setLogLevel(Application.LOG_INFO);
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Move is made in the direction UP");
 
@@ -61,7 +59,6 @@ public class LocalInputHandler extends InputListener {
 			return true;
 		case Keys.DPAD_LEFT:
 			/* Logging the move of the local player. */
-			Gdx.app.setLogLevel(Application.LOG_INFO);
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Move is made in the direction LEFT");
 
@@ -71,7 +68,6 @@ public class LocalInputHandler extends InputListener {
 			return true;
 		case Keys.DPAD_RIGHT:
 			/* Logging the move of the local player. */
-			Gdx.app.setLogLevel(Application.LOG_INFO);
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Move is made in the direction RIGHT");
 

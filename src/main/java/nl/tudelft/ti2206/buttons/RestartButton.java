@@ -30,7 +30,6 @@ public class RestartButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				/* Logging when the game is restarted */
-				Gdx.app.setLogLevel(Application.LOG_INFO);
 				Gdx.app.log(this.getClass().getSimpleName(), "Game is restarting.");
 
 				Screen gameScreen = screenHandler.get(0);

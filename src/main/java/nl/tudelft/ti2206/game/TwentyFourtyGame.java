@@ -68,8 +68,7 @@ public class TwentyFourtyGame extends Game {
 		assetHandler.dispose();
 		
 		/* Logging when the game is closed. */
-		Gdx.app.setLogLevel(Application.LOG_INFO);
-		Gdx.app.log(this.getClass().getSimpleName(), "Game is closed.");
+		Gdx.app.log(this.getClass().getName(), "Closing game...");
 
 	}
 
@@ -92,6 +91,9 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
+		
+		Gdx.app.log("TwentyFourtyGame", "Changing game state to " + state);
+		
 		curState = state;
 	}
 
