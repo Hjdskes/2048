@@ -6,7 +6,6 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.screens.Screen;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -29,7 +28,6 @@ public class RestartButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				/* Logging when the game is restarted */
 				Gdx.app.log(this.getClass().getSimpleName(), "Game is restarting.");
 
 				Screen gameScreen = screenHandler.get(0);

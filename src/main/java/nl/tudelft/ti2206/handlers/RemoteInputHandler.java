@@ -55,10 +55,8 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move upwards on the remote Grid.
 	 */
 	public void moveUp() {
-		/* Logging the move of the remote player. */
 		Gdx.app.log(this.getClass().getSimpleName(),
 				"Remote player moves UP");
-		
 		grid.move(Direction.UP);
 	}
 
@@ -66,10 +64,8 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move downwards on the remote Grid.
 	 */
 	public void moveDown() {
-		/* Logging the move of the remote player. */
 		Gdx.app.log(this.getClass().getSimpleName(),
 				"Remote player moves DOWN");
-		
 		grid.move(Direction.DOWN);
 	}
 
@@ -77,10 +73,8 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the right on the remote Grid.
 	 */
 	public void moveRight() {
-		/* Logging the move of the remote player. */
 		Gdx.app.log(this.getClass().getSimpleName(),
 				"Remote player moves RIGHT");
-		
 		grid.move(Direction.RIGHT);
 	}
 
@@ -88,10 +82,8 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the left on the remote Grid.
 	 */
 	public void moveLeft() {
-		/* Logging the move of the remote player. */
 		Gdx.app.log(this.getClass().getSimpleName(),
 				"Remote player moves LEFT");
-		
 		grid.move(Direction.LEFT);
 	}
 
@@ -110,7 +102,6 @@ public class RemoteInputHandler implements Observer {
 	 * @return
 	 */
 	public boolean validateGrid(String str) {
-		
 		return (str.matches("\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+") &&
 				(str.length() - str.replace(",", "").length()) == 15);
 	}
@@ -121,7 +112,6 @@ public class RemoteInputHandler implements Observer {
 	 * @param str
 	 */
 	public void handleRemoteInput(String str) {
-
 		int closing = str.indexOf(']');
 		
 		if (closing == -1) {
@@ -160,5 +150,4 @@ public class RemoteInputHandler implements Observer {
 			Gdx.app.error(className, "Unrecognised remote string in protocol: " + str + ", closing tag is at position " + closing);
 		}
 	}
-
 }

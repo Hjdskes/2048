@@ -9,7 +9,6 @@ import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -69,15 +68,12 @@ public class GameScreen extends Screen {
 
 		if (grid.getCurrentHighestTile() == 2048
 				&& !TwentyFourtyGame.isContinuing()) {
-			/* Logging when the game is won. */
 			Gdx.app.log(this.getClass().getName(),
 					"Game is won, the final grid: " + grid.toString()
 							+ " and with the score " + grid.getScore() + ".");	
-
 			TwentyFourtyGame.setState(GameState.WON);
 			screenHandler.add(new WinScreen());
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
-			/* Logging when the game is lost. */
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Game is lost, the final grid: " + grid.toString()
 							+ " and with the score " + grid.getScore() + ".");	

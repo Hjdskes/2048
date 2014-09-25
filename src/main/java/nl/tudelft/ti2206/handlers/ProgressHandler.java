@@ -1,10 +1,9 @@
 package nl.tudelft.ti2206.handlers;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
+
+import com.badlogic.gdx.Gdx;
 
 /**
  * The ProgressHandler is used to save the current game, or load the previously
@@ -48,7 +47,6 @@ public class ProgressHandler {
 			prefsHandler.setHighscore(highscore);
 		}
 
-		/* Logging when the grid is saved */
 		Gdx.app.log(
 				this.getClass().getSimpleName(),
 				"Saved the game with the grid: " + grid.toString()
@@ -70,7 +68,6 @@ public class ProgressHandler {
 		grid.setHighscore(prefsHandler.getHighscore());
 		grid.setScore(prefsHandler.getScore());
 
-		/* Logging when the grid is loaded */
 		Gdx.app.log(
 				this.getClass().getSimpleName(),
 				"Loaded the game with the grid: " + grid.toString()

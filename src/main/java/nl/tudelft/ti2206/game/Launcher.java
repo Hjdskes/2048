@@ -28,7 +28,6 @@ public class Launcher {
 	 *            The command line arguments. These are ignored.
 	 */
 	public static void main(String[] args) {
-
 		Launcher launcher = new Launcher();
 		launcher.launch();
 	}
