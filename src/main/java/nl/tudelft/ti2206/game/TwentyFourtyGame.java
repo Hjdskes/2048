@@ -1,18 +1,18 @@
 package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.screens.MenuScreen;
-import nl.tudelft.ti2206.screens.ScreenHandler;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
 /**
- * The main game class. It keeps track of the screens via the ScreenHandler and
+ * The main game class. It keeps track of the screens via the screenHandler and
  * of the game state.
  * 
- * It also calls, via the ScreenHandler, the update and draw methods on all the
+ * It also calls, via the screenHandler, the update and draw methods on all the
  * actors.
  */
 public class TwentyFourtyGame extends Game {
@@ -36,6 +36,9 @@ public class TwentyFourtyGame extends Game {
 	/** The AssetHanlder instance */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 	
+	/** The singleton reference to the ScreenHandler class. */
+	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
+	
 	@Override
 	public void create() {
 		
@@ -45,7 +48,7 @@ public class TwentyFourtyGame extends Game {
 				.internal("src/main/resources/skin.json"));
 
 		/* Push a menu screen onto the screen stack. */
-		ScreenHandler.add(new MenuScreen());
+		screenHandler.add(new MenuScreen());
 		
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
@@ -53,19 +56,19 @@ public class TwentyFourtyGame extends Game {
 	@Override
 	public void render() {
 		super.render();
-		ScreenHandler.update();
-		ScreenHandler.draw();
+		screenHandler.update();
+		screenHandler.draw();
 	}
 
 	@Override
 	public void dispose() {
-		ScreenHandler.dispose();
+		screenHandler.dispose();
 		assetHandler.dispose();
 	}
 
 	@Override
 	public void resize (int width, int height) {
-		ScreenHandler.resize(width, height);
+		screenHandler.resize(width, height);
 	}
 	
 	/**

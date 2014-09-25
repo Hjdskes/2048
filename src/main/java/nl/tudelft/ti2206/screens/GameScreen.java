@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -23,8 +24,12 @@ public class GameScreen extends Screen {
 	/** The button to restart the current game. */
 	private RestartButton restartButton;
 
+	/** The singleton reference to the ProgressHandler class. */
 	private ProgressHandler progressHandler = ProgressHandler.getInstance();
 
+	/** The singleton reference to the ScreenHandler class. */
+	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
+	
 	/** Constructs a new GameScreen. */
 	public GameScreen() {
 		stage = new Stage();
@@ -61,10 +66,10 @@ public class GameScreen extends Screen {
 		if (grid.getCurrentHighestTile() == 2048
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(GameState.WON);
-			ScreenHandler.add(new WinScreen());
+			screenHandler.add(new WinScreen());
 		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(GameState.LOST);
-			ScreenHandler.add(new LoseScreen());
+			screenHandler.add(new LoseScreen());
 		}
 	}
 

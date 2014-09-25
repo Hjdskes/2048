@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Gdx;
@@ -32,6 +33,9 @@ public class MultiGameScreen extends Screen {
 	
 	/** The singleton Networking instance. */ 
 	private static Networking networking = Networking.getInstance();
+	
+	/** The singleton reference to the ScreenHandler class. */
+	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 	
 	private RemoteInputHandler remoteInput;
 	
@@ -105,17 +109,17 @@ public class MultiGameScreen extends Screen {
 		super.update();
 
 		if (networking.isConnectionLost()) {
-			ScreenHandler.add(new ConnectionLostScreen());
+			screenHandler.add(new ConnectionLostScreen());
 		}
 
 		if (localGrid.getCurrentHighestTile() == 2048
 				|| (remoteGrid.isFull() && remoteGrid.getPossibleMoves() == 0)) {
 			TwentyFourtyGame.setState(GameState.WON);
-			ScreenHandler.add(new MultiWinScreen());
+			screenHandler.add(new MultiWinScreen());
 		} else if ((localGrid.isFull() && localGrid.getPossibleMoves() == 0)
 				|| remoteGrid.getCurrentHighestTile() == 2048) {
 			TwentyFourtyGame.setState(GameState.LOST);
-			ScreenHandler.add(new MultiLoseScreen());
+			screenHandler.add(new MultiLoseScreen());
 		}
 	}
 	

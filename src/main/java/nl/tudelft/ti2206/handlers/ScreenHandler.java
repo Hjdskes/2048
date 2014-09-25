@@ -1,6 +1,8 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.handlers;
 
 import java.util.Stack;
+
+import nl.tudelft.ti2206.screens.Screen;
 
 import com.badlogic.gdx.Gdx;
 
@@ -11,11 +13,26 @@ import com.badlogic.gdx.Gdx;
  * enables us to draw transparent screens, such as, for example, the WinScreen.
  */
 public class ScreenHandler {
+	/** The singleton reference to this class. */
+	private static ScreenHandler instance = new ScreenHandler();
+
 	/** The stack containing all the screens. */
 	private static Stack<Screen> screenStack = new Stack<Screen>();
 
+	/** Overrides the default constructor. */
+	private ScreenHandler() {
+	}
+
+	/** 
+	 * 
+	 * @return The singleton instance of the ScreenHandler.
+	 */
+	public static ScreenHandler getInstance() {
+		return instance;
+	}
+
 	/** Sets the stack. Used for testing. */
-	public static void setScreenStack(Stack<Screen> screens) {
+	public void setScreenStack(Stack<Screen> screens) {
 		screenStack = screens;
 	}
 
@@ -25,7 +42,7 @@ public class ScreenHandler {
 	 * @param screen
 	 *            The screen.
 	 */
-	public static void add(Screen screen) {
+	public void add(Screen screen) {
 		screen.create();
 		screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		screenStack.push(screen);
@@ -34,7 +51,7 @@ public class ScreenHandler {
 	/**
 	 * Disposes cleanly of all the screens.
 	 * */
-	public static void dispose() {
+	public void dispose() {
 		for (Screen screen : screenStack) {
 			screen.dispose();
 		}
@@ -44,7 +61,7 @@ public class ScreenHandler {
 	/**
 	 * Draws all screens in the stack.
 	 */
-	public static void draw() {
+	public void draw() {
 		for (Screen screen : screenStack) {
 			screen.draw();
 		}
@@ -53,7 +70,7 @@ public class ScreenHandler {
 	/**
 	 * Pauses all screens in the stack.
 	 */
-	public static void pause() {
+	public void pause() {
 		for (Screen screen : screenStack) {
 			screen.pause();
 		}
@@ -67,7 +84,7 @@ public class ScreenHandler {
 	 * @param height
 	 *            The new game window height (in pixels).
 	 */
-	public static void resize(int width, int height) {
+	public void resize(int width, int height) {
 		for (Screen screen : screenStack) {
 			screen.resize(width, height);
 		}
@@ -76,7 +93,7 @@ public class ScreenHandler {
 	/**
 	 * Resumes all screens in the stack.
 	 */
-	public static void resume() {
+	public void resume() {
 		for (Screen screen : screenStack) {
 			screen.resume();
 		}
@@ -85,7 +102,7 @@ public class ScreenHandler {
 	/**
 	 * Updates all screens in the stack.
 	 */
-	public static void update() {
+	public void update() {
 		boolean coveredByOtherScreen = false;
 		screenStack.peek().update();
 		for (int i = screenStack.size() - 1; i >= 0; i--) {
@@ -105,7 +122,7 @@ public class ScreenHandler {
 	 * @param screen
 	 *            The screen.
 	 */
-	public static void remove(Screen screen) {
+	public void remove(Screen screen) {
 		screen.dispose();
 		screenStack.remove(screen);
 	}
@@ -113,7 +130,7 @@ public class ScreenHandler {
 	/**
 	 * Removes the top screen and places input back into the new top screen.
 	 */
-	public static void removeTop() {
+	public void removeTop() {
 		if (screenStack.size() == 1) {
 			return;
 		}
@@ -123,10 +140,11 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * @param index The index of the Screen to return.
+	 * @param index
+	 *            The index of the Screen to return.
 	 * @return The Screen at index index.
 	 */
-	public static Screen get(int index) {
+	public Screen get(int index) {
 		if (index < 0 || index > screenStack.size()) {
 			return null;
 		}

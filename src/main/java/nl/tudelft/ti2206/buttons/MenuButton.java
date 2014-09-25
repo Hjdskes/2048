@@ -2,9 +2,9 @@ package nl.tudelft.ti2206.buttons;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
 import nl.tudelft.ti2206.screens.MenuScreen;
-import nl.tudelft.ti2206.screens.ScreenHandler;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,7 +23,7 @@ public class MenuButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Networking.getInstance().disconnect();
-				ScreenHandler.add(new MenuScreen());
+				ScreenHandler.getInstance().add(new MenuScreen());
 			}
 		});
 	}

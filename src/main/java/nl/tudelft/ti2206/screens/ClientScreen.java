@@ -7,6 +7,7 @@ import java.util.Observer;
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -124,7 +125,7 @@ public class ClientScreen extends Screen implements Observer {
 		String text = textField.getText();
 		if (networking.isConnected()) {
 			label.setText("      Connected to host!");
-			ScreenHandler.add(new MultiGameScreen());
+			ScreenHandler.getInstance().add(new MultiGameScreen());
 		} else {
 			String error = networking.getLastError();
 

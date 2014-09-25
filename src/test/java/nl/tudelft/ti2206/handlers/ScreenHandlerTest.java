@@ -1,10 +1,13 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Stack;
+
+import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.screens.Screen;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,10 +16,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 
 public class ScreenHandlerTest {
-
+	/** The singleton reference to the ScreenHandler class. */
+	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
+	
 	private static Stack<Screen> screens;
 	private static Screen screen;
 
+	
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		Gdx.graphics = mock(Graphics.class);
@@ -25,13 +31,13 @@ public class ScreenHandlerTest {
 
 		screens = new Stack<Screen>();
 		screen = mock(Screen.class);
-		ScreenHandler.setScreenStack(screens);
+		screenHandler.setScreenStack(screens);
 	}
 
 	@Test
 	public void testAdd() {
 		assertTrue(screens.isEmpty());
-		ScreenHandler.add(screen);
+		screenHandler.add(screen);
 		assertFalse(screens.isEmpty());
 		verify(screen).create();
 		verify(screen).resize(anyInt(), anyInt());
@@ -41,7 +47,7 @@ public class ScreenHandlerTest {
 	public void testDisposeNotEmpty() {
 		screens.push(screen);
 		int numScreens = screens.size();
-		ScreenHandler.dispose();
+		screenHandler.dispose();
 		verify(screen, times(numScreens)).dispose();
 		assertTrue(screens.isEmpty());
 	}
@@ -52,7 +58,7 @@ public class ScreenHandlerTest {
 		reset(screen);
 
 		screens.clear();
-		ScreenHandler.dispose();
+		screenHandler.dispose();
 		verify(screen, times(0)).dispose();
 		assertTrue(screens.isEmpty());
 	}
@@ -64,7 +70,7 @@ public class ScreenHandlerTest {
 		
 		screens.push(screen);
 		int numScreens = screens.size();
-		ScreenHandler.draw();
+		screenHandler.draw();
 		verify(screen, times(numScreens)).draw();
 	}
 	
@@ -74,7 +80,7 @@ public class ScreenHandlerTest {
 		reset(screen);
 		
 		screens.clear();
-		ScreenHandler.draw();
+		screenHandler.draw();
 		verify(screen, times(0)).draw();
 	}
 
@@ -84,7 +90,7 @@ public class ScreenHandlerTest {
 		reset(screen);
 		
 		screens.clear();
-		ScreenHandler.pause();
+		screenHandler.pause();
 		verify(screen, times(0)).pause();
 	}
 	
@@ -95,7 +101,7 @@ public class ScreenHandlerTest {
 		
 		screens.push(screen);
 		int numScreens = screens.size();
-		ScreenHandler.pause();
+		screenHandler.pause();
 		verify(screen, times(numScreens)).pause();
 	}
 
@@ -105,7 +111,7 @@ public class ScreenHandlerTest {
 		reset(screen);
 		
 		screens.clear();
-		ScreenHandler.resize(0, 0);
+		screenHandler.resize(0, 0);
 		verify(screen, times(0)).resize(0, 0);
 	}
 	
@@ -116,7 +122,7 @@ public class ScreenHandlerTest {
 		
 		screens.push(screen);
 		int numScreens = screens.size();
-		ScreenHandler.resize(0, 0);
+		screenHandler.resize(0, 0);
 		verify(screen, times(numScreens)).resize(0, 0);
 	}
 
@@ -126,7 +132,7 @@ public class ScreenHandlerTest {
 		reset(screen);
 		
 		screens.clear();
-		ScreenHandler.resume();
+		screenHandler.resume();
 		verify(screen, times(0)).resume();
 	}
 	
@@ -137,7 +143,7 @@ public class ScreenHandlerTest {
 		
 		screens.push(screen);
 		int numScreens = screens.size();
-		ScreenHandler.resume();
+		screenHandler.resume();
 		verify(screen, times(numScreens)).resume();
 	}
 	
@@ -145,7 +151,7 @@ public class ScreenHandlerTest {
 	public void testUpdateNotNullScreen() {
 		
 		screens.push(screen);
-		ScreenHandler.update();
+		screenHandler.update();
 		verify(screen).update();
 	}
 
@@ -154,7 +160,7 @@ public class ScreenHandlerTest {
 		// Reset screen to remove any dispose counters already present.
 		reset(screen);
 		
-		ScreenHandler.remove(screen);
+		screenHandler.remove(screen);
 		verify(screen).dispose();
 		assertFalse(screens.contains(screen));
 	}
@@ -163,11 +169,11 @@ public class ScreenHandlerTest {
 	public void testRemoveTopWhen1Screen() {
 		// reset the screen stack and add 1 screen to it
 		screens.clear();
-		ScreenHandler.add(screen);
+		screenHandler.add(screen);
 		// Reset the screen to remove any method invocation counters
 		reset(screen);
 		
-		ScreenHandler.removeTop();
+		screenHandler.removeTop();
 		// make sure nothing happens
 		verifyNoMoreInteractions(screen);
 	}
@@ -178,7 +184,7 @@ public class ScreenHandlerTest {
 		screens.add(screen);
 		screens.add(screen);
 		
-		ScreenHandler.removeTop();
+		screenHandler.removeTop();
 		verify(screen).resume();
 	}
 }

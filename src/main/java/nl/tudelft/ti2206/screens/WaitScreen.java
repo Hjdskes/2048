@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -46,7 +47,7 @@ public class WaitScreen extends Screen {
 		super.update();
 
 		if (Networking.getInstance().isConnected()) {
-			ScreenHandler.add(new MultiGameScreen());
+			ScreenHandler.getInstance().add(new MultiGameScreen());
 		}
 	}
 }

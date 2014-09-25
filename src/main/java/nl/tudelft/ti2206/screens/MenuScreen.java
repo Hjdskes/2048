@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -33,6 +34,9 @@ public class MenuScreen extends Screen {
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
+	
+	/** The singleton reference to the ScreenHandler class. */
+	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 	
 	/** Constructs a new MenuScreen. */
 	public MenuScreen() {
@@ -78,19 +82,19 @@ public class MenuScreen extends Screen {
 		singlePlayer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				ScreenHandler.add(new GameScreen());
+				screenHandler.add(new GameScreen());
 			}
 		});
 		hostGame.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				ScreenHandler.add(new HostScreen());
+				screenHandler.add(new HostScreen());
 			}
 		});
 		connect.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				ScreenHandler.add(new ClientScreen());
+				screenHandler.add(new ClientScreen());
 			}
 		});
 	}

@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -109,7 +110,7 @@ public class HostScreen extends Screen implements Observer {
 				String addr = networking.getRemoteAddress();
 				addresses.setText(addr);
 
-				ScreenHandler.add(new MultiGameScreen());
+				ScreenHandler.getInstance().add(new MultiGameScreen());
 			} else {
 				String error = networking.getLastError();
 
