@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.handlers;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Input.Keys;
@@ -21,9 +20,11 @@ public class InputHandler extends InputListener {
 	 */
 	private Grid grid;
 
-	private String className = this.getClass().getSimpleName();
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
 
-	private Logger logger = Logger.getInstance();
+	/** Get current class name, used for logging output. */
+	private final String className = this.getClass().getSimpleName();
 
 	/**
 	 * Creates a new InputHandler instance.
@@ -39,28 +40,23 @@ public class InputHandler extends InputListener {
 	public boolean keyDown(InputEvent event, int keycode) {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
-			logger.message(Level.INFO, className,
-					"Move is made in direction DOWN");
+			logger.debug(className, "User pressed key: DOWN");
 			grid.move(Direction.DOWN);
 			return true;
 		case Keys.DPAD_UP:
-			logger.message(Level.INFO, className,
-					"Move is made in direction UP");
+			logger.debug(className, "User pressed key: UP");
 			grid.move(Direction.UP);
 			return true;
 		case Keys.DPAD_LEFT:
-			logger.message(Level.INFO, className,
-					"Move is made in direction LEFT");
+			logger.debug(className, "User pressed key: LEFT");
 			grid.move(Direction.LEFT);
 			return true;
 		case Keys.DPAD_RIGHT:
-			logger.message(Level.INFO, className,
-					"Move is made in direction RIGHT");
+			logger.debug(className, "User pressed key: RIGHT");
 			grid.move(Direction.RIGHT);
 			return true;
 		case Keys.ESCAPE:
-			logger.message(Level.INFO, className,
-					"User pressed escape key.");
+			logger.debug(className, "User pressed key: ESCAPE");
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
 			return true;

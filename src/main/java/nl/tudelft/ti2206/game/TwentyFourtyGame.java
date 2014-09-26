@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Game;
@@ -39,16 +38,17 @@ public class TwentyFourtyGame extends Game {
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
-	
+
+	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 	
+	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
 	@Override
 	public void create() {
-		logger.setLevel(Level.ALL);
-		logger.setLogFile("2048");
-		logger.message(Level.DEBUG, className,
+		logger.info(className, "Launching game...");
+		logger.debug(className,
 				"Skin is loaded and menu screen is launched.");
 
 		/* Load all our assets. */
@@ -69,11 +69,10 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void dispose() {
-		logger.message(Level.INFO, className, "Closing game...");
-		
+		logger.info(className, "Closing game...");
+
 		screenHandler.dispose();
 		assetHandler.dispose();
-		
 		logger.dispose();
 	}
 
@@ -96,7 +95,8 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
-		logger.message(Level.INFO, "TwentyFourtyGame", "Changing current game state to " + state);
+		logger.info("TwentyFourtyGame",
+				"Changing current game state to '" + state + "'.");
 		curState = state;
 	}
 

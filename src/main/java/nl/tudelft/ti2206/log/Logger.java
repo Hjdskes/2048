@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package nl.tudelft.ti2206.log;
 
 import java.io.FileNotFoundException;
@@ -12,41 +10,48 @@ import java.util.Date;
 public class Logger {
 	/** A singleton reference to this class. */
 	private static Logger instance = new Logger();
-
+	
+	/** The format for timestamps in logging output. */
 	private SimpleDateFormat timeFormat = new SimpleDateFormat(
 			"YYYY-MM-dd HH:mm:ss");
 
+	/** The logging message format. */
 	private String msgFormat = "%s %s: %s";
 
 	PrintWriter file;
 
 	/** Current logging level verbosity. */
-	private Level level;
+	private LogLevel level;
 
-	public enum Level {
+	public enum LogLevel {
 		NONE, INFO, ERROR, DEBUG, ALL
 	}
-
+	
+	/** Private constructor for singleton. */
 	private Logger() {
-		setLevel(Level.ALL);
+		setLevel(LogLevel.ALL);
 	}
 	
+	/**
+	 * Set log filename prefix, such as application name. Timestamp and 
+	 * file extension will be appended automatically.
+	 * @param prefix the filename prefix
+	 */
 	public void setLogFile(String prefix) {
 		
 		SimpleDateFormat format = new SimpleDateFormat("YYYYMMdd_HHmmss");
-
 		Date now = new Date();
 
 		String filename = String.format("%s_%s.log", prefix, format.format(now));
 
-		message(Level.DEBUG, "Logger", "Opening " + filename
-				+ " for writing...");
+		message(LogLevel.DEBUG, "Logger", 
+				"Opening " + filename + " for writing...");
 
 		try {
 			file = new PrintWriter(filename, "UTF-8");
 			
-			message(Level.DEBUG, "Logger", "Logfile " + filename
-					+ " opened.");
+			message(LogLevel.DEBUG, "Logger", 
+					"Logfile " + filename + " opened.");
 			
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -57,11 +62,11 @@ public class Logger {
 		return instance;
 	}
 
-	public void setLevel(Level level) {
+	public void setLevel(LogLevel level) {
 		this.level = level;
 	}
 
-	public Level getLevel() {
+	public LogLevel getLevel() {
 		return level;
 	}
 
@@ -80,18 +85,28 @@ public class Logger {
 	public void setMessageFormat(String msgFormat) {
 		this.msgFormat = msgFormat;
 	}
-
-	public void message(String message) {
-		message(Level.INFO, message);
+	
+	public void info(String tag, String message) {
+		message(LogLevel.INFO, tag, message);
 	}
-
-	public void message(Level level, String message) {
-		message(level, "", message);
+	
+	public void error(String tag, String message) {
+		message(LogLevel.ERROR, tag, message);
 	}
+	
+	public void debug(String tag, String message) {
+		message(LogLevel.DEBUG, tag, message);
+	}
+	
+	/**
+	 * Process log message.
+	 * @param level log level verbosity
+	 * @param tag tag for the message
+	 * @param message natural language string to log
+	 */
+	private void message(LogLevel level, String tag, String message) {
 
-	public void message(Level level, String tag, String message) {
-
-		if (getLevel() == Level.NONE)
+		if (getLevel() == LogLevel.NONE)
 			return;
 
 		if (level.ordinal() <= getLevel().ordinal()) {
@@ -99,7 +114,12 @@ public class Logger {
 			print(output);
 		}
 	}
-
+	
+	
+	/**
+	 * Write message to standard output and to file (if enabled).
+	 * @param message
+	 */
 	private void print(String message) {
 		Date now = new Date();
 		String output = "[" + timeFormat.format(now) + "]: " + message;
@@ -113,10 +133,8 @@ public class Logger {
 	}
 
 	public void dispose() {
-
 		if (file != null)
 			file.close();
-		
 	}
 
 }
