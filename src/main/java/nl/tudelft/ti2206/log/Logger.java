@@ -111,7 +111,11 @@ public class Logger {
 
 		if (level.ordinal() <= getLevel().ordinal()) {
 			String output = String.format(msgFormat, level, tag, message);
-			print(output);
+			
+			if (level == LogLevel.ERROR)
+				error(output);
+			else
+				print(output);
 		}
 	}
 	
@@ -125,6 +129,18 @@ public class Logger {
 		String output = "[" + timeFormat.format(now) + "]: " + message;
 
 		System.out.println(output);
+
+		if (file != null) {
+			file.println(output);
+			file.flush();
+		}
+	}
+	
+	private void error(String message) {
+		Date now = new Date();
+		String output = "[" + timeFormat.format(now) + "]: " + message;
+
+		System.err.println(output);
 
 		if (file != null) {
 			file.println(output);
