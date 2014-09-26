@@ -120,19 +120,9 @@ public class TileTest {
 	 */
 	@Test
 	public void testDoubleValue() {
-		tile.doubleValue();
-		assertEquals(2, tile.getValue());
+		tile.setValue(2);
 		tile.doubleValue();
 		assertEquals(4, tile.getValue());
-	}
-
-	/**
-	 * Tests if we can correctly set the index of the tile.
-	 */
-	@Test
-	public void testIndex() {
-		tile.setIndex(2);
-		assertEquals(2, tile.getIndex());
 	}
 
 	/**
@@ -156,25 +146,25 @@ public class TileTest {
 		int x = (int) tile.getX();
 		int y = (int) tile.getY();
 		assertEquals(x, 211);
-		assertEquals(y, 211);
+		assertEquals(y, 307);
 
 		tile.setIndex(14);
 		x = (int) tile.getX();
 		y = (int) tile.getY();
 		assertEquals(x, 307);
-		assertEquals(y, 403);
+		assertEquals(y, 115);
 
 		tile.setIndex(0);
 		x = (int) tile.getX();
 		y = (int) tile.getY();
 		assertEquals(x, 115);
-		assertEquals(y, 115);
+		assertEquals(y, 403);
 
 		tile.setIndex(11);
 		x = (int) tile.getX();
 		y = (int) tile.getY();
 		assertEquals(x, 403);
-		assertEquals(y, 307);
+		assertEquals(y, 211);
 	}
 
 	/**
