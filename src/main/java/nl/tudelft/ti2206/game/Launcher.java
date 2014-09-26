@@ -1,8 +1,5 @@
 package nl.tudelft.ti2206.game;
 
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -14,9 +11,6 @@ public class Launcher {
 
 	/** The height of the game window. */
 	private static final int HEIGHT = 600;
-	
-	/** The name of the file to log to. */
-	private static final String logFile = "2048.log";
 
 	/** The configuration for the game window. */
 	LwjglApplicationConfiguration config;

@@ -6,7 +6,6 @@ import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
@@ -40,17 +39,19 @@ public class TwentyFourtyGame extends Game {
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
-	
+
+	/** The singleton reference to the Logger class. */
 	private static Logger logger = Logger.getInstance();
 	
+	/** Get current class name for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
 	@Override
 	public void create() {
 		logger.setLevel(Level.ALL);
-		
+
 		logger.setLogFile("2048");
-		
+
 		logger.message(Level.DEBUG, className,
 				"Skin is loaded and menu screen is launched.");
 
@@ -72,12 +73,12 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void dispose() {
-		
+
 		logger.message(Level.INFO, className, "Closing game...");
-		
+
 		screenHandler.dispose();
 		assetHandler.dispose();
-		
+
 		logger.dispose();
 	}
 
@@ -100,7 +101,8 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
-		logger.message(Level.INFO, "TwentyFourtyGame", "Changing current game state to " + state);
+		logger.message(Level.INFO, "TwentyFourtyGame",
+				"Changing current game state to " + state);
 		curState = state;
 	}
 

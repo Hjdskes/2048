@@ -5,8 +5,6 @@ import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.log.Logger.Level;
 
-import com.badlogic.gdx.Gdx;
-
 /**
  * The ProgressHandler is used to save the current game, or load the previously
  * saved game.
@@ -18,10 +16,12 @@ public class ProgressHandler {
 
 	/** A PrefenceHanlder singleton instance. */
 	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
-
-	private String className = this.getClass().getSimpleName();
-
-	private Logger logger = Logger.getInstance();	
+	
+	/** The singleton reference to the Logger class. */
+	private static Logger logger = Logger.getInstance();
+	
+	/** Get current class name for logging output. */
+	private final String className = this.getClass().getSimpleName();
 	
 	/** Overrides the default constructor. */
 	private ProgressHandler() {

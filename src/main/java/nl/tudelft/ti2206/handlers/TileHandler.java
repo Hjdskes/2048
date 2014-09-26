@@ -230,7 +230,7 @@ public class TileHandler {
 
 	/**
 	 * Returns the value by which the score should be incremented.
-	 * @return The value by which the score should be incremented.
+	 * @return value by which the score should be incremented.
 	 */
 	public int getScoreIncrement() {
 		return this.scoreIncrement;

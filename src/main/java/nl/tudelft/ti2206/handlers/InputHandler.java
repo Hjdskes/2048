@@ -6,7 +6,6 @@ import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,10 +20,12 @@ public class InputHandler extends InputListener {
 	 * it.
 	 */
 	private Grid grid;
-
-	private String className = this.getClass().getSimpleName();
-
-	private Logger logger = Logger.getInstance();
+	
+	/** The singleton reference to the Logger class. */
+	private static Logger logger = Logger.getInstance();
+	
+	/** Get current class name for logging output. */
+	private final String className = this.getClass().getSimpleName();
 
 	/**
 	 * Creates a new InputHandler instance.

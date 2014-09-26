@@ -16,7 +16,11 @@ import com.badlogic.gdx.utils.Disposable;
  * transparent-screen-in-libgdx
  */
 public abstract class Screen implements Disposable {
+	/** The singleton reference to the Logger class. */
 	private static Logger logger = Logger.getInstance();
+	
+	/** Get current class name for logging output. */
+	private final String className = this.getClass().getSimpleName();
 	
 	protected Stage stage;
 
@@ -24,7 +28,7 @@ public abstract class Screen implements Disposable {
 	 * Called when the screen is shown. Used for initialization.
 	 */
 	public void create() {
-		logger.message(Level.DEBUG, this.getClass().getSimpleName(), "created");
+		logger.message(Level.DEBUG, className, "created");
 		Gdx.input.setInputProcessor(stage);
 	}
 

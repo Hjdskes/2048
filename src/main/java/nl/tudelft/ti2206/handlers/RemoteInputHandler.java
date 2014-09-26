@@ -22,12 +22,14 @@ public class RemoteInputHandler implements Observer {
 	 */
 	private Grid grid;
 
-	/** The singleton Networking instance. */
+	/** The singleton reference to the Networking instance. */
 	private static Networking networking = Networking.getInstance();
 	
+	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 	
-	private String className = this.getClass().getSimpleName();
+	/** Get current class name for logging output. */
+	private final String className = this.getClass().getSimpleName();
 
 	/**
 	 * Creates a new RemoteInputHandler instance.

@@ -34,7 +34,11 @@ public class Networking extends Observable {
 	/** A singleton reference to this class. */
 	private static Networking instance = new Networking();
 	
+	/** The singleton reference to the Logger class. */
 	private static Logger logger = Logger.getInstance();
+	
+	/** Get current class name for logging output. */
+	private final String className = this.getClass().getSimpleName();
 
 	/** Enumeration indicating the mode of operation for the current game. */
 	public enum Mode {
@@ -76,8 +80,6 @@ public class Networking extends Observable {
 
 	/** The current mode of operation. */
 	private Mode mode;
-	
-	private String className = this.getClass().getSimpleName();
 
 	/** Overrides the default constructor. */
 	private Networking() {
