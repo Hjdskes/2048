@@ -68,9 +68,13 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void dispose() {
+		
+		logger.message(Level.INFO, this.getClass().getSimpleName(), "Closing game...");
+		
 		screenHandler.dispose();
 		assetHandler.dispose();
-		logger.message(Level.INFO, this.getClass().getName(), "Closing game...");
+		
+		logger.dispose();
 	}
 
 	@Override
