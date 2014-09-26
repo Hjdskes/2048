@@ -1,8 +1,5 @@
 package nl.tudelft.ti2206.game;
 
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -44,7 +41,6 @@ public class Launcher {
 	 * Configures the application window.
 	 */
 	private void configure() {
-
 		config.title = "2048";
 		config.resizable = false;
 		config.width = WIDTH;

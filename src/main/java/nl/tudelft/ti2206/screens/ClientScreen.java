@@ -23,8 +23,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * the IP address to which a connection should be made.
  */
 public class ClientScreen extends Screen implements Observer {
-
-	
 	/** The text for the main label. */
 	public static final String OPPONENT_HOSTADDR = "  Enter your opponent's\r\nhostname or IP address: ";
 
