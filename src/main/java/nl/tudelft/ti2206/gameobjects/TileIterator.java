@@ -17,7 +17,8 @@ public class TileIterator implements Iterator<Tile> {
 		 * Not sure if tiles can ever be null since we instantiate them all in
 		 * Grid, but better safe than sorry...
 		 */
-		if (index < tiles.length && tiles[index] != null) {
+		if (index < tiles.length
+				&& tiles[index] != null) {
 			return true;
 		}
 		return false;
