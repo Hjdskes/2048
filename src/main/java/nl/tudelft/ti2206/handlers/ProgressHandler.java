@@ -1,11 +1,8 @@
 package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.log.Logger.Level;
-
-import com.badlogic.gdx.Gdx;
 
 /**
  * The ProgressHandler is used to save the current game, or load the previously
@@ -39,14 +36,13 @@ public class ProgressHandler {
 	 *            The Grid to save its' current state.
 	 */
 	public void saveGame(Grid grid) {
-		
 		logger.message(Level.INFO, className, "Saving game to preference file...");
 		
 		int highest = grid.getCurrentHighestTile();
 		int highscore = grid.getHighscore();
 		int score = grid.getScore();
 
-		saveGrid(grid);
+		prefsHandler.setGrid(grid.toString());
 		prefsHandler.setScore(score);
 
 		if (highest > prefsHandler.getHighestTile()) {
@@ -71,7 +67,6 @@ public class ProgressHandler {
 	 * reached.
 	 */
 	public Grid loadGame() {
-		
 		logger.message(Level.INFO, className, "Loading game from preference file...");
 		
 		Grid grid = loadGrid();
@@ -92,34 +87,10 @@ public class ProgressHandler {
 	}
 
 	/**
-	 * Calls the prefsHandler to save the current grid.
-	 * 
-	 * @param grid
-	 *            The grid to store.
-	 */
-	private void saveGrid(Grid grid) {
-		
-		logger.message(Level.INFO, className, "Saving grid...");
-		
-		String state = "";
-
-		Tile[] tiles = grid.getTiles();
-		for (int index = 0; index < tiles.length; index++) {
-			if (!tiles[index].isEmpty()) {
-				state += index + "," + tiles[index].getValue() + "\n";
-			}
-		}
-
-		prefsHandler.setGrid(state);
-	}
-
-	/**
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 */
 	private Grid loadGrid() {
-		
 		logger.message(Level.INFO, className, "Loading saved grid.");
-		
 		String filledTiles = prefsHandler.getGrid();
 		/*
 		 * If no grid is saved, return a default one. Else, fill the grid with
@@ -129,12 +100,14 @@ public class ProgressHandler {
 			return new Grid(false);
 		} else {
 			Grid grid = new Grid(true);
-			String[] split = filledTiles.split("\n");
+			String[] split = filledTiles.split(",");
 
-			for (String tile : split) {
-				String[] tileInfo = tile.split(",");
-				grid.setTile(Integer.parseInt(tileInfo[0]),
-						Integer.parseInt(tileInfo[1]));
+			if (split.length != 16) {
+				return grid;
+			}
+
+			for (int i = 0; i < split.length; i++) {
+				grid.setTile(i, Integer.parseInt(split[i]));
 			}
 			return grid;
 		}
