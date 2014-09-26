@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>0</y>
+      <w>410</w>
+      <h>750</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GameObject&gt;&gt;
+
+*nl.tudelft.ti2206.gameobjects::Grid*
+--
+-logger = Logger.getInstance(): Logger
+-className = this.getClass().getSimpleName(): String
+-GRID_WIDTH = 400: int
+-GRID_HEIGHT = 400: int
+-GRID_X = 100: int
+-GRID_Y = 100: int
+-NTILES = 16: int
+-TWO = 2: int
+-FOUR = 4: int
+-region: TextureRegion
+-tiles: Tile[]
+-random: Random
+-iterator: TileIterator
+-tileHandler: TileHandler
+-highestTile: int
+-score: int
+-highScore: int
+--
++Grid(boolean isEmpty): ctor
++Grid(boolean isEmpty, Skin skin, TextureRegion texture): ctor
++setTile(int index, int value): void
++act(float delta): void
++restart(): void
++move(Direction direction): void
++updateHighestTile(): void
++getPossibleMoves(): int
++getTileNeighbors(int index): List&lt;Tile&gt;
++getTiles(): Tile[]
++getCurrentHighestTile(): int
++getScore(): int
++getHighscore(): int
++getTileHandler(): TileHandler
++setTileHandler(TileHandler tileHandler): void
++setHighestTile(int highest): void
++setScore(int score): void
++setHighscore(int highScore): void
++getX(): float
++getY(): float
++getWidth(): float
++getHeight(): float
++draw(Batch batch, float parentAlpha): void
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>0</y>
+      <w>270</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Handler&gt;&gt;
+*nl.tudelft.ti2206.handlers::TileHandler*
+--
+-ROW_LENGTH = 4: int
+-tiles: Tile[]
+-isMoveMade: boolean
+-scoreIncrement: int
+--
++TileHandler(Tile[] tiles): ctor
++moveLeft(): void
++moveRight(): void
++moveDown(): void
++moveUp(): void
++isMoveMade(): boolean
++getScoreIncrement(): int
++reset(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>300</y>
+      <w>270</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GameObject&gt;&gt;
+*nl.tudelft.ti2206.gameobjects::TileIterator*
+--
+-tiles: Tile[]
+-index: int
+--
++TileIterator(Tile[] tiles): ctor
++hasNext(): boolean
++next(): Tile
++reset(): void
++getIndex(): int
++remove(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>130</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+1       uses        1</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>220</y>
+      <w>140</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>1
+lt=&lt;&lt;&lt;-
+    uses
+
+
+            1 </panel_attributes>
+    <additional_attributes>120.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>650</x>
+      <y>250</y>
+      <w>70</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+1    uses
+    1</panel_attributes>
+    <additional_attributes>30.0;50.0;30.0;10.0</additional_attributes>
+  </element>
+</diagram>
