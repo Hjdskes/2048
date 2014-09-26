@@ -42,12 +42,14 @@ public class TwentyFourtyGame extends Game {
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 	
 	private static Logger logger = Logger.getInstance();
+	
+	private final String className = this.getClass().getSimpleName();
 
 	@Override
 	public void create() {
 		logger.setLevel(Level.DEBUG);
 		
-		logger.message(Level.DEBUG, this.getClass().getSimpleName(),
+		logger.message(Level.DEBUG, className,
 				"Skin is loaded and menu screen is launched.");
 
 		/* Load all our assets. */
@@ -69,7 +71,7 @@ public class TwentyFourtyGame extends Game {
 	@Override
 	public void dispose() {
 		
-		logger.message(Level.INFO, this.getClass().getSimpleName(), "Closing game...");
+		logger.message(Level.INFO, className, "Closing game...");
 		
 		screenHandler.dispose();
 		assetHandler.dispose();
