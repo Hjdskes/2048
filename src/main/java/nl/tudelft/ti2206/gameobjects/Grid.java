@@ -168,7 +168,7 @@ public class Grid extends Actor {
 	 */
 	private int getRandomEmptyLocation() {
 		int index = random.nextInt(tiles.length);
-		while (!tiles[index].isEmpty() && !isFull()) {
+		while (!tiles[index].isEmpty() && getPossibleMoves() > 0) {
 			index = random.nextInt(tiles.length);
 		}
 		return index;
@@ -219,7 +219,6 @@ public class Grid extends Actor {
 	 * reinitializing itself and checking for the new highest value.
 	 */
 	public void restart() {
-		
 		logger.info(className, "Restarting grid.");
 		
 		score = 0;
@@ -244,7 +243,6 @@ public class Grid extends Actor {
 	 * @return 
 	 */
 	public void move(Direction direction) {
-		
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -264,16 +262,16 @@ public class Grid extends Actor {
 
 		if (tileHandler.isMoveMade()) {
 			logger.info(className, "Move " + direction + " succesfully made.");
-			
+
 			int newScore = score + tileHandler.getScoreIncrement();
 			setScore(newScore);
 			logger.info(className, "Score value set to " + newScore + ".");
-			
+
 			int location = getRandomEmptyLocation();
 			int value = initialValue();
 			setTile(location, value);
 			tiles[location].spawn();
-			
+
 			logger.debug(className, "New tile set at location " + location + " (value = " + value + ").");
 		} else {
 			logger.debug(className, "Move " + direction + " ignored.");
@@ -294,19 +292,6 @@ public class Grid extends Actor {
 			}
 		}
 		iterator.reset();
-	}
-
-	/**
-	 * @return True if the grid is full.
-	 */
-	private boolean isFull() {
-		while (iterator.hasNext()) {
-			if (iterator.next().isEmpty()) {
-				return false;
-			}
-		}
-		iterator.reset();
-		return true;
 	}
 
 	/**
@@ -495,8 +480,6 @@ public class Grid extends Actor {
 	public String toString() {
 		String res = "";
 
-		iterator.reset();
-		
 		while (iterator.hasNext()) {
 			res += iterator.next().getValue() + ",";
 		}
@@ -505,17 +488,4 @@ public class Grid extends Actor {
 		res = res.substring(0, res.length() - 1);
 		return res;
 	}
-	
-//	@Override
-//	public String toString() {
-//		String res = "";
-//		for (int index = 0; index < tiles.length; index++) {
-//			res += tiles[index].getValue();
-//
-//			if (index < 15) {
-//				res += ",";
-//			}
-//		}
-//		return res;
-//	}
 }
