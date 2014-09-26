@@ -45,7 +45,8 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void create() {
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		logger.setLevel(Level.DEBUG);
+		
 		logger.message(Level.DEBUG, this.getClass().getSimpleName(),
 				"Skin is loaded and menu screen is launched.");
 
