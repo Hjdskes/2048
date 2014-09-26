@@ -29,12 +29,15 @@ public class Logger {
 
 	private Logger() {
 		setLevel(Level.ALL);
-
+	}
+	
+	public void setLogFile(String prefix) {
+		
 		SimpleDateFormat format = new SimpleDateFormat("YYYYMMdd_HHmmss");
 
 		Date now = new Date();
 
-		String filename = String.format("2048_%s.log", format.format(now));
+		String filename = String.format("%s_%s.log", prefix, format.format(now));
 
 		message(Level.DEBUG, "Logger", "Opening " + filename
 				+ " for writing...");

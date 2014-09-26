@@ -44,11 +44,6 @@ public class Launcher {
 	 * Configures the application window.
 	 */
 	private void configure() {
-//		try {
-//			System.setOut(new PrintStream(logFile));
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
 
 		config.title = "2048";
 		config.resizable = false;

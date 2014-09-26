@@ -2,6 +2,8 @@ package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Gdx;
@@ -20,6 +22,10 @@ public class InputHandler extends InputListener {
 	 */
 	private Grid grid;
 
+	private String className = this.getClass().getSimpleName();
+
+	private Logger logger = Logger.getInstance();
+
 	/**
 	 * Creates a new InputHandler instance.
 	 * 
@@ -34,27 +40,28 @@ public class InputHandler extends InputListener {
 	public boolean keyDown(InputEvent event, int keycode) {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
-			Gdx.app.log(this.getClass().getSimpleName(),
-					"Move is made in the direction DOWN");
+			logger.message(Level.INFO, className,
+					"Move is made in direction DOWN");
 			grid.move(Direction.DOWN);
 			return true;
 		case Keys.DPAD_UP:
-			Gdx.app.log(this.getClass().getSimpleName(),
-					"Move is made in the direction UP");
+			logger.message(Level.INFO, className,
+					"Move is made in direction UP");
 			grid.move(Direction.UP);
 			return true;
 		case Keys.DPAD_LEFT:
-			Gdx.app.log(this.getClass().getSimpleName(),
-					"Move is made in the direction LEFT");
+			logger.message(Level.INFO, className,
+					"Move is made in direction LEFT");
 			grid.move(Direction.LEFT);
 			return true;
 		case Keys.DPAD_RIGHT:
-			Gdx.app.log(this.getClass().getSimpleName(),
-					"Move is made in the direction RIGHT");
+			logger.message(Level.INFO, className,
+					"Move is made in direction RIGHT");
 			grid.move(Direction.RIGHT);
 			return true;
 		case Keys.ESCAPE:
-			Gdx.app.log(this.getClass().getSimpleName(), "Player has pressed escape");
+			logger.message(Level.INFO, className,
+					"User pressed escape key.");
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
 			return true;

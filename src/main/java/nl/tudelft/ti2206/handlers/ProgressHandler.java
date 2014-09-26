@@ -2,6 +2,8 @@ package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
 
 import com.badlogic.gdx.Gdx;
 
@@ -17,6 +19,10 @@ public class ProgressHandler {
 	/** A PrefenceHanlder singleton instance. */
 	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
 
+	private String className = this.getClass().getSimpleName();
+
+	private Logger logger = Logger.getInstance();	
+	
 	/** Overrides the default constructor. */
 	private ProgressHandler() {
 	}
@@ -33,6 +39,9 @@ public class ProgressHandler {
 	 *            The Grid to save its' current state.
 	 */
 	public void saveGame(Grid grid) {
+		
+		logger.message(Level.INFO, className, "Saving game to preference file...");
+		
 		int highest = grid.getCurrentHighestTile();
 		int highscore = grid.getHighscore();
 		int score = grid.getScore();
@@ -47,8 +56,7 @@ public class ProgressHandler {
 			prefsHandler.setHighscore(highscore);
 		}
 
-		Gdx.app.log(
-				this.getClass().getSimpleName(),
+		logger.message(Level.INFO, className,
 				"Saved the game with the grid: " + grid.toString()
 						+ ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
@@ -63,14 +71,16 @@ public class ProgressHandler {
 	 * reached.
 	 */
 	public Grid loadGame() {
+		
+		logger.message(Level.INFO, className, "Loading game from preference file...");
+		
 		Grid grid = loadGrid();
 		grid.setHighestTile(prefsHandler.getHighestTile());
 		grid.setHighscore(prefsHandler.getHighscore());
 		grid.setScore(prefsHandler.getScore());
 
-		Gdx.app.log(
-				this.getClass().getSimpleName(),
-				"Loaded the game with the grid: " + grid.toString()
+		logger.message(Level.INFO, className,
+				"Game has been loaded: " + grid.toString()
 						+ ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
 						+ ". Highest tile: "
@@ -88,6 +98,9 @@ public class ProgressHandler {
 	 *            The grid to store.
 	 */
 	private void saveGrid(Grid grid) {
+		
+		logger.message(Level.INFO, className, "Saving grid...");
+		
 		String state = "";
 
 		Tile[] tiles = grid.getTiles();
@@ -104,6 +117,9 @@ public class ProgressHandler {
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 */
 	private Grid loadGrid() {
+		
+		logger.message(Level.INFO, className, "Loading saved grid.");
+		
 		String filledTiles = prefsHandler.getGrid();
 		/*
 		 * If no grid is saved, return a default one. Else, fill the grid with
