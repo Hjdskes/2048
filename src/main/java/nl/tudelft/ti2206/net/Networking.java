@@ -559,7 +559,7 @@ public class Networking extends Observable {
 			}
 		} else {
 			logger.debug(className + "/" + getMode(),
-					"disconnect(): client socket not initialized (no connection)");
+					"Disonnect: client socket not initialized (no connection)");
 		}
 
 		clearErrors();
