@@ -21,15 +21,15 @@ public class Logger {
 	PrintWriter file;
 
 	/** Current logging level verbosity. */
-	private Level level;
+	private LogLevel level;
 
-	public enum Level {
+	public enum LogLevel {
 		NONE, INFO, ERROR, DEBUG, ALL
 	}
 	
 	/** Private constructor for singleton. */
 	private Logger() {
-		setLevel(Level.ALL);
+		setLevel(LogLevel.ALL);
 	}
 	
 	/**
@@ -44,13 +44,13 @@ public class Logger {
 
 		String filename = String.format("%s_%s.log", prefix, format.format(now));
 
-		message(Level.DEBUG, "Logger", 
+		message(LogLevel.DEBUG, "Logger", 
 				"Opening " + filename + " for writing...");
 
 		try {
 			file = new PrintWriter(filename, "UTF-8");
 			
-			message(Level.DEBUG, "Logger", 
+			message(LogLevel.DEBUG, "Logger", 
 					"Logfile " + filename + " opened.");
 			
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -62,11 +62,11 @@ public class Logger {
 		return instance;
 	}
 
-	public void setLevel(Level level) {
+	public void setLevel(LogLevel level) {
 		this.level = level;
 	}
 
-	public Level getLevel() {
+	public LogLevel getLevel() {
 		return level;
 	}
 
@@ -85,13 +85,17 @@ public class Logger {
 	public void setMessageFormat(String msgFormat) {
 		this.msgFormat = msgFormat;
 	}
-
-	public void message(String message) {
-		message(Level.INFO, message);
+	
+	public void info(String tag, String message) {
+		message(LogLevel.INFO, tag, message);
 	}
-
-	public void message(Level level, String message) {
-		message(level, "", message);
+	
+	public void error(String tag, String message) {
+		message(LogLevel.ERROR, tag, message);
+	}
+	
+	public void debug(String tag, String message) {
+		message(LogLevel.DEBUG, tag, message);
 	}
 	
 	/**
@@ -100,9 +104,9 @@ public class Logger {
 	 * @param tag tag for the message
 	 * @param message natural language string to log
 	 */
-	public void message(Level level, String tag, String message) {
+	private void message(LogLevel level, String tag, String message) {
 
-		if (getLevel() == Level.NONE)
+		if (getLevel() == LogLevel.NONE)
 			return;
 
 		if (level.ordinal() <= getLevel().ordinal()) {

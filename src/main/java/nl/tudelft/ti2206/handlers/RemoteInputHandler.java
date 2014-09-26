@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.net.Networking;
 
 /**
@@ -24,11 +23,11 @@ public class RemoteInputHandler implements Observer {
 
 	/** The singleton reference to the Networking instance. */
 	private static Networking networking = Networking.getInstance();
-	
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
-	
-	/** Get current class name for logging output. */
+
+	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
 	/**
@@ -61,8 +60,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move upwards on the remote Grid.
 	 */
 	public void moveUp() {
-		logger.message(Level.INFO, this.getClass().getSimpleName(),
-				"Remote player moves UP");
+		logger.info(this.getClass().getSimpleName(), "Remote player moves UP");
 		grid.move(Direction.UP);
 	}
 
@@ -70,8 +68,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move downwards on the remote Grid.
 	 */
 	public void moveDown() {
-		logger.message(Level.INFO, this.getClass().getSimpleName(),
-				"Remote player moves DOWN");
+		logger.info(this.getClass().getSimpleName(), "Remote player moves DOWN");
 		grid.move(Direction.DOWN);
 	}
 
@@ -79,7 +76,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the right on the remote Grid.
 	 */
 	public void moveRight() {
-		logger.message(Level.INFO, this.getClass().getSimpleName(),
+		logger.info(this.getClass().getSimpleName(),
 				"Remote player moves RIGHT");
 		grid.move(Direction.RIGHT);
 	}
@@ -88,8 +85,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the left on the remote Grid.
 	 */
 	public void moveLeft() {
-		logger.message(Level.INFO, this.getClass().getSimpleName(),
-				"Remote player moves LEFT");
+		logger.info(this.getClass().getSimpleName(), "Remote player moves LEFT");
 		grid.move(Direction.LEFT);
 	}
 
@@ -101,15 +97,17 @@ public class RemoteInputHandler implements Observer {
 			handleRemoteInput(input);
 		}
 	}
-	
+
 	/**
 	 * Check if string representation of Grid is valid (contains 15 commas).
+	 * 
 	 * @param str
 	 * @return
 	 */
 	public boolean validateGrid(String str) {
-		return (str.matches("\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+") &&
-				(str.length() - str.replace(",", "").length()) == 15);
+		return (str
+				.matches("\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+") && (str
+				.length() - str.replace(",", "").length()) == 15);
 	}
 
 	/**
@@ -119,20 +117,27 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public void handleRemoteInput(String str) {
 		int closing = str.indexOf(']');
-		
+
 		if (closing == -1) {
-			logger.message(Level.ERROR, className, "Protocol parsing failed, no closing bracket found (-1).");
+			logger.error(className,
+					"Protocol parsing failed, no closing bracket found (-1).");
 		} else if (str.startsWith("GRID[")) {
 			String strGrid = str.substring(5, closing);
 
 			if (validateGrid(strGrid)) {
 				fillGrid(strGrid);
-				logger.message(Level.DEBUG, className, "New remote grid set.");
+				logger.debug(className, "New remote grid set.");
 			} else {
-				logger.message(Level.ERROR, className, "Protocol parsing failed, malformed remote grid string: " + strGrid);
+				logger.error(className,
+						"Protocol parsing failed, malformed remote grid string: "
+								+ strGrid);
 			}
 		} else if (str.startsWith("MOVE[") && closing == 6) {
 			char direction = str.charAt(5);
+
+			logger.debug(className,
+					"Processing remote user's move to"
+							+ direction);
 			
 			switch (direction) {
 			case 'U':
@@ -148,12 +153,14 @@ public class RemoteInputHandler implements Observer {
 				moveLeft();
 				break;
 			default:
-				logger.message(Level.ERROR, className, "Unknown remote direction parameter in protocol: "
+				logger.error(className,
+						"Unknown remote direction parameter in protocol: "
 								+ direction);
 				break;
 			}
 		} else {
-			logger.message(Level.ERROR, className, "Unrecognised remote string in protocol: " + str + ", closing tag is at position " + closing);
+			logger.error(className, "Unrecognised remote string in protocol: "
+					+ str + ", closing tag is at position " + closing);
 		}
 	}
 }

@@ -8,6 +8,7 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
+import nl.tudelft.ti2206.log.Logger;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -45,6 +46,12 @@ public class Grid extends Actor {
 	public enum Direction {
 		DOWN, UP, LEFT, RIGHT;
 	}
+	
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
+	
+	/** Get current class name, used for logging output. */
+	private final String className = this.getClass().getSimpleName();
 
 	/** The width of the Grid. */
 	private static final int GRID_WIDTH = 400;
@@ -224,8 +231,10 @@ public class Grid extends Actor {
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
+	 * @return 
 	 */
 	public void move(Direction direction) {
+		
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -244,10 +253,21 @@ public class Grid extends Actor {
 		}
 
 		if (tileHandler.isMoveMade()) {
-			setScore(score + tileHandler.getScoreIncrement());
+			logger.info(className, "Move " + direction + " succesfully made.");
+			
+			int newScore = score + tileHandler.getScoreIncrement();
+			setScore(newScore);
+			logger.info(className, "Score value set to " + newScore + ".");
+			
 			int location = getRandomEmptyLocation();
-			setTile(location, initialValue());
+			int value = initialValue();
+			setTile(location, value);
 			grid[location].spawn();
+			
+			logger.debug(className, "New tile set at location " + location + " (value = " + value + ").");
+		}
+		else {
+			logger.debug(className, "Move " + direction + " ignored.");
 		}
 
 		tileHandler.reset();
