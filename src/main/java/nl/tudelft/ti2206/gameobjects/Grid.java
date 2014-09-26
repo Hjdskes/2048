@@ -495,6 +495,8 @@ public class Grid extends Actor {
 	public String toString() {
 		String res = "";
 
+		iterator.reset();
+		
 		while (iterator.hasNext()) {
 			res += iterator.next().getValue() + ",";
 		}
@@ -503,4 +505,17 @@ public class Grid extends Actor {
 		res = res.substring(0, res.length() - 1);
 		return res;
 	}
+	
+//	@Override
+//	public String toString() {
+//		String res = "";
+//		for (int index = 0; index < tiles.length; index++) {
+//			res += tiles[index].getValue();
+//
+//			if (index < 15) {
+//				res += ",";
+//			}
+//		}
+//		return res;
+//	}
 }
