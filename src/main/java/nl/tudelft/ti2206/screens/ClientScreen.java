@@ -124,13 +124,11 @@ public class ClientScreen extends Screen implements Observer {
 		
 		String text = textField.getText();
 		if (networking.isConnected()) {
-			label.setText("      Connected to host!");
 			ScreenHandler.getInstance().add(new MultiGameScreen());
 		} else {
-			String error = networking.getLastError();
 
-			if (error.compareTo("") != 0) {
-				label.setText(error);
+			if (networking.errorOccured()) {
+				label.setText(networking.getLastError());
 			} else if (text.compareTo("") == 0) {
 				label.setText(OPPONENT_HOSTADDR);
 				play.setVisible(false);

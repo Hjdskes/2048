@@ -111,16 +111,22 @@ public class HostScreen extends Screen implements Observer {
 				addresses.setText(addr);
 
 				ScreenHandler.getInstance().add(new MultiGameScreen());
-			} else {
+			} else if (networking.errorOccured()) {
 				String error = networking.getLastError();
 
 				if (error.compareTo("") != 0) {
 					label.setText(error);
 				}
 			}
-		} else if (!networking.getLastError().isEmpty()) {
-			label.setText(networking.getLastError());
-			addresses.setText("");
+		} else if (networking.errorOccured()) {
+			
+			String error = "Networking error!";
+			
+			if (!networking.getLastError().isEmpty())
+				error = networking.getLastError();
+			
+			label.setText(error);
+			addresses.setText(":(");
 			remote.setText("Is the port in use?");
 		} else {
 			remote.setText(CONNECTION_WAITING);

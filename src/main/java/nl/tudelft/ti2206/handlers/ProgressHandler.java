@@ -15,12 +15,10 @@ public class ProgressHandler {
 	/** A PrefenceHanlder singleton instance. */
 	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
 
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
+	private String className = this.getClass().getSimpleName();
 
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
-
+	private Logger logger = Logger.getInstance();	
+	
 	/** Overrides the default constructor. */
 	private ProgressHandler() {
 	}
@@ -38,7 +36,7 @@ public class ProgressHandler {
 	 */
 	public void saveGame(Grid grid) {
 		logger.info(className, "Saving game to preference file...");
-
+		
 		int highest = grid.getCurrentHighestTile();
 		int highscore = grid.getHighscore();
 		int score = grid.getScore();
@@ -53,9 +51,8 @@ public class ProgressHandler {
 			prefsHandler.setHighscore(highscore);
 		}
 
-		logger.info(
-				className,
-				"Saved the game with grid: " + grid.toString()
+		logger.info(className,
+				"Saved the game with the grid: " + grid.toString()
 						+ ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
 						+ ". Highest tile: "
@@ -70,15 +67,15 @@ public class ProgressHandler {
 	 */
 	public Grid loadGame() {
 		logger.info(className, "Loading game from preference file...");
-
+		
 		Grid grid = loadGrid();
 		grid.setHighestTile(prefsHandler.getHighestTile());
 		grid.setHighscore(prefsHandler.getHighscore());
 		grid.setScore(prefsHandler.getScore());
 
-		logger.info(
-				className,
-				"Game has been loaded: " + grid.toString() + ". Highscore: "
+		logger.info(className,
+				"Game has been loaded: " + grid.toString()
+						+ ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
 						+ ". Highest tile: "
 						+ Integer.toString(prefsHandler.getHighestTile())
@@ -93,7 +90,6 @@ public class ProgressHandler {
 	 */
 	private Grid loadGrid() {
 		logger.info(className, "Loading saved grid...");
-
 		String filledTiles = prefsHandler.getGrid();
 		/*
 		 * If no grid is saved, return a default one. Else, fill the grid with
@@ -110,7 +106,8 @@ public class ProgressHandler {
 			}
 
 			for (int i = 0; i < split.length; i++) {
-				grid.setTile(i, Integer.parseInt(split[i]));
+				int value = Integer.parseInt(split[i]);
+				grid.setTile(i, value % 2 == 0 ? value : 0);
 			}
 			return grid;
 		}
