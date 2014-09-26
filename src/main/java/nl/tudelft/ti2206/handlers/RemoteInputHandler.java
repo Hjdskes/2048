@@ -3,8 +3,6 @@ package nl.tudelft.ti2206.handlers;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.badlogic.gdx.Gdx;
-
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
@@ -93,7 +91,7 @@ public class RemoteInputHandler implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg instanceof String) {
 			String input = (String) arg;
-			Gdx.app.debug(className, "update received: " + input);
+			logger.debug(className, "update received: " + input);
 			handleRemoteInput(input);
 		}
 	}

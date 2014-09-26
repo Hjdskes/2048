@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Observable;
 
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.log.Logger.LogLevel;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;

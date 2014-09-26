@@ -5,7 +5,6 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,7 +21,6 @@ public class ContinueButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log(this.getClass().getSimpleName(), "Game is continuing.");
 				TwentyFourtyGame.setState(GameState.CONTINUING);
 				ScreenHandler.getInstance().removeTop();
 			}

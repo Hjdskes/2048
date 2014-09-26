@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.log.Logger.LogLevel;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Game;

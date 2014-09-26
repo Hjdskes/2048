@@ -8,9 +8,9 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -32,8 +32,14 @@ public class MultiGameScreen extends Screen {
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
-	/** The singleton Networking instance. */
+	/** The singleton reference to the Networking instance. */
 	private static Networking networking = Networking.getInstance();
+
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
+
+	/** Get current class name, used for logging output. */
+	private final String className = this.getClass().getSimpleName();
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
@@ -111,15 +117,14 @@ public class MultiGameScreen extends Screen {
 
 		if (localGrid.getCurrentHighestTile() == 2048
 				|| (remoteGrid.isFull() && remoteGrid.getPossibleMoves() == 0)) {
-			Gdx.app.log(this.getClass().getSimpleName(),
+			logger.info(className,
 					"Local player won the multiplayer game. The score of the local player: "
 							+ Integer.toString(localGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.WON);
 			screenHandler.add(new MultiWinScreen());
 		} else if ((localGrid.isFull() && localGrid.getPossibleMoves() == 0)
 				|| remoteGrid.getCurrentHighestTile() == 2048) {
-			Gdx.app.setLogLevel(Application.LOG_INFO);
-			Gdx.app.log(this.getClass().getSimpleName(),
+			logger.info(className,
 					"Local player lost the multiplayer game. The score of the remote player: "
 							+ Integer.toString(remoteGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.LOST);
