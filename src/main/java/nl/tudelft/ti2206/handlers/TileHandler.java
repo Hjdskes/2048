@@ -114,7 +114,8 @@ public class TileHandler {
 	}
 
 	/**
-	 * Rotates the grid.
+	 * Rotates the grid. Taken from:
+	 * https://github.com/bulenkov/2048/blob/master/src/com/bulenkov/game2048/Game2048.java#L184
 	 * 
 	 * @param angle
 	 *            The angle by which to rotate.
