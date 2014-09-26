@@ -44,6 +44,10 @@ public class TileIterator implements Iterator<Tile> {
 		return this.index;
 	}
 
+	/**
+	 * Apparently on Windows we have to implement this method,
+	 * but we don't use it so we leave it empty.
+	 */
 	@Override
 	public void remove() {
 		

@@ -43,13 +43,13 @@ public class ClientScreen extends Screen implements Observer {
 
 	/** The button to start the game when a connection has been made. */
 	private TextButton play;
-	
+
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
-	/** The singleton Networking instance. */ 
+	/** The singleton Networking instance. */
 	private static Networking networking = Networking.getInstance();
-	
+
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
@@ -58,7 +58,7 @@ public class ClientScreen extends Screen implements Observer {
 		textField = new TextField(addresses.get(0), assetHandler.getSkin());
 		menu = new MenuButton();
 		play = new TextButton("Play!", assetHandler.getSkin());
-		
+
 		networking.addObserver(this);
 	}
 
@@ -120,9 +120,6 @@ public class ClientScreen extends Screen implements Observer {
 	public void update() {
 		super.update();
 
-		
-		
-		String text = textField.getText();
 		if (networking.isConnected()) {
 			ScreenHandler.getInstance().add(new MultiGameScreen());
 		} else {
@@ -133,20 +130,19 @@ public class ClientScreen extends Screen implements Observer {
 				play.setVisible(true);
 			}
 		}
-		
-		
+
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-	
+
 	}
-	
+
 	@Override
 	public void dispose() {
 		// dispose the stage:
 		super.dispose();
-		
+
 		// remove screen object from networking observer list
 		networking.deleteObserver(this);
 	}
