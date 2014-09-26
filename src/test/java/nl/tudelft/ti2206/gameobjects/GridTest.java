@@ -117,28 +117,6 @@ public class GridTest {
 		assertEquals(grid.getHighscore(), 345);
 	}
 
-	/**
-	 * Tests if isFull() correctly returns true if the grid is full.
-	 */
-	@Test
-	public void testIsFull() {
-		for (int i = 0; i < 16; i++) {
-			grid.getTiles()[i].setValue(2);
-		}
-		assertTrue(grid.isFull());
-	}
-
-	/**
-	 * Tests if isFull() correctly returns false if the grid is not full.
-	 */
-	@Test
-	public void testIsFullFalse() {
-		for (int i = 0; i < 16; i = i + 2) {
-			grid.getTiles()[i].setValue(2);
-		}
-		assertFalse(grid.isFull());
-	}
-
 	@Test
 	public void testTileAddedOnMove() {
 		when(tileHandler.isMoveMade()).thenReturn(true);
@@ -322,11 +300,6 @@ public class GridTest {
 		// verify tiles are drawn
 		verify(batch, times(16)).draw(eq(region), anyInt(), anyInt(), anyInt(),
 				anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
-	}
-
-	@Test
-	public void testFromString() {
-		
 	}
 
 	@Test

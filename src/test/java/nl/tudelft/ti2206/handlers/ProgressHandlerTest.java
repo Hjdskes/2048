@@ -67,7 +67,7 @@ public class ProgressHandlerTest {
 		grid.setTile(0, 2);
 		grid.setTile(1, 4);
 
-		String saveString = "0,2\n1,4\n";
+		String saveString = "2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
 
 		progressHandler.saveGame(grid);
 		assertEquals(saveString, prefsHandler.getGrid());

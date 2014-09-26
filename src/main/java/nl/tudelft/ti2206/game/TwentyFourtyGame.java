@@ -69,12 +69,10 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void dispose() {
-		
 		logger.info(className, "Closing game...");
 
 		screenHandler.dispose();
 		assetHandler.dispose();
-
 		logger.dispose();
 	}
 

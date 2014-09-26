@@ -23,7 +23,7 @@ public class Tile extends Actor {
 	private static final int TILE_X = 115;
 
 	/** The base Tile y-coordinate. */
-	private static final int TILE_Y = 115;
+	private static final int TILE_Y = 403;
 
 	/** The Skin to retrieve all Drawables from. */
 	private Skin skin;
@@ -158,14 +158,10 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Doubles the value of the Tile, or sets it to 2 if the current value is 0.
+	 * Doubles the value of the Tile.
 	 */
 	public void doubleValue() {
-		if (this.isEmpty()) {
-			setValue(2);
-		} else {
-			setValue(value * 2);
-		}
+		setValue(value * 2);
 	}
 
 	/**
@@ -228,7 +224,6 @@ public class Tile extends Actor {
 			return TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame.GAP);
 		case 3:
 			return TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame.GAP);
-		case 0: /* Fallthrough. */
 		default:
 			return TILE_X;
 		}
@@ -236,14 +231,12 @@ public class Tile extends Actor {
 
 	@Override
 	public float getY() {
-		if (index < 4) {
-			return TILE_Y;
-		} else if (index < 8) {
-			return TILE_Y + TILE_HEIGHT + TwentyFourtyGame.GAP;
-		} else if (index < 12) {
-			return TILE_Y + 2 * (TILE_HEIGHT + TwentyFourtyGame.GAP);
-		} else if (index < 16) {
-			return TILE_Y + 3 * (TILE_HEIGHT + TwentyFourtyGame.GAP);
+		if (index >= 12) {
+			return TILE_Y - 3 * TILE_HEIGHT - 3 * TwentyFourtyGame.GAP;
+		} else if (index >= 8) {
+			return TILE_Y - 2 * TILE_HEIGHT - 2 * TwentyFourtyGame.GAP;
+		} else if (index >= 4) {
+			return TILE_Y - TILE_HEIGHT - TwentyFourtyGame.GAP;
 		} else {
 			return TILE_Y;
 		}

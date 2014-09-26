@@ -356,9 +356,7 @@ public class Networking extends Observable {
 	 *            append newline
 	 */
 	public void sendString(String str, boolean newLine) {
-
-		logger.debug(className + "/" + getMode(), "Sending string: " + str);
-
+		logger.debug(className + "/" + getMode(), "Sending string: " + str);		
 		if (newLine && !str.endsWith("\r\n")) {
 			str += "\r\n";
 		}
@@ -383,7 +381,6 @@ public class Networking extends Observable {
 	 *            The response message.
 	 */
 	private void processResponse(String response) {
-
 		logger.debug(className + "/" + getMode(), "processResponse(" + response
 				+ ") sending to " + countObservers() + " registered observers");
 
@@ -427,7 +424,6 @@ public class Networking extends Observable {
 	 *            The state to set: true for connected, false for disconnected.
 	 */
 	protected void setInitialized(boolean initialized) {
-
 		if (initialized) {
 			logger.info(className + "/" + getMode(),
 					"Client socket initialized");
@@ -489,7 +485,6 @@ public class Networking extends Observable {
 	 *            The error message to set.
 	 */
 	public void setLastError(String lastError) {
-
 		if (!lastError.isEmpty()) {
 			this.error = true;
 
@@ -540,7 +535,6 @@ public class Networking extends Observable {
 	 */
 	@SuppressWarnings("deprecation")
 	public void disconnect() {
-
 		logger.info(className + "/" + getMode(), "Disconnecting...");
 
 		if (thread != null) {

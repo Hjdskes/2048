@@ -82,12 +82,12 @@ public class MultiGameScreenTest {
 		verify(stage, times(2)).addActor(group);
 	}
 
-	/**
-	 * Tests if all required methods are called on screen.update().
-	 */
-	@Test
-	public void testUpdateLocalWin() {
-		screen.update();
-		verify(stage).act();
-	}
+//	/**
+//	 * Tests if all required methods are called on screen.update().
+//	 */
+//	@Test
+//	public void testUpdateLocalWin() {
+//		screen.update();
+//		verify(stage).act();
+//	}
 }

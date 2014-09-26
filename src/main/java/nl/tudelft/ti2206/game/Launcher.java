@@ -7,6 +7,7 @@ import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+
 /** This class launches an instance of TwentyFourtyGame. */
 public class Launcher {
 	/** The width of the game window. */
@@ -28,20 +29,19 @@ public class Launcher {
 	 *            The command line arguments. These are ignored.
 	 */
 	public static void main(String[] args) {
-		
 		// Launcher.java [loglevel] [log to file]
 		// `loglevel` = { none, info, error, debug, all }
 		// `log to file` = { true, 1, enable } 
 		// both arguments are parsed case insensitive, so DEBUG is the
 		// same as debug, or deBuG
 		
-		
 		// remove this later!
 		System.out.println("Commandline arguments passed:");
 		for (int i = 0; i < args.length; i++)
 			System.out.println("-> args[" + i + "] = " + args[i]);
 		
-		// default logging level, set this to Level.NONE later!
+		/* Default logging level.
+		 * Set this to Level.NONE later! */
 		LogLevel logLevel = LogLevel.ALL;
 		
 		if (args.length > 0 && !args[0].isEmpty()) {
@@ -87,7 +87,6 @@ public class Launcher {
 	 * Configures the application window.
 	 */
 	private void configure() {
-
 		config.title = "2048";
 		config.resizable = false;
 		config.width = WIDTH;

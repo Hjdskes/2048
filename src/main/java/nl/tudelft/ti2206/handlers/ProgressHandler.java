@@ -106,10 +106,8 @@ public class ProgressHandler {
 			}
 
 			for (int i = 0; i < split.length; i++) {
-				
-				int value = Math.max(0, Integer.parseInt(split[i]));
-				
-				grid.setTile(i, value);
+				int value = Integer.parseInt(split[i]);
+				grid.setTile(i, value % 2 == 0 ? value : 0);
 			}
 			return grid;
 		}
