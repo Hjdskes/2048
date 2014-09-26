@@ -2,6 +2,8 @@ package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Gdx;
@@ -15,9 +17,15 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
  */
 public class LocalInputHandler extends InputListener {
 
-	/** The singleton Networking instance. */
+	/** The singleton reference to the Networking instance. */
 	private static Networking networking = Networking.getInstance();
-
+	
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
+	
+	/** Get current class name for logging output. */
+	private final String className = this.getClass().getSimpleName();
+	
 	/**
 	 * A reference to the local Grid, so the called objects can interact with
 	 * it.
@@ -39,28 +47,28 @@ public class LocalInputHandler extends InputListener {
 	public boolean keyDown(InputEvent event, int keycode) {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
-			Gdx.app.log(this.getClass().getSimpleName(),
+			logger.message(Level.INFO, className,
 					"Move is made in the direction DOWN");
 			grid.move(Direction.DOWN);
 			networking.sendString("MOVE[D]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_UP:
-			Gdx.app.log(this.getClass().getSimpleName(),
+			logger.message(Level.INFO, className,
 					"Move is made in the direction UP");
 			grid.move(Direction.UP);
 			networking.sendString("MOVE[U]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_LEFT:
-			Gdx.app.log(this.getClass().getSimpleName(),
+			logger.message(Level.INFO, className,
 					"Move is made in the direction LEFT");
 			grid.move(Direction.LEFT);
 			networking.sendString("MOVE[L]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_RIGHT:
-			Gdx.app.log(this.getClass().getSimpleName(),
+			logger.message(Level.INFO, className,
 					"Move is made in the direction RIGHT");
 			grid.move(Direction.RIGHT);
 			networking.sendString("MOVE[R]");
