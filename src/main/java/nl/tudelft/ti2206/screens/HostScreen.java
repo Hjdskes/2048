@@ -118,6 +118,10 @@ public class HostScreen extends Screen implements Observer {
 					label.setText(error);
 				}
 			}
+		} else if (!networking.getLastError().isEmpty()) {
+			label.setText(networking.getLastError());
+			addresses.setText("");
+			remote.setText("Is the port in use?");
 		} else {
 			remote.setText(CONNECTION_WAITING);
 		}
