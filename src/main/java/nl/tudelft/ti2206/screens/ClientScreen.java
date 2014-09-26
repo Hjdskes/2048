@@ -131,9 +131,6 @@ public class ClientScreen extends Screen implements Observer {
 
 			if (networking.errorOccured()) {
 				label.setText(networking.getLastError());
-			} else if (text.compareTo("") == 0) {
-				label.setText(OPPONENT_HOSTADDR);
-				play.setVisible(false);
 			} else {
 				play.setVisible(true);
 			}

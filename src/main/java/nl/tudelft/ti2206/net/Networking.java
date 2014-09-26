@@ -499,7 +499,7 @@ public class Networking extends Observable {
 				lastError = lastError.replace("server socket ", "server\r\n");
 			} else if (lastError.contains("socket connection ")) {
 				lastError = lastError.replace("socket connection ",
-						"connection\r\n");
+						"connection\r\n   ");
 			}
 		}
 		this.lastError = lastError;
