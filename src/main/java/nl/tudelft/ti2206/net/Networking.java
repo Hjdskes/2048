@@ -361,7 +361,7 @@ public class Networking extends Observable {
 			} catch (IOException e) {
 				setConnectionLost(true);
 				disconnect();
-				System.err.println("ERROR: Unable to send string:" + str);
+				logger.message(Level.ERROR, className + "/" + getMode(), "Unable to send string:" + str);
 			}
 		}
 	}
@@ -479,7 +479,7 @@ public class Networking extends Observable {
 		
 		if (!lastError.isEmpty())
 		{
-			logger.message(Level.INFO, className + "/" + getMode(), lastError);
+			logger.message(Level.ERROR, className + "/" + getMode(), lastError);
 		
 			if (lastError.contains("server socket ")) {
 				lastError = lastError.replace("server socket ", "server\r\n");

@@ -6,7 +6,6 @@ import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.net.Networking;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;

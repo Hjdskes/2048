@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.game;
 
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
+
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -14,6 +17,9 @@ public class Launcher {
 
 	/** The configuration for the game window. */
 	LwjglApplicationConfiguration config;
+	
+	/** The singleton reference to the Logger class. */
+	private static Logger logger = Logger.getInstance();
 
 	/**
 	 * Main entry point for the game.
@@ -22,6 +28,45 @@ public class Launcher {
 	 *            The command line arguments. These are ignored.
 	 */
 	public static void main(String[] args) {
+		
+		// Launcher.java [loglevel] [log to file]
+		// `loglevel` = { none, info, error, debug, all }
+		// `log to file` = { true, 1, enable } 
+		// both arguments are parsed case insensitive, so DEBUG is the
+		// same as debug, or deBuG
+		
+		
+		// remove this later!
+		System.out.println("arguments passed:");
+		for (int i = 0; i < args.length; i++)
+			System.out.println("args[" + i + "] = " + args[i]);
+		
+		// default logging level, set this to Level.NONE later!
+		Level logLevel = Level.ALL;
+		
+		if (args.length > 0 && !args[0].isEmpty()) {
+			if (args[0].equalsIgnoreCase("all"))
+				logLevel = Level.ALL;
+			else if (args[0].equalsIgnoreCase("info"))
+				logLevel = Level.INFO;
+			else if (args[0].equalsIgnoreCase("error"))
+				logLevel = Level.ERROR;
+			else if (args[0].equalsIgnoreCase("debug"))
+				logLevel = Level.DEBUG;
+			else if (args[0].equalsIgnoreCase("none"))
+				logLevel = Level.NONE;
+		}
+		
+		System.out.println("setting log level to " + logLevel);
+		logger.setLevel(logLevel);
+		
+		if (logLevel.ordinal() > Level.NONE.ordinal() && args.length > 1 && !args[1].isEmpty()) {
+			if (args[1].equalsIgnoreCase("1") || args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("enable")) {
+				System.out.println("logging to file...");
+				logger.setLogFile("2048");
+			}
+		}
+		
 		Launcher launcher = new Launcher();
 		launcher.launch();
 	}
@@ -30,6 +75,7 @@ public class Launcher {
 	 * Creates a new Launcher object. This object is automatically configured.
 	 */
 	public Launcher() {
+		
 		config = new LwjglApplicationConfiguration();
 		configure();
 	}
