@@ -213,6 +213,9 @@ public class Grid extends Actor {
 	 * reinitializing itself and checking for the new highest value.
 	 */
 	public void restart() {
+		
+		logger.info(className, "Restarting grid.");
+		
 		score = 0;
 		for (Tile t : grid) {
 			t.reset();

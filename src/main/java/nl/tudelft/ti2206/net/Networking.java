@@ -31,10 +31,10 @@ import com.badlogic.gdx.net.SocketHints;
 public class Networking extends Observable {
 	/** A singleton reference to this class. */
 	private static Networking instance = new Networking();
-	
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
-	
+
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
@@ -70,6 +70,8 @@ public class Networking extends Observable {
 	/** String indicating the last occurred error. */
 	private String lastError = "";
 
+	private boolean error = false;
+
 	/** True if the connection has been lost. */
 	private boolean connectionLost = false;
 
@@ -77,11 +79,10 @@ public class Networking extends Observable {
 	private Thread thread;
 
 	/** The current mode of operation. */
-	private Mode mode;
+	private Mode mode = Mode.NONE;
 
 	/** Overrides the default constructor. */
 	private Networking() {
-		setMode(Mode.NONE);
 	}
 
 	public static Networking getInstance() {
@@ -94,7 +95,8 @@ public class Networking extends Observable {
 	public List<String> initLocalAddresses() {
 		if (addresses.isEmpty()) {
 			try {
-				logger.info(className + "/" + getMode(), "Enumerating network interfaces...");
+				logger.info(className + "/" + getMode(),
+						"Enumerating network interfaces...");
 				Enumeration<NetworkInterface> interfaces = NetworkInterface
 						.getNetworkInterfaces();
 				for (NetworkInterface ni : Collections.list(interfaces)) {
@@ -128,8 +130,8 @@ public class Networking extends Observable {
 	}
 
 	/**
-	 * Checks if a host is valid by address or by name. This method can be very slow
-	 * as it uses the system's DNS.
+	 * Checks if a host is valid by address or by name. This method can be very
+	 * slow as it uses the system's DNS.
 	 * 
 	 * @param host
 	 *            The hostname or IP address.
@@ -187,13 +189,14 @@ public class Networking extends Observable {
 	 */
 	public void startServer() {
 		setMode(Mode.SERVER);
-		setLastError("");
+		clearErrors();
 		setConnectionLost(false);
 
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				logger.info(className + "/" + getMode(), "Starting server, listening on port " + PORT);
+				logger.info(className + "/" + getMode(),
+						"Starting server, listening on port " + PORT);
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
 				serverSocketHint.reuseAddress = true;
@@ -216,8 +219,10 @@ public class Networking extends Observable {
 					if (clientSocket != null) {
 						setStreams(clientSocket);
 						setInitialized(true);
-						
-						logger.info(className + "/" + getMode(), "connection accepted from " + getRemoteAddress());
+
+						logger.info(className + "/" + getMode(),
+								"Incoming connection accepted from "
+										+ getRemoteAddress());
 
 						while (isConnected()) {
 							receiveLoop();
@@ -249,7 +254,7 @@ public class Networking extends Observable {
 	 */
 	public void startClient(final String address, final int port) {
 		setMode(Mode.CLIENT);
-		setLastError("");
+		clearErrors();
 		setConnectionLost(false);
 
 		thread = new Thread(new Runnable() {
@@ -258,9 +263,13 @@ public class Networking extends Observable {
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
 				socketHints.keepAlive = true;
-				
-				logger.info(className + "/" + getMode(), "Starting client, trying to connect to " + address + ":" + port + "...");
-				logger.debug(className + "/" + getMode(), "Connection timeout is " + socketHints.connectTimeout + "ms");
+
+				logger.info(className + "/" + getMode(),
+						"Starting client, trying to connect to " + address
+								+ ":" + port + "...");
+				logger.debug(className + "/" + getMode(),
+						"Connection timeout is " + socketHints.connectTimeout
+								+ "ms");
 				try {
 					clientSocket = Gdx.net.newClientSocket(Protocol.TCP,
 							address, port, socketHints);
@@ -348,8 +357,8 @@ public class Networking extends Observable {
 	 */
 	public void sendString(String str, boolean newLine) {
 
-		logger.debug(className + "/" + getMode(), "Sending string: " + str);		
-		
+		logger.debug(className + "/" + getMode(), "Sending string: " + str);
+
 		if (newLine && !str.endsWith("\r\n")) {
 			str += "\r\n";
 		}
@@ -357,11 +366,12 @@ public class Networking extends Observable {
 		if (isConnected()) {
 			try {
 				dOutputStream.writeBytes(str);
-				
+
 			} catch (IOException e) {
 				setConnectionLost(true);
 				disconnect();
-				logger.error(className + "/" + getMode(), "Unable to send string:" + str);
+				logger.error(className + "/" + getMode(),
+						"Unable to send string:" + str);
 			}
 		}
 	}
@@ -419,7 +429,8 @@ public class Networking extends Observable {
 	protected void setInitialized(boolean initialized) {
 
 		if (initialized) {
-			logger.info(className + "/" + getMode(), "Client socket initialized");
+			logger.info(className + "/" + getMode(),
+					"Client socket initialized");
 			setChanged();
 			notifyObservers();
 		}
@@ -451,6 +462,8 @@ public class Networking extends Observable {
 	 *            Client or Server.
 	 */
 	public void setMode(Mode mode) {
+		
+		logger.debug(className, "Changing mode to " + mode);
 		this.mode = mode;
 	}
 
@@ -468,7 +481,7 @@ public class Networking extends Observable {
 	public String getLastError() {
 		return lastError;
 	}
-	
+
 	/**
 	 * Sets the error message of the last error that has occurred.
 	 * 
@@ -476,11 +489,12 @@ public class Networking extends Observable {
 	 *            The error message to set.
 	 */
 	public void setLastError(String lastError) {
-		
-		if (!lastError.isEmpty())
-		{
+
+		if (!lastError.isEmpty()) {
+			this.error = true;
+
 			logger.error(className + "/" + getMode(), lastError);
-		
+
 			if (lastError.contains("server socket ")) {
 				lastError = lastError.replace("server socket ", "server\r\n");
 			} else if (lastError.contains("socket connection ")) {
@@ -489,6 +503,15 @@ public class Networking extends Observable {
 			}
 		}
 		this.lastError = lastError;
+	}
+
+	public boolean errorOccured() {
+		return error;
+	}
+
+	public void clearErrors() {
+		this.error = false;
+		this.lastError = "";
 	}
 
 	/**
@@ -541,9 +564,11 @@ public class Networking extends Observable {
 				e.printStackTrace();
 			}
 		} else {
-			logger.debug(className + "/" + getMode(), "disconnect(): client socket not initialized (no connection)");
+			logger.debug(className + "/" + getMode(),
+					"disconnect(): client socket not initialized (no connection)");
 		}
-		
+
+		clearErrors();
 		setMode(Mode.NONE);
 	}
 
