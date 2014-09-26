@@ -57,9 +57,7 @@ public class GameScreen extends Screen {
 		grid.setName("Grid");
 		stage.addActor(grid);
 		stage.addActor(restartButton);
-		stage.addActor(scores);
-		
-		
+		stage.addActor(scores);		
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public class GameScreen extends Screen {
 							+ " and with the score " + grid.getScore() + ".");	
 			TwentyFourtyGame.setState(GameState.WON);
 			screenHandler.add(new WinScreen());
-		} else if (grid.isFull() && grid.getPossibleMoves() == 0) {
+		} else if (grid.getPossibleMoves() == 0) {
 			Gdx.app.log(this.getClass().getSimpleName(),
 					"Game is lost, the final grid: " + grid.toString()
 							+ " and with the score " + grid.getScore() + ".");	

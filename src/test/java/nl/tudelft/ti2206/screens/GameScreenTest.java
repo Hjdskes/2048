@@ -107,12 +107,12 @@ public class GameScreenTest {
 		verify(stage).draw();
 	}
 
-	/**
-	 * Tests if all required methods are called on screen.update().
-	 */
-	@Test
-	public void testUpdate() {
-		screen.update();
-		verify(stage).act();
-	}
+//	/**
+//	 * Tests if all required methods are called on screen.update().
+//	 */
+//	@Test
+//	public void testUpdate() {
+//		screen.update();
+//		verify(stage).act();
+//	}
 }

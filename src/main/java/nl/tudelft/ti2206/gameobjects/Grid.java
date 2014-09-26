@@ -25,13 +25,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * For example, imagine the grid being laid out like this:
  * 
  * +---+---+---+---+ 
- * | 12| 13| 12| 14|
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11|
- * +---+---+---+---+ 
- * | 4 | 5 | 6 | 7 | 
- * +---+---+---+---+ 
  * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+ 
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ 
+ * | 8 | 9 | 10| 11| 
+ * +---+---+---+---+ 
+ * | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -71,10 +71,13 @@ public class Grid extends Actor {
 	private TextureRegion region;
 
 	/** The array containing all sixteen tiles. */
-	private Tile[] grid;
+	private Tile[] tiles;
 
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
+
+	/** The TileIterator is used to iterate over the tiles. */
+	private TileIterator iterator;
 
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
@@ -98,11 +101,12 @@ public class Grid extends Actor {
 		this.region = new TextureRegion(AssetHandler.getInstance().getSkin().get("grid",
 				Texture.class));
 		this.random = new Random();
-		this.grid = new Tile[NTILES];
-		this.tileHandler = new TileHandler(this);
+		this.tiles = new Tile[NTILES];
+		this.iterator = new TileIterator(tiles);
+		this.tileHandler = new TileHandler(tiles);
 
-		for (int i = 0; i < grid.length; i++) {
-			grid[i] = new Tile(i, 0);
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i] = new Tile(i, 0);
 		}
 		if (!isEmpty) {
 			initGrid();
@@ -119,11 +123,12 @@ public class Grid extends Actor {
 	public Grid(boolean isEmpty, Skin skin, TextureRegion texture) {
 		this.region = texture;
 		this.random = new Random();
-		this.grid = new Tile[NTILES];
-		this.tileHandler = new TileHandler(this);
+		this.tiles = new Tile[NTILES];
+		this.iterator = new TileIterator(tiles);
+		this.tileHandler = new TileHandler(tiles);
 
-		for (int i = 0; i < grid.length; i++) {
-			grid[i] = new Tile(i, 0, skin, region);
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i] = new Tile(i, 0, skin, region);
 		}
 		if (!isEmpty) {
 			initGrid();
@@ -143,8 +148,8 @@ public class Grid extends Actor {
 		while (loc2 == loc1) {
 			loc2 = getRandomEmptyLocation();
 		}
-		grid[loc1].setValue(initialValue());
-		grid[loc2].setValue(initialValue());
+		tiles[loc1].setValue(initialValue());
+		tiles[loc2].setValue(initialValue());
 	}
 
 	/**
@@ -155,9 +160,9 @@ public class Grid extends Actor {
 	 * @return A new valid location.
 	 */
 	private int getRandomEmptyLocation() {
-		int index = random.nextInt(grid.length);
-		while (!grid[index].isEmpty() && !isFull()) {
-			index = random.nextInt(grid.length);
+		int index = random.nextInt(tiles.length);
+		while (!tiles[index].isEmpty() && !isFull()) {
+			index = random.nextInt(tiles.length);
 		}
 		return index;
 	}
@@ -181,7 +186,7 @@ public class Grid extends Actor {
 	 *            The Tile's value (should be a multiple of 2 or 0).
 	 */
 	public void setTile(int index, int value) {
-		grid[index].setValue(value);
+		tiles[index].setValue(value);
 	}
 
 	/**
@@ -191,9 +196,10 @@ public class Grid extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		for (Tile t : grid) {
-			t.act(delta);
+		while (iterator.hasNext()) {
+			iterator.next().act(delta);
 		}
+		iterator.reset();
 
 		updateHighestTile();
 		if (score > highScore) {
@@ -207,9 +213,10 @@ public class Grid extends Actor {
 	 */
 	public void restart() {
 		score = 0;
-		for (Tile t : grid) {
-			t.reset();
+		while (iterator.hasNext()) {
+			iterator.next().reset();
 		}
+		iterator.reset();
 		initGrid();
 		
 		TwentyFourtyGame.setState(GameState.RUNNING);
@@ -247,7 +254,7 @@ public class Grid extends Actor {
 			setScore(score + tileHandler.getScoreIncrement());
 			int location = getRandomEmptyLocation();
 			setTile(location, initialValue());
-			grid[location].spawn();
+			tiles[location].spawn();
 		}
 
 		tileHandler.reset();
@@ -257,24 +264,26 @@ public class Grid extends Actor {
 	 * Updates the highest Tile value present in the grid.
 	 */
 	public void updateHighestTile() {
-		for (Tile t : grid) {
+		Tile t = null;
+		while (iterator.hasNext()) {
+			t = iterator.next();
 			if (t.getValue() > highestTile) {
 				highestTile = t.getValue();
 			}
 		}
+		iterator.reset();
 	}
 
 	/**
 	 * @return True if the grid is full.
 	 */
-	public boolean isFull() {
-		/* Check each Tile on the grid. */
-		for (int index = 0; index < grid.length; index++) {
-			/* If any Tile on the grid is empty, the grid is not full. */
-			if (grid[index].isEmpty()) {
+	private boolean isFull() {
+		while (iterator.hasNext()) {
+			if (iterator.next().isEmpty()) {
 				return false;
 			}
 		}
+		iterator.reset();
 		return true;
 	}
 
@@ -282,15 +291,18 @@ public class Grid extends Actor {
 	 * @return The amount of possible moves.
 	 */
 	public int getPossibleMoves() {
-		int moves = 0;
+		TileIterator iterator = new TileIterator(tiles);
+		Tile t = null;
+		int moves = 0, value = 0;
 
-		for (int index = 0; index < grid.length; index++) {
+		while (iterator.hasNext()) {
+			t = iterator.next();
 			/* An empty Tile cannot move. */
-			if (!grid[index].isEmpty()) {
+			if (!t.isEmpty()) {
 				/* Get current Tile value. */
-				int value = grid[index].getValue();
+				value = t.getValue();
 				/* Get all Tile's neighbors. */
-				List<Tile> neighbors = getTileNeighbors(index);
+				List<Tile> neighbors = getTileNeighbors(iterator.getIndex() - 1);
 
 				/* For all neighboring tiles, compare the values. */
 				for (Tile neighbor : neighbors) {
@@ -301,6 +313,7 @@ public class Grid extends Actor {
 				}
 			}
 		}
+		iterator.reset();
 
 		return moves;
 	}
@@ -319,8 +332,8 @@ public class Grid extends Actor {
 		 * Right neighbor: check if the index we're checking is not the right
 		 * edge of the grid by making sure (index + 1) is a not a multiple of 4.
 		 */
-		if ((index + 1) % 4 != 0 && index + 1 < grid.length) {
-			neighbors.add(grid[index + 1]);
+		if ((index + 1) % 4 != 0 && index + 1 < tiles.length) {
+			neighbors.add(tiles[index + 1]);
 		}
 
 		/*
@@ -328,7 +341,7 @@ public class Grid extends Actor {
 		 * of the grid by making sure (index - 1) is a not a multiple of 4.
 		 */
 		if (index % 4 != 0 && index - 1 >= 0) {
-			neighbors.add(grid[index - 1]);
+			neighbors.add(tiles[index - 1]);
 		}
 
 		/*
@@ -336,8 +349,8 @@ public class Grid extends Actor {
 		 * edge of the grid by making sure (index + 4) is smaller than
 		 * grid.length:
 		 */
-		if (index + 4 < grid.length) {
-			neighbors.add(grid[index + 4]);
+		if (index + 4 < tiles.length) {
+			neighbors.add(tiles[index + 4]);
 		}
 
 		/*
@@ -345,7 +358,7 @@ public class Grid extends Actor {
 		 * of the grid by making sure (index - 4) is not smaller than zero:
 		 */
 		if (index - 4 >= 0) {
-			neighbors.add(grid[index - 4]);
+			neighbors.add(tiles[index - 4]);
 		}
 
 		return neighbors;
@@ -355,7 +368,7 @@ public class Grid extends Actor {
 	 * @return The array containing all the Tiles.
 	 */
 	public Tile[] getTiles() {
-		return grid;
+		return tiles;
 	}
 
 	/**
@@ -450,21 +463,22 @@ public class Grid extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());
-		for (Tile t : grid) {
-			t.draw(batch, parentAlpha);
+		while (iterator.hasNext()) {
+			iterator.next().draw(batch, parentAlpha);
 		}
+		iterator.reset();
 	}
 
 	@Override
 	public String toString() {
 		String res = "";
-		for (int index = 0; index < grid.length; index++) {
-			res += grid[index].getValue();
 
-			if (index < 15) {
-				res += ",";
-			}
+		while (iterator.hasNext()) {
+			res += iterator.next().getValue() + ",";
 		}
+		iterator.reset();
+
+		res = res.substring(0, res.length() - 1);
 		return res;
 	}
 }
