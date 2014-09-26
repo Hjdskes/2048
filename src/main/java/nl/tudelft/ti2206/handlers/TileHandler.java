@@ -92,22 +92,24 @@ public class TileHandler {
 		while (iterator.hasNext()) {
 			collidee = collider;
 			collider = iterator.next();
-			if (collider.getValue() == 0 || collidee.isMerged() || collider.isMerged()) {
+			if (collider.getValue() == 0 || collidee.isMerged()
+					|| collider.isMerged()) {
 				continue;
-			} else if (collidee.isEmpty()) {
-				collidee.setValue(collider.getValue());
-				if (collider.isMerged()) {
+			} else {
+				isMoveMade = true;
+				if (collidee.isEmpty()) {
+					collidee.setValue(collider.getValue());
+					if (collider.isMerged()) {
+						collidee.setMerged(true);
+					}
+					collider.reset();
+				} else if (collider.getValue() == collidee.getValue()) {
+					collidee.doubleValue();
 					collidee.setMerged(true);
+					collidee.merge();
+					collider.reset();
+					scoreIncrement += collidee.getValue();
 				}
-				collider.reset();
-				isMoveMade = true;
-			} else if (collider.getValue() == collidee.getValue()) {
-				collidee.doubleValue();
-				collidee.setMerged(true);
-				collidee.merge();
-				collider.reset();
-				isMoveMade = true;
-				scoreIncrement += collidee.getValue();
 			}
 		}
 		iterator.reset();
