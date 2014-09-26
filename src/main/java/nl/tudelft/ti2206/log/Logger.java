@@ -41,6 +41,10 @@ public class Logger {
 
 		try {
 			file = new PrintWriter(filename, "UTF-8");
+			
+			message(Level.DEBUG, "Logger", "Logfile " + filename
+					+ " opened.");
+			
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -99,8 +103,17 @@ public class Logger {
 
 		System.out.println(output);
 
-		if (file != null)
+		if (file != null) {
 			file.println(output);
+			file.flush();
+		}
+	}
+
+	public void dispose() {
+
+		if (file != null)
+			file.close();
+		
 	}
 
 }

@@ -258,7 +258,7 @@ public class Networking extends Observable {
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
 				socketHints.keepAlive = true;
-				logger.message(Level.INFO, className + "/" + getMode(), "Starting client on port " + port);
+				logger.message(Level.INFO, className + "/" + getMode(), "Starting client, trying to connect to " + address + ":" + port);
 				try {
 					clientSocket = Gdx.net.newClientSocket(Protocol.TCP,
 							address, port, socketHints);
@@ -474,11 +474,17 @@ public class Networking extends Observable {
 	 *            The error message to set.
 	 */
 	public void setLastError(String lastError) {
-		if (lastError.contains("server socket ")) {
-			lastError = lastError.replace("server socket ", "server\r\n");
-		} else if (lastError.contains("socket connection ")) {
-			lastError = lastError.replace("socket connection ",
-					"connection\r\n");
+		
+		if (!lastError.isEmpty())
+		{
+			logger.message(Level.INFO, className + "/" + getMode(), lastError);
+		
+			if (lastError.contains("server socket ")) {
+				lastError = lastError.replace("server socket ", "server\r\n");
+			} else if (lastError.contains("socket connection ")) {
+				lastError = lastError.replace("socket connection ",
+						"connection\r\n");
+			}
 		}
 		this.lastError = lastError;
 	}
@@ -510,7 +516,7 @@ public class Networking extends Observable {
 	@SuppressWarnings("deprecation")
 	public void disconnect() {
 
-		logger.message(Level.INFO, className + "/" + getMode(), "disconnect();");
+		logger.message(Level.INFO, className + "/" + getMode(), "Disconnecting...");
 
 		if (thread != null) {
 			thread.stop();
