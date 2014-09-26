@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.net.Networking;
 
 /**
@@ -22,6 +24,8 @@ public class RemoteInputHandler implements Observer {
 
 	/** The singleton Networking instance. */
 	private static Networking networking = Networking.getInstance();
+	
+	private static Logger logger = Logger.getInstance();
 	
 	private String className = this.getClass().getSimpleName();
 
@@ -55,7 +59,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move upwards on the remote Grid.
 	 */
 	public void moveUp() {
-		Gdx.app.log(this.getClass().getSimpleName(),
+		logger.message(Level.INFO, this.getClass().getSimpleName(),
 				"Remote player moves UP");
 		grid.move(Direction.UP);
 	}
@@ -64,7 +68,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move downwards on the remote Grid.
 	 */
 	public void moveDown() {
-		Gdx.app.log(this.getClass().getSimpleName(),
+		logger.message(Level.INFO, this.getClass().getSimpleName(),
 				"Remote player moves DOWN");
 		grid.move(Direction.DOWN);
 	}
@@ -73,7 +77,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the right on the remote Grid.
 	 */
 	public void moveRight() {
-		Gdx.app.log(this.getClass().getSimpleName(),
+		logger.message(Level.INFO, this.getClass().getSimpleName(),
 				"Remote player moves RIGHT");
 		grid.move(Direction.RIGHT);
 	}
@@ -82,7 +86,7 @@ public class RemoteInputHandler implements Observer {
 	 * Performs a move to the left on the remote Grid.
 	 */
 	public void moveLeft() {
-		Gdx.app.log(this.getClass().getSimpleName(),
+		logger.message(Level.INFO, this.getClass().getSimpleName(),
 				"Remote player moves LEFT");
 		grid.move(Direction.LEFT);
 	}
@@ -115,15 +119,15 @@ public class RemoteInputHandler implements Observer {
 		int closing = str.indexOf(']');
 		
 		if (closing == -1) {
-			Gdx.app.error(className, "Protocol parsing failed, no closing bracket found (-1).");
+			logger.message(Level.ERROR, className, "Protocol parsing failed, no closing bracket found (-1).");
 		} else if (str.startsWith("GRID[")) {
 			String strGrid = str.substring(5, closing);
 
 			if (validateGrid(strGrid)) {
 				fillGrid(strGrid);
-				Gdx.app.debug(className, "New remote grid set.");
+				logger.message(Level.DEBUG, className, "New remote grid set.");
 			} else {
-				Gdx.app.error(className, "Protocol parsing failed, malformed remote grid string: " + strGrid);
+				logger.message(Level.ERROR, className, "Protocol parsing failed, malformed remote grid string: " + strGrid);
 			}
 		} else if (str.startsWith("MOVE[") && closing == 6) {
 			char direction = str.charAt(5);
@@ -142,12 +146,12 @@ public class RemoteInputHandler implements Observer {
 				moveLeft();
 				break;
 			default:
-				Gdx.app.error(className, "Unknown remote direction parameter in protocol: "
+				logger.message(Level.ERROR, className, "Unknown remote direction parameter in protocol: "
 								+ direction);
 				break;
 			}
 		} else {
-			Gdx.app.error(className, "Unrecognised remote string in protocol: " + str + ", closing tag is at position " + closing);
+			logger.message(Level.ERROR, className, "Unrecognised remote string in protocol: " + str + ", closing tag is at position " + closing);
 		}
 	}
 }

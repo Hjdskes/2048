@@ -16,6 +16,9 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Observable;
 
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
@@ -30,6 +33,8 @@ import com.badlogic.gdx.net.SocketHints;
 public class Networking extends Observable {
 	/** A singleton reference to this class. */
 	private static Networking instance = new Networking();
+	
+	private static Logger logger = Logger.getInstance();
 
 	/** Enumeration indicating the mode of operation for the current game. */
 	public enum Mode {
@@ -89,7 +94,7 @@ public class Networking extends Observable {
 	public List<String> initLocalAddresses() {
 		if (addresses.isEmpty()) {
 			try {
-				Gdx.app.log(className + "/" + getMode(), "Enumerating network interfaces...");
+				logger.message(Level.INFO, className + "/" + getMode(), "Enumerating network interfaces...");
 				Enumeration<NetworkInterface> interfaces = NetworkInterface
 						.getNetworkInterfaces();
 				for (NetworkInterface ni : Collections.list(interfaces)) {
@@ -188,8 +193,7 @@ public class Networking extends Observable {
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Gdx.app.log(className + "/" + getMode(), "Starting server on port " + PORT);
-
+				logger.message(Level.INFO, className + "/" + getMode(), "Starting server on port " + PORT);
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
 				serverSocketHint.acceptTimeout = 0;
 				serverSocketHint.reuseAddress = true;
@@ -213,7 +217,7 @@ public class Networking extends Observable {
 						setStreams(clientSocket);
 						setInitialized(true);
 						
-						Gdx.app.log(className + "/" + getMode(), "connection accepted from " + getRemoteAddress());
+						logger.message(Level.INFO, className + "/" + getMode(), "connection accepted from " + getRemoteAddress());
 
 						while (isConnected()) {
 							receiveLoop();
@@ -254,7 +258,7 @@ public class Networking extends Observable {
 				SocketHints socketHints = new SocketHints();
 				socketHints.connectTimeout = 4000;
 				socketHints.keepAlive = true;
-				Gdx.app.log(className + "/" + getMode(), "Starting client on port " + port);
+				logger.message(Level.INFO, className + "/" + getMode(), "Starting client on port " + port);
 				try {
 					clientSocket = Gdx.net.newClientSocket(Protocol.TCP,
 							address, port, socketHints);
@@ -342,7 +346,7 @@ public class Networking extends Observable {
 	 */
 	public void sendString(String str, boolean newLine) {
 
-		Gdx.app.debug(className + "/" + getMode(), "Sending string: " + str);		
+		logger.message(Level.DEBUG, className + "/" + getMode(), "Sending string: " + str);		
 		
 		if (newLine && !str.endsWith("\r\n")) {
 			str += "\r\n";
@@ -368,7 +372,7 @@ public class Networking extends Observable {
 	 */
 	private void processResponse(String response) {
 
-		Gdx.app.debug(className + "/" + getMode(), "processResponse(" + response
+		logger.message(Level.DEBUG, className + "/" + getMode(), "processResponse(" + response
 				+ ") sending to " + countObservers() + " registered observers");
 
 		setChanged();
@@ -413,7 +417,7 @@ public class Networking extends Observable {
 	protected void setInitialized(boolean initialized) {
 
 		if (initialized) {
-			Gdx.app.log(className + "/" + getMode(), "Client socket initialized");
+			logger.message(Level.INFO, className + "/" + getMode(), "Client socket initialized");
 			setChanged();
 			notifyObservers();
 		}
@@ -496,7 +500,7 @@ public class Networking extends Observable {
 		this.connectionLost = connectionLost;
 
 		if (connectionLost) {
-			Gdx.app.log(className + "/" + getMode(), "Connection lost.");
+			logger.message(Level.INFO, className + "/" + getMode(), "Connection lost.");
 		}
 	}
 
@@ -506,7 +510,7 @@ public class Networking extends Observable {
 	@SuppressWarnings("deprecation")
 	public void disconnect() {
 
-		Gdx.app.log(className + "/" + getMode(), "disconnect();");
+		logger.message(Level.INFO, className + "/" + getMode(), "disconnect();");
 
 		if (thread != null) {
 			thread.stop();
@@ -529,7 +533,7 @@ public class Networking extends Observable {
 				e.printStackTrace();
 			}
 		} else {
-			Gdx.app.debug(className + "/" + getMode(), "disconnect(): client socket not initialized");
+			logger.message(Level.DEBUG, className + "/" + getMode(), "disconnect(): client socket not initialized");
 		}
 		
 		setMode(Mode.NONE);

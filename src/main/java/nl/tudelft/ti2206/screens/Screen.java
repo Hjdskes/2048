@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,13 +16,15 @@ import com.badlogic.gdx.utils.Disposable;
  * transparent-screen-in-libgdx
  */
 public abstract class Screen implements Disposable {
+	private static Logger logger = Logger.getInstance();
+	
 	protected Stage stage;
 
 	/**
 	 * Called when the screen is shown. Used for initialization.
 	 */
 	public void create() {
-		Gdx.app.log(this.getClass().getSimpleName(), "created");
+		logger.message(Level.DEBUG, this.getClass().getSimpleName(), "created");
 		Gdx.input.setInputProcessor(stage);
 	}
 

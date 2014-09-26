@@ -2,6 +2,8 @@ package nl.tudelft.ti2206.game;
 
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.log.Logger.Level;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Application;
@@ -38,11 +40,13 @@ public class TwentyFourtyGame extends Game {
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
+	
+	private static Logger logger = Logger.getInstance();
 
 	@Override
 	public void create() {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		Gdx.app.log(this.getClass().getSimpleName(),
+		logger.message(Level.DEBUG, this.getClass().getSimpleName(),
 				"Skin is loaded and menu screen is launched.");
 
 		/* Load all our assets. */
@@ -65,7 +69,7 @@ public class TwentyFourtyGame extends Game {
 	public void dispose() {
 		screenHandler.dispose();
 		assetHandler.dispose();
-		Gdx.app.log(this.getClass().getName(), "Closing game...");
+		logger.message(Level.INFO, this.getClass().getName(), "Closing game...");
 	}
 
 	@Override
@@ -87,7 +91,7 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
-		Gdx.app.log("TwentyFourtyGame", "Changing game state to " + state);
+		logger.message(Level.INFO, "TwentyFourtyGame", "Changing current game state to " + state);
 		curState = state;
 	}
 
