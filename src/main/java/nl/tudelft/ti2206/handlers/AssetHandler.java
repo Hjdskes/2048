@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.handlers;
 
+import nl.tudelft.ti2206.log.Logger;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +22,11 @@ public class AssetHandler {
 	/** The Skin contains all our textures and fonts. */
 	private Skin skin = new Skin();
 
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
+	
+	/** Get current class name, used for logging output. */
+	private final String className = this.getClass().getSimpleName();
 	
 	/**
 	 * Overrides the default constructor.
@@ -41,6 +48,9 @@ public class AssetHandler {
 	 * Blocks until the AssetManager is done.
 	 */
 	public void load() {
+		
+		logger.debug(className, "Loading assets...");
+		
 		/*
 		 * Queue all of these items for loading, order does not really matter I
 		 * think, since we wait for everything to be done anyway.

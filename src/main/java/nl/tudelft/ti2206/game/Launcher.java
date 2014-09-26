@@ -37,9 +37,9 @@ public class Launcher {
 		
 		
 		// remove this later!
-		System.out.println("arguments passed:");
+		System.out.println("Commandline arguments passed:");
 		for (int i = 0; i < args.length; i++)
-			System.out.println("args[" + i + "] = " + args[i]);
+			System.out.println("-> args[" + i + "] = " + args[i]);
 		
 		// default logging level, set this to Level.NONE later!
 		LogLevel logLevel = LogLevel.ALL;
@@ -61,7 +61,10 @@ public class Launcher {
 		logger.setLevel(logLevel);
 		
 		if (logLevel.ordinal() > LogLevel.NONE.ordinal() && args.length > 1 && !args[1].isEmpty()) {
-			if (args[1].equalsIgnoreCase("1") || args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("enable")) {
+			if (
+					args[1].equalsIgnoreCase("1") || 
+					args[1].equalsIgnoreCase("true") || 
+					args[1].equalsIgnoreCase("enable")) {
 				System.out.println("logging to file...");
 				logger.setLogFile("2048");
 			}

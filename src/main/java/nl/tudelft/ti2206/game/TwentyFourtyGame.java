@@ -47,7 +47,7 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void create() {
-
+		logger.info(className, "Launching game...");
 		logger.debug(className,
 				"Skin is loaded and menu screen is launched.");
 
