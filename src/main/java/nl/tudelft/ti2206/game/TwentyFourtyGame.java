@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.net.Networking;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
 import com.badlogic.gdx.Game;
@@ -70,7 +71,7 @@ public class TwentyFourtyGame extends Game {
 	@Override
 	public void dispose() {
 		logger.info(className, "Closing game...");
-
+		Networking.getInstance().disconnect();
 		screenHandler.dispose();
 		assetHandler.dispose();
 		logger.dispose();

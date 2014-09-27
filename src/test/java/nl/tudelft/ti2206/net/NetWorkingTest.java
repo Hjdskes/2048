@@ -126,7 +126,7 @@ public class NetWorkingTest {
 	@Test
 	public void testSetLastError() {
 		networking.setLastError("server socket ");
-		assertEquals("server\r\n", networking.getLastError());
+		assertEquals("server\r\n        ", networking.getLastError());
 		networking.setLastError("socket connection ");
 		assertEquals("connection\r\n   ", networking.getLastError());
 	}

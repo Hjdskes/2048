@@ -72,21 +72,21 @@ public class Logger implements Disposable {
 		return level;
 	}
 
-	public void setTimeFormat(String newFormat) {
-		timeFormat = new SimpleDateFormat(newFormat);
-	}
-
-	public SimpleDateFormat getTimeFormat() {
-		return timeFormat;
-	}
-
-	public String getMessageFormat() {
-		return msgFormat;
-	}
-
-	public void setMessageFormat(String msgFormat) {
-		this.msgFormat = msgFormat;
-	}
+//	public void setTimeFormat(String newFormat) {
+//		timeFormat = new SimpleDateFormat(newFormat);
+//	}
+//
+//	public SimpleDateFormat getTimeFormat() {
+//		return timeFormat;
+//	}
+//
+//	public String getMessageFormat() {
+//		return msgFormat;
+//	}
+//
+//	public void setMessageFormat(String msgFormat) {
+//		this.msgFormat = msgFormat;
+//	}
 	
 	public void info(String tag, String message) {
 		message(LogLevel.INFO, tag, message);

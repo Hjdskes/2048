@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.screens;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
@@ -37,7 +41,7 @@ public class HostScreen extends Screen {
 
 	/** The label listing all addresses. */
 	private Label addresses;
-	
+
 	/** The label showing the current port number. */
 	private Label portLabel;
 
@@ -47,26 +51,47 @@ public class HostScreen extends Screen {
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
-	/** The singleton Networking instance. */ 
+	/** The singleton Networking instance. */
 	private static Networking networking = Networking.getInstance();
+
+	/** List of error messages. */
+	private List<String> errorMessages = new ArrayList<String>();
+
+	/** Random number selector for random error message. */
+	private Random rand = new Random();
+	
+	/** Message for port in use. */
+	private String errorMessage = "What have you done!?";
 
 	/** Constructs a new HostScreen. */
 	public HostScreen() {
 		stage = new Stage();
 		table = new Table();
 		label = new Label(OPPONENT_DESTINY, assetHandler.getSkin());
-		
-		portLabel = new Label("On port TCP/" + networking.getPortNumber() + ", duh!", assetHandler.getSkin());
+
+		portLabel = new Label("On port TCP/" + networking.getPortNumber()
+				+ ", duh!", assetHandler.getSkin());
 
 		remote = new Label(CONNECTION_WAITING, assetHandler.getSkin());
 
 		/* Show addresses to user to share with opponent. */
-		addresses = new Label(networking.localAddresses(), assetHandler.getSkin());
+		addresses = new Label(networking.localAddresses(),
+				assetHandler.getSkin());
 		cancel = new MenuButton();
+
+		errorMessages.add("What have you done!?");
+		errorMessages.add("Fix this, NOW!");
+		errorMessages.add("I'm sad!");
+		errorMessages.add("You're doing it WRONG.");
+		
+		int index = rand.nextInt(errorMessages.size());
+		errorMessage = errorMessages.get(index);
+
 	}
 
 	/** Constructor for injecting mock objects. For testing purposes only. */
-	public HostScreen(Stage stage, Table table, Label label, Label portLabel, MenuButton cancel) {
+	public HostScreen(Stage stage, Table table, Label label, Label portLabel,
+			MenuButton cancel) {
 		this.stage = stage;
 		this.table = table;
 		this.remote = label;
@@ -94,7 +119,6 @@ public class HostScreen extends Screen {
 		table.add(remote);
 		table.getCell(remote).padTop(5).padBottom(5).row();
 
-
 		table.setFillParent(true);
 		stage.addActor(table);
 		stage.addActor(cancel);
@@ -115,9 +139,9 @@ public class HostScreen extends Screen {
 
 				ScreenHandler.getInstance().add(new MultiGameScreen());
 			} else if (networking.errorOccured()) {
-				
+
 				// This never really happens, but whatever...
-				
+
 				String error = networking.getLastError();
 
 				if (error.compareTo("") != 0) {
@@ -130,7 +154,8 @@ public class HostScreen extends Screen {
 			if (!networking.getLastError().isEmpty()) {
 				error = networking.getLastError();
 			}
-			
+
+			portLabel.setText(errorMessage);
 			label.setText(error);
 			addresses.setText(":("); // HostScreen sad :(
 			remote.setText("Is the port in use?"); // you bet!
