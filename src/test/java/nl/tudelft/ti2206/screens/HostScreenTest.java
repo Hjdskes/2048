@@ -41,8 +41,6 @@ public class HostScreenTest {
 	@Mock
 	private Label label;
 	@Mock
-	private Label portLabel;
-	@Mock
 	private TextField field;
 	@Mock
 	private MenuButton menuButton;
@@ -59,15 +57,15 @@ public class HostScreenTest {
 		MockitoAnnotations.initMocks(this);
 		Skin skin = mock(Skin.class);
 		AssetHandler.getInstance().setSkin(skin);
-		
-		screen = new HostScreen(stage, table, label, portLabel, menuButton);
+
+		screen = new HostScreen(stage, table, label, label, menuButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-		
+
 		when(cell.padTop(anyInt())).thenReturn(cell);
 		when(cell.padBottom(anyInt())).thenReturn(cell);
 		when(cell.row()).thenReturn(cell);
@@ -85,10 +83,10 @@ public class HostScreenTest {
 	public void testCreate() {
 		screen.create();
 
-		verify(table, times(3)).add(label);
-		verify(cell, times(3)).padTop(anyInt());
-		verify(cell, times(3)).padBottom(anyInt());
-		verify(cell, times(3)).row();
+		verify(table, times(4)).add(label);
+		verify(cell, times(4)).padTop(anyInt());
+		verify(cell, times(4)).padBottom(anyInt());
+		verify(cell, times(4)).row();
 
 		verify(stage).addActor(table); 
 		verify(stage).addActor(menuButton);
