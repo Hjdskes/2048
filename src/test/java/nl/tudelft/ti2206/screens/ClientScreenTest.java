@@ -3,13 +3,10 @@ package nl.tudelft.ti2206.screens;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.never;
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.net.Networking;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,30 +72,11 @@ public class ClientScreenTest {
 		verify(stage).draw();
 	}
 	
-	/**
-	 * Tests if all the required methods are called when updating.
-	 */
 	@Test
 	public void testUpdate() {
 		when(field.getText()).thenReturn("");
-		
-		Networking network = mock(Networking.class);
-		screen.setNetworking(network);
-		
-		when(network.isConnected()).thenReturn(true);
-		when(network.errorOccured()).thenReturn(false);
-		
-		MultiGameScreen mwScreen = mock(MultiGameScreen.class);
-		screen.update(mwScreen);
-		verify(mwScreen).create();
-		
-		when(network.isConnected()).thenReturn(false);
-		mwScreen = mock(MultiGameScreen.class);
-		screen.update(mwScreen);
-		verify(mwScreen, never()).create();
-		
-		when(network.errorOccured()).thenReturn(true);
-		screen.update(mwScreen);	
+		screen.update();
+		verify(stage).act();
 	}
 
 	/**

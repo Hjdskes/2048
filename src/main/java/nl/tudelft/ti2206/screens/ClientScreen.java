@@ -119,14 +119,9 @@ public class ClientScreen extends Screen implements Observer {
 	@Override
 	public void update() {
 		super.update();
-		update(new MultiGameScreen());
 
-	}
-	
-	public void update(MultiGameScreen multiGameScreen){
-		
 		if (networking.isConnected()) {
-			ScreenHandler.getInstance().add(multiGameScreen);
+			ScreenHandler.getInstance().add(new MultiGameScreen());
 		} else {
 
 			if (networking.errorOccured()) {
@@ -150,13 +145,5 @@ public class ClientScreen extends Screen implements Observer {
 
 		// remove screen object from networking observer list
 		networking.deleteObserver(this);
-	}
-	
-	/**
-	 * Setter for networking. Used for testing.
-	 * @param networking which we will mock.
-	 */
-	public void setNetworking(Networking networking) {
-		ClientScreen.networking = networking;
 	}
 }
