@@ -21,6 +21,7 @@ public class ConnectionLostScreen extends Screen {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "connectionlostoverlay");
 		menuButton = new MenuButton();
+		this.setDrawBehavior(new SimpleDraw(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -28,6 +29,7 @@ public class ConnectionLostScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.menuButton = menuButton;
+		this.setDrawBehavior(new SimpleDraw(stage));
 	}
 
 	@Override
@@ -37,10 +39,10 @@ public class ConnectionLostScreen extends Screen {
 		stage.addActor(menuButton);
 	}
 
-	@Override
-	public void draw() {
-		stage.draw();
-	}
+//	@Override
+//	public void draw() {
+//		stage.draw();
+//	}
 
 	@Override
 	public boolean isOverlay() {

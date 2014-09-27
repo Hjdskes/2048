@@ -60,6 +60,7 @@ public class ClientScreen extends Screen implements Observer {
 		play = new TextButton("Play!", assetHandler.getSkin());
 
 		networking.addObserver(this);
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -70,6 +71,7 @@ public class ClientScreen extends Screen implements Observer {
 		this.textField = field;
 		this.menu = menuButton;
 		this.play = playButton;
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override

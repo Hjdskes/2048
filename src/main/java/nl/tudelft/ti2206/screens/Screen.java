@@ -20,6 +20,7 @@ public abstract class Screen implements Disposable {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
+	protected DrawBehavior drawbehavior;
 	
 	protected Stage stage;
 
@@ -35,11 +36,18 @@ public abstract class Screen implements Disposable {
 	 * Draws the screen.
 	 */
 	public void draw() {
-		/* Draw beige background in the screen. */
-		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.draw();
+//		/* Draw beige background in the screen. */
+//		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
+//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//
+//		stage.draw();
+		
+		drawbehavior.draw();
+	}
+	
+	public void setDrawBehavior(DrawBehavior newDrawBehavior){
+		drawbehavior = newDrawBehavior;
+		
 	}
 
 	/**

@@ -29,6 +29,7 @@ public class LoseScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.restartButton = restartButton;
+		this.setDrawBehavior(new SimpleDraw(stage));
 	}
 
 	@Override
@@ -37,12 +38,13 @@ public class LoseScreen extends Screen {
 
 		stage.addActor(image);
 		stage.addActor(restartButton);
+		this.setDrawBehavior(new SimpleDraw(stage));
 	}
 
-	@Override
-	public void draw() {
-		stage.draw();
-	}
+//	@Override
+//	public void draw() {
+//		stage.draw();
+//	}
 
 	@Override
 	public boolean isOverlay() {

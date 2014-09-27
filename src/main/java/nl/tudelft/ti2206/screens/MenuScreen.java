@@ -50,6 +50,7 @@ public class MenuScreen extends Screen {
 		singlePlayer = new TextButton("Singleplayer", assetHandler.getSkin());
 		hostGame = new TextButton("Host a game", assetHandler.getSkin());
 		connect = new TextButton("Join a game", assetHandler.getSkin());
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constuctor for testing purposes only. */
@@ -60,6 +61,7 @@ public class MenuScreen extends Screen {
 		this.singlePlayer = button;
 		this.hostGame = button;
 		this.connect = button;
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override

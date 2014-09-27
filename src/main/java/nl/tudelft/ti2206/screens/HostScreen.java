@@ -64,6 +64,7 @@ public class HostScreen extends Screen implements Observer {
 		cancel = new MenuButton();
 		
 		networking.addObserver(this);
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for injecting mock objects. For testing purposes only. */
@@ -74,6 +75,7 @@ public class HostScreen extends Screen implements Observer {
 		this.addresses = label;
 		this.label = label;
 		this.cancel = cancel;
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override
