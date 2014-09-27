@@ -1,7 +1,7 @@
 {  
   com.badlogic.gdx.graphics.g2d.BitmapFont: {  
-   brownText: { file: src/main/resources/fonts/brown.fnt },  
-   whiteText: { file: src/main/resources/fonts/white.fnt },  
+   brownText: { file: resources/fonts/brown.fnt },  
+   whiteText: { file: resources/fonts/white.fnt },  
   },  
   com.badlogic.gdx.graphics.Color: {  
    beige: { r: 0.976, g: 0.969, b: 0.933, a: 1 },  

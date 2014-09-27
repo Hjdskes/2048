@@ -54,7 +54,7 @@ public class TwentyFourtyGame extends Game {
 		/* Load all our assets. */
 		assetHandler.load();
 		assetHandler.loadSkinFile(Gdx.files
-				.internal("src/main/resources/skin.json"));
+				.internal("resources/skin.json"));
 
 		/* Push a menu screen onto the screen stack. */
 		screenHandler.add(new MenuScreen());
