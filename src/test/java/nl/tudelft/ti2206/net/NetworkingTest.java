@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.net.Socket;
 
-public class NetWorkingTest {
+public class NetworkingTest {
 
 	private static ArrayList<String> spyList;
 	private static Socket socket;
