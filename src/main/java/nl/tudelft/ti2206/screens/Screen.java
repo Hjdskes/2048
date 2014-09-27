@@ -20,7 +20,7 @@ public abstract class Screen implements Disposable {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
-	
+	/** The scene graph. */
 	protected Stage stage;
 
 	/**

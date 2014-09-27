@@ -7,7 +7,6 @@ import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-
 /** This class launches an instance of TwentyFourtyGame. */
 public class Launcher {
 	/** The width of the game window. */
@@ -18,7 +17,7 @@ public class Launcher {
 
 	/** The configuration for the game window. */
 	LwjglApplicationConfiguration config;
-	
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
@@ -26,50 +25,42 @@ public class Launcher {
 	 * Main entry point for the game.
 	 * 
 	 * @param args
-	 *            The command line arguments. These are ignored.
+	 *            The command line arguments. These are case-insensitive.
+	 *            Supported arguments are:
+	 *            Set the log level: none, info, error, debug, all.
+	 *            Log to a file: file.
 	 */
 	public static void main(String[] args) {
-		// Launcher.java [loglevel] [log to file]
-		// `loglevel` = { none, info, error, debug, all }
-		// `log to file` = { true, 1, enable } 
-		// both arguments are parsed case insensitive, so DEBUG is the
-		// same as debug, or deBuG
-		
-		// remove this later!
-		System.out.println("Commandline arguments passed:");
-		for (int i = 0; i < args.length; i++)
-			System.out.println("-> args[" + i + "] = " + args[i]);
-		
-		/* Default logging level.
-		 * Set this to Level.NONE later! */
+		/* Default log level. */
 		LogLevel logLevel = LogLevel.ALL;
-		
+
 		if (args.length > 0 && !args[0].isEmpty()) {
-			if (args[0].equalsIgnoreCase("all"))
+			if (args[0].equalsIgnoreCase("all")) {
 				logLevel = LogLevel.ALL;
-			else if (args[0].equalsIgnoreCase("info"))
+			} else if (args[0].equalsIgnoreCase("info")) {
 				logLevel = LogLevel.INFO;
-			else if (args[0].equalsIgnoreCase("error"))
+			} else if (args[0].equalsIgnoreCase("error")) {
 				logLevel = LogLevel.ERROR;
-			else if (args[0].equalsIgnoreCase("debug"))
+			} else if (args[0].equalsIgnoreCase("debug")) {
 				logLevel = LogLevel.DEBUG;
-			else if (args[0].equalsIgnoreCase("none"))
+			} else if (args[0].equalsIgnoreCase("none")) {
 				logLevel = LogLevel.NONE;
+			}
 		}
-		
-		System.out.println("setting log level to " + logLevel);
-		logger.setLevel(logLevel);
-		
-		if (logLevel.ordinal() > LogLevel.NONE.ordinal() && args.length > 1 && !args[1].isEmpty()) {
-			if (
-					args[1].equalsIgnoreCase("1") || 
-					args[1].equalsIgnoreCase("true") || 
-					args[1].equalsIgnoreCase("enable")) {
+
+		if (logLevel != LogLevel.NONE) {
+			logger.info("Launcher", "Set log level to: " + logLevel);
+			logger.setLevel(logLevel);
+		}
+
+		if (logLevel.ordinal() > LogLevel.NONE.ordinal() && args.length > 1
+				&& !args[1].isEmpty()) {
+			if (args[1].equalsIgnoreCase("file")) {
 				System.out.println("logging to file...");
 				logger.setLogFile("2048");
 			}
 		}
-		
+
 		Launcher launcher = new Launcher();
 		launcher.launch();
 	}
@@ -78,7 +69,6 @@ public class Launcher {
 	 * Creates a new Launcher object. This object is automatically configured.
 	 */
 	public Launcher() {
-		
 		config = new LwjglApplicationConfiguration();
 		configure();
 	}
@@ -100,8 +90,7 @@ public class Launcher {
 			config.addIcon("resources/images/icons/2048_mac.png",
 					FileType.Internal);
 		} else {
-			config.addIcon(
-					"resources/images/icons/2048_linux_windows.png",
+			config.addIcon("resources/images/icons/2048_linux_windows.png",
 					FileType.Internal);
 		}
 	}

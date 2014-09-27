@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * A button to continue playing after having won.
  */
 public class ContinueButton extends TextButton {
+
+	/** Constructs a new ContinueButton. */
 	public ContinueButton() {
 		super("Continue!", AssetHandler.getInstance().getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - getPrefWidth() / 2);

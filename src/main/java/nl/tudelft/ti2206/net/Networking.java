@@ -70,6 +70,7 @@ public class Networking extends Observable {
 	/** String indicating the last occurred error. */
 	private String lastError = "";
 
+	/** Indicates whether an error has occured. */
 	private boolean error = false;
 
 	/** True if the connection has been lost. */
@@ -85,6 +86,9 @@ public class Networking extends Observable {
 	private Networking() {
 	}
 
+	/**
+	 * @return The singleton instance of this class.
+	 */
 	public static Networking getInstance() {
 		return instance;
 	}
@@ -307,14 +311,13 @@ public class Networking extends Observable {
 			}
 		} catch (Exception e) {
 			setConnectionLost(true);
-			// e.printStackTrace();
 		}
 	}
 
 	private void setStreams(Socket socket) {
-
-		if (socket == null)
+		if (socket == null) {
 			return;
+		}
 
 		setInputStream(socket.getInputStream());
 		setOutputStream(socket.getOutputStream());

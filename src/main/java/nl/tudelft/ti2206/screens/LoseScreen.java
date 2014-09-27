@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * and offers the ability to restart.
  */
 public class LoseScreen extends Screen {
-	/** */
+	/** The background image. */
 	private Image image;
 
 	/** The button used to restart the game. */

@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * A button to cancel the current operation and to go back to the main menu.
  */
 public class MenuButton extends TextButton {
+
+	/** Constructs a new MenuButton. */
 	public MenuButton() {
 		super("Menu", AssetHandler.getInstance().getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 4 - this.getPrefWidth() / 2);

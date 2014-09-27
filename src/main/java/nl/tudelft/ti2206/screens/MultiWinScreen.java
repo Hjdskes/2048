@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * The MultiWinScreen is displayed when the local player has won.
  */
 public class MultiWinScreen extends Screen {
-	/** The transparent background image. */
+	/** The background image. */
 	private Image image;
 
 	/** The button to go back to the menu. */

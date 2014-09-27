@@ -9,16 +9,14 @@ import com.badlogic.gdx.Preferences;
  * current game (the grid and the current score).
  */
 public class PreferenceHandler {
-
-	/** A singleton instance of the PreferenceHandler */
+	/** The unique singleton instance of this class. */
 	private static PreferenceHandler instance = new PreferenceHandler();
 
 	/** The Preferences object to save and load everything. */
 	private static Preferences prefs = Gdx.app.getPreferences("2048");
 
 	/** Overrides the default constructor. */
-	private PreferenceHandler() {
-	}
+	private PreferenceHandler() { }
 
 	/**
 	 * @return The singleton instance of the PreferenceHandler

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * the game requires.
  */
 public class AssetHandler {
-	/** The unique singleton instance of this class */
+	/** The unique singleton instance of this class. */
 	private static AssetHandler instance = new AssetHandler();
 	
 	/** The AssetManager is used to load and get all our textures and font. */
@@ -28,11 +28,8 @@ public class AssetHandler {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 	
-	/**
-	 * Overrides the default constructor.
-	 */
+	/** Overrides the default constructor. */
 	private AssetHandler() {}
-	
 	
 	/**
 	 * @return The singleton instance of this class.
