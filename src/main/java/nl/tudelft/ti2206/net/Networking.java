@@ -123,8 +123,7 @@ public class Networking extends Observable {
 	}
 
 	/**
-	 * Get a list of all local addresses (IPv4).
-	 * @return A list (string) all local addresses.
+	 * @return A list of all local IPv4 addresses.
 	 */
 	public String localAddresses() {
 		initLocalAddresses();
@@ -136,8 +135,7 @@ public class Networking extends Observable {
 	}
 	
 	/**
-	 * Get internal port number.
-	 * @return the port number
+	 * @return The internal port number.
 	 */
 	public int getPortNumber() {
 		return PORT;
@@ -335,7 +333,7 @@ public class Networking extends Observable {
 	
 	/**
 	 * Set data input/output streams by socket.
-	 * @param socket the socket
+	 * @param socket The socket.
 	 */
 	private void setStreams(Socket socket) {
 		if (socket == null) {
@@ -415,31 +413,29 @@ public class Networking extends Observable {
 	}
 
 	/**
-	 * Get connected remote address.
-	 * @return The remote address string.
+	 * @return The connected remote address string.
 	 */
 	public String getRemoteAddress() {
 		return clientSocket.getRemoteAddress().replaceFirst("/", "");
 	}
 
 	/**
-	 * Check if connection is still up.
 	 * @return True if the socket is currently connected, false otherwise.
 	 */
 	public boolean isConnected() {
-
-		if (isConnectionLost())
+		if (isConnectionLost()) {
 			return false;
+		}
 
-		if (!isInitialized())
+		if (!isInitialized()) {
 			return false;
+		}
 
 		return clientSocket.isConnected();
 	}
 
 	/**
-	 * Check if client socket has been initialised.
-	 * @return True if client socket initialized is initialized, false
+	 * @return True if client socket is initialized, false
 	 *         otherwise.
 	 */
 	public boolean isInitialized() {
@@ -533,15 +529,14 @@ public class Networking extends Observable {
 	}
 	
 	/**
-	 * Check if a networking error has occured.
-	 * @return true if any error has occured 
+	 * @return True if any networking error has occured. 
 	 */
 	public boolean errorOccured() {
 		return error;
 	}
 	
 	/**
-	 * Clear the last error.
+	 * Clears the last error.
 	 */
 	public void clearErrors() {
 		this.error = false;
