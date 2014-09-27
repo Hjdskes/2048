@@ -44,7 +44,7 @@ public class Networking extends Observable {
 	}
 
 	/** The default port to connect to. */
-	private final int PORT = 2526;
+	private final int PORT = 2048;
 
 	/** The list containing all local IP addresses. */
 	private List<String> addresses = new ArrayList<String>();
