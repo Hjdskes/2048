@@ -111,7 +111,7 @@ public class ProgressHandler {
 		 * If no grid is saved, return a default one. Else, fill the grid with
 		 * the saved tiles.
 		 */
-		if (filledTiles.equals("grid")) {
+		if (filledTiles.equals("")) {
 			return new Grid(false);
 		} else {
 			Grid grid = new Grid(true);
