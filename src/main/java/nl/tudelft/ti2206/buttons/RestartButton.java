@@ -28,7 +28,6 @@ public class RestartButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//ScreenHandler.getInstance().removeTop();
 				Screen gameScreen = screenHandler.get(0);
 				Stage stage = gameScreen.getStage();
 				Group group = stage.getRoot();
