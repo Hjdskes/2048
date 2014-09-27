@@ -49,10 +49,7 @@ public class Launcher {
 		}
 		
 		logger.setLevel(logLevel);
-		if (logLevel != LogLevel.NONE) {
-			logger.info("Launcher", "Set log level to: " + logLevel);
-		}
-		
+		logger.info("Launcher", "Set log level to: " + logLevel);
 
 		if (logLevel.ordinal() > LogLevel.NONE.ordinal() && args.length > 1
 				&& !args[1].isEmpty()) {
