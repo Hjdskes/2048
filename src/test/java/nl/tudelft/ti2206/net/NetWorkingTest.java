@@ -68,6 +68,11 @@ public class NetWorkingTest {
 	}
 
 	@Test
+	public void testGetPortNumber() {
+		assertEquals(2048, networking.getPortNumber());
+	}
+	
+	@Test
 	public void testIsValidAddr() {
 		assertFalse(networking.isValidAddr(""));
 		assertFalse(networking.isValidAddr("add.res.s"));
