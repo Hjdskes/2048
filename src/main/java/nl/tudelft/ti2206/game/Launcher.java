@@ -83,7 +83,7 @@ public class Launcher {
 		 * different icon.
 		 */
 		if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
-			config.addIcon("src/main/resources/images/icons/2048_mac.png",
+			config.addIcon("images/icons/2048_mac.png",
 					FileType.Internal);
 		} else {
 			config.addIcon("images/icons/2048_linux_windows.png",
