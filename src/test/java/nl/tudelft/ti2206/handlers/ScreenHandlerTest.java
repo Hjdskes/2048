@@ -187,4 +187,20 @@ public class ScreenHandlerTest {
 		screenHandler.removeTop();
 		verify(screen).resume();
 	}
+	
+	@Test
+	public void testGetNegative() {
+		assertNull(screenHandler.get(-1));
+	}
+	
+	@Test
+	public void testGetTooLarge() {
+		assertNull(screenHandler.get(19000));
+	}
+	
+	@Test
+	public void testGetCorrect() {
+		screens.add(screen);
+		assertEquals(screen, screenHandler.get(0));
+	}
 }

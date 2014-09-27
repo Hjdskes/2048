@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -12,6 +12,7 @@ import nl.tudelft.ti2206.game.HeadlessLauncher;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -66,6 +67,12 @@ public class AssetHandlerTest {
 	@Test
 	public void testGetSkin() {
 		assertEquals(skin, assetHandler.getSkin());
+	}
+	
+	@Test
+	public void testLoadSkinFile() {
+		assetHandler.loadSkinFile(Gdx.files.internal("resources/skin.json"));
+		verify(skin).load(Gdx.files.internal("resources/skin.json"));
 	}
 	
 	/**

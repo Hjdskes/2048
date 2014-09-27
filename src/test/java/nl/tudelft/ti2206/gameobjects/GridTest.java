@@ -235,34 +235,34 @@ public class GridTest {
 	 * Tests if restart() correctly resets all tiles and the current highest
 	 * tile.
 	 */
-//	@Test
-//	public void testRestart() {
-//		int tiles = 0;
-//
-//		/*
-//		 * Set two extra tiles on the grid (they can possible overlap, so no
-//		 * assert is possible here) and confirm the highest tile.
-//		 */
-//		grid.setTile(4, 2048);
-//		grid.setTile(3, 4096);
-//		grid.updateHighestTile();
-//		assertEquals(4096, grid.getCurrentHighestTile());
-//
-//		/*
-//		 * Now upon restart, the highest value should be 2 or 4 and there should
-//		 * be two tiles.
-//		 */
-//		grid.restart();
-//		tiles = 0;
-//		assertTrue(grid.getCurrentHighestTile() == 2
-//				|| grid.getCurrentHighestTile() == 4);
-//		for (Tile tile : grid.getTiles()) {
-//			if (!tile.isEmpty()) {
-//				tiles++;
-//			}
-//		}
-//		assertEquals(2, tiles);
-//	}
+	@Test
+	public void testRestart() {
+		int tiles = 0;
+
+		/*
+		 * Set two extra tiles on the grid (they can possible overlap, so no
+		 * assert is possible here) and confirm the highest tile.
+		 */
+		grid.setTile(4, 2048);
+		grid.setTile(3, 4096);
+		grid.updateHighestTile();
+		assertEquals(4096, grid.getCurrentHighestTile());
+
+		/*
+		 * Now upon restart, the highest value should be 2 or 4 and there should
+		 * be two tiles.
+		 */
+		grid.restart();
+		tiles = 0;
+		assertTrue(grid.getCurrentHighestTile() == 2
+				|| grid.getCurrentHighestTile() == 4);
+		for (Tile tile : grid.getTiles()) {
+			if (!tile.isEmpty()) {
+				tiles++;
+			}
+		}
+		assertEquals(2, tiles);
+	}
 
 	/**
 	 * Tests if the getters of x, y, width and height are returning the correct
