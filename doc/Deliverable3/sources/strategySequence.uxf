@@ -5,7 +5,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>80</x>
-      <y>80</y>
+      <y>60</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -16,7 +16,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>240</x>
-      <y>80</y>
+      <y>60</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -27,7 +27,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>400</x>
-      <y>80</y>
+      <y>60</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -37,8 +37,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
-      <y>100</y>
+      <x>280</x>
+      <y>80</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -48,32 +48,21 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
-      <y>100</y>
-      <w>30</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
       <x>440</x>
-      <y>100</y>
+      <y>80</y>
       <w>30</w>
-      <h>130</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>120</x>
-      <y>140</y>
+      <y>120</y>
       <w>20</w>
-      <h>140</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -82,9 +71,9 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>280</x>
-      <y>170</y>
+      <y>120</y>
       <w>20</w>
-      <h>50</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -93,7 +82,7 @@
     <id>Relation</id>
     <coordinates>
       <x>130</x>
-      <y>160</y>
+      <y>110</y>
       <w>170</w>
       <h>40</h>
     </coordinates>
@@ -105,13 +94,35 @@ screen.draw()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>290</x>
-      <y>190</y>
+      <y>230</y>
       <w>170</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 drawbehavior.draw()</panel_attributes>
     <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>440</x>
+      <y>120</y>
+      <w>20</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>80</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -122,29 +133,18 @@ drawbehavior.draw()</panel_attributes>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>440</x>
-      <y>210</y>
-      <w>20</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>280</x>
-      <y>210</y>
+      <y>270</y>
       <w>30</w>
-      <h>130</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -152,9 +152,9 @@ drawbehavior.draw()</panel_attributes>
       <x>440</x>
       <y>270</y>
       <w>30</w>
-      <h>70</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
 </diagram>
