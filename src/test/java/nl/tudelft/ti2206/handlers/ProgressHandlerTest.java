@@ -23,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class ProgressHandlerTest {
 
 	/** A singleton reference to the PreferenceHandler. */
-	private static PreferenceHandler prefsHandler; 
+	private static PreferenceHandler prefsHandler;
 	/** A singleton reference to the progressHandler. */
 	private static ProgressHandler progressHandler;
 
@@ -87,5 +87,20 @@ public class ProgressHandlerTest {
 
 		assertEquals(score, prefsHandler.getScore());
 		assertEquals(highestTile, prefsHandler.getHighestTile());
+	}
+
+	/**
+	 * Tests if a game is loaded correctly.
+	 */
+	@Test
+	public void testLoadGame() {
+		grid.setScore(3000);
+		grid.setHighestTile(2048);
+		progressHandler.saveGame(grid);
+
+		Grid testGrid = progressHandler.loadGame(grid);
+		testGrid.act(0);
+		assertEquals(testGrid.getHighscore(), 3000);
+		assertEquals(testGrid.getCurrentHighestTile(), 2048);
 	}
 }

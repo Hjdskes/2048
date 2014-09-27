@@ -17,8 +17,8 @@ public class ProgressHandler {
 
 	private String className = this.getClass().getSimpleName();
 
-	private Logger logger = Logger.getInstance();	
-	
+	private Logger logger = Logger.getInstance();
+
 	/** Overrides the default constructor. */
 	private ProgressHandler() {
 	}
@@ -36,7 +36,7 @@ public class ProgressHandler {
 	 */
 	public void saveGame(Grid grid) {
 		logger.info(className, "Saving game to preference file...");
-		
+
 		int highest = grid.getCurrentHighestTile();
 		int highscore = grid.getHighscore();
 		int score = grid.getScore();
@@ -51,7 +51,8 @@ public class ProgressHandler {
 			prefsHandler.setHighscore(highscore);
 		}
 
-		logger.info(className,
+		logger.info(
+				className,
 				"Saved the game with the grid: " + grid.toString()
 						+ ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
@@ -64,18 +65,29 @@ public class ProgressHandler {
 	/**
 	 * Loads the saved grid, score, high score and highest tile value ever
 	 * reached.
+	 * 
+	 * @return
 	 */
 	public Grid loadGame() {
-		logger.info(className, "Loading game from preference file...");
-		
 		Grid grid = loadGrid();
+		loadGame(grid);
+		return grid;
+	}
+
+	/**
+	 * Loads the saved grid, score, high score and highest tile value ever
+	 * reached. This is used for testing.
+	 */
+	public Grid loadGame(Grid grid) {
+		logger.info(className, "Loading game from preference file...");
+
 		grid.setHighestTile(prefsHandler.getHighestTile());
 		grid.setHighscore(prefsHandler.getHighscore());
 		grid.setScore(prefsHandler.getScore());
 
-		logger.info(className,
-				"Game has been loaded: " + grid.toString()
-						+ ". Highscore: "
+		logger.info(
+				className,
+				"Game has been loaded: " + grid.toString() + ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
 						+ ". Highest tile: "
 						+ Integer.toString(prefsHandler.getHighestTile())
