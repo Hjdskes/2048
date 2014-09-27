@@ -6,9 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -105,7 +107,30 @@ public class HostScreenTest {
 
 	@Test
 	public void testUpdate() {
-		screen.update();
-		verify(stage).act();
+		Networking network = mock(Networking.class);
+		screen.setNetworking(network);
+		
+		when(network.isServerSocketInitialized()).thenReturn(true);
+		when(network.isConnected()).thenReturn(true);
+		
+		MultiGameScreen mwScreen = mock(MultiGameScreen.class);
+		screen.update(mwScreen);
+		verify(mwScreen).create();
+		
+		when(network.isConnected()).thenReturn(false);
+		when(network.errorOccured()).thenReturn(true);
+		when(network.getLastError()).thenReturn("Test");
+		
+		mwScreen = mock(MultiGameScreen.class);
+		screen.update(mwScreen);
+		verify(mwScreen, never()).create();
+		verify(network).getLastError();
+		
+		when(network.isServerSocketInitialized()).thenReturn(false);
+		
+		screen.update(mwScreen);
+		verify(mwScreen, never()).create();
+		verify(network, times(3)).getLastError();
+		
 	}
 }
