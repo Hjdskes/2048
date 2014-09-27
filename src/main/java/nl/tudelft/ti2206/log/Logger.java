@@ -7,7 +7,9 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Logger {
+import com.badlogic.gdx.utils.Disposable;
+
+public class Logger implements Disposable {
 	/** A singleton reference to this class. */
 	private static Logger instance = new Logger();
 	
@@ -148,9 +150,10 @@ public class Logger {
 		}
 	}
 
+	@Override
 	public void dispose() {
-		if (file != null)
+		if (file != null) {
 			file.close();
+		}
 	}
-
 }

@@ -19,7 +19,7 @@ public class RestartButton extends TextButton {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
-
+	/** Constructs a new RestartButton. */
 	public RestartButton() {
 		super("Restart", AssetHandler.getInstance().getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);
@@ -28,6 +28,7 @@ public class RestartButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				//ScreenHandler.getInstance().removeTop();
 				Screen gameScreen = screenHandler.get(0);
 				Stage stage = gameScreen.getStage();
 				Group group = stage.getRoot();

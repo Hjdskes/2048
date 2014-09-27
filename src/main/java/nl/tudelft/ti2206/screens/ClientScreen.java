@@ -1,8 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
@@ -22,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * The ClientScreen is the screen the client sees. It holds an entry field for
  * the IP address to which a connection should be made.
  */
-public class ClientScreen extends Screen implements Observer {
+public class ClientScreen extends Screen {
 	/** The text for the main label. */
 	public static final String OPPONENT_HOSTADDR = "  Enter your opponent's\r\nhostname or IP address: ";
 
@@ -58,8 +56,6 @@ public class ClientScreen extends Screen implements Observer {
 		textField = new TextField(addresses.get(0), assetHandler.getSkin());
 		menu = new MenuButton();
 		play = new TextButton("Play!", assetHandler.getSkin());
-
-		networking.addObserver(this);
 	}
 
 	/** Constructor used for mock insertion */
@@ -131,19 +127,5 @@ public class ClientScreen extends Screen implements Observer {
 			}
 		}
 
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-
-	}
-
-	@Override
-	public void dispose() {
-		// dispose the stage:
-		super.dispose();
-
-		// remove screen object from networking observer list
-		networking.deleteObserver(this);
 	}
 }

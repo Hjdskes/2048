@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * and offers the ability to restart or continue playing.
  */
 public class WinScreen extends Screen {
-	/** The transparent background image. */
+	/** The background image. */
 	private Image image;
 
 	/** The button used to put the game into continuing state. */

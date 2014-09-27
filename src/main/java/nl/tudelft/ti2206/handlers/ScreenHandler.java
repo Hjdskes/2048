@@ -13,15 +13,14 @@ import com.badlogic.gdx.Gdx;
  * enables us to draw transparent screens, such as, for example, the WinScreen.
  */
 public class ScreenHandler {
-	/** The singleton reference to this class. */
+	/** The unique singleton instance of this class. */
 	private static ScreenHandler instance = new ScreenHandler();
 
 	/** The stack containing all the screens. */
 	private static Stack<Screen> screenStack = new Stack<Screen>();
 
 	/** Overrides the default constructor. */
-	private ScreenHandler() {
-	}
+	private ScreenHandler() { }
 
 	/** 
 	 * 
