@@ -52,23 +52,23 @@ public class AssetHandler {
 		 * Queue all of these items for loading, order does not really matter I
 		 * think, since we wait for everything to be done anyway.
 		 */
-		manager.load("src/main/resources/fonts/fonts.atlas", TextureAtlas.class);
-		manager.load("src/main/resources/images/icons/icons.atlas",
+		manager.load("fonts/fonts.atlas", TextureAtlas.class);
+		manager.load("images/icons/icons.atlas",
 				TextureAtlas.class);
-		manager.load("src/main/resources/images/tiles/tiles.atlas",
+		manager.load("images/tiles/tiles.atlas",
 				TextureAtlas.class);
-		manager.load("src/main/resources/images/scoretiles/scoretiles.atlas",
+		manager.load("images/scoretiles/scoretiles.atlas",
 				TextureAtlas.class);
-		manager.load("src/main/resources/images/cursor.png", Texture.class);
-		manager.load("src/main/resources/images/button.png", Texture.class);
-		manager.load("src/main/resources/images/grid.png", Texture.class);
-		manager.load("src/main/resources/images/lostoverlay.png", Texture.class);
-		manager.load("src/main/resources/images/wonoverlay.png", Texture.class);
-		manager.load("src/main/resources/images/multilostoverlay.png",
+		manager.load("images/cursor.png", Texture.class);
+		manager.load("images/button.png", Texture.class);
+		manager.load("images/grid.png", Texture.class);
+		manager.load("images/lostoverlay.png", Texture.class);
+		manager.load("images/wonoverlay.png", Texture.class);
+		manager.load("images/multilostoverlay.png",
 				Texture.class);
-		manager.load("src/main/resources/images/multiwonoverlay.png",
+		manager.load("images/multiwonoverlay.png",
 				Texture.class);
-		manager.load("src/main/resources/images/connectionlostoverlay.png",
+		manager.load("images/connectionlostoverlay.png",
 				Texture.class);
 
 		/*
@@ -86,38 +86,38 @@ public class AssetHandler {
 	 */
 	private void setupSkin() {
 		TextureAtlas fonts = manager.get(
-				"src/main/resources/fonts/fonts.atlas", TextureAtlas.class);
+				"fonts/fonts.atlas", TextureAtlas.class);
 		TextureAtlas icons = manager.get(
-				"src/main/resources/images/icons/icons.atlas",
+				"images/icons/icons.atlas",
 				TextureAtlas.class);
 		TextureAtlas tiles = manager.get(
-				"src/main/resources/images/tiles/tiles.atlas",
+				"images/tiles/tiles.atlas",
 				TextureAtlas.class);
 		TextureAtlas scoretiles = manager.get(
-				"src/main/resources/images/scoretiles/scoretiles.atlas",
+				"images/scoretiles/scoretiles.atlas",
 				TextureAtlas.class);
 
 		skin.addRegions(fonts);
 		skin.addRegions(icons);
 		skin.addRegions(tiles);
 		skin.addRegions(scoretiles);
-		skin.add("cursor", manager.get("src/main/resources/images/cursor.png",
+		skin.add("cursor", manager.get("images/cursor.png",
 				Texture.class));
-		skin.add("button", manager.get("src/main/resources/images/button.png",
+		skin.add("button", manager.get("images/button.png",
 				Texture.class));
-		skin.add("grid", manager.get("src/main/resources/images/grid.png",
+		skin.add("grid", manager.get("images/grid.png",
 				Texture.class));
 		skin.add("lostoverlay", manager.get(
-				"src/main/resources/images/lostoverlay.png", Texture.class));
+				"images/lostoverlay.png", Texture.class));
 		skin.add("wonoverlay", manager.get(
-				"src/main/resources/images/wonoverlay.png", Texture.class));
+				"images/wonoverlay.png", Texture.class));
 		skin.add("multilostoverlay", manager
-				.get("src/main/resources/images/multilostoverlay.png",
+				.get("images/multilostoverlay.png",
 						Texture.class));
 		skin.add("multiwonoverlay", manager.get(
-				"src/main/resources/images/multiwonoverlay.png", Texture.class));
+				"images/multiwonoverlay.png", Texture.class));
 		skin.add("connectionlostoverlay", manager.get(
-				"src/main/resources/images/connectionlostoverlay.png",
+				"images/connectionlostoverlay.png",
 				Texture.class));
 	}
 

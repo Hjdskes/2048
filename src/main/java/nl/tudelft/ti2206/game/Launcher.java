@@ -86,7 +86,7 @@ public class Launcher {
 			config.addIcon("src/main/resources/images/icons/2048_mac.png",
 					FileType.Internal);
 		} else {
-			config.addIcon("resources/images/icons/2048_linux_windows.png",
+			config.addIcon("images/icons/2048_linux_windows.png",
 					FileType.Internal);
 		}
 	}
