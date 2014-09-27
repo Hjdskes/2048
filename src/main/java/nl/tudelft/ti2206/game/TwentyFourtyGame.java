@@ -42,20 +42,18 @@ public class TwentyFourtyGame extends Game {
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
-	
+
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
 	@Override
 	public void create() {
 		logger.info(className, "Launching game...");
-		logger.debug(className,
-				"Skin is loaded and menu screen is launched.");
+		logger.debug(className, "Skin is loaded and menu screen is launched.");
 
 		/* Load all our assets. */
 		assetHandler.load();
-		assetHandler.loadSkinFile(Gdx.files
-				.internal("resources/skin.json"));
+		assetHandler.loadSkinFile(Gdx.files.internal("resources/skin.json"));
 
 		/* Push a menu screen onto the screen stack. */
 		screenHandler.add(new MenuScreen());
@@ -96,8 +94,8 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
-		logger.info("TwentyFourtyGame",
-				"Changing current game state to '" + state + "'.");
+		logger.info("TwentyFourtyGame", "Changing current game state to '"
+				+ state + "'.");
 		curState = state;
 	}
 
@@ -127,5 +125,13 @@ public class TwentyFourtyGame extends Game {
 	 */
 	public static boolean isContinuing() {
 		return (curState == GameState.CONTINUING);
+	}
+
+	/** Mock insertion method. Used for testing only. */
+	public void setMockObjects(ScreenHandler screenHandlerMock,
+			AssetHandler assetHandlerMock, Logger loggerMock) {
+		screenHandler = screenHandlerMock;
+		assetHandler = assetHandlerMock;
+		logger = loggerMock;
 	}
 }

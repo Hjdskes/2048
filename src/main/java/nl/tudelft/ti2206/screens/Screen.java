@@ -1,8 +1,8 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.log.Logger;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -23,6 +23,7 @@ public abstract class Screen implements Disposable {
 	/** The scene graph. */
 	protected Stage stage;
 	
+	/**	The DrawBehavior variable to determine the draw implementation */
 	protected DrawBehavior drawbehavior;
 
 	/**
@@ -34,7 +35,7 @@ public abstract class Screen implements Disposable {
 	}
 
 	/**
-	 * Draws the screen.
+	 * Draws the screen with the help of the DrawBehavior implementations.
 	 */
 	public void draw() {
 		drawbehavior.draw();

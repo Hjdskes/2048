@@ -47,11 +47,9 @@ public class Launcher {
 				logLevel = LogLevel.NONE;
 			}
 		}
-
-		if (logLevel != LogLevel.NONE) {
-			logger.info("Launcher", "Set log level to: " + logLevel);
-			logger.setLevel(logLevel);
-		}
+		
+		logger.setLevel(logLevel);
+		logger.info("Launcher", "Set log level to: " + logLevel);
 
 		if (logLevel.ordinal() > LogLevel.NONE.ordinal() && args.length > 1
 				&& !args[1].isEmpty()) {
