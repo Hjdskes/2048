@@ -46,11 +46,10 @@ public class HostScreen extends Screen {
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
-	
+
 	/** The singleton Networking instance. */ 
 	private static Networking networking = Networking.getInstance();
-	
-	
+
 	/** Constructs a new HostScreen. */
 	public HostScreen() {
 		stage = new Stage();
