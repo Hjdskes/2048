@@ -96,19 +96,20 @@ public class TileHandler {
 					|| collider.isMerged()) {
 				continue;
 			} else {
-				isMoveMade = true;
 				if (collidee.isEmpty()) {
 					collidee.setValue(collider.getValue());
 					if (collider.isMerged()) {
 						collidee.setMerged(true);
 					}
 					collider.reset();
+					isMoveMade = true;
 				} else if (collider.getValue() == collidee.getValue()) {
 					collidee.doubleValue();
 					collidee.setMerged(true);
 					collidee.merge();
 					collider.reset();
 					scoreIncrement += collidee.getValue();
+					isMoveMade = true;
 				}
 			}
 		}
