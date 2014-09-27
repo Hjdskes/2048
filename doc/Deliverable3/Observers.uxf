@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>310</x>
+      <y>70</y>
+      <w>390</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;observable&gt;&gt;
+nl.tudelft.ti2206.net::Networking
+--
+-instance = new Networking(): Networking
+-logger = Logger.getInstance(): Logger
+-className = this.getClass().getSimpleName(): String
+...
+-mode = Mode.NONE: Mode
+--
+-Networking(): ctor
+...
++sendString(String str): void
++sendString(String str, boolean newLine): void
+-processResponse(String response): void
++getRemoteAddress(): String
++isConnected(): boolean
++isInitialized(): boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>910</x>
+      <y>60</y>
+      <w>350</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;observer&gt;&gt;
+nl.tudelft.ti2206.handlers::RemoteInputHandler
+--
+-grid: Grid
+-networking = Networking.getInstance(): Networking
+-logger = Logger.getInstance(): Logger
+-className = this.getClass().getSimpleName(): String
+--
++RemoteInputHandler(Grid grid): ctor
++fillGrid(String tiles): void
++moveUp(): void
++moveDown(): void
++moveRight(): void
++moveLeft(): void
++update(Observable o, Object arg): void
++validateGrid(String str): boolean
++handleRemoteInput(String str): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>250</y>
+      <w>240</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m1=0..n
+m2=0..1
+notifies &gt;</panel_attributes>
+    <additional_attributes>220.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+</diagram>
