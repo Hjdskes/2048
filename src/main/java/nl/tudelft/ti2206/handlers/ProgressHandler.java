@@ -66,7 +66,7 @@ public class ProgressHandler {
 	 * Loads the saved grid, score, high score and highest tile value ever
 	 * reached.
 	 * 
-	 * @return
+	 * @return The loaded Grid.
 	 */
 	public Grid loadGame() {
 		Grid grid = loadGrid();
@@ -76,7 +76,9 @@ public class ProgressHandler {
 
 	/**
 	 * Loads the saved grid, score, high score and highest tile value ever
-	 * reached. This is used for testing.
+	 * reached.
+	 * 
+	 * @return The loaded Grid.
 	 */
 	public Grid loadGame(Grid grid) {
 		logger.info(className, "Loading game from preference file...");
