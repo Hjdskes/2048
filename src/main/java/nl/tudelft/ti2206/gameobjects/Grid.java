@@ -51,7 +51,7 @@ public class Grid extends Actor {
 	private static Logger logger = Logger.getInstance();
 
 	/**
-	 * The name of the object Grid initialized on the name of the class. Used
+	 * The name of the instance, initialized to the name of the class. Used
 	 * for logging.
 	 */
 	private String objectName = this.getClass().getSimpleName();
@@ -243,7 +243,6 @@ public class Grid extends Actor {
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
-	 * @return
 	 */
 	public void move(Direction direction) {
 		switch (direction) {
@@ -412,6 +411,13 @@ public class Grid extends Actor {
 	}
 
 	/**
+	 * @return The name of this instance.
+	 */
+	public String getObjectName() {
+		return objectName;
+	}
+
+	/**
 	 * Sets the TileHandler object used by the grid.
 	 * 
 	 * @param tileHandler
@@ -451,6 +457,15 @@ public class Grid extends Actor {
 		this.highScore = highScore;
 	}
 
+	/**
+	 * Sets the name of this instance.
+	 * 
+	 * @param name The name for this instance.
+	 */
+	public void setObjectName(String name) {
+		this.objectName = name;
+	}
+
 	@Override
 	public float getX() {
 		return GRID_X;
@@ -469,24 +484,6 @@ public class Grid extends Actor {
 	@Override
 	public float getHeight() {
 		return GRID_HEIGHT;
-	}
-
-	/**
-	 * Sets the name of the object
-	 * 
-	 * @param name
-	 */
-	public void setObjectName(String name) {
-		this.objectName = name;
-	}
-
-	/**
-	 * Gets the name of the object.
-	 * 
-	 * @return name
-	 */
-	public String getObjectName() {
-		return objectName;
 	}
 
 	@Override
