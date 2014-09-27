@@ -25,14 +25,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ 
- * | 0 | 1 | 2 | 3 |
- * +---+---+---+---+ 
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
- * | 12| 13| 14| 15|
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -46,12 +40,15 @@ public class Grid extends Actor {
 	public enum Direction {
 		DOWN, UP, LEFT, RIGHT;
 	}
-	
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
-	
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
+
+	/**
+	 * The name of the object Grid initialized on the name of the class. Used
+	 * for logging.
+	 */
+	private String objectName = this.getClass().getSimpleName();
 
 	/** The width of the Grid. */
 	private static final int GRID_WIDTH = 400;
@@ -105,8 +102,8 @@ public class Grid extends Actor {
 	 *            True if the grid should be empty, false otherwise.
 	 */
 	public Grid(boolean isEmpty) {
-		this.region = new TextureRegion(AssetHandler.getInstance().getSkin().get("grid",
-				Texture.class));
+		this.region = new TextureRegion(AssetHandler.getInstance().getSkin()
+				.get("grid", Texture.class));
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
@@ -219,15 +216,15 @@ public class Grid extends Actor {
 	 * reinitializing itself and checking for the new highest value.
 	 */
 	public void restart() {
-		logger.info(className, "Restarting grid.");
-		
+		logger.info(objectName, "Restarting grid.");
+
 		score = 0;
 		while (iterator.hasNext()) {
 			iterator.next().reset();
 		}
 		iterator.reset();
 		initGrid();
-		
+
 		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
@@ -240,7 +237,7 @@ public class Grid extends Actor {
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
-	 * @return 
+	 * @return
 	 */
 	public void move(Direction direction) {
 		switch (direction) {
@@ -261,20 +258,21 @@ public class Grid extends Actor {
 		}
 
 		if (tileHandler.isMoveMade()) {
-			logger.info(className, "Move " + direction + " succesfully made.");
+			logger.info(objectName, "Move " + direction + " succesfully made.");
 
 			int newScore = score + tileHandler.getScoreIncrement();
 			setScore(newScore);
-			logger.info(className, "Score value set to " + newScore + ".");
+			logger.info(objectName, "Score value set to " + newScore + ".");
 
 			int location = getRandomEmptyLocation();
 			int value = initialValue();
 			setTile(location, value);
 			tiles[location].spawn();
 
-			logger.debug(className, "New tile set at location " + location + " (value = " + value + ").");
+			logger.debug(objectName, "New tile set at location " + location
+					+ " (value = " + value + ").");
 		} else {
-			logger.debug(className, "Move " + direction + " ignored.");
+			logger.debug(objectName, "Move " + direction + " ignored.");
 		}
 
 		tileHandler.reset();
@@ -465,6 +463,24 @@ public class Grid extends Actor {
 	@Override
 	public float getHeight() {
 		return GRID_HEIGHT;
+	}
+
+	/**
+	 * Sets the name of the object
+	 * 
+	 * @param name
+	 */
+	public void setObjectName(String name) {
+		this.objectName = name;
+	}
+
+	/**
+	 * Gets the name of the object.
+	 * 
+	 * @return name
+	 */
+	public String getObjectName() {
+		return objectName;
 	}
 
 	@Override

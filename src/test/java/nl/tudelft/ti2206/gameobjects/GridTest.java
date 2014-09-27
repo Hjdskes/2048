@@ -309,4 +309,11 @@ public class GridTest {
 		grid.setTile(0, 2);
 		assertEquals("2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", grid.toString());
 	}
-}
+	
+	@Test
+	public void testObjectName() {
+		String objectName = "GridTest";
+		grid.setObjectName(objectName);
+		assertEquals(objectName, grid.getObjectName());	
+	}
+ }
