@@ -24,7 +24,7 @@ public class HostScreen extends Screen {
 	public static final String CONNECTION_ESTABLISHED = "Connection established!";
 
 	/** The text for the main label. */
-	public static final String OPPONENT_DESTINY = "Your opponent's destiny\r\nlies beyond one of these:";
+	public static final String OPPONENT_DESTINY = " Your opponent's destiny\r\nlies beyond one of these:";
 
 	/** The table used for positioning all Actors. */
 	private Table table;
@@ -37,6 +37,9 @@ public class HostScreen extends Screen {
 
 	/** The label listing all addresses. */
 	private Label addresses;
+	
+	/** The label showing the current port number. */
+	private Label portLabel;
 
 	/** The button to cancel and go back to the main menu. */
 	private MenuButton cancel;
@@ -53,6 +56,8 @@ public class HostScreen extends Screen {
 		stage = new Stage();
 		table = new Table();
 		label = new Label(OPPONENT_DESTINY, assetHandler.getSkin());
+		
+		portLabel = new Label("On port TCP/" + networking.getPortNumber() + ", duh!", assetHandler.getSkin());
 
 		remote = new Label(CONNECTION_WAITING, assetHandler.getSkin());
 
@@ -62,13 +67,14 @@ public class HostScreen extends Screen {
 	}
 
 	/** Constructor for injecting mock objects. For testing purposes only. */
-	public HostScreen(Stage stage, Table table, Label label, MenuButton cancel) {
+	public HostScreen(Stage stage, Table table, Label label, Label portLabel, MenuButton cancel) {
 		this.stage = stage;
 		this.table = table;
 		this.remote = label;
 		this.addresses = label;
 		this.label = label;
 		this.cancel = cancel;
+		this.portLabel = portLabel;
 	}
 
 	@Override
@@ -81,11 +87,14 @@ public class HostScreen extends Screen {
 		}
 
 		table.add(label);
-		table.getCell(label).padTop(20).padBottom(10).row();
+		table.getCell(label).padTop(5).padBottom(5).row();
 		table.add(addresses);
-		table.getCell(addresses).padTop(10).padBottom(20).row();
+		table.getCell(addresses).padTop(5).padBottom(5).row();
+		table.add(portLabel);
+		table.getCell(portLabel).padTop(5).padBottom(5).row();
 		table.add(remote);
-		table.getCell(remote).padTop(20).padBottom(50).row();
+		table.getCell(remote).padTop(5).padBottom(5).row();
+
 
 		table.setFillParent(true);
 		stage.addActor(table);

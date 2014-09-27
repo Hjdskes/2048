@@ -41,6 +41,8 @@ public class HostScreenTest {
 	@Mock
 	private Label label;
 	@Mock
+	private Label portLabel;
+	@Mock
 	private TextField field;
 	@Mock
 	private MenuButton menuButton;
@@ -58,7 +60,7 @@ public class HostScreenTest {
 		Skin skin = mock(Skin.class);
 		AssetHandler.getInstance().setSkin(skin);
 		
-		screen = new HostScreen(stage, table, label, menuButton);
+		screen = new HostScreen(stage, table, label, portLabel, menuButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);

@@ -106,10 +106,11 @@ public class Networking extends Observable {
 				for (NetworkInterface ni : Collections.list(interfaces)) {
 					for (InetAddress address : Collections.list(ni
 							.getInetAddresses())) {
-						// ignore localhost
+						// ignore localhost and only add ipv4 addresses
 						if (address instanceof Inet4Address) {
 							if (!address.getHostAddress().equals("127.0.0.1")) {
 								addresses.add(address.getHostAddress());
+								logger.debug(className + "/" + getMode(), "Local address " + address.getHostAddress() + " added to list.");
 							}
 						}
 					}
@@ -122,6 +123,7 @@ public class Networking extends Observable {
 	}
 
 	/**
+	 * Get a list of all local addresses (IPv4).
 	 * @return A list (string) all local addresses.
 	 */
 	public String localAddresses() {
@@ -131,6 +133,14 @@ public class Networking extends Observable {
 			res += address + "\r\n";
 		}
 		return res;
+	}
+	
+	/**
+	 * Get internal port number.
+	 * @return the port number
+	 */
+	public int getPortNumber() {
+		return PORT;
 	}
 
 	/**
@@ -217,17 +227,23 @@ public class Networking extends Observable {
 
 				if (serverSocket != null) {
 
+					// server socket initialized from here
+					
 					setServerSocketInitialized(true);
 					clientSocket = serverSocket.accept(null);
 
 					if (clientSocket != null) {
+						
+						// connection accepted from here
+						
 						setStreams(clientSocket);
 						setInitialized(true);
 
 						logger.info(className + "/" + getMode(),
 								"Incoming connection accepted from "
 										+ getRemoteAddress());
-
+						
+						// handle incoming messages from client
 						while (isConnected()) {
 							receiveLoop();
 						}
@@ -285,9 +301,12 @@ public class Networking extends Observable {
 				}
 
 				if (clientSocket != null) {
+					
+					// connection is up from here
 					setStreams(clientSocket);
 					setInitialized(true);
-
+					
+					// handle incoming messages from client
 					while (isConnected()) {
 						receiveLoop();
 					}
@@ -299,7 +318,7 @@ public class Networking extends Observable {
 	}
 
 	/**
-	 * Handles all incoming messages.
+	 * Handles all incoming messages, this could be used in a loop.
 	 */
 	@SuppressWarnings("deprecation")
 	private void receiveLoop() {
@@ -313,7 +332,11 @@ public class Networking extends Observable {
 			setConnectionLost(true);
 		}
 	}
-
+	
+	/**
+	 * Set data input/output streams by socket.
+	 * @param socket the socket
+	 */
 	private void setStreams(Socket socket) {
 		if (socket == null) {
 			return;
@@ -378,7 +401,7 @@ public class Networking extends Observable {
 	}
 
 	/**
-	 * Handles an incoming response.
+	 * Handles an incoming response and notify all observers registered.
 	 * 
 	 * @param response
 	 *            The response message.
@@ -392,6 +415,7 @@ public class Networking extends Observable {
 	}
 
 	/**
+	 * Get connected remote address.
 	 * @return The remote address string.
 	 */
 	public String getRemoteAddress() {
@@ -399,6 +423,7 @@ public class Networking extends Observable {
 	}
 
 	/**
+	 * Check if connection is still up.
 	 * @return True if the socket is currently connected, false otherwise.
 	 */
 	public boolean isConnected() {
@@ -413,6 +438,7 @@ public class Networking extends Observable {
 	}
 
 	/**
+	 * Check if client socket has been initialised.
 	 * @return True if client socket initialized is initialized, false
 	 *         otherwise.
 	 */
@@ -422,6 +448,7 @@ public class Networking extends Observable {
 
 	/**
 	 * Sets the connection state of the client socket (connected/disconnected).
+	 * Notifies observers.
 	 * 
 	 * @param initialized
 	 *            The state to set: true for connected, false for disconnected.
@@ -504,11 +531,18 @@ public class Networking extends Observable {
 		}
 		this.lastError = lastError;
 	}
-
+	
+	/**
+	 * Check if a networking error has occured.
+	 * @return true if any error has occured 
+	 */
 	public boolean errorOccured() {
 		return error;
 	}
-
+	
+	/**
+	 * Clear the last error.
+	 */
 	public void clearErrors() {
 		this.error = false;
 		this.lastError = "";
