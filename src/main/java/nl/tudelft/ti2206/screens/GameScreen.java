@@ -62,7 +62,7 @@ public class GameScreen extends Screen {
 	@Override
 	public void update() {
 		super.update();
-
+ 
 		if (grid.getCurrentHighestTile() == 2048
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(GameState.WON);
@@ -72,7 +72,7 @@ public class GameScreen extends Screen {
 			screenHandler.add(new LoseScreen());
 		}
 	}
-
+	
 	@Override
 	public void dispose() {
 		progressHandler.saveGame(grid);
