@@ -1,0 +1,13 @@
+#Exercise 3
+
+##Design Pattern: Strategy
+
+###3.1
+
+We use a Screen hierarchy to define some GUI aspects that we use in the game. The parent, Screen, has a "draw" method among others that are extended
+to the child classes. These child classes would use one of the two implementations of "draw": the implementation that was extended from the parent or
+override into a different implementation. Because of this, the classes that override the existing method would have duplicate code.
+By applying the Strategy design pattern to our existing hierarchy we can not only reduce duplicate code but also prepare our program to further changes.
+This has been done by encapsulating the different implementations in a family of algorithms. Every class now can add one of the objects to use an implementation
+dynamically (even in runtime) instead of implementing it themselves. As the program grows and a new set of screens with a different implementation
+of draw is added, we can simply add a new class to the family where we define the implementation. Doing this without forcing any changes on the existing classes.
