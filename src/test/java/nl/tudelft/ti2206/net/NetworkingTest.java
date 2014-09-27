@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.net.Socket;
 
-public class NetWorkingTest {
+public class NetworkingTest {
 
 	private static ArrayList<String> spyList;
 	private static Socket socket;
@@ -67,6 +67,11 @@ public class NetWorkingTest {
 		assertTrue(networking.isValidHost("java.sun.com"));
 	}
 
+	@Test
+	public void testGetPortNumber() {
+		assertEquals(2048, networking.getPortNumber());
+	}
+	
 	@Test
 	public void testIsValidAddr() {
 		assertFalse(networking.isValidAddr(""));
