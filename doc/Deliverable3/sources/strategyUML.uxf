@@ -4,10 +4,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>175</x>
-      <y>25</y>
+      <x>330</x>
+      <y>15</y>
       <w>300</w>
-      <h>190</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::HostScreen
 --
@@ -30,18 +30,16 @@
 +HostScreen(): ctor
 +HostScreen(Stage stage, Table table, Label label, Label portLabel, MenuButton cancel): ctor
 +create(): void
-+update(): void
---
-</panel_attributes>
++update(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>0</y>
-      <w>375</w>
-      <h>190</h>
+      <x>170</x>
+      <y>210</y>
+      <w>220</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::MultiGameScreen
 --
@@ -64,18 +62,16 @@
 +MultiGameScreen(Stage stage, Grid grid, Label label, Group group, ScoreDisplay scores, Networking netMock): ctor
 +create(): void
 +update(): void
-+dispose(): void
---
-</panel_attributes>
++dispose(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>865</x>
-      <y>20</y>
-      <w>350</w>
-      <h>145</h>
+      <x>630</x>
+      <y>90</y>
+      <w>190</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::ClientScreen
 --
@@ -94,15 +90,14 @@
 +create(): void
 -addPlayButtonListener(): void
 +update(): void
---
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>615</x>
-      <y>250</y>
+      <x>405</x>
+      <y>200</y>
       <w>190</w>
       <h>145</h>
     </coordinates>
@@ -122,18 +117,16 @@
 +resume(): void
 +update(): void
 +dispose(): void
-+getStage(): Stage
---
-</panel_attributes>
++getStage(): Stage</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>175</x>
-      <y>230</y>
-      <w>275</w>
-      <h>135</h>
+      <x>335</x>
+      <y>560</y>
+      <w>280</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::GameScreen
 --
@@ -148,15 +141,14 @@
 +create(): void
 +update(): void
 +dispose(): void
---
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>905</x>
-      <y>175</y>
+      <x>620</x>
+      <y>225</y>
       <w>245</w>
       <h>115</h>
     </coordinates>
@@ -180,10 +172,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>135</x>
-      <y>370</y>
-      <w>340</w>
-      <h>90</h>
+      <x>230</x>
+      <y>405</y>
+      <w>120</w>
+      <h>75</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::WinScreen
 --
@@ -194,18 +186,16 @@
 +WinScreen(): ctor
 +WinScreen(Stage stage, Image image, RestartButton restartButton, ContinueButton continueButton): ctor
 +create(): void
-+isOverlay(): boolean
---
-</panel_attributes>
++isOverlay(): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>875</x>
-      <y>380</y>
+      <x>365</x>
+      <y>490</y>
       <w>265</w>
-      <h>80</h>
+      <h>65</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::ConnectionLostScreen
 --
@@ -223,10 +213,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>875</x>
-      <y>470</y>
+      <x>635</x>
+      <y>415</y>
       <w>240</w>
-      <h>80</h>
+      <h>65</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::LoseScreen
 --
@@ -244,10 +234,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>215</x>
-      <y>470</y>
-      <w>250</w>
-      <h>80</h>
+      <x>175</x>
+      <y>135</y>
+      <w>145</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>nl.tudelft.ti2206.screens::MultiLoseScreen
 --
@@ -257,16 +247,14 @@
 +MultiLoseScreen(): ctor
 +MultiLoseScreen(Stage stage, Image image, MenuButton menuButton): ctor
 +create(): void
-+isOverlay(): boolean
---
-</panel_attributes>
++isOverlay(): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>900</x>
-      <y>300</y>
+      <x>625</x>
+      <y>345</y>
       <w>245</w>
       <h>65</h>
     </coordinates>
@@ -286,207 +274,201 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
-      <y>190</y>
-      <w>15</w>
-      <h>70</h>
+      <x>385</x>
+      <y>270</y>
+      <w>30</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 </panel_attributes>
-    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>470</x>
-      <y>210</y>
-      <w>155</w>
+      <x>490</x>
+      <y>180</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>335</x>
+      <y>340</y>
+      <w>95</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>170.0;10.0;60.0;190.0;10.0;440.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>345</x>
+      <y>340</y>
+      <w>75</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 </panel_attributes>
-    <additional_attributes>290.0;140.0;10.0;10.0</additional_attributes>
+    <additional_attributes>130.0;10.0;50.0;140.0;10.0;140.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>445</x>
-      <y>250</y>
-      <w>180</w>
+      <x>315</x>
+      <y>190</y>
+      <w>100</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>180.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>585</x>
+      <y>340</y>
+      <w>60</w>
+      <h>115</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>375</x>
+      <y>345</y>
+      <w>65</w>
+      <h>155</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;160.0;10.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>305</y>
+      <w>45</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>235</y>
+      <w>40</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;60.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>200</y>
+      <w>50</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;30.0;80.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>365</y>
+      <w>135</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+nl.tudelft.ti2206.screens::DrawBehavior
+--
+/+draw()/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>430</y>
+      <w>120</w>
       <h>55</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>340.0;90.0;10.0;10.0</additional_attributes>
+    <panel_attributes>nl.tudelft.ti2206.screens::SimpleDraw
+--
+-stage: Stage
+--
++SimpleDraw(Stage)
++draw(): void</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>470</x>
-      <y>315</y>
-      <w>155</w>
-      <h>65</h>
+      <x>385</x>
+      <y>435</y>
+      <w>120</w>
+      <h>45</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>290.0;10.0;10.0;110.0</additional_attributes>
+    <panel_attributes>nl.tudelft.ti2206.screens::SimpleDraw
+--
+-stage: Stage
+--
++SimpleDraw(Stage)
++draw(): void</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>460</x>
-      <y>390</y>
-      <w>185</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>350.0;10.0;10.0;180.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>795</x>
-      <y>390</y>
-      <w>90</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>10.0;10.0;160.0;220.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>800</x>
-      <y>375</y>
-      <w>85</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>10.0;10.0;150.0;60.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>800</x>
-      <y>315</y>
-      <w>110</w>
-      <h>25</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>10.0;20.0;200.0;30.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>800</x>
-      <y>255</y>
-      <w>115</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>10.0;80.0;210.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>800</x>
-      <y>160</y>
-      <w>105</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-</panel_attributes>
-    <additional_attributes>10.0;200.0;190.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>630</x>
-      <y>440</y>
-      <w>135</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
-nl.tudelft.ti2206.screens::DrawBehavior
---
-/+draw()/
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>695</x>
-      <y>515</y>
-      <w>150</w>
-      <h>55</h>
-    </coordinates>
-    <panel_attributes>nl.tudelft.ti2206.screens::SimpleDraw
---
--stage: Stage
---
-+SimpleDraw(Stage)
-+draw(): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>530</x>
-      <y>515</y>
-      <w>150</w>
-      <h>55</h>
-    </coordinates>
-    <panel_attributes>nl.tudelft.ti2206.screens::SimpleDraw
---
--stage: Stage
---
-+SimpleDraw(Stage)
-+draw(): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>600</x>
-      <y>475</y>
-      <w>80</w>
+      <y>395</y>
+      <w>20</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>140.0;10.0;10.0;80.0</additional_attributes>
+    <additional_attributes>20.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>475</y>
-      <w>70</w>
-      <h>50</h>
+      <x>510</x>
+      <y>395</y>
+      <w>40</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;70.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>695</x>
-      <y>390</y>
-      <w>25</w>
-      <h>60</h>
+      <x>485</x>
+      <y>340</y>
+      <w>35</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
    0..1</panel_attributes>
-    <additional_attributes>30.0;100.0;10.0;10.0</additional_attributes>
+    <additional_attributes>50.0;50.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
