@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.PreferenceHandler;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,11 +25,14 @@ public class ScoreDisplay extends Group {
 	/** The grid holding the tiles. */
 	private Grid grid;
 
+	/** The highest tile value saved. */
+	private int allTimeHighestValue;
+
 	/** Labels to display scores. */
 	private Label scoreLabel;
 	private Label highScoreLabel;
 	private Label highestTileLabel;
-	
+
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
@@ -45,18 +49,20 @@ public class ScoreDisplay extends Group {
 		initLabels();
 		setLabelLocations();
 		addLabelsToGroup();
+		allTimeHighestValue = PreferenceHandler.getInstance().getHighestTile();
 	}
-	
+
 	/** Constructor for testing purposes only */
-	 public ScoreDisplay(Grid mockGrid, Label mockLabel) {
-		 this.grid = mockGrid;
-		 this.scoreLabel = mockLabel;
-		 this.highScoreLabel = mockLabel;
-		 this.highestTileLabel = mockLabel;
-		 
-		 addLabelsToGroup();
-		 setLabelLocations();
-	 }
+	public ScoreDisplay(Grid mockGrid, Label mockLabel) {
+		this.grid = mockGrid;
+		this.scoreLabel = mockLabel;
+		this.highScoreLabel = mockLabel;
+		this.highestTileLabel = mockLabel;
+
+		addLabelsToGroup();
+		setLabelLocations();
+		allTimeHighestValue = PreferenceHandler.getInstance().getHighestTile();
+	}
 
 	/**
 	 * Initializes all Labels for the scores. It creates the label and sets its
@@ -82,11 +88,15 @@ public class ScoreDisplay extends Group {
 		highScoreLabel.setHeight(HEIGHT);
 		highScoreLabel.setWidth(SCORE_WIDTH);
 
-		highestTileLabel = new Label("0", assetHandler.getSkin(), "highest") {
+		highestTileLabel = new Label(Integer.toString(allTimeHighestValue),
+				assetHandler.getSkin(), "highest") {
 			@Override
 			public void act(float delta) {
-				highestTileLabel.setText(Integer.toString(grid
-						.getCurrentHighestTile()));
+				int currentHighest = grid.getCurrentHighestTile();
+				String value = Integer
+						.toString(allTimeHighestValue > currentHighest ? allTimeHighestValue
+								: currentHighest);
+				highestTileLabel.setText(value);
 			}
 		};
 		highestTileLabel.setHeight(HEIGHT);
@@ -118,7 +128,7 @@ public class ScoreDisplay extends Group {
 		this.addActor(highScoreLabel);
 		this.addActor(highestTileLabel);
 	}
-	
+
 	/**
 	 * @return The x-coordinate of the score tile.
 	 */

@@ -81,12 +81,10 @@ public class ProgressHandlerTest {
 		int score = 200;
 		int highestTile = 2048;
 		grid.setScore(score);
-		grid.setHighestTile(highestTile);
 
 		progressHandler.saveGame(grid);
 
 		assertEquals(score, prefsHandler.getScore());
-		assertEquals(highestTile, prefsHandler.getHighestTile());
 	}
 
 	/**
@@ -95,12 +93,10 @@ public class ProgressHandlerTest {
 	@Test
 	public void testLoadGame() {
 		grid.setScore(3000);
-		grid.setHighestTile(2048);
 		progressHandler.saveGame(grid);
 
 		Grid testGrid = progressHandler.loadGame(grid);
 		testGrid.act(0);
 		assertEquals(testGrid.getHighscore(), 3000);
-		assertEquals(testGrid.getCurrentHighestTile(), 2048);
 	}
 }

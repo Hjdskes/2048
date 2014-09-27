@@ -92,7 +92,7 @@ public class Grid extends Actor {
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
 
-	/** Keeps track of the highest Tile value in the current game. */
+	/** The highest tile value present in the Grid. */
 	private int highestTile;
 
 	/** Keeps track of the current score. */
@@ -425,16 +425,6 @@ public class Grid extends Actor {
 	 */
 	public void setTileHandler(TileHandler tileHandler) {
 		this.tileHandler = tileHandler;
-	}
-
-	/**
-	 * Sets the highest tile to the value provided.
-	 * 
-	 * @param highest
-	 *            The new highest tile.
-	 */
-	public void setHighestTile(int highest) {
-		this.highestTile = highest;
 	}
 
 	/**
