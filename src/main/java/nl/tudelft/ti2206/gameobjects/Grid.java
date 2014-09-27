@@ -225,6 +225,7 @@ public class Grid extends Actor {
 		logger.info(objectName, "Restarting grid.");
 
 		score = 0;
+		highestTile = 0;
 		while (iterator.hasNext()) {
 			iterator.next().reset();
 		}
