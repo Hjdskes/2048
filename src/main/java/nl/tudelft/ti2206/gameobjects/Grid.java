@@ -7,6 +7,7 @@ import java.util.Random;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
 import nl.tudelft.ti2206.log.Logger;
 
@@ -225,12 +226,20 @@ public class Grid extends Actor {
 		logger.info(objectName, "Restarting grid.");
 
 		score = 0;
-		highestTile = 0;
+			
 		while (iterator.hasNext()) {
 			iterator.next().reset();
 		}
 		iterator.reset();
 		initGrid();
+		
+		if (highestTile > PreferenceHandler.getInstance().getHighestTile()) {
+			PreferenceHandler.getInstance().setHighest(highestTile);
+			ScoreDisplay.updateAllTimeHighestTile();
+		}
+		
+		highestTile = 0;
+		updateHighestTile();
 
 		TwentyFourtyGame.setState(GameState.RUNNING);
 	}

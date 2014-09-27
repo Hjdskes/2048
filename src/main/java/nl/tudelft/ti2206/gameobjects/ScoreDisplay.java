@@ -26,7 +26,7 @@ public class ScoreDisplay extends Group {
 	private Grid grid;
 
 	/** The highest tile value saved. */
-	private int allTimeHighestValue;
+	private static int allTimeHighestValue;
 
 	/** Labels to display scores. */
 	private Label scoreLabel;
@@ -127,6 +127,14 @@ public class ScoreDisplay extends Group {
 		this.addActor(scoreLabel);
 		this.addActor(highScoreLabel);
 		this.addActor(highestTileLabel);
+	}
+
+	/**
+	 * Updates the all time highest tile value used to determine the value for
+	 * the highestTileLabel
+	 */
+	public static void updateAllTimeHighestTile() {
+		allTimeHighestValue = PreferenceHandler.getInstance().getHighestTile();
 	}
 
 	/**
