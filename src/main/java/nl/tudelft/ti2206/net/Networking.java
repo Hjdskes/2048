@@ -488,7 +488,9 @@ public class Networking extends Observable {
 		if (!lastError.isEmpty()) {
 			this.error = true;
 
-			logger.error(className + "/" + getMode(), lastError);
+			// even though this is an error, it's not an error in the application
+			// but on a networking level, so let's just log it on the info level
+			logger.info(className + "/" + getMode(), lastError);
 
 			if (lastError.contains("server socket ")) {
 				lastError = lastError.replace("server socket ", "server\r\n");
