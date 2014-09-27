@@ -20,14 +20,29 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  * The MultiGameScreen is the screen for a multiplayer game.
  */
 public class MultiGameScreen extends Screen {
+	/** The local grid holding all the local Tiles. */
 	private Grid localGrid;
+
+	/** The remote grid holding all the remote Tiles. */
 	private Grid remoteGrid;
-	private Label you;
-	private Label opponent;
-	private Group localGroup;
-	private Group remoteGroup;
+
+	/** The ScoreDisplay for the local Grid. */
 	private ScoreDisplay localScores;
+
+	/** The ScoreDisplay for the remote Grid. */
 	private ScoreDisplay remoteScores;
+
+	/** The label indicating which Grid is yours. */
+	private Label you;
+
+	/** The label indicating which Grid is your opponent's. */
+	private Label opponent;
+
+	/** The Group packing all local elements. */
+	private Group localGroup;
+
+	/** The Group packing all remote elements. */
+	private Group remoteGroup;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
@@ -44,6 +59,7 @@ public class MultiGameScreen extends Screen {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
+	/** The InputHandler for the remote Grid. */
 	private RemoteInputHandler remoteInput;
 
 	/** Constructs a new MultiGameScreen. */
