@@ -56,7 +56,6 @@ public class Launcher {
 		if (logLevel.ordinal() > LogLevel.NONE.ordinal() && args.length > 1
 				&& !args[1].isEmpty()) {
 			if (args[1].equalsIgnoreCase("file")) {
-				System.out.println("logging to file...");
 				logger.setLogFile("2048");
 			}
 		}
