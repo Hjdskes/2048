@@ -22,6 +22,7 @@ public class LoseScreen extends Screen {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "lostoverlay");
 		restartButton = new RestartButton();
+		this.setDrawBehavior( new SimpleDraw(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -29,6 +30,7 @@ public class LoseScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.restartButton = restartButton;
+		this.setDrawBehavior( new SimpleDraw(stage));
 	}
 
 	@Override
@@ -37,11 +39,6 @@ public class LoseScreen extends Screen {
 
 		stage.addActor(image);
 		stage.addActor(restartButton);
-	}
-
-	@Override
-	public void draw() {
-		stage.draw();
 	}
 
 	@Override

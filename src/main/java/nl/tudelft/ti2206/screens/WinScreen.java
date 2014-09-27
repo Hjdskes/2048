@@ -27,6 +27,7 @@ public class WinScreen extends Screen {
 		image = new Image(AssetHandler.getInstance().getSkin(), "wonoverlay");
 		restartButton = new RestartButton();
 		continueButton = new ContinueButton();
+		this.setDrawBehavior( new SimpleDraw(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -36,6 +37,7 @@ public class WinScreen extends Screen {
 		this.image = image;
 		this.restartButton = restartButton;
 		this.continueButton = continueButton;
+		this.setDrawBehavior( new SimpleDraw(stage));
 	}
 
 	@Override
@@ -44,11 +46,6 @@ public class WinScreen extends Screen {
 		stage.addActor(image);
 		stage.addActor(continueButton);
 		stage.addActor(restartButton);
-	}
-
-	@Override
-	public void draw() {
-		stage.draw();
 	}
 
 	@Override

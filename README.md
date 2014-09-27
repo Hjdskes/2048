@@ -1,6 +1,6 @@
 # TI2206 - Group 21 (2048)
 
-This team consists of the following students:
+Group 21 consists of the following students:
 
 | Name                 | Student number |
 |----------------------|----------------|

@@ -22,6 +22,8 @@ public abstract class Screen implements Disposable {
 
 	/** The scene graph. */
 	protected Stage stage;
+	
+	protected DrawBehavior drawbehavior;
 
 	/**
 	 * Called when the screen is shown. Used for initialization.
@@ -35,13 +37,13 @@ public abstract class Screen implements Disposable {
 	 * Draws the screen.
 	 */
 	public void draw() {
-		/* Draw beige background in the screen. */
-		Gdx.gl.glClearColor(.976f, .969f, .933f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.draw();
+		drawbehavior.draw();
 	}
-
+	
+	public void setDrawBehavior(DrawBehavior newDrawBehavior){
+		drawbehavior = newDrawBehavior;
+	}
+	
 	/**
 	 * Determines if the screen is an overlay or not. Overlays will not cause
 	 * screens below it to automatically exit.

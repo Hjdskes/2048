@@ -86,6 +86,8 @@ public class MultiGameScreen extends Screen {
 
 		remoteInput = new RemoteInputHandler(remoteGrid);
 		networking.addObserver(remoteInput);
+		
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only */
@@ -101,6 +103,7 @@ public class MultiGameScreen extends Screen {
 		this.localScores = scores;
 		this.remoteScores = scores;
 		networking = netMock;
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	@Override
