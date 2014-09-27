@@ -100,6 +100,11 @@ public class HostScreen extends Screen implements Observer {
 	@Override
 	public void update() {
 		super.update();
+		update(new MultiGameScreen());
+
+	}
+	
+	public void update(MultiGameScreen multiGameScreen) {
 
 		if (networking.isServerSocketInitialized()) {
 			if (networking.isConnected()) {
@@ -110,7 +115,7 @@ public class HostScreen extends Screen implements Observer {
 				String addr = networking.getRemoteAddress();
 				addresses.setText(addr);
 
-				ScreenHandler.getInstance().add(new MultiGameScreen());
+				ScreenHandler.getInstance().add(multiGameScreen);
 			} else if (networking.errorOccured()) {
 				String error = networking.getLastError();
 
@@ -146,5 +151,13 @@ public class HostScreen extends Screen implements Observer {
 		
 		// remove screen object from networking observer list
 		networking.deleteObserver(this);
+	}
+	
+	/**
+	 * Setter for networking. Used for testing.
+	 * @param networking which we will mock.
+	 */
+	public void setNetworking(Networking networking) {
+		HostScreen.networking = networking;
 	}
 }

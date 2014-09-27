@@ -6,9 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,13 +53,16 @@ public class HostScreenTest {
 
 	private HostScreen screen;
 
+	/**
+	 * Setting up the screen for testing.
+	 */
 	@Before
 	public void setUp() {
 		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		Skin skin = mock(Skin.class);
 		AssetHandler.getInstance().setSkin(skin);
-		
+
 		screen = new HostScreen(stage, table, label, menuButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
@@ -65,20 +70,26 @@ public class HostScreenTest {
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-		
+
 		when(cell.padTop(anyInt())).thenReturn(cell);
 		when(cell.padBottom(anyInt())).thenReturn(cell);
 		when(cell.row()).thenReturn(cell);
-		
+
 		when(table.getCell(label)).thenReturn(cell);
 	}
 
+	/**
+	 * Tests if all the required methods are called when disposing the screen.
+	 */
 	@Test
 	public void testDispose() {
 		screen.dispose();
 		verify(stage).dispose();
 	}
 
+	/**
+	 * Tests if all the required methods are called when creating the screen.
+	 */
 	@Test
 	public void testCreate() {
 		screen.create();
@@ -88,24 +99,53 @@ public class HostScreenTest {
 		verify(cell, times(3)).padBottom(anyInt());
 		verify(cell, times(3)).row();
 
-		verify(stage).addActor(table); 
+		verify(stage).addActor(table);
 		verify(stage).addActor(menuButton);
 
 		verify(input).setInputProcessor(stage);
 	}
 
+	/**
+	 * Tests if all the required methods are called when drawing the screen.
+	 */
 	@Test
 	public void testDraw() {
 		screen.draw();
 		verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
 		verify(gl).glClear(anyInt());
-		
+
 		verify(stage).draw();
 	}
 
+	/**
+	 * Tests if all the required methods are called when updating the screen.
+	 */
 	@Test
 	public void testUpdate() {
-		screen.update();
-		verify(stage).act();
+		Networking network = mock(Networking.class);
+		screen.setNetworking(network);
+
+		when(network.isServerSocketInitialized()).thenReturn(true);
+		when(network.isConnected()).thenReturn(true);
+
+		MultiGameScreen mwScreen = mock(MultiGameScreen.class);
+		screen.update(mwScreen);
+		verify(mwScreen).create();
+
+		when(network.isConnected()).thenReturn(false);
+		when(network.errorOccured()).thenReturn(true);
+		when(network.getLastError()).thenReturn("Test");
+
+		mwScreen = mock(MultiGameScreen.class);
+		screen.update(mwScreen);
+		verify(mwScreen, never()).create();
+		verify(network).getLastError();
+
+		when(network.isServerSocketInitialized()).thenReturn(false);
+
+		screen.update(mwScreen);
+		verify(mwScreen, never()).create();
+		verify(network, times(3)).getLastError();
+
 	}
 }
