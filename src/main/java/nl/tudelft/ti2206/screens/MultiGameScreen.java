@@ -54,7 +54,7 @@ public class MultiGameScreen extends Screen {
 
 		localGrid = new Grid(false);
 		remoteGrid = new Grid(false);
-		
+
 		/* Sets the name of the objects. Used for logging */
 		localGrid.setObjectName("LocalGrid");
 		remoteGrid.setObjectName("RemoteGrid");
@@ -114,9 +114,22 @@ public class MultiGameScreen extends Screen {
 	@Override
 	public void update() {
 		super.update();
+		update(new ConnectionLostScreen(), new MultiWinScreen(),
+				new MultiLoseScreen());
 
+	}
+
+	/**
+	 * We check if a player won the game. We splitted the method for testing.
+	 * 
+	 * @param clScreen
+	 * @param mwScreen
+	 * @param mlScreen
+	 */
+	public void update(ConnectionLostScreen clScreen, MultiWinScreen mwScreen,
+			MultiLoseScreen mlScreen) {
 		if (networking.isConnectionLost()) {
-			screenHandler.add(new ConnectionLostScreen());
+			screenHandler.add(clScreen);
 		}
 
 		if (localGrid.getCurrentHighestTile() == 2048
@@ -125,19 +138,27 @@ public class MultiGameScreen extends Screen {
 					"Local player won the multiplayer game. The score of the local player: "
 							+ Integer.toString(localGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.WON);
-			screenHandler.add(new MultiWinScreen());
+			screenHandler.add(mwScreen);
 		} else if (localGrid.getPossibleMoves() == 0
 				|| remoteGrid.getCurrentHighestTile() == 2048) {
 			logger.info(className,
 					"Local player lost the multiplayer game. The score of the remote player: "
 							+ Integer.toString(remoteGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.LOST);
-			screenHandler.add(new MultiLoseScreen());
+			screenHandler.add(mlScreen);
 		}
 	}
 
 	@Override
 	public void dispose() {
 		networking.deleteObserver(remoteInput);
+	}
+
+	public void setLocalGrid(Grid grid) {
+		this.localGrid = grid;
+	}
+
+	public void setRemoteGrid(Grid grid) {
+		this.remoteGrid = grid;
 	}
 }

@@ -1,14 +1,19 @@
 package nl.tudelft.ti2206.screens;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -46,6 +51,16 @@ public class MultiGameScreenTest {
 	private Texture texture;
 	@Mock
 	private Input input;
+	@Mock
+	private ConnectionLostScreen clScreen;
+	@Mock
+	private MultiWinScreen mwScreen;
+	@Mock
+	private MultiLoseScreen mlScreen;
+
+	private Grid localGrid;
+
+	private Grid remoteGrid;
 
 	private MultiGameScreen screen;
 
@@ -64,6 +79,7 @@ public class MultiGameScreenTest {
 		doNothing().when(group).addActor(any(Actor.class));
 
 		when(label.getPrefWidth()).thenReturn(0f);
+
 	}
 
 	/**
@@ -82,12 +98,69 @@ public class MultiGameScreenTest {
 		verify(stage, times(2)).addActor(group);
 	}
 
-//	/**
-//	 * Tests if all required methods are called on screen.update().
-//	 */
-//	@Test
-//	public void testUpdateLocalWin() {
-//		screen.update();
-//		verify(stage).act();
-//	}
+	/**
+	 * Tests if all required methods are called on screen.update().
+	 */
+	@Test
+	public void testUpdateLocalWin() {
+		localGrid = mock(Grid.class);
+		remoteGrid = mock(Grid.class);
+		screen.setLocalGrid(localGrid);
+		screen.setRemoteGrid(remoteGrid);
+
+		when(localGrid.getCurrentHighestTile()).thenReturn(2048);
+		screen.update(clScreen, mwScreen, mlScreen);
+		verify(localGrid).getCurrentHighestTile();
+		verify(mwScreen).create();
+		assertEquals(TwentyFourtyGame.getState(), GameState.WON);
+	}
+
+	/**
+	 * Tests if all required methods are called on screen.update().
+	 */
+	@Test
+	public void testUpdateLocalLost() {
+		localGrid = mock(Grid.class);
+		remoteGrid = mock(Grid.class);
+		screen.setLocalGrid(localGrid);
+		screen.setRemoteGrid(remoteGrid);
+
+		when(remoteGrid.getPossibleMoves()).thenReturn(1);
+		when(remoteGrid.getCurrentHighestTile()).thenReturn(2048);
+		when(localGrid.getPossibleMoves()).thenReturn(1);
+
+		screen.update(clScreen, mwScreen, mlScreen);
+		verify(localGrid).getCurrentHighestTile();
+		verify(remoteGrid).getPossibleMoves();
+		verify(localGrid).getPossibleMoves();
+		verify(remoteGrid).getCurrentHighestTile();
+		verify(mlScreen).create();
+		assertEquals(TwentyFourtyGame.getState(), GameState.LOST);
+	}
+
+	/**
+	 * Tests if all required methods are called on screen.update().
+	 */
+	@Test
+	public void testUpdate() {
+		TwentyFourtyGame.setState(GameState.RUNNING);
+		localGrid = mock(Grid.class);
+		remoteGrid = mock(Grid.class);
+		screen.setLocalGrid(localGrid);
+		screen.setRemoteGrid(remoteGrid);
+
+		when(remoteGrid.getPossibleMoves()).thenReturn(1);
+		when(remoteGrid.getCurrentHighestTile()).thenReturn(4);
+		when(localGrid.getPossibleMoves()).thenReturn(1);
+		when(localGrid.getCurrentHighestTile()).thenReturn(4);
+
+		screen.update(clScreen, mwScreen, mlScreen);
+		verify(localGrid).getCurrentHighestTile();
+		verify(remoteGrid).getPossibleMoves();
+		verify(localGrid).getPossibleMoves();
+		verify(remoteGrid).getCurrentHighestTile();
+		verify(mlScreen, never()).create();
+		verify(mwScreen, never()).create();
+		assertEquals(TwentyFourtyGame.getState(), GameState.RUNNING);
+	}
 }
