@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 
@@ -41,8 +42,10 @@ public class ProgressHandler {
 		int highscore = grid.getHighscore();
 		int score = grid.getScore();
 
-		prefsHandler.setGrid(grid.toString());
-		prefsHandler.setScore(score);
+		if (!TwentyFourtyGame.isLost()) {
+			prefsHandler.setGrid(grid.toString());
+			prefsHandler.setScore(score);
+		}
 
 		if (highest > prefsHandler.getHighestTile()) {
 			prefsHandler.setHighest(highest);
