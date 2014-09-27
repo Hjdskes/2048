@@ -115,6 +115,9 @@ public class HostScreen extends Screen {
 
 				ScreenHandler.getInstance().add(new MultiGameScreen());
 			} else if (networking.errorOccured()) {
+				
+				// This never really happens, but whatever...
+				
 				String error = networking.getLastError();
 
 				if (error.compareTo("") != 0) {
@@ -129,8 +132,8 @@ public class HostScreen extends Screen {
 			}
 			
 			label.setText(error);
-			addresses.setText(":(");
-			remote.setText("Is the port in use?");
+			addresses.setText(":("); // HostScreen sad :(
+			remote.setText("Is the port in use?"); // you bet!
 		} else {
 			remote.setText(CONNECTION_WAITING);
 		}
