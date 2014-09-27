@@ -82,6 +82,7 @@ public class Tile extends Actor {
 	public Tile(int index, int value, Skin skin, TextureRegion region) {
 		this.skin = skin;
 		this.region = region;
+		
 		setValue(value);
 		setIndex(index);
 		setMerged(false);

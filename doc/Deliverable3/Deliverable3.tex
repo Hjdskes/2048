@@ -73,7 +73,7 @@ the internet. Your opponent does not have to be in the same room with you; they
 can even be on the other side of the planet and you can still kick their
 asses!\\
 
-Your goal is to reach the 2048 tile \textit{before} your opponent. In case you
+Your goal is to reach the 2048 tile \textit{before} your opponent does. In case you
 are unable to reach the 2048 tile (e.g., because you died), your opponent
 automatically wins.\\
 
@@ -196,14 +196,15 @@ is implemented, together with a class- and sequence diagram.
 \subsection{The Singleton design pattern}
 We implemented the singleton design pattern because we noticed the large amount
 of classes that only contained static methods. Nearly all of them are located in
-the handlers package. This is logical, since handlers are supposed to carry out
-one specific task, without the need of an instance of the class. \\
+the \texttt{handlers} package. This is logical, since handlers are supposed to carry out
+one specific task, without the need of an instance of the class.\\
 
 We noticed that the code did not really look clean with all those classnames in
 front of methods. Instead, we could declare an instance variable in each class
 using the static methods to access those. A requirement would be that only one
 instance is allowed to exist, as it would make no sense to have multiple
-instances when the class does not maintain any state. How did we do that?
+instances when the class does not maintain any state. This is exactly what the
+Singleton design pattern is for.
 
 \subsubsection{The implementation}
 First of all, we started refactoring the classes that were going to follow the
@@ -248,22 +249,22 @@ the singleton.
 \newpage\subsection{The Iterator design pattern}
 We implemented the iterator design pattern because we have to iterate over our
 grid a lot. It seemed a natural choise to implement an iterator on top of this.
-The prospect of having to refactor our TileHandler class was daunting, though,
+The prospect of having to refactor our \texttt{TileHandler} class was daunting, though,
 so we never did it. This assignment, however, gave us the needed motivation to
 go ahead and do it.
 
 \subsubsection{The implementation}
-A new class, the TileIterator class, has been created. This class implements the
-Iterator interface that is defined in java.util. The classes that have to
-iterate over the grid now make use of this TileIterator.\\
+A new class, the \texttt{TileIterator} class, has been created. This class implements the
+\texttt{Iterator} interface that is defined in \texttt{java.util}. The classes that have to
+iterate over the grid now make use of this \texttt{TileIterator}.\\
 
-One detail we would like to point out, is that our TileIterator also has a reset
+One detail we would like to point out, is that our \texttt{TileIterator} also has a reset
 method. This method will move the index back to the beginning of the array, so
 the iterator can be used again. This allows us to have only one instance of
-TileIterator inside the Grid class instead of every method creating an iterator
-when needed. This would mean that several new TileIterators would be
-instantiated sixty times per second! The same trick is used inside TileHandler,
-although the impact here is less big.
+\texttt{TileIterator} inside the \texttt{Grid} class instead of every method creating an iterator
+when needed. This would mean that several new \texttt{TileIterator} instances would be
+created sixty times per second! The same trick is used inside
+\texttt{TileHandler}, although the impact here is less big.
 
 \subsubsection{The class- and sequence diagram}
 \textbf{The class diagram:}\\
@@ -273,31 +274,32 @@ although the impact here is less big.
 \centerline{\includegraphics[scale=1.0]{sources/IteratorSequence}}
 
 \newpage\subsection{The Observer design pattern}
-The Networking class required to communicate with the opponent's grid in the
-game, for movements and for synchronization of the grids.\\
+The \texttt{Networking} class is required to synchronize movements and the grids.\\
 
-In previous releases of 2048, we would give a handle to the RemoteInputHandler
-object to the Networking class. This way, however, attaches RemoteInputHandler
-entirely to Networking.\\
+In previous releases of 2048, we would give a handle to the
+\texttt{RemoteInputHandler} object to the \texttt{Networking} class. This way,
+however, attaches \texttt{RemoteInputHandler} entirely to \texttt{Networking}.\\
 
-To circumvent this in our new version, the RemoteInputHandler registers itself
-to Networking as an Observer so that the Observable (Networking) can notify the
-RemoteInputHandler whenever it needs to be updated.
+To circumvent this in our new version, the \texttt{RemoteInputHandler}
+registers itself to \texttt{Networking} as an \texttt{Observer} so that the
+\texttt{Observable} (the \texttt{Networking} class) can notify the
+\texttt{RemoteInputHandler} whenever it needs to be updated.
 
 \subsubsection{The implementation}
-The RemoteInputHandler class simply gets a singleton instance of the Networking
-class:
+The \texttt{RemoteInputHandler} class simply gets a singleton instance of the
+\texttt{Networking} class:
 \begin{verbatim}
 private static Networking networking = Networking.getInstance();
 \end{verbatim}
-Then, in its constructor, it calls the addObserver method on the networking
-object and registers itself as a observer:
+Then, in its constructor, it calls the \texttt{addObserver} method on the
+\texttt{Networking} object and it registers itself as a observer:
 \begin{verbatim}
 networking.addObserver(this);
 \end{verbatim}
-The Networking class can now send objects to the RemoteInputHandler without
-being fully attached to eachother. Whenever Networking needs to send an object
-to RemoteInputHandler it can simply set a flag to a changed state, using:
+The \texttt{Networking} class can now send objects to the
+\texttt{RemoteInputHandler} without them being fully attached to eachother.
+Whenever \texttt{Networking} needs to send an object to
+\texttt{RemoteInputHandler} it can simply set a flag to a changed state, using:
 \begin{verbatim}
 setChanged();
 \end{verbatim}
@@ -305,9 +307,9 @@ and then simply notify all observers that were registered in the past:
 \begin{verbatim}
 notifyObservers(response);
 \end{verbatim}
-The benefits of this design are that Networking can communicate with other
+The benefits of this design are that \texttt{Networking} can communicate with other
 objects while not being fully attached to them and newly added objects can
-easily register to the list of observers, allowing the application to be
+easily be registered to the list of observers, allowing the application to be
 maintained and extended in an easier way.
 
 \newpage\subsubsection{The class- and sequence diagram}
@@ -318,10 +320,10 @@ maintained and extended in an easier way.
 \centerline{\includegraphics[scale=1.0]{sources/ObserverSequence}}
 
 \newpage\section{Exercise 3 - One more design pattern}
-We use a Screen hierarchy to define some of the GUI aspects that we use in the
-game. The parent, Screen, has a draw-method among others that are extended
+We use a \texttt{Screen} hierarchy to define some of the GUI aspects that we use in the
+game. The parent, \texttt{Screen}, has a draw method among others that are extended
 to the child classes. These child classes would use one of two implementations
-of the draw-method: the implementation that was extended from the parent, or
+of the draw method: the implementation that was extended from the parent, or
 override into a different implementation. Because of this, the classes that
 override the existing method would have duplicate code.\\
 
@@ -331,18 +333,18 @@ This has been done by encapsulating the different implementations in a family
 of algorithms. Every class can now add one of the objects to use an implementation
 dynamically (even in runtime), instead of implementing it by themselves. As
 the program grows and a new set of screens with a different implementation
-of the draw method is added, we can simply add a new class to the family where
+of the draw method is added, we can simply add a new class to the family
 in which define the implementation, without forcing any changes in the existing
 classes.
 
 \subsubsection{The implementation}
 The pattern has been implemented by moving the existing implementations of the
-draw method into separated classes that implement the DrawBehavior interface.
+draw method into separated classes that implement the \texttt{DrawBehavior} interface.
 This interface contains a draw method that the implementing classes override
-with their own implementation. By adding a DrawBehavior local variable to the
-Screen class and a method to assign a new DrawBehavior object to it, a
-DrawBehavior object can be assigned to every screen object to determine its
-draw-implementation.
+with their own implementation. By adding a local variable to the
+\texttt{Screen} class and a method to assign a new \texttt{DrawBehavior} object to it, a
+\texttt{DrawBehavior} object can be assigned to every screen object to determine its
+draw implementation.
 
 \newpage\subsubsection{The class- and sequence diagram}
 \textbf{The class diagram:}\\

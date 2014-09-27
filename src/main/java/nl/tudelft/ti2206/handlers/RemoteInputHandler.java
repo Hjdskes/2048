@@ -162,4 +162,9 @@ public class RemoteInputHandler implements Observer {
 					+ str + ", closing tag is at position " + closing);
 		}
 	}
+	
+	/** Used to insert a Mock for Logger. */
+	public void setLogger(Logger loggerMock) {
+		logger = loggerMock;
+	}
 }
