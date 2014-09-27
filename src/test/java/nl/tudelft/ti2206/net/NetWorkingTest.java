@@ -79,10 +79,10 @@ public class NetWorkingTest {
 
 	@Test
 	public void testGetRemoteAddress() {
-		when(socket.getRemoteAddress()).thenReturn("/192.168.1.1:2526");
+		when(socket.getRemoteAddress()).thenReturn("/192.168.1.1:2048");
 		networking.setSocket(socket);
 		String res = networking.getRemoteAddress();
-		assertEquals("192.168.1.1:2526", res);
+		assertEquals("192.168.1.1:2048", res);
 	}
 
 	@Test
