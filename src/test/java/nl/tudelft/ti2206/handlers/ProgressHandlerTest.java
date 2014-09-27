@@ -79,7 +79,6 @@ public class ProgressHandlerTest {
 	@Test
 	public void testSaveGame() {
 		int score = 200;
-		int highestTile = 2048;
 		grid.setScore(score);
 
 		progressHandler.saveGame(grid);
