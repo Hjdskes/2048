@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>175</x>
+      <y>25</y>
+      <w>300</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::HostScreen
+--
++LETS_PLAY = "Let's play!": String
++CONNECTION_WAITING = "Waiting for connection...": String
++CONNECTION_ESTABLISHED = "Connection established!": String
++OPPONENT_DESTINY = " Your opponent's destiny\r\nlies beyond one of these:": String
+-table: Table
+-label: Label
+-remote: Label
+-addresses: Label
+-portLabel: Label
+-cancel: MenuButton
+-assetHandler = AssetHandler.getInstance(): AssetHandler
+-networking = Networking.getInstance(): Networking
+-errorMessages = new ArrayList&lt;String&gt;(): List&lt;String&gt;
+-rand = new Random(): Random
+-errorMessage = "What have you done!?": String
+--
++HostScreen(): ctor
++HostScreen(Stage stage, Table table, Label label, Label portLabel, MenuButton cancel): ctor
++create(): void
++update(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>0</y>
+      <w>375</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::MultiGameScreen
+--
+-localGrid: Grid
+-remoteGrid: Grid
+-localScores: ScoreDisplay
+-remoteScores: ScoreDisplay
+-you: Label
+-opponent: Label
+-localGroup: Group
+-remoteGroup: Group
+-assetHandler = AssetHandler.getInstance(): AssetHandler
+-networking = Networking.getInstance(): Networking
+-logger = Logger.getInstance(): Logger
+-className = this.getClass().getSimpleName(): String
+-screenHandler = ScreenHandler.getInstance(): ScreenHandler
+-remoteInput: RemoteInputHandler
+--
++MultiGameScreen(): ctor
++MultiGameScreen(Stage stage, Grid grid, Label label, Group group, ScoreDisplay scores, Networking netMock): ctor
++create(): void
++update(): void
++dispose(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>865</x>
+      <y>20</y>
+      <w>350</w>
+      <h>145</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::ClientScreen
+--
++OPPONENT_HOSTADDR = "  Enter your opponent's\r\nhostname or IP address: ": String
++HOST_INVALID = "Invalid host!": String
+-MAX_LENGTH = 20: int
+-label: Label
+-textField: TextField
+-menu: MenuButton
+-play: TextButton
+-assetHandler = AssetHandler.getInstance(): AssetHandler
+-networking = Networking.getInstance(): Networking
+--
++ClientScreen(): ctor
++ClientScreen(Stage stage, Label label, TextField field, MenuButton menuButton, TextButton playButton): ctor
++create(): void
+-addPlayButtonListener(): void
++update(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>615</x>
+      <y>250</y>
+      <w>190</w>
+      <h>145</h>
+    </coordinates>
+    <panel_attributes>/nl.tudelft.ti2206.screens::Screen/
+--
+-logger = Logger.getInstance(): Logger
+-className = this.getClass().getSimpleName(): String
+#stage: Stage
+#drawbehavior: DrawBehavior
+--
++create(): void
++draw(): void
++setDrawBehavior(DrawBehavior newDrawBehavior): void
++isOverlay(): boolean
++pause(): void
++resize(int width, int height): void
++resume(): void
++update(): void
++dispose(): void
++getStage(): Stage
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>175</x>
+      <y>230</y>
+      <w>275</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::GameScreen
+--
+-grid: Grid
+-scores: ScoreDisplay
+-restartButton: RestartButton
+-progressHandler = ProgressHandler.getInstance(): ProgressHandler
+-screenHandler = ScreenHandler.getInstance(): ScreenHandler
+--
++GameScreen(): ctor
++GameScreen(Stage stage, Grid grid, RestartButton button, ScoreDisplay scores): ctor
++create(): void
++update(): void
++dispose(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>905</x>
+      <y>175</y>
+      <w>245</w>
+      <h>115</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::MenuScreen
+--
+-table: Table
+-label: Label
+-singlePlayer: TextButton
+-hostGame: TextButton
+-connect: TextButton
+-assetHandler = AssetHandler.getInstance(): AssetHandler
+-screenHandler = ScreenHandler.getInstance(): ScreenHandler
+--
++MenuScreen(): ctor
++MenuScreen(Stage stage, Table table, Label label, TextButton button): ctor
++create(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>135</x>
+      <y>370</y>
+      <w>340</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::WinScreen
+--
+-image: Image
+-continueButton: ContinueButton
+-restartButton: RestartButton
+--
++WinScreen(): ctor
++WinScreen(Stage stage, Image image, RestartButton restartButton, ContinueButton continueButton): ctor
++create(): void
++isOverlay(): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>875</x>
+      <y>380</y>
+      <w>265</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::ConnectionLostScreen
+--
+-image: Image
+-menuButton: MenuButton
+--
++ConnectionLostScreen(): ctor
++ConnectionLostScreen(Stage stage, Image image, MenuButton menuButton): ctor
++create(): void
++isOverlay(): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>875</x>
+      <y>470</y>
+      <w>240</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::LoseScreen
+--
+-image: Image
+-restartButton: RestartButton
+--
++LoseScreen(): ctor
++LoseScreen(Stage stage, Image image, RestartButton restartButton): ctor
++create(): void
++isOverlay(): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>215</x>
+      <y>470</y>
+      <w>250</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::MultiLoseScreen
+--
+-image: Image
+-menuButton: MenuButton
+--
++MultiLoseScreen(): ctor
++MultiLoseScreen(Stage stage, Image image, MenuButton menuButton): ctor
++create(): void
++isOverlay(): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>300</y>
+      <w>245</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::MultiWinScreen
+--
+-image: Image
+-menuButton: MenuButton
+--
++MultiWinScreen(): ctor
++MultiWinScreen(Stage stage, Image image, MenuButton menuButton): ctor
++create(): void
++isOverlay(): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>190</y>
+      <w>15</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>470</x>
+      <y>210</y>
+      <w>155</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>290.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>445</x>
+      <y>250</y>
+      <w>180</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>340.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>470</x>
+      <y>315</y>
+      <w>155</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>290.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>390</y>
+      <w>185</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>350.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>795</x>
+      <y>390</y>
+      <w>90</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>375</y>
+      <w>85</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>315</y>
+      <w>110</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>255</y>
+      <w>115</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;80.0;210.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>160</y>
+      <w>105</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;200.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>440</y>
+      <w>135</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+nl.tudelft.ti2206.screens::DrawBehavior
+--
+/+draw()/
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>695</x>
+      <y>515</y>
+      <w>150</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::SimpleDraw
+--
+-stage: Stage
+--
++SimpleDraw(Stage)
++draw(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>515</y>
+      <w>150</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.screens::SimpleDraw
+--
+-stage: Stage
+--
++SimpleDraw(Stage)
++draw(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>600</x>
+      <y>475</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>710</x>
+      <y>475</y>
+      <w>70</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>695</x>
+      <y>390</y>
+      <w>25</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+   0..1</panel_attributes>
+    <additional_attributes>30.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

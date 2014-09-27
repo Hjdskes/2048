@@ -26,9 +26,8 @@ public class Launcher {
 	 * 
 	 * @param args
 	 *            The command line arguments. These are case-insensitive.
-	 *            Supported arguments are:
-	 *            Set the log level: none, info, error, debug, all.
-	 *            Log to a file: file.
+	 *            Supported arguments are: Set the log level: none, info, error,
+	 *            debug, all. Log to a file: file.
 	 */
 	public static void main(String[] args) {
 		/* Default log level. */
@@ -47,7 +46,7 @@ public class Launcher {
 				logLevel = LogLevel.NONE;
 			}
 		}
-		
+
 		logger.setLevel(logLevel);
 		logger.info("Launcher", "Set log level to: " + logLevel);
 
@@ -84,7 +83,7 @@ public class Launcher {
 		 * different icon.
 		 */
 		if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
-			config.addIcon("resources/images/icons/2048_mac.png",
+			config.addIcon("src/main/resources/images/icons/2048_mac.png",
 					FileType.Internal);
 		} else {
 			config.addIcon("resources/images/icons/2048_linux_windows.png",

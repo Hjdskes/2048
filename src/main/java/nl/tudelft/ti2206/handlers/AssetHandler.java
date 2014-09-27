@@ -52,23 +52,23 @@ public class AssetHandler {
 		 * Queue all of these items for loading, order does not really matter I
 		 * think, since we wait for everything to be done anyway.
 		 */
-		manager.load("resources/fonts/fonts.atlas", TextureAtlas.class);
-		manager.load("resources/images/icons/icons.atlas",
+		manager.load("src/main/resources/fonts/fonts.atlas", TextureAtlas.class);
+		manager.load("src/main/resources/images/icons/icons.atlas",
 				TextureAtlas.class);
-		manager.load("resources/images/tiles/tiles.atlas",
+		manager.load("src/main/resources/images/tiles/tiles.atlas",
 				TextureAtlas.class);
-		manager.load("resources/images/scoretiles/scoretiles.atlas",
+		manager.load("src/main/resources/images/scoretiles/scoretiles.atlas",
 				TextureAtlas.class);
-		manager.load("resources/images/cursor.png", Texture.class);
-		manager.load("resources/images/button.png", Texture.class);
-		manager.load("resources/images/grid.png", Texture.class);
-		manager.load("resources/images/lostoverlay.png", Texture.class);
-		manager.load("resources/images/wonoverlay.png", Texture.class);
-		manager.load("resources/images/multilostoverlay.png",
+		manager.load("src/main/resources/images/cursor.png", Texture.class);
+		manager.load("src/main/resources/images/button.png", Texture.class);
+		manager.load("src/main/resources/images/grid.png", Texture.class);
+		manager.load("src/main/resources/images/lostoverlay.png", Texture.class);
+		manager.load("src/main/resources/images/wonoverlay.png", Texture.class);
+		manager.load("src/main/resources/images/multilostoverlay.png",
 				Texture.class);
-		manager.load("resources/images/multiwonoverlay.png",
+		manager.load("src/main/resources/images/multiwonoverlay.png",
 				Texture.class);
-		manager.load("resources/images/connectionlostoverlay.png",
+		manager.load("src/main/resources/images/connectionlostoverlay.png",
 				Texture.class);
 
 		/*
@@ -86,38 +86,38 @@ public class AssetHandler {
 	 */
 	private void setupSkin() {
 		TextureAtlas fonts = manager.get(
-				"resources/fonts/fonts.atlas", TextureAtlas.class);
+				"src/main/resources/fonts/fonts.atlas", TextureAtlas.class);
 		TextureAtlas icons = manager.get(
-				"resources/images/icons/icons.atlas",
+				"src/main/resources/images/icons/icons.atlas",
 				TextureAtlas.class);
 		TextureAtlas tiles = manager.get(
-				"resources/images/tiles/tiles.atlas",
+				"src/main/resources/images/tiles/tiles.atlas",
 				TextureAtlas.class);
 		TextureAtlas scoretiles = manager.get(
-				"resources/images/scoretiles/scoretiles.atlas",
+				"src/main/resources/images/scoretiles/scoretiles.atlas",
 				TextureAtlas.class);
 
 		skin.addRegions(fonts);
 		skin.addRegions(icons);
 		skin.addRegions(tiles);
 		skin.addRegions(scoretiles);
-		skin.add("cursor", manager.get("resources/images/cursor.png",
+		skin.add("cursor", manager.get("src/main/resources/images/cursor.png",
 				Texture.class));
-		skin.add("button", manager.get("resources/images/button.png",
+		skin.add("button", manager.get("src/main/resources/images/button.png",
 				Texture.class));
-		skin.add("grid", manager.get("resources/images/grid.png",
+		skin.add("grid", manager.get("src/main/resources/images/grid.png",
 				Texture.class));
 		skin.add("lostoverlay", manager.get(
-				"resources/images/lostoverlay.png", Texture.class));
+				"src/main/resources/images/lostoverlay.png", Texture.class));
 		skin.add("wonoverlay", manager.get(
-				"resources/images/wonoverlay.png", Texture.class));
+				"src/main/resources/images/wonoverlay.png", Texture.class));
 		skin.add("multilostoverlay", manager
-				.get("resources/images/multilostoverlay.png",
+				.get("src/main/resources/images/multilostoverlay.png",
 						Texture.class));
 		skin.add("multiwonoverlay", manager.get(
-				"resources/images/multiwonoverlay.png", Texture.class));
+				"src/main/resources/images/multiwonoverlay.png", Texture.class));
 		skin.add("connectionlostoverlay", manager.get(
-				"resources/images/connectionlostoverlay.png",
+				"src/main/resources/images/connectionlostoverlay.png",
 				Texture.class));
 	}
 
