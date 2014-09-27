@@ -86,6 +86,7 @@ public class HostScreen extends Screen {
 		
 		int index = rand.nextInt(errorMessages.size());
 		errorMessage = errorMessages.get(index);
+		this.setDrawBehavior( new DrawBeige(stage));
 
 	}
 
@@ -99,6 +100,7 @@ public class HostScreen extends Screen {
 		this.label = label;
 		this.cancel = cancel;
 		this.portLabel = portLabel;
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	@Override

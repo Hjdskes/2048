@@ -21,6 +21,7 @@ public class MultiLoseScreen extends Screen {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "multilostoverlay");
 		menuButton = new MenuButton();
+		this.setDrawBehavior( new SimpleDraw(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -28,6 +29,7 @@ public class MultiLoseScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.menuButton = menuButton;
+		this.setDrawBehavior( new SimpleDraw(stage));
 	}
 
 	@Override
@@ -35,11 +37,6 @@ public class MultiLoseScreen extends Screen {
 		super.create();
 		stage.addActor(image);
 		stage.addActor(menuButton);
-	}
-
-	@Override
-	public void draw() {
-		stage.draw();
 	}
 
 	@Override

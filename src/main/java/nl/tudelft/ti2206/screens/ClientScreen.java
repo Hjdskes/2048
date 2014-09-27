@@ -56,6 +56,7 @@ public class ClientScreen extends Screen {
 		textField = new TextField(addresses.get(0), assetHandler.getSkin());
 		menu = new MenuButton();
 		play = new TextButton("Play!", assetHandler.getSkin());
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -66,6 +67,7 @@ public class ClientScreen extends Screen {
 		this.textField = field;
 		this.menu = menuButton;
 		this.play = playButton;
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	@Override

@@ -36,6 +36,7 @@ public class GameScreen extends Screen {
 		grid = progressHandler.loadGame();
 		restartButton = new RestartButton();
 		scores = new ScoreDisplay(grid);
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	/** Constructor to insert Mock objects. For testing only. */
@@ -45,6 +46,7 @@ public class GameScreen extends Screen {
 		this.grid = grid;
 		this.restartButton = button;
 		this.scores = scores;
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	@Override

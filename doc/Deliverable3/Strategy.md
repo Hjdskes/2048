@@ -2,7 +2,7 @@
 
 ## Why the Strategy Design Pattern?
 
-We use a Screen hierarchy to define some GUI aspects that we use in the game. The parent, Screen, has a draw-method among others that are extended
+We use a Screen hierarchy to define some of the GUI aspects that we use in the game. The parent, Screen, has a draw-method among others that are extended
 to the child classes. These child classes would use one of the two implementations of draw-method: the implementation that was extended from the parent or
 override into a different implementation. Because of this, the classes that override the existing method would have duplicate code.
 By applying the Strategy design pattern to our existing hierarchy we can not only reduce duplicate code but also prepare our program to further changes.
