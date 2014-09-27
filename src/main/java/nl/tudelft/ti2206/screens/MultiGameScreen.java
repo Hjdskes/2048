@@ -90,7 +90,7 @@ public class MultiGameScreen extends Screen {
 
 	/** Constructor for testing purposes only */
 	public MultiGameScreen(Stage stage, Grid grid, Label label, Group group,
-			ScoreDisplay scores) {
+			ScoreDisplay scores, Networking netMock) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.remoteGrid = grid;
@@ -100,6 +100,7 @@ public class MultiGameScreen extends Screen {
 		this.remoteGroup = group;
 		this.localScores = scores;
 		this.remoteScores = scores;
+		networking = netMock;
 	}
 
 	@Override

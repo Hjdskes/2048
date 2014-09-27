@@ -52,7 +52,7 @@ public class GameScreenTest {
 	private ScoreDisplay scores;
 	@Mock
 	private RestartButton button;
-
+	
 	private GameScreen screen;
 
 	/** Sets up all mock objects and the object under test */
@@ -70,18 +70,18 @@ public class GameScreenTest {
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-
+		
 		when(stage.getViewport()).thenReturn(viewPort);
 	}
 
 	/**
 	 * Tests if the stage is disposed on screen.dispose().
 	 */
-//	@Test
-//	public void testDispose() {
-//		screen.dispose();
-//		verify(stage).dispose();
-//	}
+	@Test
+	public void testDispose() {
+		screen.dispose();
+		verify(stage).dispose();
+	}
 
 	/**
 	 * Tests if all required methods are called on screen.show().
@@ -106,13 +106,4 @@ public class GameScreenTest {
 		verify(gl).glClear(anyInt());
 		verify(stage).draw();
 	}
-
-//	/**
-//	 * Tests if all required methods are called on screen.update().
-//	 */
-//	@Test
-//	public void testUpdate() {
-//		screen.update();
-//		verify(stage).act();
-//	}
 }

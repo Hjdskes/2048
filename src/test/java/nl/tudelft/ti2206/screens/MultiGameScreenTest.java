@@ -8,10 +8,14 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Observer;
+
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.net.Networking;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +50,10 @@ public class MultiGameScreenTest {
 	private Texture texture;
 	@Mock
 	private Input input;
-
+	@Mock
+	private Networking networking;
+	
+	
 	private MultiGameScreen screen;
 
 	/** Sets up all mock objects and the object under test */
@@ -57,12 +64,14 @@ public class MultiGameScreenTest {
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 
-		screen = new MultiGameScreen(stage, grid, label, group, scores);
+		screen = new MultiGameScreen(stage, grid, label, group, scores, networking);
 
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 		doNothing().when(group).addActor(any(Actor.class));
 
+		doNothing().when(networking).deleteObserver(any(Observer.class));
+		
 		when(label.getPrefWidth()).thenReturn(0f);
 	}
 
@@ -82,12 +91,9 @@ public class MultiGameScreenTest {
 		verify(stage, times(2)).addActor(group);
 	}
 
-//	/**
-//	 * Tests if all required methods are called on screen.update().
-//	 */
-//	@Test
-//	public void testUpdateLocalWin() {
-//		screen.update();
-//		verify(stage).act();
-//	}
+	@Test
+	public void testDispose() {
+		screen.dispose();
+		verify(networking).deleteObserver(any(Observer.class));
+	}
 }
