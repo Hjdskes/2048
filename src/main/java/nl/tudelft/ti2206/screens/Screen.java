@@ -23,6 +23,7 @@ public abstract class Screen implements Disposable {
 	/** The scene graph. */
 	protected Stage stage;
 	
+	/**	The DrawBehavior variable to determine the draw implementation */
 	protected DrawBehavior drawbehavior;
 
 	/**
@@ -34,7 +35,7 @@ public abstract class Screen implements Disposable {
 	}
 
 	/**
-	 * Draws the screen.
+	 * Draws the screen with the help of the DrawBehavior implementations.
 	 */
 	public void draw() {
 		drawbehavior.draw();
