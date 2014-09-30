@@ -5,10 +5,8 @@ import nl.tudelft.ti2206.log.Logger;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 public class SlidingTile extends Actor {
 
@@ -22,36 +20,36 @@ public class SlidingTile extends Actor {
 
 	private MoveToAction move;
 	private TextureRegion tile;
+	private float destX, destY;
+	private float startX, startY;
 
 	public SlidingTile(Tile start) {
 		this.setVisible(false);
+		startX = start.getX();
+		startY = start.getY();
+		setStartCoordinates();
 	}
 
-	private void setCoordinates(Tile start) {
-		setX(start.getX());
-		setY(start.getX());
+	private void setStartCoordinates() {
+		setX(startX);
+		setY(startY);
 	}
 
 	public void move(Tile start, float destX, float destY) {
+		// reset to clear any move still in progress
+		this.reset();
+		
 		setValue(start.getValue());
-		setCoordinates(start);
 		this.setVisible(true);
+		this.destX = destX;
+		this.destY = destY;
 		
 		move = new MoveToAction();
-		move.setDuration(.3f);
+		move.setDuration(.15f);
 		move.setPosition(destX, destY);
-		
-		Action action = new Action() {
-			@Override
-			public boolean act(float delta) {
-				reset();
-				return true;
-			}
-		};
-		
-		this.addAction(new SequenceAction(move, action));
-		
-		logger.debug("SlidingTile", "Moving to (" + destX + ", " + destY + ")");
+	
+		this.addAction(move);
+		logger.debug("SlidingTile", "Moving from (" + getX() + ", " + getY() + ") to (" + destX + ", " + destY + ")");
 	}
 
 	/** Sets the tile according to the value provided. */
@@ -61,6 +59,18 @@ public class SlidingTile extends Actor {
 
 	public void reset() {
 		this.setVisible(false);
+		this.setStartCoordinates();
+		move = null;
+		destX = 0;
+		destY = 0;
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		if (getX() == destX && getY() == destY) {
+			reset();
+		}
 	}
 
 	@Override

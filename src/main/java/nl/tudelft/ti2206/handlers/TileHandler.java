@@ -107,7 +107,7 @@ public class TileHandler {
 						collidee.setMerged(true);
 					}
 
-					slidingTiles[iterator.getIndex()].move(collider,
+					slidingTiles[collider.getIndex()].move(collider,
 							collidee.getX(), collidee.getY());
 
 					collider.reset();
@@ -117,7 +117,7 @@ public class TileHandler {
 					collidee.setMerged(true);
 					collidee.merge();
 
-					slidingTiles[iterator.getIndex()].move(collider,
+					slidingTiles[collider.getIndex()].move(collider,
 							collidee.getX(), collidee.getY());
 
 					collider.reset();
