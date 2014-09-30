@@ -84,6 +84,9 @@ public class Grid extends Actor {
 	/** The array containing all sixteen tiles. */
 	private Tile[] tiles;
 
+	/** The array containing all sixteen tiles for sliding animations. */
+	private SlidingTile[] slidingTiles;
+
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
 
@@ -113,12 +116,15 @@ public class Grid extends Actor {
 				.get("grid", Texture.class));
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
+		this.slidingTiles = new SlidingTile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles);
-
+		this.tileHandler = new TileHandler(tiles, slidingTiles);
+		
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
+			slidingTiles[i] = new SlidingTile(tiles[i]);
 		}
+		
 		if (!isEmpty) {
 			initGrid();
 		}
@@ -135,12 +141,15 @@ public class Grid extends Actor {
 		this.region = texture;
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
+		this.slidingTiles = new SlidingTile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles);
+		this.tileHandler = new TileHandler(tiles, slidingTiles);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
+			slidingTiles[i] = new SlidingTile(tiles[i]);
 		}
+		
 		if (!isEmpty) {
 			initGrid();
 		}
@@ -492,6 +501,12 @@ public class Grid extends Actor {
 		while (iterator.hasNext()) {
 			iterator.next().draw(batch, parentAlpha);
 		}
+		
+		//FIXME: use iterator for slidingtiles
+		for (SlidingTile tile : slidingTiles) {
+			tile.draw(batch, parentAlpha);
+		}
+		
 		iterator.reset();
 	}
 

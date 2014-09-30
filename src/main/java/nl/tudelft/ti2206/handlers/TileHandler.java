@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.handlers;
 
 import java.util.Arrays;
 
+import nl.tudelft.ti2206.gameobjects.SlidingTile;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.gameobjects.TileIterator;
 
@@ -15,6 +16,9 @@ public class TileHandler {
 	/** The array holding all the tiles. */
 	private Tile[] tiles;
 
+	/** The array holding all the sliding tiles (for movement animation). */
+	private SlidingTile[] slidingTiles;
+
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
 
@@ -27,8 +31,9 @@ public class TileHandler {
 	 * @param tiles
 	 *            The array holding the tiles.
 	 */
-	public TileHandler(Tile[] tiles) {
+	public TileHandler(Tile[] tiles, SlidingTile[] slidingTiles) {
 		this.tiles = tiles;
+		this.slidingTiles = slidingTiles;
 		scoreIncrement = 0;
 	}
 
@@ -102,6 +107,8 @@ public class TileHandler {
 						collidee.setMerged(true);
 					}
 					collider.reset();
+					slidingTiles[iterator.getIndex()].move(collider.getValue(),
+							collidee.getX(), collidee.getY());
 					isMoveMade = true;
 				} else if (collider.getValue() == collidee.getValue()) {
 					collidee.doubleValue();
@@ -109,6 +116,8 @@ public class TileHandler {
 					collidee.merge();
 					collider.reset();
 					scoreIncrement += collidee.getValue();
+					slidingTiles[iterator.getIndex()].move(collider.getValue(),
+							collidee.getX(), collidee.getY());
 					isMoveMade = true;
 				}
 			}
@@ -118,7 +127,8 @@ public class TileHandler {
 
 	/**
 	 * Rotates the grid. Taken from:
-	 * https://github.com/bulenkov/2048/blob/master/src/com/bulenkov/game2048/Game2048.java#L184
+	 * https://github.com/bulenkov/2048/blob/master
+	 * /src/com/bulenkov/game2048/Game2048.java#L184
 	 * 
 	 * @param angle
 	 *            The angle by which to rotate.
