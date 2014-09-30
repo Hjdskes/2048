@@ -5,8 +5,10 @@ import nl.tudelft.ti2206.log.Logger;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 public class SlidingTile extends Actor {
 
@@ -22,28 +24,33 @@ public class SlidingTile extends Actor {
 	private TextureRegion tile;
 
 	public SlidingTile(Tile start) {
-		setValue(0);
-		setAction();
-		setCoordinates(start);
 		this.setVisible(false);
-	}
-
-	private void setAction() {
-		move = new MoveToAction();
-		move.setDuration(.3f);
-		this.addAction(move);
 	}
 
 	private void setCoordinates(Tile start) {
 		setX(start.getX());
-		setY(start.getY());
+		setY(start.getX());
 	}
 
-	public void move(int value, float destX, float destY) {
-		setValue(value);
+	public void move(Tile start, float destX, float destY) {
+		setValue(start.getValue());
+		setCoordinates(start);
 		this.setVisible(true);
+		
+		move = new MoveToAction();
+		move.setDuration(.3f);
 		move.setPosition(destX, destY);
-
+		
+		Action action = new Action() {
+			@Override
+			public boolean act(float delta) {
+				reset();
+				return true;
+			}
+		};
+		
+		this.addAction(new SequenceAction(move, action));
+		
 		logger.debug("SlidingTile", "Moving to (" + destX + ", " + destY + ")");
 	}
 
@@ -51,8 +58,8 @@ public class SlidingTile extends Actor {
 	private void setValue(int value) {
 		tile = AssetHandler.getInstance().getSkin().getRegion("tile" + value);
 	}
-	
-	public void restart() {
+
+	public void reset() {
 		this.setVisible(false);
 	}
 

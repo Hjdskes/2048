@@ -220,6 +220,10 @@ public class Grid extends Actor {
 			iterator.next().act(delta);
 		}
 		iterator.reset();
+		
+		for (SlidingTile tile : slidingTiles) {
+			tile.act(delta);
+		}
 
 		updateHighestTile();
 		if (score > highScore) {
@@ -236,6 +240,11 @@ public class Grid extends Actor {
 
 		score = 0;
 			
+		// FIXME: use iterator for sliding tiles
+		for (SlidingTile tile : slidingTiles) {
+			tile.reset();
+		}
+		
 		while (iterator.hasNext()) {
 			iterator.next().reset();
 		}

@@ -106,18 +106,22 @@ public class TileHandler {
 					if (collider.isMerged()) {
 						collidee.setMerged(true);
 					}
-					collider.reset();
-					slidingTiles[iterator.getIndex()].move(collider.getValue(),
+
+					slidingTiles[iterator.getIndex()].move(collider,
 							collidee.getX(), collidee.getY());
+
+					collider.reset();
 					isMoveMade = true;
 				} else if (collider.getValue() == collidee.getValue()) {
 					collidee.doubleValue();
 					collidee.setMerged(true);
 					collidee.merge();
+
+					slidingTiles[iterator.getIndex()].move(collider,
+							collidee.getX(), collidee.getY());
+
 					collider.reset();
 					scoreIncrement += collidee.getValue();
-					slidingTiles[iterator.getIndex()].move(collider.getValue(),
-							collidee.getX(), collidee.getY());
 					isMoveMade = true;
 				}
 			}
