@@ -1,6 +1,13 @@
 package nl.tudelft.ti2206.handlers;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TreeMap;
+
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Solver;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
@@ -25,6 +32,8 @@ public class InputHandler extends InputListener {
 
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
+	
+	Timer solver = null;
 
 	/**
 	 * Creates a new InputHandler instance.
@@ -60,6 +69,17 @@ public class InputHandler extends InputListener {
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
 			return true;
+			
+		case Keys.S:
+			
+			if (solver == null) {
+				logger.debug(className, "Solving this grid! At least, trying to...");
+				solver = Solver.autoSolve(grid, 200, 1);
+			}
+			else {
+				solver.cancel();
+				logger.debug(className, "Autosolver stopped.");
+			}
 		}
 		return false;
 	}

@@ -272,7 +272,10 @@ public class Grid extends Actor {
 	 * @param direction
 	 *            The direction in which is to be moved.
 	 */
-	public void move(Direction direction) {
+	public int move(Direction direction) {
+		
+		int newScore = score;
+		
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -293,7 +296,7 @@ public class Grid extends Actor {
 		if (tileHandler.isMoveMade()) {
 			logger.info(objectName, "Move " + direction + " succesfully made.");
 
-			int newScore = score + tileHandler.getScoreIncrement();
+			newScore = score + tileHandler.getScoreIncrement();
 			setScore(newScore);
 			logger.info(objectName, "Score value set to " + newScore + ".");
 
@@ -306,9 +309,12 @@ public class Grid extends Actor {
 					+ " (value = " + value + ").");
 		} else {
 			logger.debug(objectName, "Move " + direction + " ignored.");
+			return -1;
 		}
 
 		tileHandler.reset();
+		
+		return newScore;
 	}
 
 	/**
@@ -530,5 +536,16 @@ public class Grid extends Actor {
 
 		res = res.substring(0, res.length() - 1);
 		return res;
+	}
+	
+	@Override
+	public Grid clone() {
+		Grid newGrid = new Grid(true);
+		
+		for (int i = 0; i < tiles.length; i++) {
+			newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
+			newGrid.slidingTiles[i] = new SlidingTile(newGrid.tiles[i]);
+		}
+		return newGrid;
 	}
 }
