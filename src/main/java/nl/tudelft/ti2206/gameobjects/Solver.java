@@ -10,6 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 
@@ -19,7 +20,11 @@ public class Solver extends TimerTask {
 
 	private Grid original;
 
-	private int moves;
+	private static int succesfulMoves = 0;
+
+	// private int moves;
+	//
+	// private Timer timer;
 
 	private static void print(String str) {
 		System.out.println("[AUTSOLVE]: " + str);
@@ -29,12 +34,28 @@ public class Solver extends TimerTask {
 		this.original = grid;
 	}
 
-	public void setMoves(int moves) {
-		this.moves = moves;
-	}
+	// public void setMoves(int moves) {
+	// this.moves = moves;
+	// }
+	//
+	// public int getMoves() {
+	// return moves;
+	// }
+	//
+	// public static boolean leftColFull(Grid grid) {
+	// Tile[] tiles = grid.getTiles();
+	// for (int index = 0; index < 16; index += 4)
+	// if (tiles[index].isEmpty())
+	// return false;
+	// return true;
+	// }
 
-	public int getMoves() {
-		return moves;
+	public static boolean lowerRowFull(Grid grid) {
+		Tile[] tiles = grid.getTiles();
+		for (int index = 12; index < 16; index += 1)
+			if (tiles[index].isEmpty())
+				return false;
+		return true;
 	}
 
 	public static int tryMoves(Grid ogrid) {
@@ -43,82 +64,94 @@ public class Solver extends TimerTask {
 
 		for (Direction direction : Grid.Direction.values()) {
 
-			if (direction == Direction.UP)
+			// ignore up direction
+			if (direction == Direction.UP)// && !leftColFull(ogrid))
 				continue;
-			
+
+			// ignore right direction if lower row is not full
+			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
+				continue;
+
 			Grid grid = ogrid.clone();
 			grid.move(direction);
 
+			// get highest score possible
 			highest = Math.max(highest, grid.getScore());
 		}
 		return highest;
 	}
 
-	public static Map<String, Object> bestMove(Grid ogrid) {
-		Map<String, Object> result = new HashMap<>();
+	public static Direction selectDirectionComplex(Grid ogrid) {
 
 		int score = ogrid.getScore();
-		Direction bestDirection = null;
+		Direction selected = null;
 
 		for (Direction direction : Grid.Direction.values()) {
 
-			if (direction == Direction.UP || direction == Direction.RIGHT)
-				continue;
-			
 			Grid grid = ogrid.clone();
-			
+
+			if (direction == Direction.UP)// && !leftColFull(ogrid))
+				continue;
+
+			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
+				continue;
+
+			// if move actually is possible
 			if (grid.move(direction) != -1) {
 
 				int pointsAfter = grid.getScore() + tryMoves(grid.clone());
-				
+
 				if (pointsAfter > score) {
 					score = pointsAfter;
-					bestDirection = direction;
+					selected = direction;
 				}
-
-			//	System.out.println("Our best move is " + direction
-			//			+ " giving us " + score);
 			}
 		}
-		result.put("score", score);
-		result.put("direction", bestDirection);
 
-		return result;
+		return selected;
 	}
 
-	public static void bruteForce(Grid grid, int maxMoves) {
+	public static Direction selectDirectionSimple(Grid grid) {
+		Direction direction = Direction.LEFT;
 
-		int moves = 0;
+		if (grid.clone().move(Direction.LEFT) != -1)
+			direction = Direction.LEFT;
+		else if (grid.clone().move(Direction.DOWN) != -1)
+			direction = Direction.DOWN;
+		else if (grid.clone().move(Direction.RIGHT) != -1)
+			direction = Direction.RIGHT;
+		else
+			// if all else fails, move up :/
+			direction = Direction.UP;
 
-		while (moves++ < maxMoves) {
-			Map<String, Object> newResult = bestMove(grid.clone());
+		return direction;
+	}
 
-			// int newScore = ((Number) newResult.get("score")).intValue();
-			Direction direction = ((Direction) newResult.get("direction"));
-			
-			if (direction == null) {
-				print("smart selection failed! using 'dumb' movement selection");
-				if (grid.clone().move(Direction.LEFT) != -1)
-					direction = Direction.LEFT;
-				else if (grid.clone().move(Direction.DOWN) != -1)
-					direction = Direction.DOWN;
-				else if (grid.clone().move(Direction.RIGHT) != -1)
-					direction = Direction.RIGHT;
-				else
-					direction = Direction.UP;
-			}
-			print("making selected move: " + direction);
-			grid.move(direction);
+	public static void autoMove(Grid grid) {
+
+		Direction direction = selectDirectionComplex(grid.clone());
+
+		if (direction == null) {
+
+			print("smart direction selection failed! using 'dumb' movement selection");
+			direction = selectDirectionSimple(grid.clone());
 		}
+		print("making selected move: " + direction);
+		if (grid.move(direction) != -1)
+			succesfulMoves += 1;
+		if (direction == Direction.UP) {
+			if (grid.move(Direction.DOWN) != -1)
+				succesfulMoves += 1;
+		}
+
 	}
 
-	public static Timer autoSolve(Grid grid, int delay, int moves) {
-		print("Trying to solve grid automatically, making " + moves
-				+ " move every " + delay + "ms...");
+	public static Timer autoSolve(Grid grid, int delay) {
+		print("Trying to solve grid automatically, making one move every "
+				+ delay + "ms...");
 
 		Solver solver = new Solver();
 		solver.setGrid(grid);
-		solver.setMoves(moves);
 
 		Timer timer = new Timer();
 		timer.schedule(solver, 0, delay);
@@ -128,7 +161,13 @@ public class Solver extends TimerTask {
 
 	@Override
 	public void run() {
-		bruteForce(original, getMoves());
+
+		if (original.getPossibleMoves() == 0) {
+			print("succesful moves made: " + succesfulMoves);
+			print("Grid's full! Did I lose? :(");
+			this.cancel();
+		} else
+			autoMove(original);
 	}
 
 }
