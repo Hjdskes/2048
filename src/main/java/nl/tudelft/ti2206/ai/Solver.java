@@ -1,7 +1,7 @@
 /**
  * 
  */
-package nl.tudelft.ti2206.gameobjects;
+package nl.tudelft.ti2206.ai;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +11,8 @@ import java.util.TimerTask;
 import java.util.TreeMap;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
+import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 

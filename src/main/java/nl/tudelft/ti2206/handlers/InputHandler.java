@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TreeMap;
 
+import nl.tudelft.ti2206.ai.Solver;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Solver;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
