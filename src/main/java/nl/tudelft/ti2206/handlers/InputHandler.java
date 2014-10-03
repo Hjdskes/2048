@@ -78,6 +78,7 @@ public class InputHandler extends InputListener {
 			}
 			else {
 				solver.cancel();
+				solver = null;
 				logger.debug(className, "Autosolver stopped.");
 			}
 		}
