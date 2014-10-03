@@ -1,7 +1,11 @@
 package nl.tudelft.ti2206.screens;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
@@ -29,8 +32,6 @@ public class MenuScreenTest {
 	private BitmapFont font;
 	@Mock
 	private Stage stage;
-	@Mock
-	private Table table;
 	@Mock
 	private Cell<Label> labelCell;
 	@Mock
@@ -51,7 +52,7 @@ public class MenuScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new MenuScreen(stage, table, label, button);
+		screen = new MenuScreen(stage, label, button);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
@@ -66,9 +67,6 @@ public class MenuScreenTest {
 		when(buttonCell.padTop(anyInt())).thenReturn(buttonCell);
 		when(buttonCell.padBottom(anyInt())).thenReturn(buttonCell);
 		when(buttonCell.row()).thenReturn(buttonCell);
-
-		when(table.getCell(label)).thenReturn(labelCell);
-		when(table.getCell(button)).thenReturn(buttonCell);
 	}
 
 	@Test
@@ -82,18 +80,9 @@ public class MenuScreenTest {
 		screen.create();
 		verify(input).setInputProcessor(stage);
 
-		verify(table).add(label);
-		verify(labelCell).padBottom(anyInt());
-		verify(labelCell).row();
-
-		verify(table, times(3)).add(button);
-		verify(buttonCell, times(3)).padBottom(anyInt());
-		verify(buttonCell, times(3)).row();
-
-		verify(table).setFillParent(true);
-
-		verify(stage).addActor(table);
-
+		verify(button, times(3)).setWidth(anyInt());
+		verify(button, times(3)).setX(anyInt());
+		verify(button, times(3)).setY(anyInt());
 		verify(button, times(3)).addListener(any(EventListener.class));
 	}
 }

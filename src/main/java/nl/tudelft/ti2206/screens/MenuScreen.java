@@ -17,9 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * singleplayer, hosting a game or connecting to another player.
  */
 public class MenuScreen extends Screen {
-	/** The table used for positioning all Actors. */
-	private Table table;
-
 	/** The main label. */
 	private Label label;
 
@@ -45,41 +42,46 @@ public class MenuScreen extends Screen {
 		Gdx.graphics.setDisplayMode(TwentyFourtyGame.GAME_WIDTH,
 				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
-		table = new Table();
 		label = new Label("Choose your destiny!", assetHandler.getSkin());
 		singlePlayer = new TextButton("Singleplayer", assetHandler.getSkin());
 		hostGame = new TextButton("Host a game", assetHandler.getSkin());
 		connect = new TextButton("Join a game", assetHandler.getSkin());
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
-	/** Constuctor for testing purposes only. */
-	public MenuScreen(Stage stage, Table table, Label label, TextButton button) {
+	/** Constructor for testing purposes only. */
+	public MenuScreen(Stage stage, Label label, TextButton button) {
 		this.stage = stage;
-		this.table = table;
 		this.label = label;
 		this.singlePlayer = button;
 		this.hostGame = button;
 		this.connect = button;
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override
 	public void create() {
 		super.create();
 
-		table.add(label);
-		table.getCell(label).padBottom(60).row();
-		table.add(singlePlayer);
-		table.getCell(singlePlayer).padBottom(60).row();
-		table.add(connect);
-		table.getCell(connect).padBottom(20).row();
-		table.add(hostGame);
-		table.getCell(hostGame).padBottom(20).row();
+		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getWidth() / 2);
+		label.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + label.getHeight() + 6 * TwentyFourtyGame.GAP);
 
-		table.setFillParent(true);
-		
-		stage.addActor(table);
+		singlePlayer.setWidth(200);
+		singlePlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2 - singlePlayer.getWidth() / 2);
+		singlePlayer.setY(label.getY() - label.getHeight() - 6 * TwentyFourtyGame.GAP);
+
+		hostGame.setWidth(200);
+		hostGame.setX(TwentyFourtyGame.GAME_WIDTH / 2 - hostGame.getWidth() / 2);
+		hostGame.setY(singlePlayer.getY() - singlePlayer.getHeight() - 2 * TwentyFourtyGame.GAP);
+
+		connect.setWidth(200);
+		connect.setX(TwentyFourtyGame.GAME_WIDTH / 2 - connect.getWidth() / 2);
+		connect.setY(hostGame.getY() - hostGame.getHeight() - 2 * TwentyFourtyGame.GAP);
+
+		stage.addActor(label);
+		stage.addActor(singlePlayer);
+		stage.addActor(hostGame);
+		stage.addActor(connect);
 
 		singlePlayer.addListener(new ClickListener() {
 			@Override
