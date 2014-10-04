@@ -8,6 +8,7 @@ import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.buttons.UndoButton;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -22,7 +23,10 @@ public class GameScreen extends Screen {
 	private ScoreDisplay scores;
 
 	/** The button to restart the current game. */
-	private RestartButton restartButton;
+	private RestartButton restartButton;	
+	
+	/** The button to undo the last move. */
+	private UndoButton undoButton;
 
 	/** The singleton reference to the ProgressHandler class. */
 	private ProgressHandler progressHandler = ProgressHandler.getInstance();
@@ -35,16 +39,18 @@ public class GameScreen extends Screen {
 		stage = new Stage();
 		grid = progressHandler.loadGame();
 		restartButton = new RestartButton();
+		undoButton = new UndoButton();
 		scores = new ScoreDisplay(grid);
 		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	/** Constructor to insert Mock objects. For testing only. */
-	public GameScreen(Stage stage, Grid grid, RestartButton button,
-			ScoreDisplay scores) {
+	public GameScreen(Stage stage, Grid grid, RestartButton restartbutton, 
+			UndoButton undobutton, ScoreDisplay scores) {
 		this.stage = stage;
 		this.grid = grid;
-		this.restartButton = button;
+		this.restartButton = restartbutton;
+		this.undoButton = undobutton;
 		this.scores = scores;
 		this.setDrawBehavior( new DrawBeige(stage));
 	}
@@ -58,6 +64,7 @@ public class GameScreen extends Screen {
 		grid.setName("Grid");
 		stage.addActor(grid);
 		stage.addActor(restartButton);
+		stage.addActor(undoButton);
 		stage.addActor(scores);		
 	}
 
