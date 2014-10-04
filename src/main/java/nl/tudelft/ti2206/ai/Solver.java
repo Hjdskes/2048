@@ -24,6 +24,8 @@ public class Solver extends TimerTask {
 
 	private static int succesfulMoves = 0;
 
+	private static boolean locked;
+
 	// private int moves;
 	//
 	// private Timer timer;
@@ -129,7 +131,22 @@ public class Solver extends TimerTask {
 		return direction;
 	}
 
+	public static boolean maxLowerLeft(Grid grid) {
+		return grid.getTiles()[12].getValue() == grid.getCurrentHighestTile();
+	}
+
 	public static void autoMove(Grid grid) {
+		if (!lowerRowFull(grid)) {
+		if (grid.move(Direction.LEFT) != -1)
+			succesfulMoves += 1;
+		}
+		
+		if (!maxLowerLeft(grid) && grid.getCurrentHighestTile()  <= 64) {
+			
+			if (grid.move(Direction.DOWN) != -1)
+				succesfulMoves += 1;
+
+		}
 
 		Direction direction = selectDirectionComplex(grid.clone());
 
@@ -137,14 +154,11 @@ public class Solver extends TimerTask {
 
 			print("smart direction selection failed! using 'dumb' movement selection");
 			direction = selectDirectionSimple(grid.clone());
+
 		}
 		print("making selected move: " + direction);
 		if (grid.move(direction) != -1)
 			succesfulMoves += 1;
-		if (direction == Direction.UP) {
-			if (grid.move(Direction.DOWN) != -1)
-				succesfulMoves += 1;
-		}
 
 	}
 
