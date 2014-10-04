@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.gameobjects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
@@ -93,9 +92,6 @@ public class Grid extends Actor {
 
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
-	
-	/**	The Stack with all the previous tile combinations */
-	private Stack<String> previousTiles;
 
 	/** The highest tile value present in the Grid. */
 	private int highestTile;
@@ -119,7 +115,6 @@ public class Grid extends Actor {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(tiles);
-		this.previousTiles = new Stack<String>();
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
@@ -142,8 +137,7 @@ public class Grid extends Actor {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(tiles);
-		this.previousTiles = new Stack<String>();
-		
+
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
 		}
@@ -207,20 +201,6 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * Undo the last move made in the game.
-	 * 
-	 * Undo only works with moves made in the current session.
-	 */
-	public void undo(){
-		if(!previousTiles.isEmpty()){
-			String[] temp = previousTiles.pop().split(",");
-			for(int i = 0; i < temp.length; i++) {
-				this.setTile(i, Integer.parseInt(temp[i]));
-			}
-		}
-	}
-	
-	/**
 	 * Updates the grid, by updating all the Tiles it contains and checking for
 	 * a new highest value.
 	 */
@@ -275,9 +255,6 @@ public class Grid extends Actor {
 	 *            The direction in which is to be moved.
 	 */
 	public void move(Direction direction) {
-		//save the current grid before the move is made.
-		previousTiles.push(this.toString());
-		
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();

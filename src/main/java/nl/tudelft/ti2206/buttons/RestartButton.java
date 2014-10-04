@@ -22,7 +22,7 @@ public class RestartButton extends TextButton {
 	/** Constructs a new RestartButton. */
 	public RestartButton() {
 		super("Restart", AssetHandler.getInstance().getSkin());
-		this.setX(TwentyFourtyGame.GAME_WIDTH / 3 - this.getPrefWidth() / 2);
+		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);
 		this.setY(TwentyFourtyGame.GAP);
 
 		this.addListener(new ClickListener() {

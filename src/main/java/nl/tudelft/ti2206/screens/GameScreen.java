@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.buttons.UndoButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -24,9 +23,6 @@ public class GameScreen extends Screen {
 
 	/** The button to restart the current game. */
 	private RestartButton restartButton;
-	
-	/** The button to undo the last move. */
-	private UndoButton undobutton;
 
 	/** The singleton reference to the ProgressHandler class. */
 	private ProgressHandler progressHandler = ProgressHandler.getInstance();
@@ -39,18 +35,16 @@ public class GameScreen extends Screen {
 		stage = new Stage();
 		grid = progressHandler.loadGame();
 		restartButton = new RestartButton();
-		undobutton = new UndoButton();
 		scores = new ScoreDisplay(grid);
 		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	/** Constructor to insert Mock objects. For testing only. */
-	public GameScreen(Stage stage, Grid grid, RestartButton restartbutton, 
-			UndoButton undobutton, ScoreDisplay scores) {
+	public GameScreen(Stage stage, Grid grid, RestartButton button,
+			ScoreDisplay scores) {
 		this.stage = stage;
 		this.grid = grid;
-		this.restartButton = restartbutton;
-		this.undobutton = undobutton;
+		this.restartButton = button;
 		this.scores = scores;
 		this.setDrawBehavior( new DrawBeige(stage));
 	}
@@ -64,7 +58,6 @@ public class GameScreen extends Screen {
 		grid.setName("Grid");
 		stage.addActor(grid);
 		stage.addActor(restartButton);
-		stage.addActor(undobutton);
 		stage.addActor(scores);		
 	}
 
