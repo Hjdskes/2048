@@ -4,6 +4,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.solver.Solver;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,6 +20,9 @@ public class InputHandler extends InputListener {
 	 * it.
 	 */
 	private Grid grid;
+
+	/** The solver to automatically solve this game. */
+	private Solver solver;
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
@@ -59,6 +63,14 @@ public class InputHandler extends InputListener {
 			logger.debug(className, "User pressed key: ESCAPE");
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
+			return true;
+		case Keys.S:
+			if (solver == null) {
+				solver = new Solver(grid, 600);
+			} else {
+				solver.cancel();
+				solver = null;
+			}
 			return true;
 		}
 		return false;

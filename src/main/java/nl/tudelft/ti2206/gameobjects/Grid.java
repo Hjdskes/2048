@@ -253,8 +253,11 @@ public class Grid extends Actor {
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
+	 * @return The increment in score of this move.
 	 */
-	public void move(Direction direction) {
+	public int move(Direction direction) {
+		int increment = 0;
+
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -275,7 +278,8 @@ public class Grid extends Actor {
 		if (tileHandler.isMoveMade()) {
 			logger.info(objectName, "Move " + direction + " succesfully made.");
 
-			int newScore = score + tileHandler.getScoreIncrement();
+			increment = tileHandler.getScoreIncrement();
+			int newScore = score + increment;
 			setScore(newScore);
 			logger.info(objectName, "Score value set to " + newScore + ".");
 
@@ -291,6 +295,7 @@ public class Grid extends Actor {
 		}
 
 		tileHandler.reset();
+		return increment;
 	}
 
 	/**
