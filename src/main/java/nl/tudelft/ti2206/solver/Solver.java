@@ -41,7 +41,6 @@ public class Solver extends TimerTask {
 		double increment, empty, monotonicity, max;
 
 		for (Direction dir : Direction.values()) {
-			System.out.println("\n\n----------\n" + dir);
 			clone = cloneGrid();
 			increment = clone.move(dir);
 			if (increment < 0) {
@@ -50,18 +49,12 @@ public class Solver extends TimerTask {
 			empty = getEmptyTiles(clone);
 			max = clone.getCurrentHighestTile() / Math.log(2);
 			monotonicity = getMonotonicity(clone);
-			value = (int) (EMPTY * empty
-					+ SCORE * increment
-					+ MAX * max
-					+ MONO * monotonicity);
+			value = (int) (EMPTY * empty + SCORE * increment + MAX * max + MONO * monotonicity);
 			if (value > bestValue) {
 				bestValue = value;
 				move = dir;
 			}
-			System.out.println("Move " + move + " with increment " + increment);
-			System.out.println("----------\n\n");
 		}
-		System.out.println("Selected " + move + " with best value " + bestValue);
 		original.move(move);
 	}
 
@@ -165,7 +158,7 @@ public class Solver extends TimerTask {
 	 * @return The 2log of the amount of empty tiles.
 	 */
 	private double getEmptyTiles(Grid grid) {
-		double res = -1;
+		double res = 0;
 		TileIterator iterator = new TileIterator(grid.getTiles());
 		while (iterator.hasNext()) {
 			if (iterator.next().isEmpty()) {
@@ -173,7 +166,7 @@ public class Solver extends TimerTask {
 			}
 		}
 		iterator.reset();
-		return Math.log(res);
+		return (res == 0 ? res : Math.log(res));
 	}
 
 	// private Integer minimax(Node root, int depth) {
@@ -207,8 +200,6 @@ public class Solver extends TimerTask {
 			res.setTile(iterator.getIndex(), iterator.next().getValue());
 		}
 		iterator.reset();
-		System.out.println("Original: " + original.toString());
-		System.out.println("Clone   : " + res.toString());
 		return res;
 	}
 
