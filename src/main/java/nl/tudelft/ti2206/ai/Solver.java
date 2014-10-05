@@ -175,7 +175,7 @@ public class Solver extends TimerTask {
 	}
 
 	public static Timer autoSolve(Grid grid, int delay, int maxruns) {
-		print("Trying to solve grid automatically, making one move every "
+		print("Trying to solve grid automatically " + maxruns + " times, making one move every "
 				+ delay + "ms...");
 
 		Solver solver = new Solver();
