@@ -171,14 +171,14 @@ public class Solver extends TimerTask {
 	}
 
 	public static void autoMove(Grid grid) {
-
+		
 		if (Solver.getStrategy() == Solver.Strategy.RANDOM) {
 			Direction direction = Grid.Direction.values()[(int) (Math.random()
 					* Grid.Direction.values().length)];
 			makeMove(grid, direction);
 		}
 		else {
-
+			
 			Direction direction = selectMove(grid);
 			// make the selected move
 			makeMove(grid, direction);
@@ -234,7 +234,7 @@ public class Solver extends TimerTask {
 					+ original.getCurrentHighestTile()
 					+ ". Succesful moves made: " + succesfulMoves);
 			print(runs + ": Game WON (" + wins + " out of " + runs
-					+ " games were won).");
+					+ " games were won = " + (wins * 100.0f) / runs + "%)");
 			printGrid(original);
 
 			original.restart();
@@ -252,7 +252,7 @@ public class Solver extends TimerTask {
 					+ original.getCurrentHighestTile()
 					+ ". Succesful moves made: " + succesfulMoves);
 			print(runs + ": Game LOST (" + wins + " out of " + runs
-					+ " games were won)");
+					+ " games were won = " + (wins * 100.0f) / runs + "%)");
 			printGrid(original);
 
 			original.restart();
@@ -267,15 +267,17 @@ public class Solver extends TimerTask {
 			long endTime = System.currentTimeMillis();
 			long seconds = (endTime - initTime) / 1000;
 			
-			print("");
+			print("---------------------------------------------------");
 			print("Benchmark complete!");
 			print("Maximum amount of runs reached: " + maxruns);
-			print("");
+			print("---------------------------------------------------");
 			print("Final statistics: ");
 			print("Games run: " + runs);
 			print("Games won: " + wins + " (" + (runs - wins) + " lost)");
+			print("Accuracy: " + (wins * 100.0f) / runs + "%");
 			print("Total time elapsed: " + seconds + " seconds");
 			print("Average time per game: " + (seconds/runs) + " seconds");
+			print("---------------------------------------------------");
 			
 			this.cancel();
 		}
