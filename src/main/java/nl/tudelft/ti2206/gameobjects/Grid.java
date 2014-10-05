@@ -253,10 +253,10 @@ public class Grid extends Actor {
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
-	 * @return The increment in score of this move.
+	 * @return The increment in score of this move, or -1 if no move was made.
 	 */
 	public int move(Direction direction) {
-		int increment = 0;
+		int increment = -1;
 
 		switch (direction) {
 		case LEFT:
