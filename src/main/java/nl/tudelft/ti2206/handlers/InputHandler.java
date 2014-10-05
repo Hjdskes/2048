@@ -1,10 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
-import java.util.TreeMap;
 
 import nl.tudelft.ti2206.ai.Solver;
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -74,7 +70,7 @@ public class InputHandler extends InputListener {
 			
 			if (solver == null) {
 				logger.debug(className, "Solving this grid! At least, trying to...");
-				solver = Solver.autoSolve(grid, 200);
+				solver = Solver.autoSolve(grid, 100);
 			}
 			else {
 				solver.cancel();

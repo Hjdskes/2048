@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
@@ -20,7 +19,7 @@ public class Solver extends TimerTask {
 	private int runs = 0;
 	private static int succesfulMoves = 0;
 	private static boolean wasRightMove = false;
-
+	
 	private static void print(String str) {
 		System.out.println("[AUTSOLVE]: " + str);
 	}
@@ -179,32 +178,19 @@ public class Solver extends TimerTask {
 
 	@Override
 	public void run() {
-
-		if (original.getCurrentHighestTile() >= 2048) {
-			wins += 1;
-			runs += 1;
-			
-			print(runs + ": Game ended. Succesful moves made: " + succesfulMoves);
-			print(runs + ": Game WON (" + wins + " out of " + runs + " games were won)");
-			
-			print(runs + ": Resetting grid...");
-			original.restart();
-			
-			succesfulMoves = 0;
-		}
-		else if (original.getPossibleMoves() == 0) {
-			runs += 1;
-			
-			print(runs + ": Game ended. Succesful moves made: " + succesfulMoves);
-			print(runs + ": Game LOST (" + wins + " out of " + runs + " games were won)");
-			
-			print(runs + ": Resetting grid...");
-			original.restart();
-			
-			succesfulMoves = 0;
+		if (TwentyFourtyGame.isLost()) {
+			runs++;
+			print("succesful moves made: " + succesfulMoves);
+			print("Grid's full! Did I lose? :(");
+			this.cancel();
+		}else if (TwentyFourtyGame.isWon()) {
+			wins++;
+			runs++;
+			print("succesful moves made: " + succesfulMoves);
+			print("WHAT DID I DO? You won. \nI CAN'T HEAR YOU! YOU WON :D\nWon: " + wins + " out of " + runs);
+			this.cancel();
 		} else {
 			autoMove(original);
 		}
 	}
-
 }
