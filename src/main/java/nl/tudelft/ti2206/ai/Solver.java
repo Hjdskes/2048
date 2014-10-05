@@ -3,32 +3,18 @@
  */
 package nl.tudelft.ti2206.ai;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.TreeMap;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.gameobjects.Tile;
 
 public class Solver extends TimerTask {
 
-	private static Logger logger = Logger.getInstance();
-
 	private Grid original;
-
 	private static int succesfulMoves = 0;
-
-	private static boolean locked;
-
-	// private int moves;
-	//
-	// private Timer timer;
+	private static boolean wasRightMove = false;
 
 	private static void print(String str) {
 		System.out.println("[AUTSOLVE]: " + str);
@@ -38,28 +24,22 @@ public class Solver extends TimerTask {
 		this.original = grid;
 	}
 
-	// public void setMoves(int moves) {
-	// this.moves = moves;
-	// }
-	//
-	// public int getMoves() {
-	// return moves;
-	// }
-	//
-	// public static boolean leftColFull(Grid grid) {
-	// Tile[] tiles = grid.getTiles();
-	// for (int index = 0; index < 16; index += 4)
-	// if (tiles[index].isEmpty())
-	// return false;
-	// return true;
-	// }
-
 	public static boolean lowerRowFull(Grid grid) {
 		Tile[] tiles = grid.getTiles();
 		for (int index = 12; index < 16; index += 1)
 			if (tiles[index].isEmpty())
 				return false;
-		return true;
+		return !isMergePossibleLowerRow(tiles);
+	}
+
+	public static boolean isMergePossibleLowerRow(Tile[] tiles) {
+		for (int i = tiles.length - 4; i < tiles.length - 1; i++) {
+			if (!tiles[i].isEmpty()
+					&& tiles[i].getValue() == tiles[i + 1].getValue()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static int tryMoves(Grid ogrid) {
@@ -90,8 +70,17 @@ public class Solver extends TimerTask {
 		int score = ogrid.getScore();
 		Direction selected = null;
 
+		if (wasRightMove) {
+			wasRightMove = false;
+			if (!lowerRowFull(ogrid))
+				return Direction.LEFT;
+		}
+		
+		if (!maxLowerLeft(ogrid) && ogrid.getTiles()[12].isEmpty()) {
+			return Direction.LEFT;
+		}
+		
 		for (Direction direction : Grid.Direction.values()) {
-
 			Grid grid = ogrid.clone();
 
 			if (direction == Direction.UP)// && !leftColFull(ogrid))
@@ -112,21 +101,26 @@ public class Solver extends TimerTask {
 			}
 		}
 
+		if (selected == Direction.RIGHT)
+			wasRightMove = true;
+
 		return selected;
 	}
 
 	public static Direction selectDirectionSimple(Grid grid) {
 		Direction direction = Direction.LEFT;
 
-		if (grid.clone().move(Direction.LEFT) != -1)
+		if (grid.clone().move(Direction.LEFT) != -1) {
 			direction = Direction.LEFT;
-		else if (grid.clone().move(Direction.DOWN) != -1)
+		} else if (grid.clone().move(Direction.DOWN) != -1) {
 			direction = Direction.DOWN;
-		else if (grid.clone().move(Direction.RIGHT) != -1)
+		} else if (grid.clone().move(Direction.RIGHT) != -1) {
 			direction = Direction.RIGHT;
-		else
+			wasRightMove = true;
+		} else {
 			// if all else fails, move up :/
 			direction = Direction.UP;
+		}
 
 		return direction;
 	}
@@ -139,14 +133,13 @@ public class Solver extends TimerTask {
 		if (grid.move(direction) != -1) {
 			print("selected move succesfully performed: " + direction);
 			succesfulMoves += 1;
-		}
-		else
+		} else
 			print("selected move succesfully failed: " + direction);
 	}
-	
+
 	public static Direction selectMove(Grid grid) {
 		Direction direction = Direction.LEFT;
-		
+
 		direction = selectDirectionComplex(grid.clone());
 
 		if (direction == null) {
@@ -159,14 +152,8 @@ public class Solver extends TimerTask {
 	}
 
 	public static void autoMove(Grid grid) {
-		
+
 		Direction direction = selectMove(grid);
-		
-//		if (!maxLowerLeft(grid) && !lowerRowFull(grid)) {
-//			makeMove(grid, Direction.LEFT);
-//			makeMove(grid, Direction.DOWN);
-//		}
-//		
 		// make the selected move
 		makeMove(grid, direction);
 	}
