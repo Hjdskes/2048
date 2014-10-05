@@ -42,7 +42,7 @@ public class Solver extends TimerTask {
 			empty = getEmptyTiles(clone);
 			monotonicity = getMonotonicity(clone);
 			max = (int) (clone.getCurrentHighestTile() / Math.log(2));
-			value = increment < 0 ? 0 : ((int) (EMPTY * empty
+			value = increment == 0 ? 0 : ((int) (EMPTY * empty
 					+ SCORE * increment + MAX * max + MONO * monotonicity));
 			if (value > bestValue) {
 				bestValue = value;
