@@ -6,13 +6,18 @@ package nl.tudelft.ti2206.ai;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
 
 public class Solver extends TimerTask {
+	
 
 	private Grid original;
+	private int wins = 0;
+	private int runs = 0;
 	private static int succesfulMoves = 0;
 	private static boolean wasRightMove = false;
 
@@ -131,10 +136,11 @@ public class Solver extends TimerTask {
 
 	public static void makeMove(Grid grid, Direction direction) {
 		if (grid.move(direction) != -1) {
-			print("selected move succesfully performed: " + direction);
+	//		print("selected move succesfully performed: " + direction);
 			succesfulMoves += 1;
-		} else
-			print("selected move succesfully failed: " + direction);
+		} 
+//		else
+//			print("selected move failed: " + direction);
 	}
 
 	public static Direction selectMove(Grid grid) {
@@ -144,7 +150,7 @@ public class Solver extends TimerTask {
 
 		if (direction == null) {
 
-			print("smart direction selection failed! using 'dumb' movement selection");
+		//	print("smart direction selection failed! using 'dumb' movement selection");
 			direction = selectDirectionSimple(grid.clone());
 
 		}
@@ -167,19 +173,38 @@ public class Solver extends TimerTask {
 
 		Timer timer = new Timer();
 		timer.schedule(solver, 0, delay);
-
+		
 		return timer;
 	}
 
 	@Override
 	public void run() {
 
-		if (original.getPossibleMoves() == 0) {
-			print("succesful moves made: " + succesfulMoves);
-			print("Grid's full! Did I lose? :(");
-			this.cancel();
-		} else
+		if (original.getCurrentHighestTile() >= 2048) {
+			wins += 1;
+			runs += 1;
+			
+			print(runs + ": Game ended. Succesful moves made: " + succesfulMoves);
+			print(runs + ": Game WON (" + wins + " out of " + runs + " games were won)");
+			
+			print(runs + ": Resetting grid...");
+			original.restart();
+			
+			succesfulMoves = 0;
+		}
+		else if (original.getPossibleMoves() == 0) {
+			runs += 1;
+			
+			print(runs + ": Game ended. Succesful moves made: " + succesfulMoves);
+			print(runs + ": Game LOST (" + wins + " out of " + runs + " games were won)");
+			
+			print(runs + ": Resetting grid...");
+			original.restart();
+			
+			succesfulMoves = 0;
+		} else {
 			autoMove(original);
+		}
 	}
 
 }
