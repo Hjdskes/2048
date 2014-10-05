@@ -145,7 +145,9 @@ public class Solver extends TimerTask {
 	}
 	
 	public static Direction selectMove(Grid grid) {
-		Direction direction = selectDirectionComplex(grid.clone());
+		Direction direction = Direction.LEFT;
+		
+		direction = selectDirectionComplex(grid.clone());
 
 		if (direction == null) {
 
@@ -160,6 +162,11 @@ public class Solver extends TimerTask {
 		
 		Direction direction = selectMove(grid);
 		
+//		if (!maxLowerLeft(grid) && !lowerRowFull(grid)) {
+//			makeMove(grid, Direction.LEFT);
+//			makeMove(grid, Direction.DOWN);
+//		}
+//		
 		// make the selected move
 		makeMove(grid, direction);
 	}
