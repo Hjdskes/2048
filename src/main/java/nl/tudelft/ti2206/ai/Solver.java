@@ -184,7 +184,7 @@ public class Solver extends TimerTask {
 			wins += 1;
 			runs += 1;
 			
-			print(runs + ": Game ended. Succesful moves made: " + succesfulMoves);
+			print(runs + ": Game ended. Highest tile = " + original.getCurrentHighestTile() + ". Succesful moves made: " + succesfulMoves);
 			print(runs + ": Game WON (" + wins + " out of " + runs + " games were won)");
 			
 			print(runs + ": Resetting grid...");
@@ -195,7 +195,7 @@ public class Solver extends TimerTask {
 		else if (original.getPossibleMoves() == 0) {
 			runs += 1;
 			
-			print(runs + ": Game ended. Succesful moves made: " + succesfulMoves);
+			print(runs + ": Game ended. Highest tile = " + original.getCurrentHighestTile() + ". Succesful moves made: " + succesfulMoves);
 			print(runs + ": Game LOST (" + wins + " out of " + runs + " games were won)");
 			
 			print(runs + ": Resetting grid...");
