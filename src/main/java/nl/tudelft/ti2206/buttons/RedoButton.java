@@ -13,16 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to undo a move.
+ * A button to Redo a move.
  */
-public class UndoButton extends TextButton {
+public class RedoButton extends TextButton {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
-	/** Constructs a new UndoButton. */
-	public UndoButton() {
-		super("Undo", AssetHandler.getInstance().getSkin());
-		this.setX( (TwentyFourtyGame.GAME_WIDTH / 4)*2 - this.getPrefWidth() / 2);
+	/** Constructs a new RedoButton. */
+	public RedoButton() {
+		super("Redo", AssetHandler.getInstance().getSkin());
+		this.setX((TwentyFourtyGame.GAME_WIDTH / 4)*3 - this.getPrefWidth() / 2);
 		this.setY(TwentyFourtyGame.GAP);
 
 		this.addListener(new ClickListener() {
@@ -33,7 +33,7 @@ public class UndoButton extends TextButton {
 				Group group = stage.getRoot();
 				Grid grid = group.findActor("Grid");
 				screenHandler.removeTop();
-				grid.getMoveUtility().undo();
+				grid.getMoveUtility().redo();
 			}
 		});
 	}

@@ -94,8 +94,8 @@ public class Grid extends Actor {
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
 
-	/**	The Stack with all the previous tile combinations */
-	private Stack<String> previousTiles;
+	/**	The object that is responsible for undoing and redoing moves */
+	private MoveUtility moveUtility;
 	
 	/** The highest tile value present in the Grid. */
 	private int highestTile;
@@ -119,7 +119,7 @@ public class Grid extends Actor {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(tiles);
-		this.previousTiles = new Stack<String>();
+		this.moveUtility = new MoveUtility(this);
 		
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
@@ -142,7 +142,7 @@ public class Grid extends Actor {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(tiles);
-		this.previousTiles = new Stack<String>();
+		this.moveUtility = new MoveUtility(this);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
@@ -206,20 +206,7 @@ public class Grid extends Actor {
 		tiles[index].setValue(value);
 	}
 
-	/**
-	 * Undo the last move made in the game.
-	 * 
-	 * Undo only works with moves made in the current session.
-	 */
-	public void undo(){
-		if(!previousTiles.isEmpty()){
-			String[] temp = previousTiles.pop().split(",");
-			for(int i = 0; i < temp.length; i++) {
-				this.setTile(i, Integer.parseInt(temp[i]));
-			}
-		}
-	}
-	
+
 	/**
 	 * Updates the grid, by updating all the Tiles it contains and checking for
 	 * a new highest value.
@@ -276,7 +263,7 @@ public class Grid extends Actor {
 	 */
 	public void move(Direction direction) {
 		//save the current grid before the move is made.
-		previousTiles.push(this.toString());
+		moveUtility.update();
 	
 		switch (direction) {
 		case LEFT:
@@ -441,6 +428,13 @@ public class Grid extends Actor {
 	 */
 	public TileHandler getTileHandler() {
 		return tileHandler;
+	}
+	
+	/**
+	 * @return The MoveUtility object used by the Grid.
+	 */
+	public MoveUtility getMoveUtility() {
+		return moveUtility;
 	}
 
 	/**
