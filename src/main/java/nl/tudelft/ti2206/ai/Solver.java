@@ -17,6 +17,7 @@ public class Solver extends TimerTask {
 	private Grid original;
 	private int wins = 0;
 	private int runs = 0;
+	private static int maxruns = 20;
 	private static int succesfulMoves = 0;
 	private static boolean wasRightMove = false;
 	
@@ -57,8 +58,8 @@ public class Solver extends TimerTask {
 				continue;
 
 			// ignore right direction if lower row is not full
-			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
-				continue;
+//			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
+//				continue;
 
 			Grid grid = ogrid.clone();
 			grid.move(direction);
@@ -91,8 +92,8 @@ public class Solver extends TimerTask {
 			if (direction == Direction.UP)// && !leftColFull(ogrid))
 				continue;
 
-			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
-				continue;
+//			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
+//				continue;
 
 			// if move actually is possible
 			if (grid.move(direction) != -1) {
@@ -164,7 +165,7 @@ public class Solver extends TimerTask {
 		makeMove(grid, direction);
 	}
 
-	public static Timer autoSolve(Grid grid, int delay) {
+	public static Timer autoSolve(Grid grid, int delay, int maxruns) {
 		print("Trying to solve grid automatically, making one move every "
 				+ delay + "ms...");
 
@@ -173,6 +174,8 @@ public class Solver extends TimerTask {
 
 		Timer timer = new Timer();
 		timer.schedule(solver, 0, delay);
+		
+		Solver.maxruns = maxruns;
 		
 		return timer;
 	}
@@ -217,6 +220,11 @@ public class Solver extends TimerTask {
 			succesfulMoves = 0;
 		} else {
 			autoMove(original);
+		}
+		
+		if (runs >= maxruns) {
+			print("Maximum amount of runs reached: " + maxruns + ", ending timer...");
+			this.cancel();
 		}
 	}
 }

@@ -70,7 +70,7 @@ public class InputHandler extends InputListener {
 			
 			if (solver == null) {
 				logger.debug(className, "Solving this grid! At least, trying to...");
-				solver = Solver.autoSolve(grid, 100);
+				solver = Solver.autoSolve(grid, 100, 15);
 			}
 			else {
 				solver.cancel();
