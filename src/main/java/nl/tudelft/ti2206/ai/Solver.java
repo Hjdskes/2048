@@ -11,21 +11,24 @@ import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
 
 public class Solver extends TimerTask {
-	
+
+	public enum Strategy {
+		HUMAN, RANDOM,
+	}
 
 	private Grid original;
-	
+
 	private long startTime = System.currentTimeMillis();
 
-	
-	
 	private int wins = 0;
 	private int runs = 0;
 	private static int maxruns = 20;
 	private static int succesfulMoves = 0;
-	
+
 	private static boolean wasRightMove = false;
-	
+
+	private static Strategy strategy = Strategy.HUMAN;
+
 	private static void print(String str) {
 		System.out.println("[AUTSOLVE]: " + str);
 	}
@@ -61,7 +64,7 @@ public class Solver extends TimerTask {
 			// never ever move up:
 			if (direction == Direction.UP)// && !leftColFull(ogrid))
 				continue;
-			
+
 			// we shouldn't move to right if the lower row is not full
 			// so ignore moving to the right
 			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
@@ -86,19 +89,18 @@ public class Solver extends TimerTask {
 			if (!lowerRowFull(ogrid))
 				return Direction.LEFT;
 		}
-		
+
 		if (!maxLowerLeft(ogrid) && ogrid.getTiles()[12].isEmpty()) {
 			return Direction.LEFT;
 		}
-		
-		
+
 		for (Direction direction : Grid.Direction.values()) {
 			Grid grid = ogrid.clone();
 
 			// never ever move up:
 			if (direction == Direction.UP)// && !leftColFull(ogrid))
 				continue;
-			
+
 			// we shouldn't move to right if the lower row is not full
 			// so ignore moving to the right
 			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
@@ -146,11 +148,11 @@ public class Solver extends TimerTask {
 
 	public static void makeMove(Grid grid, Direction direction) {
 		if (grid.move(direction) != -1) {
-	//		print("selected move succesfully performed: " + direction);
+			// print("selected move succesfully performed: " + direction);
 			succesfulMoves += 1;
-		} 
-//		else
-//			print("selected move failed: " + direction);
+		}
+		// else
+		// print("selected move failed: " + direction);
 	}
 
 	public static Direction selectMove(Grid grid) {
@@ -160,7 +162,7 @@ public class Solver extends TimerTask {
 
 		if (direction == null) {
 
-		//	print("smart direction selection failed! using 'dumb' movement selection");
+			// print("smart direction selection failed! using 'dumb' movement selection");
 			direction = selectDirectionSimple(grid.clone());
 
 		}
@@ -169,31 +171,44 @@ public class Solver extends TimerTask {
 
 	public static void autoMove(Grid grid) {
 
-		Direction direction = selectMove(grid);
-		// make the selected move
-		makeMove(grid, direction);
+		if (Solver.getStrategy() == Solver.Strategy.RANDOM) {
+			Direction direction = Grid.Direction.values()[(int) (Math.random()
+					* Grid.Direction.values().length)];
+			makeMove(grid, direction);
+		}
+		else {
+
+			Direction direction = selectMove(grid);
+			// make the selected move
+			makeMove(grid, direction);
+		}
 	}
 
-	public static Timer autoSolve(Grid grid, int delay, int maxruns) {
-		print("Trying to solve grid automatically " + maxruns + " times, making one move every "
-				+ delay + "ms...");
+	private static Strategy getStrategy() {
+		return strategy;
+	}
+
+	public static Timer autoSolve(Grid grid, Strategy strategy, int delay, int maxruns) {
+		print("Trying to solve grid automatically " + maxruns
+				+ " times, making one move every " + delay + "ms...");
 
 		Solver solver = new Solver();
 		solver.setGrid(grid);
 
 		Timer timer = new Timer();
 		timer.schedule(solver, 0, delay);
-		
+
 		Solver.maxruns = maxruns;
-		
+		Solver.strategy = strategy;
+
 		return timer;
 	}
-	
+
 	public static void printGrid(Grid grid) {
 		Tile[] tiles = grid.getTiles();
 
 		String line = "Resulting grid: ";
-		
+
 		for (int i = 0; i < tiles.length; i += 1) {
 			line += tiles[i].getValue() + " ";
 		}
@@ -202,43 +217,51 @@ public class Solver extends TimerTask {
 
 	@Override
 	public void run() {
-		
+
 		if (original.getCurrentHighestTile() >= 2048) {
 			wins += 1;
 			runs += 1;
-			
+
 			long endTime = System.currentTimeMillis();
 			long seconds = (endTime - startTime) / 1000;
-			
+
 			print("-- Statistics for game " + runs + " -- WON");
-			print(runs + ": Game ended after " + seconds + " seconds. Highest tile = " + original.getCurrentHighestTile() + ". Succesful moves made: " + succesfulMoves);
-			print(runs + ": Game WON (" + wins + " out of " + runs + " games were won).");
+			print(runs + ": Game ended after " + seconds
+					+ " seconds. Highest tile = "
+					+ original.getCurrentHighestTile()
+					+ ". Succesful moves made: " + succesfulMoves);
+			print(runs + ": Game WON (" + wins + " out of " + runs
+					+ " games were won).");
 			printGrid(original);
-			
+
 			original.restart();
 			succesfulMoves = 0;
 			startTime = System.currentTimeMillis();
-		}
-		else if (original.getPossibleMoves() == 0) {
+		} else if (original.getPossibleMoves() == 0) {
 			runs += 1;
-			
+
 			long endTime = System.currentTimeMillis();
 			long seconds = (endTime - startTime) / 1000;
-			
+
 			print("-- Statistics for game " + runs + " -- LOST");
-			print(runs + ": Game ended after " + seconds + " seconds. Highest tile = " + original.getCurrentHighestTile() + ". Succesful moves made: " + succesfulMoves);
-			print(runs + ": Game LOST (" + wins + " out of " + runs + " games were won)");
+			print(runs + ": Game ended after " + seconds
+					+ " seconds. Highest tile = "
+					+ original.getCurrentHighestTile()
+					+ ". Succesful moves made: " + succesfulMoves);
+			print(runs + ": Game LOST (" + wins + " out of " + runs
+					+ " games were won)");
 			printGrid(original);
-			
+
 			original.restart();
 			succesfulMoves = 0;
 			startTime = System.currentTimeMillis();
 		} else {
 			autoMove(original);
 		}
-		
+
 		if (runs >= maxruns) {
-			print("Maximum amount of runs reached: " + maxruns + ", disabling timer...");
+			print("Maximum amount of runs reached: " + maxruns
+					+ ", disabling timer...");
 			this.cancel();
 		}
 	}

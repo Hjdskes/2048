@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import java.util.Timer;
 
 import nl.tudelft.ti2206.ai.Solver;
+import nl.tudelft.ti2206.ai.Solver.Strategy;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
@@ -70,7 +71,7 @@ public class InputHandler extends InputListener {
 			
 			if (solver == null) {
 				logger.debug(className, "Solving this grid! At least, trying to...");
-				solver = Solver.autoSolve(grid, 100, 30);
+				solver = Solver.autoSolve(grid, Strategy.HUMAN, 100, 30);
 			}
 			else {
 				solver.cancel();
