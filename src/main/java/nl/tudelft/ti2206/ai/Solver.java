@@ -135,18 +135,27 @@ public class Solver extends TimerTask {
 		return grid.getTiles()[12].getValue() == grid.getCurrentHighestTile();
 	}
 
-	public static void autoMove(Grid grid) {
-		if (!lowerRowFull(grid)) {
-		if (grid.move(Direction.LEFT) != -1)
+	public static void makeMove(Grid grid, Direction direction) {
+		if (grid.move(direction) != -1) {
+			print("selected move succesfully performed: " + direction);
 			succesfulMoves += 1;
 		}
+		else
+			print("selected move succesfully failed: " + direction);
+	}
+	
+	public static void selectMove(Grid grid) {
 		
-		if (!maxLowerLeft(grid) && grid.getCurrentHighestTile()  <= 64) {
-			
-			if (grid.move(Direction.DOWN) != -1)
-				succesfulMoves += 1;
+	}
 
-		}
+	public static void autoMove(Grid grid) {
+		
+		if (!lowerRowFull(grid)) 
+			makeMove(grid, Direction.LEFT);
+
+		if (!maxLowerLeft(grid) && grid.getCurrentHighestTile() <= 64) 
+			makeMove(grid, Direction.DOWN);
+
 
 		Direction direction = selectDirectionComplex(grid.clone());
 
@@ -156,10 +165,13 @@ public class Solver extends TimerTask {
 			direction = selectDirectionSimple(grid.clone());
 
 		}
-		print("making selected move: " + direction);
-		if (grid.move(direction) != -1)
-			succesfulMoves += 1;
-
+		
+		// make the selected move
+		makeMove(grid, direction);
+		
+		if (direction == Direction.RIGHT)
+			makeMove(grid, Direction.LEFT);
+		
 	}
 
 	public static Timer autoSolve(Grid grid, int delay) {
