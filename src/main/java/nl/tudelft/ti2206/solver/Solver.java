@@ -17,9 +17,13 @@ public class Solver extends TimerTask {
 	 * These constants are to provide weights in the static evaluation function.
 	 */
 	private static double EMPTY = 2.7;
-	//private static double SCORE = 7.4;
-	private static double MONO = 1.0;
+	private static double SCORE = 2.0;
+	private static double MONO = 2.3;
 	private static double MAX = 1.0;
+//	private static double EMPTY = 2.7;
+//	private static double SCORE = 1.5;
+//	private static double MONO = 3.0;
+//	private static double MAX = 2.7;
 
 	private Grid original;
 	private Timer timer;
@@ -33,71 +37,103 @@ public class Solver extends TimerTask {
 	private void solve() {
 		Grid clone;
 		Direction move = Direction.DOWN;
-		int value, bestValue = Integer.MIN_VALUE;
+		int value = Integer.MIN_VALUE, bestValue = Integer.MIN_VALUE;
 		double increment, empty, monotonicity, max;
 
 		for (Direction dir : Direction.values()) {
+			System.out.println("\n\n----------\n" + dir);
 			clone = cloneGrid();
 			increment = clone.move(dir);
+			if (increment < 0) {
+				continue;
+			}
 			empty = getEmptyTiles(clone);
-			monotonicity = getMonotonicity(clone);
 			max = clone.getCurrentHighestTile() / Math.log(2);
-			value = increment < 0 ? Integer.MIN_VALUE : (int) (EMPTY * empty
-					//+ SCORE * increment
+			monotonicity = getMonotonicity(clone);
+			value = (int) (EMPTY * empty
+					+ SCORE * increment
 					+ MAX * max
 					+ MONO * monotonicity);
 			if (value > bestValue) {
 				bestValue = value;
 				move = dir;
 			}
+			System.out.println("Move " + move + " with increment " + increment);
+			System.out.println("----------\n\n");
 		}
+		System.out.println("Selected " + move + " with best value " + bestValue);
 		original.move(move);
 	}
 
 	private double getMonotonicity(Grid grid) {
 		Tile[] tiles = grid.getTiles();
-		int res = 0;
+		double res = 0;
 
 		res += getMonotonicityHorizontal(tiles);
 		tiles = rotate(tiles, 90);
 		res += getMonotonicityHorizontal(tiles);
-		tiles = rotate(tiles, 270);
 		return res;
 	}
 
 	private double getMonotonicityHorizontal(Tile[] tiles) {
-		TileIterator iterator = null;
-		int[] totals = new int[2];
-		int currentValue, nextValue;
+//		TileIterator iterator = null;
+		double[] totals = new double[2];
+		double currentValue, nextValue;
 
-		/* First check in the horizontal direction: */
-		/* for each row in the Grid... */
-		for (int index = 0; index < tiles.length; index += ROW_LENGTH) {
-			/* ... create an iterator that iterates over that row only... */
-			iterator = new TileIterator(Arrays.copyOfRange(tiles, index, index
-					+ ROW_LENGTH));
-			/* ... and make it do so four times. */
-			Tile current = iterator.next();
-			Tile next = iterator.next();
-			while (iterator.hasNext()) {
-				while (next.isEmpty() && iterator.hasNext()) {
-					next = iterator.next();
+//		/* For each row in the Grid... */
+//		for (int index = 0; index < tiles.length; index += ROW_LENGTH) {
+//			/* ... create an iterator that iterates over that row only... */
+//			iterator = new TileIterator(Arrays.copyOfRange(tiles, index, index
+//					+ ROW_LENGTH));
+//
+//			/* Ask the first two tiles in that row. We know they exist. */
+//			Tile current = iterator.next();
+//			Tile next = iterator.next();
+//			/* Now for the remaining tiles (2)*/
+//			while (iterator.hasNext()) {
+//				/* Skip all the empty tiles. */
+//				while (next.isEmpty() && iterator.hasNext()) {
+//					next = iterator.next();
+//				}
+//				currentValue = current.isEmpty() ? 0 : ((int) Math
+//						.log(current.getValue() / Math.log(2)));
+//				nextValue = next.isEmpty() ? 0 : ((int) Math.log(next
+//						.getValue() / Math.log(2)));
+//				if (currentValue > nextValue) {
+//					totals[0] += nextValue - currentValue;
+//				} else {
+//					totals[1] += currentValue - nextValue;
+//				}
+//				if (iterator.hasNext()) {
+//					current = next;
+//					next = iterator.next();
+//				}
+//			}
+//		}
+
+		for (int y = 0; y < 4; y++) {
+			int current = 0;
+			int next = current + 1;
+			while (next < 4) {
+				while (next < 4 && tiles[next + 4 * y].isEmpty()) {
+					next++;
 				}
-				currentValue = current.isEmpty() ? 0 : ((int) Math
-						.log(current.getValue() / Math.log(2)));
-				nextValue = next.isEmpty() ? 0 : ((int) Math.log(next
-						.getValue() / Math.log(2)));
+				if (next >= 4) {
+					next--;
+				}
+				currentValue = tiles[current + 4 * y].isEmpty() ? 0 : ((int) Math.log(tiles[current + 4 * y].getValue() / Math.log(2)));
+				nextValue = tiles[next + 4 * y].isEmpty() ? 0 : ((int) Math.log(tiles[next + 4 * y].getValue() / Math.log(2)));
+				/* If the current is bigger, the order is decreasing */
 				if (currentValue > nextValue) {
 					totals[0] += nextValue - currentValue;
 				} else {
 					totals[1] += currentValue - nextValue;
 				}
-				if (iterator.hasNext()) {
-					current = next;
-					next = iterator.next();
-				}
+				current = next;
+				next++;
 			}
 		}
+
 		return Math.max(totals[0], totals[1]);
 	}
 
@@ -129,7 +165,7 @@ public class Solver extends TimerTask {
 	 * @return The 2log of the amount of empty tiles.
 	 */
 	private double getEmptyTiles(Grid grid) {
-		int res = 0;
+		double res = -1;
 		TileIterator iterator = new TileIterator(grid.getTiles());
 		while (iterator.hasNext()) {
 			if (iterator.next().isEmpty()) {
@@ -171,6 +207,8 @@ public class Solver extends TimerTask {
 			res.setTile(iterator.getIndex(), iterator.next().getValue());
 		}
 		iterator.reset();
+		System.out.println("Original: " + original.toString());
+		System.out.println("Clone   : " + res.toString());
 		return res;
 	}
 

@@ -295,6 +295,7 @@ public class Grid extends Actor {
 		}
 
 		tileHandler.reset();
+		System.out.println("Increment: " + increment);
 		return increment;
 	}
 
