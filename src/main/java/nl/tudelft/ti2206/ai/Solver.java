@@ -18,6 +18,7 @@ public class Solver extends TimerTask {
 
 	private Grid original;
 
+	private static long initTime = System.currentTimeMillis();
 	private long startTime = System.currentTimeMillis();
 
 	private int wins = 0;
@@ -200,7 +201,9 @@ public class Solver extends TimerTask {
 
 		Solver.maxruns = maxruns;
 		Solver.strategy = strategy;
-
+		
+		initTime = System.currentTimeMillis();
+		
 		return timer;
 	}
 
@@ -260,8 +263,20 @@ public class Solver extends TimerTask {
 		}
 
 		if (runs >= maxruns) {
-			print("Maximum amount of runs reached: " + maxruns
-					+ ", disabling timer...");
+			
+			long endTime = System.currentTimeMillis();
+			long seconds = (endTime - initTime) / 1000;
+			
+			print("");
+			print("Benchmark complete!");
+			print("Maximum amount of runs reached: " + maxruns);
+			print("");
+			print("Final statistics: ");
+			print("Games run: " + runs);
+			print("Games won: " + wins + " (" + (runs - wins) + " lost)");
+			print("Total time elapsed: " + seconds + " seconds");
+			print("Average time per game: " + (seconds/runs) + " seconds");
+			
 			this.cancel();
 		}
 	}
