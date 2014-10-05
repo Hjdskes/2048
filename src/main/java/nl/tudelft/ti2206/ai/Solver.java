@@ -84,6 +84,7 @@ public class Solver extends TimerTask {
 			return Direction.LEFT;
 		}
 		
+		
 		for (Direction direction : Grid.Direction.values()) {
 			Grid grid = ogrid.clone();
 
@@ -175,6 +176,17 @@ public class Solver extends TimerTask {
 		
 		return timer;
 	}
+	
+	public static void printGrid(Grid grid) {
+		Tile[] tiles = grid.getTiles();
+
+		String line = "Resulting grid: ";
+		
+		for (int i = 0; i < tiles.length; i += 1) {
+			line += tiles[i].getValue() + " ";
+		}
+		print(line);
+	}
 
 	@Override
 	public void run() {
@@ -183,23 +195,25 @@ public class Solver extends TimerTask {
 			wins += 1;
 			runs += 1;
 			
+			print("-- Statistics for game " + runs + " -- WON");
 			print(runs + ": Game ended. Highest tile = " + original.getCurrentHighestTile() + ". Succesful moves made: " + succesfulMoves);
-			print(runs + ": Game WON (" + wins + " out of " + runs + " games were won)");
+			print(runs + ": Game WON (" + wins + " out of " + runs + " games were won).");
+			printGrid(original);
+			print(runs + ": Resetting grid and restarting game...\r\n");
 			
-			print(runs + ": Resetting grid...");
 			original.restart();
-			
 			succesfulMoves = 0;
 		}
 		else if (original.getPossibleMoves() == 0) {
 			runs += 1;
 			
+			print("-- Statistics for game " + runs + " -- LOST");
 			print(runs + ": Game ended. Highest tile = " + original.getCurrentHighestTile() + ". Succesful moves made: " + succesfulMoves);
 			print(runs + ": Game LOST (" + wins + " out of " + runs + " games were won)");
+			printGrid(original);
+			print(runs + ": Resetting grid and restarting game...\r\n");
 			
-			print(runs + ": Resetting grid...");
 			original.restart();
-			
 			succesfulMoves = 0;
 		} else {
 			autoMove(original);
