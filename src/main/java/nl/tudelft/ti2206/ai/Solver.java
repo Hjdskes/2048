@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
@@ -20,7 +19,7 @@ public class Solver extends TimerTask {
 	private int runs = 0;
 	private static int succesfulMoves = 0;
 	private static boolean wasRightMove = false;
-
+	
 	private static void print(String str) {
 		System.out.println("[AUTSOLVE]: " + str);
 	}
@@ -179,7 +178,7 @@ public class Solver extends TimerTask {
 
 	@Override
 	public void run() {
-
+		
 		if (original.getCurrentHighestTile() >= 2048) {
 			wins += 1;
 			runs += 1;
@@ -206,5 +205,4 @@ public class Solver extends TimerTask {
 			autoMove(original);
 		}
 	}
-
 }
