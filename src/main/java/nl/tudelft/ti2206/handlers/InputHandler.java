@@ -2,12 +2,11 @@ package nl.tudelft.ti2206.handlers;
 
 import java.util.Timer;
 
-import nl.tudelft.ti2206.ai.Solver;
-import nl.tudelft.ti2206.ai.Solver.Strategy;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.solver.Benchmark;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,6 +30,8 @@ public class InputHandler extends InputListener {
 	private final String className = this.getClass().getSimpleName();
 	
 	Timer solver = null;
+
+	private Benchmark bmark;
 
 	/**
 	 * Creates a new InputHandler instance.
@@ -69,13 +70,14 @@ public class InputHandler extends InputListener {
 			
 		case Keys.S:
 			
-			if (solver == null) {
+			if (bmark == null) {
 				logger.debug(className, "Solving this grid! At least, trying to...");
-				solver = Solver.autoSolve(grid, Strategy.HUMAN, 1, 1000);
+				
+				bmark = new Benchmark(grid, 1, 20);
+				bmark.start();
 			}
 			else {
-				solver.cancel();
-				solver = null;
+				bmark.stop();
 				logger.debug(className, "Autosolver stopped.");
 			}
 		}
