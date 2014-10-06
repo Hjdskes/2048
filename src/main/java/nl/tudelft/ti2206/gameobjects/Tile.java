@@ -38,6 +38,7 @@ public class Tile extends Actor {
 	/** The Action used to perform a merge animation. */
 	private ScaleToAction mergeAction;
 
+	/** The Action used to perform a slide animation. */
 	private MoveToAction moveAction;
 
 	/**
@@ -52,6 +53,7 @@ public class Tile extends Actor {
 	/** The index into the Grid array. */
 	private int index;
 
+	/** The x and y coordinates belonging to the current index. */
 	private float baseX, baseY;
 
 	/** Indicates whether this Tile has been merged in the current move. */
@@ -73,10 +75,8 @@ public class Tile extends Actor {
 		setIndex(index);
 		setMerged(false);
 
-		setBaseX();
-		setBaseY();
-		setX(baseX);
-		setY(baseY);
+		updateBaseCoordinates();
+		setBaseCoordinates();
 	}
 
 	/**
@@ -100,8 +100,8 @@ public class Tile extends Actor {
 		setIndex(index);
 		setMerged(false);
 
-		setBaseX();
-		setBaseY();
+		updateBaseCoordinates();
+		setBaseCoordinates();
 	}
 
 	/**
@@ -175,10 +175,8 @@ public class Tile extends Actor {
 		if (moveAction != null) {
 			moveAction.finish();
 		}
-		setBaseX();
-		setBaseY();
-		setX(baseX);
-		setY(baseY);
+		updateBaseCoordinates();
+		setBaseCoordinates();
 	}
 
 	/**
@@ -212,17 +210,22 @@ public class Tile extends Actor {
 		logger.debug("Tile", "Merging tiles at index " + index + "...");
 	}
 
+	/**
+	 * Starts a sliding animation to the x and y coordinates, defined for the
+	 * index provided.
+	 * 
+	 * @param destIndex
+	 *            The index the Tile needs to move to.
+	 */
 	public void move(int destIndex) {
-		int oldIndex = index;
 		index = destIndex;
-		setBaseX();
-		setBaseY();
+		updateBaseCoordinates();
 		moveAction = new MoveToAction();
 		moveAction.setPosition(baseX, baseY);
-		moveAction.setDuration(.15f);
+		moveAction.setDuration(.05f);
 		this.addAction(moveAction);
-		logger.debug("Tile", "Moving Tile " + oldIndex + " from (" + getX() + ", "
-				+ getY() + ") to (" + baseX + ", " + baseY + ")...");
+		logger.debug("Tile", "Moving Tile from (" + getX() + ", " + getY()
+				+ ") to (" + baseX + ", " + baseY + ")...");
 	}
 
 	/**
@@ -257,6 +260,10 @@ public class Tile extends Actor {
 				getScaleX(), getScaleY(), 0);
 	}
 
+	/**
+	 * Calculates the x coordinate belonging to the current index and sets the
+	 * baseX variable to the value calculated.
+	 */
 	public void setBaseX() {
 		switch (this.index % 4) {
 		case 1:
@@ -274,6 +281,10 @@ public class Tile extends Actor {
 		}
 	}
 
+	/**
+	 * Calculates the y coordinate belonging to the current index and sets the
+	 * baseY variable to the value calculated.
+	 */
 	public void setBaseY() {
 		if (index >= 12) {
 			baseY = TILE_Y - 3 * TILE_HEIGHT - 3 * TwentyFourtyGame.GAP;
@@ -284,6 +295,21 @@ public class Tile extends Actor {
 		} else {
 			baseY = TILE_Y;
 		}
+	}
+
+	/** Updates the baseX and baseY variables. */
+	private void updateBaseCoordinates() {
+		setBaseX();
+		setBaseY();
+	}
+
+	/**
+	 * sets the x and y coordinates of this tile to the values of baseX and
+	 * baseY.
+	 */
+	private void setBaseCoordinates() {
+		setX(baseX);
+		setY(baseY);
 	}
 
 	/**
