@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
 import nl.tudelft.ti2206.solver.Benchmark;
+import nl.tudelft.ti2206.solver.Benchmark.Strategy;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,7 +29,7 @@ public class InputHandler extends InputListener {
 
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
-	
+
 	Timer solver = null;
 
 	private Benchmark bmark;
@@ -67,18 +68,21 @@ public class InputHandler extends InputListener {
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
 			return true;
-			
+
 		case Keys.S:
-			
-			if (bmark == null) {
-				logger.debug(className, "Solving this grid! At least, trying to...");
-				
-				bmark = new Benchmark(grid, 1, 20);
-				bmark.start();
-			}
-			else {
+
+			if (bmark == null)
+				bmark = new Benchmark(grid, Strategy.HUMAN, 1, 100);
+
+			if (bmark.isRunning()) {
 				bmark.stop();
 				logger.debug(className, "Autosolver stopped.");
+			} else {
+
+				logger.debug(className,
+						"Solving this grid! At least, trying to...");
+
+				bmark.start();
 			}
 		}
 		return false;
