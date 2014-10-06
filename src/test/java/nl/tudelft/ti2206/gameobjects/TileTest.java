@@ -135,44 +135,44 @@ public class TileTest {
 		assertEquals(i, heigth);
 	}
 
-//	/**
-//	 * Tests if the getter of x and y are behaving correctly.
-//	 */
-//	@Test
-//	public void testGetXY() {
-//		tile.setIndex(5);
-//		int x = (int) tile.getX();
-//		int y = (int) tile.getY();
-//		assertEquals(x, 211);
-//		assertEquals(y, 307);
-//
-//		tile.setIndex(14);
-//		x = (int) tile.getX();
-//		y = (int) tile.getY();
-//		assertEquals(x, 307);
-//		assertEquals(y, 115);
-//
-//		tile.setIndex(0);
-//		x = (int) tile.getX();
-//		y = (int) tile.getY();
-//		assertEquals(x, 115);
-//		assertEquals(y, 403);
-//
-//		tile.setIndex(11);
-//		x = (int) tile.getX();
-//		y = (int) tile.getY();
-//		assertEquals(x, 403);
-//		assertEquals(y, 211);
-//	}
+	/**
+	 * Tests if the getter of x and y are behaving correctly.
+	 */
+	@Test
+	public void testGetXY() {
+		tile.setIndex(5);
+		int x = (int) tile.getX();
+		int y = (int) tile.getY();
+		assertEquals(x, 211);
+		assertEquals(y, 307);
 
-//	@Test
-//	public void testActSpawnNotEmpty() {
-//		tile.setValue(4);
-//		tile.spawn();
-//		assertEquals(.6f, tile.getScaleX(), .01);
-//		tile.act(.15f);
-//		assertNotEquals(.6f, tile.getScaleX(), .01);
-//	}
+		tile.setIndex(14);
+		x = (int) tile.getX();
+		y = (int) tile.getY();
+		assertEquals(x, 307);
+		assertEquals(y, 115);
+
+		tile.setIndex(0);
+		x = (int) tile.getX();
+		y = (int) tile.getY();
+		assertEquals(x, 115);
+		assertEquals(y, 403);
+
+		tile.setIndex(11);
+		x = (int) tile.getX();
+		y = (int) tile.getY();
+		assertEquals(x, 403);
+		assertEquals(y, 211);
+	}
+
+	@Test
+	public void testActSpawnNotEmpty() {
+		tile.setValue(4);
+		tile.spawn();
+		assertEquals(.6f, tile.getScaleX(), .01);
+		tile.act(.15f);
+		assertNotEquals(.6f, tile.getScaleX(), .01);
+	}
 	
 	@Test
 	public void testActSpawnEmpty() {
@@ -189,6 +189,18 @@ public class TileTest {
 		assertEquals(1.4f, tile.getScaleX(), .01);
 		tile.act(.15f);
 		assertNotEquals(1.4f, tile.getScaleX(), .01);
+	}
+	
+	@Test
+	public void testActMove() {
+		tile.setIndex(0);
+		tile.setValue(2);
+		float y = tile.getY();
+		float x = tile.getX();
+		tile.move(1);
+		tile.act(.15f);
+		assertNotEquals(y, tile.getY());
+		assertEquals(x, tile.getX(), 0.01);
 	}
 	
 	/**
