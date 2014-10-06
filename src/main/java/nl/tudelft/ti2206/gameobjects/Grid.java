@@ -84,9 +84,6 @@ public class Grid extends Actor {
 	/** The array containing all sixteen tiles. */
 	private Tile[] tiles;
 
-	/** The array containing all sixteen tiles for sliding animations. */
-	private SlidingTile[] slidingTiles;
-
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
 
@@ -116,13 +113,11 @@ public class Grid extends Actor {
 				.get("grid", Texture.class));
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
-		this.slidingTiles = new SlidingTile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles, slidingTiles);
+		this.tileHandler = new TileHandler(tiles);
 		
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
-			slidingTiles[i] = new SlidingTile(tiles[i]);
 		}
 		
 		if (!isEmpty) {
@@ -141,13 +136,11 @@ public class Grid extends Actor {
 		this.region = texture;
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
-		this.slidingTiles = new SlidingTile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles, slidingTiles);
+		this.tileHandler = new TileHandler(tiles);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
-			slidingTiles[i] = new SlidingTile(tiles[i]);
 		}
 		
 		if (!isEmpty) {
@@ -221,10 +214,6 @@ public class Grid extends Actor {
 		}
 		iterator.reset();
 		
-		for (SlidingTile tile : slidingTiles) {
-			tile.act(delta);
-		}
-
 		updateHighestTile();
 		if (score > highScore) {
 			highScore = score;
@@ -239,11 +228,6 @@ public class Grid extends Actor {
 		logger.info(objectName, "Restarting grid.");
 
 		score = 0;
-			
-		// FIXME: use iterator for sliding tiles
-		for (SlidingTile tile : slidingTiles) {
-			tile.reset();
-		}
 		
 		while (iterator.hasNext()) {
 			iterator.next().reset();
@@ -509,11 +493,6 @@ public class Grid extends Actor {
 		batch.draw(region, getX(), getY(), getWidth(), getHeight());
 		while (iterator.hasNext()) {
 			iterator.next().draw(batch, parentAlpha);
-		}
-		
-		//FIXME: use iterator for slidingtiles
-		for (SlidingTile tile : slidingTiles) {
-			tile.draw(batch, parentAlpha);
 		}
 		
 		iterator.reset();

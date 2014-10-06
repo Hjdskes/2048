@@ -2,10 +2,12 @@ package nl.tudelft.ti2206.gameobjects;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.log.Logger;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -13,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * The Tile class represents the tiles you move around while playing 2048.
  */
 public class Tile extends Actor {
+	private static Logger logger = Logger.getInstance();
+
 	/** The width of the Tile. */
 	private static final int TILE_WIDTH = 81;
 
@@ -34,6 +38,8 @@ public class Tile extends Actor {
 	/** The Action used to perform a merge animation. */
 	private ScaleToAction mergeAction;
 
+	private MoveToAction moveAction;
+
 	/**
 	 * Defines a rectangular area of a texture, kind of like a viewport, on the
 	 * whole image.
@@ -45,6 +51,8 @@ public class Tile extends Actor {
 
 	/** The index into the Grid array. */
 	private int index;
+
+	private float baseX, baseY;
 
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
@@ -64,6 +72,11 @@ public class Tile extends Actor {
 		setValue(value);
 		setIndex(index);
 		setMerged(false);
+
+		setBaseX();
+		setBaseY();
+		setX(baseX);
+		setY(baseY);
 	}
 
 	/**
@@ -82,10 +95,13 @@ public class Tile extends Actor {
 	public Tile(int index, int value, Skin skin, TextureRegion region) {
 		this.skin = skin;
 		this.region = region;
-		
+
 		setValue(value);
 		setIndex(index);
 		setMerged(false);
+
+		setBaseX();
+		setBaseY();
 	}
 
 	/**
@@ -156,6 +172,13 @@ public class Tile extends Actor {
 		if (mergeAction != null) {
 			mergeAction.finish();
 		}
+		if (moveAction != null) {
+			moveAction.finish();
+		}
+		setBaseX();
+		setBaseY();
+		setX(baseX);
+		setY(baseY);
 	}
 
 	/**
@@ -174,6 +197,7 @@ public class Tile extends Actor {
 		spawnAction.setScale(1f);
 		spawnAction.setDuration(.3f);
 		this.addAction(spawnAction);
+		logger.debug("Tile", "Spawning a Tile at index " + index + "...");
 	}
 
 	/**
@@ -185,6 +209,20 @@ public class Tile extends Actor {
 		mergeAction.setScale(1f);
 		mergeAction.setDuration(.3f);
 		this.addAction(mergeAction);
+		logger.debug("Tile", "Merging tiles at index " + index + "...");
+	}
+
+	public void move(int destIndex) {
+		int oldIndex = index;
+		index = destIndex;
+		setBaseX();
+		setBaseY();
+		moveAction = new MoveToAction();
+		moveAction.setPosition(baseX, baseY);
+		moveAction.setDuration(.15f);
+		this.addAction(moveAction);
+		logger.debug("Tile", "Moving Tile " + oldIndex + " from (" + getX() + ", "
+				+ getY() + ") to (" + baseX + ", " + baseY + ")...");
 	}
 
 	/**
@@ -200,6 +238,9 @@ public class Tile extends Actor {
 
 	@Override
 	public void act(float delta) {
+		if (!isEmpty() && (getX() != baseX || getY() != baseY)) {
+			moveAction.act(delta);
+		}
 		if (getScaleX() > 1) {
 			mergeAction.act(delta);
 		} else if (getScaleX() < 1 && !isEmpty()) {
@@ -216,30 +257,32 @@ public class Tile extends Actor {
 				getScaleX(), getScaleY(), 0);
 	}
 
-	@Override
-	public float getX() {
+	public void setBaseX() {
 		switch (this.index % 4) {
 		case 1:
-			return TILE_X + TILE_WIDTH + TwentyFourtyGame.GAP;
+			baseX = TILE_X + TILE_WIDTH + TwentyFourtyGame.GAP;
+			break;
 		case 2:
-			return TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			baseX = TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			break;
 		case 3:
-			return TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			baseX = TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			break;
 		default:
-			return TILE_X;
+			baseX = TILE_X;
+			break;
 		}
 	}
 
-	@Override
-	public float getY() {
+	public void setBaseY() {
 		if (index >= 12) {
-			return TILE_Y - 3 * TILE_HEIGHT - 3 * TwentyFourtyGame.GAP;
+			baseY = TILE_Y - 3 * TILE_HEIGHT - 3 * TwentyFourtyGame.GAP;
 		} else if (index >= 8) {
-			return TILE_Y - 2 * TILE_HEIGHT - 2 * TwentyFourtyGame.GAP;
+			baseY = TILE_Y - 2 * TILE_HEIGHT - 2 * TwentyFourtyGame.GAP;
 		} else if (index >= 4) {
-			return TILE_Y - TILE_HEIGHT - TwentyFourtyGame.GAP;
+			baseY = TILE_Y - TILE_HEIGHT - TwentyFourtyGame.GAP;
 		} else {
-			return TILE_Y;
+			baseY = TILE_Y;
 		}
 	}
 

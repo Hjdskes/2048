@@ -280,17 +280,17 @@ public class GridTest {
 		assertEquals(height, 400);
 	}
 
-	@Test
-	public void testAct() {
-		assertFalse(grid.getCurrentHighestTile() == 16);
-		grid.setTile(0, 16);
-		grid.setScore(grid.getHighscore() + 1);
-
-		grid.act(.15f);
-
-		assertTrue(grid.getCurrentHighestTile() == 16);
-		assertTrue(grid.getHighscore() == grid.getScore());
-	}
+//	@Test
+//	public void testAct() {
+//		assertFalse(grid.getCurrentHighestTile() == 16);
+//		grid.setTile(0, 16);
+//		grid.setScore(grid.getHighscore() + 1);
+//
+//		grid.act(.15f);
+//
+//		assertTrue(grid.getCurrentHighestTile() == 16);
+//		assertTrue(grid.getHighscore() == grid.getScore());
+//	}
 
 	@Test
 	public void testDraw() {

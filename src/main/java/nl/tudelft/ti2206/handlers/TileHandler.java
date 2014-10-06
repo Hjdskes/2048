@@ -1,8 +1,8 @@
 package nl.tudelft.ti2206.handlers;
 
 import java.util.Arrays;
+import java.util.Collections;
 
-import nl.tudelft.ti2206.gameobjects.SlidingTile;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.gameobjects.TileIterator;
 
@@ -16,9 +16,6 @@ public class TileHandler {
 	/** The array holding all the tiles. */
 	private Tile[] tiles;
 
-	/** The array holding all the sliding tiles (for movement animation). */
-	private SlidingTile[] slidingTiles;
-
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
 
@@ -31,9 +28,8 @@ public class TileHandler {
 	 * @param tiles
 	 *            The array holding the tiles.
 	 */
-	public TileHandler(Tile[] tiles, SlidingTile[] slidingTiles) {
+	public TileHandler(Tile[] tiles) {
 		this.tiles = tiles;
-		this.slidingTiles = slidingTiles;
 		scoreIncrement = 0;
 	}
 
@@ -71,9 +67,11 @@ public class TileHandler {
 	 * Performs a move downwards.
 	 */
 	public void moveDown() {
+		System.out.println(toString());
 		tiles = rotate(90);
 		moveLeft();
 		tiles = rotate(270);
+		System.out.println(toString());
 	}
 
 	/**
@@ -102,31 +100,44 @@ public class TileHandler {
 				continue;
 			} else {
 				if (collidee.isEmpty()) {
-					collidee.setValue(collider.getValue());
-					if (collider.isMerged()) {
-						collidee.setMerged(true);
-					}
-
-					slidingTiles[collider.getIndex()].move(collider,
-							collidee.getX(), collidee.getY());
-
-					collider.reset();
 					isMoveMade = true;
+
+					int originalIndex = collider.getIndex();
+					collider.move(collidee.getIndex());
+					collidee.setIndex(originalIndex);
+					collidee.reset();
+					Collections.swap(Arrays.asList(tiles),
+							iterator.getIndex() - 1, iterator.getIndex() - 2);
 				} else if (collider.getValue() == collidee.getValue()) {
-					collidee.doubleValue();
-					collidee.setMerged(true);
-					collidee.merge();
-
-					slidingTiles[collider.getIndex()].move(collider,
-							collidee.getX(), collidee.getY());
-
-					collider.reset();
-					scoreIncrement += collidee.getValue();
+					collider.doubleValue();
+					collider.setMerged(true);
+					collider.merge();
+					collidee.reset();
+					scoreIncrement += collider.getValue();
 					isMoveMade = true;
+
+					int originalIndex = collider.getIndex();
+					collider.move(collidee.getIndex());
+					collidee.setIndex(originalIndex);
+					collidee.reset();
+					Collections.swap(Arrays.asList(tiles),
+							iterator.getIndex() - 1, iterator.getIndex() - 2);
 				}
 			}
 		}
 		iterator.reset();
+	}
+
+	@Override
+	public String toString() {
+		String res = "";
+		for (int i = 0; i < tiles.length; i++) {
+			if (i % 4 == 3)
+				res += tiles[i].getValue() + "\n";
+			else
+				res += tiles[i].getValue() + " ";
+		}
+		return res;
 	}
 
 	/**
