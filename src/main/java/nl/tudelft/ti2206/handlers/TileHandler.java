@@ -70,11 +70,9 @@ public class TileHandler {
 	 * Performs a move downwards.
 	 */
 	public void moveDown() {
-		System.out.println(toString());
 		tiles = rotate(90);
 		moveLeft();
 		tiles = rotate(270);
-		System.out.println(toString());
 	}
 
 	/**

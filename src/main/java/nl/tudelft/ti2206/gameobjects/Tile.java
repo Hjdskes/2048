@@ -74,9 +74,6 @@ public class Tile extends Actor {
 		setValue(value);
 		setIndex(index);
 		setMerged(false);
-
-		updateBaseCoordinates();
-		setBaseCoordinates();
 	}
 
 	/**
@@ -99,9 +96,6 @@ public class Tile extends Actor {
 		setValue(value);
 		setIndex(index);
 		setMerged(false);
-
-		updateBaseCoordinates();
-		setBaseCoordinates();
 	}
 
 	/**
@@ -130,13 +124,16 @@ public class Tile extends Actor {
 	}
 
 	/**
-	 * Sets the index of the Tile into the Grid array.
+	 * Sets the index of the Tile into the Grid array and updates the x and y
+	 * coordinates accordingly.
 	 * 
 	 * @param index
 	 *            The new index.
 	 */
 	public void setIndex(int index) {
 		this.index = index;
+		updateBaseCoordinates();
+		setBaseCoordinates();
 	}
 
 	/**
