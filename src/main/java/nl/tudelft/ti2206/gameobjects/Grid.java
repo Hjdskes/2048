@@ -26,8 +26,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
+ * +---+---+---+---+ 
+ * | 0 | 1 | 2 | 3 | 
+ * +---+---+---+---+ 
+ * | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ 
+ * | 8 | 9 | 10| 11| 
+ * +---+---+---+---+ 
+ * | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -482,7 +488,9 @@ public class Grid extends Actor {
 		return res;
 	}
 	
-	public void setTiles(Tile[] tiles) {
-		this.tiles = tiles;
+	public void setTiles(TileIterator iterator) {
+		while(iterator.hasNext()){
+			setTile(iterator.getIndex(), iterator.next().getValue());
+		}
 	}
 }
