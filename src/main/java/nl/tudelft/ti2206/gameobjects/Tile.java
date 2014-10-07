@@ -219,7 +219,7 @@ public class Tile extends Actor {
 		updateBaseCoordinates();
 		moveAction = new MoveToAction();
 		moveAction.setPosition(baseX, baseY);
-		moveAction.setDuration(.05f);
+		moveAction.setDuration(.08f);
 		this.addAction(moveAction);
 		logger.debug("Tile", "Moving Tile from (" + getX() + ", " + getY()
 				+ ") to (" + baseX + ", " + baseY + ")...");
