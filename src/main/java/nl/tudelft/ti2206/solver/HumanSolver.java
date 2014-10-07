@@ -7,6 +7,17 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
 
+/**
+ * This class attempts to solve the grid using a 'human-like' strategy:
+ * - Keep the highest tile in one of the grid's corners (lower left in this case).
+ * - Merge tiles of equal values with each other whenever possible.
+ *
+ * By default, this class looked ahead two moves. However, to increase accuracy
+ * the last method (tryMoves) is now recursive:
+ * selectDirectionComplex + tryMoves(depth = 0) = look 2 moves ahead
+ * selectDirectionComplex + tryMoves(depth = 1) = look 3 moves ahead
+ */
+
 public class HumanSolver {
 
 	private static boolean wasRightMove = false;
@@ -29,7 +40,9 @@ public class HumanSolver {
 		return false;
 	}
 
-	public static int tryMoves(Grid ogrid) {
+	public static int nextMove(Grid ogrid, int depth) {
+		
+		//System.out.println("tryMoves, depth = " + depth);
 
 		int highest = 0;
 
@@ -46,15 +59,24 @@ public class HumanSolver {
 
 			Grid cloned = ogrid.clone();
 			cloned.move(direction);
-
+			
+			int score = cloned.getScore();
+			
+			if (depth > 0)
+				score += nextMove(cloned, depth - 1);
+			
 			// get highest score possible
-			highest = Math.max(highest, cloned.getScore());
+			highest = Math.max(highest, score);
 		}
 		return highest;
 	}
 
 	public static Direction selectDirectionComplex(Grid ogrid) {
 
+//		System.out.println("looking ahead!");
+		
+		int depth = 5;
+		
 		int score = ogrid.getScore();
 		Direction selected = null;
 
@@ -83,7 +105,7 @@ public class HumanSolver {
 			// if move actually is possible
 			if (cloned.move(direction) != -1) {
 
-				int pointsAfter = cloned.getScore() + tryMoves(cloned);
+				int pointsAfter = cloned.getScore() + nextMove(cloned, depth);
 
 				if (pointsAfter > score) {
 					score = pointsAfter;

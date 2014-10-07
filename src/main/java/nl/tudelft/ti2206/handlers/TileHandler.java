@@ -17,7 +17,7 @@ public class TileHandler {
 	private Tile[] tiles;
 
 	/** The array holding all the sliding tiles (for movement animation). */
-	private SlidingTile[] slidingTiles;
+//	private SlidingTile[] slidingTiles;
 
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
@@ -31,9 +31,9 @@ public class TileHandler {
 	 * @param tiles
 	 *            The array holding the tiles.
 	 */
-	public TileHandler(Tile[] tiles, SlidingTile[] slidingTiles) {
+	public TileHandler(Tile[] tiles) {//, SlidingTile[] slidingTiles) {
 		this.tiles = tiles;
-		this.slidingTiles = slidingTiles;
+//		this.slidingTiles = slidingTiles;
 		scoreIncrement = 0;
 	}
 
@@ -107,8 +107,8 @@ public class TileHandler {
 						collidee.setMerged(true);
 					}
 
-					slidingTiles[collider.getIndex()].move(collider,
-							collidee.getX(), collidee.getY());
+//					slidingTiles[collider.getIndex()].move(collider,
+//							collidee.getX(), collidee.getY());
 
 					collider.reset();
 					isMoveMade = true;
@@ -116,8 +116,9 @@ public class TileHandler {
 					collidee.doubleValue();
 					collidee.setMerged(true);
 					collidee.merge();
-					slidingTiles[collider.getIndex()].move(collider,
-							collidee.getX(), collidee.getY());
+
+//					slidingTiles[collider.getIndex()].move(collider,
+//							collidee.getX(), collidee.getY());
 
 					collider.reset();
 					scoreIncrement += collidee.getValue();

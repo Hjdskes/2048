@@ -85,7 +85,7 @@ public class Grid extends Actor {
 	private Tile[] tiles;
 
 	/** The array containing all sixteen tiles for sliding animations. */
-	private SlidingTile[] slidingTiles;
+//	private SlidingTile[] slidingTiles;
 
 	/** A randomizer is needed for filling tiles. */
 	private Random random;
@@ -116,21 +116,18 @@ public class Grid extends Actor {
 				.get("grid", Texture.class));
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
-		this.slidingTiles = new SlidingTile[NTILES];
+//		this.slidingTiles = new SlidingTile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles, slidingTiles);
+		this.tileHandler = new TileHandler(tiles);//, slidingTiles);
 		
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
-			slidingTiles[i] = new SlidingTile(tiles[i]);
+	//		slidingTiles[i] = new SlidingTile(tiles[i]);
 		}
 		
 		if (!isEmpty) {
 			initGrid();
 		}
-
-		/* After loading the grid, start the game. */
-	//	TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -141,13 +138,13 @@ public class Grid extends Actor {
 		this.region = texture;
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
-		this.slidingTiles = new SlidingTile[NTILES];
+//		this.slidingTiles = new SlidingTile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles, slidingTiles);
+	//	this.tileHandler = new TileHandler(tiles, slidingTiles);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
-			slidingTiles[i] = new SlidingTile(tiles[i]);
+	//		slidingTiles[i] = new SlidingTile(tiles[i]);
 		}
 		
 		if (!isEmpty) {
@@ -155,7 +152,7 @@ public class Grid extends Actor {
 		}
 
 		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(GameState.RUNNING);
+//		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -221,9 +218,9 @@ public class Grid extends Actor {
 		}
 		iterator.reset();
 		
-		for (SlidingTile tile : slidingTiles) {
-			tile.act(delta);
-		}
+//		for (SlidingTile tile : slidingTiles) {
+//			tile.act(delta);
+//		}
 
 		updateHighestTile();
 		if (score > highScore) {
@@ -240,10 +237,10 @@ public class Grid extends Actor {
 
 		score = 0;
 			
-		// FIXME: use iterator for sliding tiles
-		for (SlidingTile tile : slidingTiles) {
-			tile.reset();
-		}
+//		// FIXME: use iterator for sliding tiles
+//		for (SlidingTile tile : slidingTiles) {
+//			tile.reset();
+//		}
 		
 		while (iterator.hasNext()) {
 			iterator.next().reset();
@@ -259,7 +256,7 @@ public class Grid extends Actor {
 		highestTile = 0;
 		updateHighestTile();
 
-		TwentyFourtyGame.setState(GameState.RUNNING);
+//		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -518,9 +515,9 @@ public class Grid extends Actor {
 		}
 		
 		//FIXME: use iterator for slidingtiles
-		for (SlidingTile tile : slidingTiles) {
-			tile.draw(batch, parentAlpha);
-		}
+//		for (SlidingTile tile : slidingTiles) {
+//			tile.draw(batch, parentAlpha);
+//		}
 		
 		iterator.reset();
 	}

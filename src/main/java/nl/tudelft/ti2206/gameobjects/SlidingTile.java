@@ -23,7 +23,7 @@ public class SlidingTile extends Actor {
 	private float destX, destY;
 	private float startX, startY;
 
-	public SlidingTile(Tile start) {
+	private SlidingTile(Tile start) {
 		this.setVisible(false);
 		startX = start.getX();
 		startY = start.getY();
