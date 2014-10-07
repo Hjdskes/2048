@@ -114,7 +114,7 @@ public class Grid extends Actor {
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles);
+		this.tileHandler = new TileHandler(this);
 		
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
@@ -137,7 +137,7 @@ public class Grid extends Actor {
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles);
+		this.tileHandler = new TileHandler(this);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
@@ -200,6 +200,11 @@ public class Grid extends Actor {
 	 */
 	public void setTile(int index, int value) {
 		tiles[index].setValue(value);
+	}
+	
+	public void setTiles(Tile[] tiles) {
+		this.tiles = tiles;
+		this.iterator = new TileIterator(tiles);
 	}
 
 	/**
