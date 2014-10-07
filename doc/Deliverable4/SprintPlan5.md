@@ -5,11 +5,12 @@ Group: 21
 
 | User Story | Task | Assigned to | Estimated Effort |
 |:----------:|:----:|:-----------:|:----------------:|
-| Story 1 | Exercise 1 | Jente, Jochem, Piet|20 hours (Jente & Jochem), 10 hours (Piet) (very hard) |
+| Story 1 | Exercise 1 | Jente, Jochem, Piet|20 hours each (Jente & Jochem), 10 hours (Piet) (very hard) |
 | Story 2 | Exercise 1 | Piet | 12 hours (difficult) |
-| N/A | Exercise 2 pattern 1 | Paul | 6 hours (medium) |
-| N/A | Exercise 2 pattern 2 | Arthur | 6 hours (medium) |
-| N/A | Exercise 3 | MVC pattern | 12 hours (hard) |
+| Story 3 | Exercise 1 | Arthur | 8 hours (medium) |
+| N/A | Exercise 2 Command Pattern | Paul | 6 hours (medium) |
+| N/A | Exercise 2 State Pattern | Arthur | 6 hours (medium) |
+| N/A | Exercise 3 MVC Pattern | Jente, Piet | 12 hours each (hard) |
 
 ## User Stories
 Below the user stories for this sprint are defined.
@@ -19,3 +20,9 @@ As a user, I want to be able to let the game be solved for me when I am stuck or
 
 ### Story 2
 As a user, I want to see how tiles are moving in order to gain a better understanding of the game.
+
+### Story 3
+As a user, I want to be able to undo a move that I am not happy with.
+
+### Story 4
+As a user, I want to have the option to redo the move I made after I have undone it.
