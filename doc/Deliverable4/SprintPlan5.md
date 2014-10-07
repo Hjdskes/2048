@@ -6,7 +6,7 @@ Group: 21
 | User Story | Task | Assigned to | Estimated Effort |
 |:----------:|:----:|:-----------:|:----------------:|
 | Story 1 | Exercise 1 | Jente, Jochem, Piet|20 hours each (Jente & Jochem), 10 hours (Piet) (very hard) |
-| Story 2 | Exercise 1 | Piet | 12 hours (difficult) |
+| Story 2 | Exercise 1 | Piet | 12 hours (hard) |
 | Story 3 & 4 | Exercise 1 | Arthur | 8 hours (medium) |
 | N/A | Exercise 2 Command Pattern | Paul | 6 hours (medium) |
 | N/A | Exercise 2 State Pattern | Arthur | 6 hours (medium) |
