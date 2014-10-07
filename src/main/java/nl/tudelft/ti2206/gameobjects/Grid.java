@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.gameobjects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
@@ -96,6 +97,10 @@ public class Grid extends Actor {
 
 	/** Keeps track of the current high score. */
 	private int highScore;
+	
+	private Stack<String> undo;
+	
+	private Stack<String> redo;
 
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
@@ -110,6 +115,8 @@ public class Grid extends Actor {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(tiles);
+		this.undo = new Stack<String>();
+		this.redo = new Stack<String>();
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
@@ -132,6 +139,8 @@ public class Grid extends Actor {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(tiles);
+		this.undo = new Stack<String>();
+		this.redo = new Stack<String>();
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
@@ -488,9 +497,23 @@ public class Grid extends Actor {
 		return res;
 	}
 	
-	public void setTiles(TileIterator iterator) {
-		while(iterator.hasNext()){
-			setTile(iterator.getIndex(), iterator.next().getValue());
-		}
+	public void addToUndoStack(String string) {
+		undo.push(string);
+	}
+	
+	public String getPreviousGrid() {
+		return undo.pop();
+	}
+	
+	public void addToRedoStack(String string) {
+		redo.push(string);
+	}
+	
+	public String getGridAfterMove() {
+		return redo.pop();
+	}
+	
+	public void clearRedo() {
+		redo.clear();
 	}
 }
