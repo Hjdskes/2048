@@ -12,7 +12,6 @@ import java.util.List;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
 
@@ -117,30 +116,6 @@ public class GridTest {
 		assertEquals(grid.getHighscore(), 345);
 	}
 
-	@Test
-	public void testTileAddedOnMove() {
-		when(tileHandler.isMoveMade()).thenReturn(true);
-
-		int endTiles = 0;
-		int tiles = 0;
-
-		// make a move to the left. This can always be done because of the stub.
-		grid.move(Direction.LEFT);
-
-		// if the tile is not empty, count it. If the tile is merged, dont
-		// increment endTiles because a merge has taken place.
-		for (Tile tile : grid.getTiles()) {
-			if (!tile.isEmpty()) {
-				tiles++;
-				if (!tile.isMerged()) {
-					endTiles++;
-				}
-			}
-		}
-
-		assertEquals(endTiles, tiles);
-	}
-
 	/**
 	 * Tests if getPossibleMoves() correctly returns 0 when no move is possible.
 	 */
@@ -185,42 +160,6 @@ public class GridTest {
 				found++;
 		}
 		assertEquals(4, found);
-	}
-
-	/**
-	 * Tests the move method when moving down.
-	 */
-	@Test
-	public void testMoveDown() {
-		grid.move(Direction.DOWN);
-		verify(tileHandler).moveDown();
-	}
-
-	/**
-	 * Tests the move method when moving up.
-	 */
-	@Test
-	public void testMoveUp() {
-		grid.move(Direction.UP);
-		verify(tileHandler).moveUp();
-	}
-
-	/**
-	 * Tests the move method when moving left.
-	 */
-	@Test
-	public void testMoveLeft() {
-		grid.move(Direction.LEFT);
-		verify(tileHandler).moveLeft();
-	}
-
-	/**
-	 * Tests the move method when moving right.
-	 */
-	@Test
-	public void testMoveRight() {
-		grid.move(Direction.RIGHT);
-		verify(tileHandler).moveRight();
 	}
 
 	/**
@@ -309,11 +248,37 @@ public class GridTest {
 		grid.setTile(0, 2);
 		assertEquals("2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", grid.toString());
 	}
-	
+
 	@Test
 	public void testObjectName() {
 		String objectName = "GridTest";
 		grid.setObjectName(objectName);
-		assertEquals(objectName, grid.getObjectName());	
+		assertEquals(objectName, grid.getObjectName());
 	}
- }
+
+	@Test
+	public void testSpawnTile() {
+		int count = 0;
+		for (int i = 0; i < grid.getTiles().length; i++) {
+			if (!grid.getTiles()[i].isEmpty()) {
+				count++;
+			}
+		}
+		grid.spawnNewTile();
+		int count2 = 0;
+		for (int i = 0; i < grid.getTiles().length; i++) {
+			if (!grid.getTiles()[i].isEmpty()) {
+				count2++;
+			}
+		}
+		assertEquals(count2, count + 1);
+	}
+	
+	@Test
+	public void testUpdateScore() {
+		int score = grid.getScore();
+		when(tileHandler.getScoreIncrement()).thenReturn(20);
+		grid.updateScore();
+		assertEquals(grid.getScore(), score + 20);
+	}
+}

@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.InputHandler;
 
 import org.junit.BeforeClass;
@@ -22,6 +22,8 @@ public class InputHandlerTest {
 	private static InputHandler handler;
 	/** A mock to verify behavior. */
 	private static Grid grid;
+	/** A mock to for the getTiles() */
+	private static Tile tile;
 
 	/**
 	 * Initialize all mocks and creates a new InputHandler.
@@ -29,8 +31,14 @@ public class InputHandlerTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		grid = Mockito.mock(Grid.class);
-
 		handler = new InputHandler(grid);
+		tile = Mockito.mock(Tile.class);
+		Tile[] tiles = new Tile[16];
+		for (int i = 0; i < 16; i++) {
+			tiles[i] = tile;
+		}
+		when(grid.getTiles()).thenReturn(tiles);
+		when(grid.getTileHandler()).thenReturn(new TileHandler(tiles));
 	}
 
 	/**
@@ -48,7 +56,7 @@ public class InputHandlerTest {
 	@Test
 	public void testKeyDownDown() {
 		handler.keyDown(null, Keys.DPAD_DOWN);
-		verify(grid).move(Direction.DOWN);
+		assertTrue(handler.getCommand() instanceof MoveDownCommand);
 	}
 
 	/**
@@ -58,7 +66,7 @@ public class InputHandlerTest {
 	@Test
 	public void testKeyDownUp() {
 		handler.keyDown(null, Keys.DPAD_UP);
-		verify(grid).move(Direction.UP);
+		assertTrue(handler.getCommand() instanceof MoveUpCommand);
 	}
 
 	/**
@@ -68,7 +76,7 @@ public class InputHandlerTest {
 	@Test
 	public void testKeyDownLeft() {
 		handler.keyDown(null, Keys.DPAD_LEFT);
-		verify(grid).move(Direction.LEFT);
+		assertTrue(handler.getCommand() instanceof MoveLeftCommand);
 	}
 
 	/**
@@ -78,9 +86,9 @@ public class InputHandlerTest {
 	@Test
 	public void testKeyDownRight() {
 		handler.keyDown(null, Keys.DPAD_RIGHT);
-		verify(grid).move(Direction.RIGHT);
+		assertTrue(handler.getCommand() instanceof MoveRightCommand);
 	}
-	
+
 	/**
 	 * Make sure the keyDown method returns false when the key is invalid.
 	 */

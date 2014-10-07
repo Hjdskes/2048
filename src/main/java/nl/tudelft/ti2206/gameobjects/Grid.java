@@ -26,14 +26,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ 
- * | 0 | 1 | 2 | 3 |
- * +---+---+---+---+ 
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
- * | 12| 13| 14| 15|
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -43,17 +37,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * The grid will draw all the Tiles it holds.
  */
 public class Grid extends Actor {
-	/** This enumeration is used to indicate the direction of a movement. */
-	public enum Direction {
-		DOWN, UP, LEFT, RIGHT;
-	}
-
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
 	/**
-	 * The name of the instance, initialized to the name of the class. Used
-	 * for logging.
+	 * The name of the instance, initialized to the name of the class. Used for
+	 * logging.
 	 */
 	private String objectName = this.getClass().getSimpleName();
 
@@ -226,18 +215,18 @@ public class Grid extends Actor {
 		logger.info(objectName, "Restarting grid.");
 
 		score = 0;
-			
+
 		while (iterator.hasNext()) {
 			iterator.next().reset();
 		}
 		iterator.reset();
 		initGrid();
-		
+
 		if (highestTile > PreferenceHandler.getInstance().getHighestTile()) {
 			PreferenceHandler.getInstance().setHighest(highestTile);
 			ScoreDisplay.updateAllTimeHighestTile();
 		}
-		
+
 		highestTile = 0;
 		updateHighestTile();
 
@@ -245,52 +234,36 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * This method is the one method used for moving tiles.
-	 * 
-	 * Its parameter shall indicate which direction is to be moved in. The
-	 * actual moving will be delegated to TileHandler. If a move has been made,
-	 * it will update the score and create a new Tile.
-	 * 
-	 * @param direction
-	 *            The direction in which is to be moved.
+	 * Updates the score with the score increment from the TileHandler class.
 	 */
-	public void move(Direction direction) {
-		switch (direction) {
-		case LEFT:
-			tileHandler.moveLeft();
-			break;
-		case RIGHT:
-			tileHandler.moveRight();
-			break;
-		case UP:
-			tileHandler.moveUp();
-			break;
-		case DOWN:
-			tileHandler.moveDown();
-			break;
-		default:
-			break;
-		}
+	public void updateScore() {
+		int newScore = score + tileHandler.getScoreIncrement();
+		setScore(newScore);
 
+		logger.info(objectName, "Score value set to " + newScore + ".");
+	}
+
+	/**
+	 * Gets a new random empty location and spawn a new tile there.
+	 */
+	public void spawnNewTile() {
+		int location = getRandomEmptyLocation();
+		int value = initialValue();
+		setTile(location, value);
+		tiles[location].spawn();
+
+		logger.debug(objectName, "New tile set at location " + location
+				+ " (value = " + value + ").");
+	}
+
+	/**
+	 * This method is called after the TileHandler has been given a direction.
+	 */
+	public void updateMove() {
 		if (tileHandler.isMoveMade()) {
-			logger.info(objectName, "Move " + direction + " succesfully made.");
-
-			int newScore = score + tileHandler.getScoreIncrement();
-			setScore(newScore);
-			logger.info(objectName, "Score value set to " + newScore + ".");
-
-			int location = getRandomEmptyLocation();
-			int value = initialValue();
-			setTile(location, value);
-			tiles[location].spawn();
-
-			logger.debug(objectName, "New tile set at location " + location
-					+ " (value = " + value + ").");
-		} else {
-			logger.debug(objectName, "Move " + direction + " ignored.");
+			this.updateScore();
+			this.spawnNewTile();
 		}
-
-		tileHandler.reset();
 	}
 
 	/**
@@ -460,7 +433,8 @@ public class Grid extends Actor {
 	/**
 	 * Sets the name of this instance.
 	 * 
-	 * @param name The name for this instance.
+	 * @param name
+	 *            The name for this instance.
 	 */
 	public void setObjectName(String name) {
 		this.objectName = name;
@@ -506,5 +480,9 @@ public class Grid extends Actor {
 
 		res = res.substring(0, res.length() - 1);
 		return res;
+	}
+	
+	public void setTiles(Tile[] tiles) {
+		this.tiles = tiles;
 	}
 }

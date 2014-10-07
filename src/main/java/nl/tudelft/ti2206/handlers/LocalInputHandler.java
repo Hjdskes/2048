@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -29,6 +28,9 @@ public class LocalInputHandler extends InputListener {
 	 * it.
 	 */
 	private Grid grid;
+	
+	/** The recent command of the local player */
+	private Command command;
 
 	/**
 	 * Creates a new LocalInputHandler instance.
@@ -46,25 +48,29 @@ public class LocalInputHandler extends InputListener {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			logger.info(className, "Move is made in the direction DOWN");
-			grid.move(Direction.DOWN);
+			setCommand(new MoveDownCommand(grid));
+			command.execute();
 			networking.sendString("MOVE[D]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_UP:
 			logger.info(className, "Move is made in the direction UP");
-			grid.move(Direction.UP);
+			setCommand(new MoveUpCommand(grid));
+			command.execute();
 			networking.sendString("MOVE[U]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_LEFT:
 			logger.info(className, "Move is made in the direction LEFT");
-			grid.move(Direction.LEFT);
+			setCommand(new MoveLeftCommand(grid));
+			command.execute();
 			networking.sendString("MOVE[L]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_RIGHT:
 			logger.info(className, "Move is made in the direction RIGHT");
-			grid.move(Direction.RIGHT);
+			setCommand(new MoveRightCommand(grid));
+			command.execute();
 			networking.sendString("MOVE[R]");
 			sendGrid();
 			return true;
@@ -77,5 +83,13 @@ public class LocalInputHandler extends InputListener {
 	 */
 	private void sendGrid() {
 		networking.sendString("GRID[" + grid.toString() + "]");
+	}
+	
+	public void setCommand(Command command) {
+		this.command = command;
+	}
+	
+	public Command getCommand() {
+		return command;
 	}
 }

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.gameobjects.Tile;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +17,8 @@ public class LocalInputHandlerTest {
 
 	@Mock
 	private Grid grid;
+	@Mock
+	private Tile tile;
 
 	private LocalInputHandler handler;
 
@@ -25,30 +27,36 @@ public class LocalInputHandlerTest {
 		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		handler = new LocalInputHandler(grid);
+		Tile[] tiles = new Tile[16];
+		for (int i = 0; i < 16; i++) {
+			tiles[i] = tile;
+		}
+		when(grid.getTiles()).thenReturn(tiles);
+		when(grid.getTileHandler()).thenReturn(new TileHandler(tiles));
 	}
 
 	@Test
 	public void testKeyDownDOWN() {
 		handler.keyDown(null, Keys.DPAD_DOWN);
-		verify(grid).move(Direction.DOWN);
+		assertTrue(handler.getCommand() instanceof MoveDownCommand);
 	}
 
 	@Test
 	public void testKeyDownUP() {
 		handler.keyDown(null, Keys.DPAD_UP);
-		verify(grid).move(Direction.UP);
+		assertTrue(handler.getCommand() instanceof MoveUpCommand);
 	}
 
 	@Test
 	public void testKeyDownLEFT() {
 		handler.keyDown(null, Keys.DPAD_LEFT);
-		verify(grid).move(Direction.LEFT);
+		assertTrue(handler.getCommand() instanceof MoveLeftCommand);
 	}
 
 	@Test
 	public void testKeyDownRIGHT() {
 		handler.keyDown(null, Keys.DPAD_RIGHT);
-		verify(grid).move(Direction.RIGHT);
+		assertTrue(handler.getCommand() instanceof MoveRightCommand);
 	}
 
 	@Test

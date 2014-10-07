@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
 
@@ -26,6 +25,9 @@ public class InputHandler extends InputListener {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
+	/** The command that can be executed */
+	private Command command;
+	
 	/**
 	 * Creates a new InputHandler instance.
 	 * 
@@ -41,26 +43,42 @@ public class InputHandler extends InputListener {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			logger.debug(className, "User pressed key: DOWN");
-			grid.move(Direction.DOWN);
+			setCommand(new MoveDownCommand(grid));
+			command.execute();
 			return true;
 		case Keys.DPAD_UP:
 			logger.debug(className, "User pressed key: UP");
-			grid.move(Direction.UP);
+			setCommand(new MoveUpCommand(grid));
+			command.execute();
 			return true;
 		case Keys.DPAD_LEFT:
 			logger.debug(className, "User pressed key: LEFT");
-			grid.move(Direction.LEFT);
+			setCommand(new MoveLeftCommand(grid));
+			command.execute();
 			return true;
 		case Keys.DPAD_RIGHT:
 			logger.debug(className, "User pressed key: RIGHT");
-			grid.move(Direction.RIGHT);
+			setCommand(new MoveRightCommand(grid));
+			command.execute();
 			return true;
 		case Keys.ESCAPE:
 			logger.debug(className, "User pressed key: ESCAPE");
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
 			return true;
+		case Keys.BACKSPACE:
+			logger.debug(className, "User pressed key: BACKSPACE");
+			command.undo();
+			return true;
 		}
 		return false;
+	}
+	
+	public void setCommand(Command command) {
+		this.command = command;
+	}
+	
+	public Command getCommand() {
+		return command;
 	}
 }

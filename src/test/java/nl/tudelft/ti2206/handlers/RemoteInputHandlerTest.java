@@ -6,20 +6,24 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.log.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 public class RemoteInputHandlerTest {
 
 	@Mock
 	private Grid grid;
+	@Mock
+	private Tile tile;
 	@Mock
 	private Logger logger;
 
@@ -31,6 +35,14 @@ public class RemoteInputHandlerTest {
 		MockitoAnnotations.initMocks(this);
 		handler = new RemoteInputHandler(grid);
 		handler.setLogger(logger);
+		
+		tile = Mockito.mock(Tile.class);
+		Tile[] tiles = new Tile[16];
+		for (int i = 0; i < 16; i++) {
+			tiles[i] = tile;
+		}
+		when(grid.getTiles()).thenReturn(tiles);
+		when(grid.getTileHandler()).thenReturn(new TileHandler(tiles));
 	}
 
 	@Test
@@ -43,25 +55,25 @@ public class RemoteInputHandlerTest {
 	@Test
 	public void testMoveUp() {
 		handler.moveUp();
-		verify(grid).move(Direction.UP);
+		assertTrue(handler.getCommand() instanceof MoveUpCommand);
 	}
 
 	@Test
 	public void testMoveDown() {
 		handler.moveDown();
-		verify(grid).move(Direction.DOWN);
+		assertTrue(handler.getCommand() instanceof MoveDownCommand);
 	}
 
 	@Test
 	public void testMoveRight() {
 		handler.moveRight();
-		verify(grid).move(Direction.RIGHT);
+		assertTrue(handler.getCommand() instanceof MoveRightCommand);
 	}
 
 	@Test
 	public void testMoveLeft() {
 		handler.moveLeft();
-		verify(grid).move(Direction.LEFT);
+		assertTrue(handler.getCommand() instanceof MoveLeftCommand);
 	}
 
 	@Test
@@ -85,7 +97,7 @@ public class RemoteInputHandlerTest {
 	@Test
 	public void testHandleRemoteInputMove() {
 		handler.handleRemoteInput("MOVE[R]");
-		verify(grid).move(Direction.RIGHT);
+		assertTrue(handler.getCommand() instanceof MoveRightCommand);
 	}
 
 	@Test
@@ -122,25 +134,25 @@ public class RemoteInputHandlerTest {
 	@Test
 	public void testHandleRemoteInputMoveLeft() {
 		handler.handleRemoteInput("MOVE[L]");
-		verify(grid).move(Direction.LEFT);
+		assertTrue(handler.getCommand() instanceof MoveLeftCommand);
 	}
 
 	@Test
 	public void testHandleRemoteInputMoveRight() {
 		handler.handleRemoteInput("MOVE[R]");
-		verify(grid).move(Direction.RIGHT);
+		assertTrue(handler.getCommand() instanceof MoveRightCommand);
 	}
 
 	@Test
 	public void testHandleRemoteInputMoveUp() {
 		handler.handleRemoteInput("MOVE[U]");
-		verify(grid).move(Direction.UP);
+		assertTrue(handler.getCommand() instanceof MoveUpCommand);
 	}
 
 	@Test
 	public void testHandleRemoteInputMoveDown() {
 		handler.handleRemoteInput("MOVE[D]");
-		verify(grid).move(Direction.DOWN);
+		assertTrue(handler.getCommand() instanceof MoveDownCommand);
 	}
 
 	@Test

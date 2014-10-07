@@ -80,14 +80,14 @@ public class TileHandlerTest {
 	/**
 	 * Tests a simple move to the right without any merges or other affected tiles.
 	 */
-	@Test
-	public void testMoveRight() {
-		tileHandler.moveRight();
-		/* Test if the tile is in the expected location. */
-		assertTrue(grid.getTiles()[7].getValue() == 8);
-		/* Test if the tile has disappeared from its previous location. */
-		assertFalse(grid.getTiles()[5].getValue() == 8);
-	}
+//	@Test
+//	public void testMoveRight() {
+//		tileHandler.moveRight();
+//		/* Test if the tile is in the expected location. */
+//		assertTrue(grid.getTiles()[7].getValue() == 8);
+//		/* Test if the tile has disappeared from its previous location. */
+//		assertFalse(grid.getTiles()[5].getValue() == 8);
+//	}
 
 	/**
 	 * Tests a simple move downwards without any merges or other affected tiles.
