@@ -92,8 +92,7 @@ public class TileHandler {
 		while (iterator.hasNext()) {
 			collidee = collider;
 			collider = iterator.next();
-			if (collider.getValue() == 0 || collidee.isMerged()
-					|| collider.isMerged()) {
+			if (collider.getValue() == 0) {
 				continue;
 			} else {
 				if (collidee.isEmpty()) {
@@ -103,7 +102,8 @@ public class TileHandler {
 					}
 					collider.reset();
 					isMoveMade = true;
-				} else if (collider.getValue() == collidee.getValue()) {
+				} else if (!collidee.isMerged() & !collider.isMerged()
+						&& collider.getValue() == collidee.getValue()) {
 					collidee.doubleValue();
 					collidee.setMerged(true);
 					collidee.merge();
@@ -118,7 +118,8 @@ public class TileHandler {
 
 	/**
 	 * Rotates the grid. Taken from:
-	 * https://github.com/bulenkov/2048/blob/master/src/com/bulenkov/game2048/Game2048.java#L184
+	 * https://github.com/bulenkov/2048/blob/master
+	 * /src/com/bulenkov/game2048/Game2048.java#L184
 	 * 
 	 * @param angle
 	 *            The angle by which to rotate.
