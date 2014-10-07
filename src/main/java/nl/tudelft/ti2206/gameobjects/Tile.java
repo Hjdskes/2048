@@ -332,4 +332,9 @@ public class Tile extends Actor {
 	public float getHeight() {
 		return TILE_HEIGHT;
 	}
+	
+	@Override
+	public String toString() {
+		return Integer.toString(value);
+	}
 }
