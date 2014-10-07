@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.gameobjects.TileIterator;
 
@@ -17,6 +18,8 @@ public class TileHandler {
 	/** The array holding all the tiles. */
 	private Tile[] tiles;
 
+	private Grid grid;
+	
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
 
@@ -29,8 +32,9 @@ public class TileHandler {
 	 * @param tiles
 	 *            The array holding the tiles.
 	 */
-	public TileHandler(Tile[] tiles) {
-		this.tiles = tiles;
+	public TileHandler(Grid grid) {
+		this.grid = grid;
+		this.tiles = grid.getTiles();
 		scoreIncrement = 0;
 	}
 
@@ -55,6 +59,7 @@ public class TileHandler {
 			}
 			resetMerged(iterator);
 		}
+		grid.setTiles(tiles);
 	}
 
 	/**
@@ -64,6 +69,7 @@ public class TileHandler {
 		tiles = rotate(180);
 		moveLeft();
 		tiles = rotate(180);
+		grid.setTiles(tiles);
 	}
 
 	/**
@@ -73,6 +79,7 @@ public class TileHandler {
 		tiles = rotate(90);
 		moveLeft();
 		tiles = rotate(270);
+		grid.setTiles(tiles);
 	}
 
 	/**
@@ -82,6 +89,7 @@ public class TileHandler {
 		tiles = rotate(270);
 		moveLeft();
 		tiles = rotate(90);
+		grid.setTiles(tiles);
 	}
 
 	/**
