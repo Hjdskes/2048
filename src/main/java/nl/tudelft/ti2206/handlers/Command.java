@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.handlers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
-import nl.tudelft.ti2206.gameobjects.TileIterator;
 import nl.tudelft.ti2206.log.Logger;
 
 public abstract class Command {
@@ -20,35 +19,29 @@ public abstract class Command {
 	public Grid grid;
 	public TileHandler tileHandler;
 	public Tile[] oldTiles;
+	public String gridString;
 	
 	public abstract void execute();
 	
 	public Command(Grid grid) {
 		this.tileHandler = grid.getTileHandler();
-	//	this.oldTiles = copyGrid(grid.getTiles());
 		this.grid = grid;
+		this.gridString = gridToString();
 	}
 	
-	public Command(Grid grid, boolean test) {
-		this.tileHandler = grid.getTileHandler();
-		if(!test) {
-			this.oldTiles = copyGrid(grid.getTiles());
-		}
-		this.grid = grid;
+	public String gridToString() {
+		return grid.toString();
 	}
 	
-	public Tile[] copyGrid(Tile[] oldTiles) {
-		Tile[] res = new Tile[16];
-		for(int i = 0; i < res.length; i++) {
-			Tile tile = new Tile(i, oldTiles[i].getValue());
-			res[i] = tile;
+	public void setStringAsGrid(String string) {
+		String[] temp = string.split(",");
+		for(int i = 0; i < temp.length; i++) {
+			grid.setTile(i, Integer.parseInt(temp[i]));
 		}
-		return res;
 	}
 	
 	public void undo() {
-		TileIterator iterator = new TileIterator(oldTiles);
-		grid.setTiles(iterator);
+		setStringAsGrid(gridString);
 	}
 	
 	public void updateAndSpawn() {

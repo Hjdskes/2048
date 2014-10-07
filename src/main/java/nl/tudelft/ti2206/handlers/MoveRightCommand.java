@@ -7,10 +7,6 @@ public class MoveRightCommand extends Command {
 	public MoveRightCommand(Grid grid) {
 		super(grid);
 	}
-	
-	public MoveRightCommand(Grid grid, Boolean test) {
-		super(grid, test);
-	}
 
 	@Override
 	public void execute() {
