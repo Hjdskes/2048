@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.handlers;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.gameobjects.TileIterator;
@@ -37,16 +39,18 @@ public class TileHandler {
 	 */
 	public void moveLeft() {
 		TileIterator iterator = null;
-		/* For each row in the Grid... */
+		/* For each row in the grid, check if moves can be made. */
 		for (int index = 0; index < tiles.length; index += ROW_LENGTH) {
-			/* ... create an iterator that iterates over that row only... */
-			iterator = new TileIterator(Arrays.copyOfRange(tiles, index, index
-					+ ROW_LENGTH));
-			/*
-			 * ... and make it do so four times, to move tiles as far as they
-			 * possibly can.
-			 */
+
 			for (int i = 0; i < ROW_LENGTH; i++) {
+				/*
+				 * FIXME: quite some iterators are created, try to reduce this.
+				 * Creates a new TileIterator for a certain row. This is done
+				 * for each time a row is checked for moves to make sure the
+				 * references to the tiles are up to date.
+				 */
+				iterator = new TileIterator(Arrays.copyOfRange(tiles, index,
+						index + ROW_LENGTH));
 				move(iterator);
 			}
 			resetMerged(iterator);
@@ -97,19 +101,10 @@ public class TileHandler {
 				continue;
 			} else {
 				if (collidee.isEmpty()) {
-					collidee.setValue(collider.getValue());
-					if (collider.isMerged()) {
-						collidee.setMerged(true);
-					}
-					collider.reset();
-					isMoveMade = true;
+					handleMove(collider, collidee);
 				} else if (collider.getValue() == collidee.getValue()) {
-					collidee.doubleValue();
-					collidee.setMerged(true);
-					collidee.merge();
-					collider.reset();
-					scoreIncrement += collidee.getValue();
-					isMoveMade = true;
+					handleMerge(collider);
+					handleMove(collider, collidee);
 				}
 			}
 		}
@@ -117,8 +112,42 @@ public class TileHandler {
 	}
 
 	/**
+	 * Handles the move except for merging, which is done handled in
+	 * {@link #handleMerge(Tile) handleMerge}.
+	 * 
+	 * @param collider
+	 *            The colliding Tile.
+	 * @param collidee
+	 *            The Tile that is collided with.
+	 */
+	private void handleMove(Tile collider, Tile collidee) {
+		isMoveMade = true;
+		List<Tile> tileList = Arrays.asList(tiles);
+		int originalIndex = collider.getIndex();
+		collider.move(collidee.getIndex());
+		collidee.setIndex(originalIndex);
+		collidee.reset();
+		Collections.swap(tileList, tileList.indexOf(collider),
+				tileList.indexOf(collidee));
+	}
+
+	/**
+	 * Updates the variables of the the colliding Tile after a merge.
+	 * 
+	 * @param collider
+	 *            The colliding Tile.
+	 */
+	private void handleMerge(Tile collider) {
+		collider.doubleValue();
+		collider.setMerged(true);
+		collider.merge();
+		scoreIncrement += collider.getValue();
+	}
+
+	/**
 	 * Rotates the grid. Taken from:
-	 * https://github.com/bulenkov/2048/blob/master/src/com/bulenkov/game2048/Game2048.java#L184
+	 * https://github.com/bulenkov/2048/blob/master
+	 * /src/com/bulenkov/game2048/Game2048.java#L184
 	 * 
 	 * @param angle
 	 *            The angle by which to rotate.

@@ -191,6 +191,18 @@ public class TileTest {
 		assertNotEquals(1.4f, tile.getScaleX(), .01);
 	}
 	
+//	@Test
+//	public void testActMove() {
+//		tile.setIndex(0);
+//		tile.setValue(2);
+//		float y = tile.getY();
+//		float x = tile.getX();
+//		tile.move(1);
+//		tile.act(.15f);
+//		assertNotEquals(x, tile.getX());
+//		assertEquals(y, tile.getY(), 0.01);
+//	}
+	
 	/**
 	 * Tests if the draw calls the draw method of Batch.class.
 	 */
