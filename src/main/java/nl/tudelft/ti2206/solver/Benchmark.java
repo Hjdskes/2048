@@ -10,7 +10,7 @@ import nl.tudelft.ti2206.gameobjects.Tile;
 public class Benchmark extends TimerTask {
 
 	public enum Strategy {
-		HUMAN, RANDOM
+		HUMAN, RANDOM, ARTHUR
 	}
 
 	private static long initTime = System.currentTimeMillis();
@@ -29,8 +29,9 @@ public class Benchmark extends TimerTask {
 	private boolean running = false;
 
 	public Benchmark(Grid grid, Strategy strategy, int delay, int maxruns) {
-
-		timer = new Timer();
+		
+		print("Initialising benchmark: " + maxruns + " games using strategy " + strategy + ", making one move every " + delay + " ms.");
+		
 		running = false;
 		runs = 0;
 
@@ -39,15 +40,15 @@ public class Benchmark extends TimerTask {
 		setMaxruns(maxruns);
 		setStrategy(strategy);
 	}
-	
-	/////////////
+
+	// ///////////
 	// setters
-	/////////////
-	
+	// ///////////
+
 	private static void print(String str) {
 		System.out.println("[AUTSOLVE]: " + str);
 	}
-	
+
 	public void setGrid(Grid grid) {
 		this.original = grid;
 	}
@@ -59,52 +60,57 @@ public class Benchmark extends TimerTask {
 	public void setMaxruns(int maxruns) {
 		this.maxruns = maxruns;
 	}
-	
+
 	private void setStrategy(Strategy strategy) {
 		this.strategy = strategy;
 	}
 
-	///////////////
+	// /////////////
 	// start/stop
-	///////////////
-	
+	// /////////////
+
 	/** Benchmark start. */
 	public void start() {
 
-		print("Trying to solve grid automatically " + maxruns
-				+ " times, making one move every " + delay + "ms...");
+		print("Benchmark started.");
 
 		initTime = System.currentTimeMillis();
-
-		timer.schedule(this, 0, delay);
 		
+		
+		timer = new Timer();
+		timer.schedule(this, 0, delay);
+
 		running = true;
 	}
-	
+
 	/** Stop benchmark. */
 	public void stop() {
-		timer.cancel();
-		
-		running = false;
+
+		if (isRunning()) {
+			timer.cancel();
+			timer.purge();
+			
+			timer = null;
+			running = false;
+			print("Benchmark terminated.");
+		}
 	}
-	
+
 	public boolean isRunning() {
 		return running;
 	}
 
 	public static void makeMove(Grid grid, Direction direction) {
-		
+
 		if (direction == null) {
 			print("WARNING: direction == null!");
-		}
-		else if (grid.move(direction) != -1) {
+		} else if (grid.move(direction) != -1) {
 			// print("selected move succesfully performed: " + direction);
 			succesfulMoves += 1;
-		}
-		else
+		} else
 			print("selected move failed: " + direction);
 	}
-	
+
 	public static void printGrid(Grid grid) {
 		Tile[] tiles = grid.getTiles();
 
@@ -116,10 +122,10 @@ public class Benchmark extends TimerTask {
 		print(line);
 	}
 
-	////////////////////////
+	// //////////////////////
 	// statistics printing
-	////////////////////////
-	
+	// //////////////////////
+
 	private void printStatsWon() {
 		long endTime = System.currentTimeMillis();
 		long seconds = (endTime - startTime) / 1000;
@@ -148,7 +154,7 @@ public class Benchmark extends TimerTask {
 		printGrid(original);
 
 	}
-	
+
 	private void printStatsFinal() {
 		long endTime = System.currentTimeMillis();
 		long seconds = (endTime - initTime) / 1000;
@@ -191,7 +197,7 @@ public class Benchmark extends TimerTask {
 
 			Direction direction = null;
 
-			if (strategy == Strategy.RANDOM) // Arthur's strategy
+			if (strategy == Strategy.RANDOM || strategy == Strategy.ARTHUR) // Arthur's strategy
 				direction = RandomSolver.selectMove(original);
 			else if (strategy == Strategy.HUMAN)
 				direction = HumanSolver.selectMove(original);

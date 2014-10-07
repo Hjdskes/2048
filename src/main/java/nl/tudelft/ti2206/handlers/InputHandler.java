@@ -71,18 +71,15 @@ public class InputHandler extends InputListener {
 
 		case Keys.S:
 
-			if (bmark == null)
-				bmark = new Benchmark(grid, Strategy.HUMAN, 1, 100);
-
-			if (bmark.isRunning()) {
-				bmark.stop();
-				logger.debug(className, "Autosolver stopped.");
-			} else {
-
+			if (bmark == null) {
 				logger.debug(className,
 						"Solving this grid! At least, trying to...");
-
+				bmark = new Benchmark(grid, Strategy.HUMAN, 100, 5);
 				bmark.start();
+			} else if (bmark.isRunning()) {
+				bmark.stop();
+				bmark = null;
+				logger.debug(className, "Autosolver stopped.");
 			}
 		}
 		return false;

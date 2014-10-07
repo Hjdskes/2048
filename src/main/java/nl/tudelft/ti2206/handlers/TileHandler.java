@@ -107,8 +107,8 @@ public class TileHandler {
 						collidee.setMerged(true);
 					}
 
-//					slidingTiles[collider.getIndex()].move(collider,
-//							collidee.getX(), collidee.getY());
+					slidingTiles[collider.getIndex()].move(collider,
+							collidee.getX(), collidee.getY());
 
 					collider.reset();
 					isMoveMade = true;
@@ -116,9 +116,8 @@ public class TileHandler {
 					collidee.doubleValue();
 					collidee.setMerged(true);
 					collidee.merge();
-
-//					slidingTiles[collider.getIndex()].move(collider,
-//							collidee.getX(), collidee.getY());
+					slidingTiles[collider.getIndex()].move(collider,
+							collidee.getX(), collidee.getY());
 
 					collider.reset();
 					scoreIncrement += collidee.getValue();

@@ -130,7 +130,7 @@ public class Grid extends Actor {
 		}
 
 		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(GameState.RUNNING);
+	//	TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -544,7 +544,7 @@ public class Grid extends Actor {
 		
 		for (int i = 0; i < tiles.length; i++) {
 			newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
-			newGrid.slidingTiles[i] = new SlidingTile(newGrid.tiles[i]);
+		//	newGrid.slidingTiles[i] = new SlidingTile(newGrid.tiles[i]);
 		}
 		return newGrid;
 	}
