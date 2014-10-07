@@ -1,7 +1,6 @@
 # Requirements specification Sprint 5
 
-The goal is to develop a multiplayer feature in our 2048 clone. These
-requirements extend the other requirements defined in `doc/Requirements.pdf`.
+The goal is to develop a multiplayer feature in our 2048 clone. These requirements extend the other requirements.
 
 All of the requirements have each been given a unique identifier followed by a
 number:
