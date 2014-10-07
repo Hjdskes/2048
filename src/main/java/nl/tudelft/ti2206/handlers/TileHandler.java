@@ -96,13 +96,13 @@ public class TileHandler {
 		while (iterator.hasNext()) {
 			collidee = collider;
 			collider = iterator.next();
-			if (collider.getValue() == 0 || collidee.isMerged()
-					|| collider.isMerged()) {
+			if (collider.getValue() == 0) {
 				continue;
 			} else {
 				if (collidee.isEmpty()) {
 					handleMove(collider, collidee);
-				} else if (collider.getValue() == collidee.getValue()) {
+				} else if (!collidee.isMerged() && !collider.isMerged()
+						&& collider.getValue() == collidee.getValue()) {
 					handleMerge(collider);
 					handleMove(collider, collidee);
 				}
