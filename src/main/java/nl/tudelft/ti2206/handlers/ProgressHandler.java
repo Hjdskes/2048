@@ -9,7 +9,6 @@ import nl.tudelft.ti2206.log.Logger;
  * saved game.
  */
 public class ProgressHandler {
-
 	/** A singleton reference to the this class. */
 	private static ProgressHandler instance = new ProgressHandler();
 
@@ -39,7 +38,6 @@ public class ProgressHandler {
 		logger.info(className, "Saving game to preference file...");
 
 		int highest = grid.getCurrentHighestTile();
-		int highscore = grid.getHighscore();
 		int score = grid.getScore();
 
 		if (!TwentyFourtyGame.isLost()) {
@@ -50,8 +48,8 @@ public class ProgressHandler {
 		if (highest > prefsHandler.getHighestTile()) {
 			prefsHandler.setHighest(highest);
 		}
-		if (highscore > prefsHandler.getHighscore()) {
-			prefsHandler.setHighscore(highscore);
+		if (score > prefsHandler.getHighscore()) {
+			prefsHandler.setHighscore(score);
 		}
 
 		logger.info(
@@ -86,7 +84,6 @@ public class ProgressHandler {
 	public Grid loadGame(Grid grid) {
 		logger.info(className, "Loading game from preference file...");
 
-		grid.setHighscore(prefsHandler.getHighscore());
 		grid.setScore(prefsHandler.getScore());
 
 		logger.info(

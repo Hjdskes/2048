@@ -28,12 +28,12 @@ public class RestartButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Screen gameScreen = screenHandler.get(0);
-				Stage stage = gameScreen.getStage();
-				Group group = stage.getRoot();
-				Grid grid = group.findActor("Grid");
-				screenHandler.removeTop();
-				grid.restart();
+//				Screen gameScreen = screenHandler.get(0);
+//				Stage stage = gameScreen.getStage();
+//				Group group = stage.getRoot();
+//				Grid grid = group.findActor("Grid");
+//				screenHandler.removeTop();
+//				grid.restart();
 			}
 		});
 	}

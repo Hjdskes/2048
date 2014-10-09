@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.solver;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -294,7 +292,6 @@ public class Solver extends TimerTask {
 	}
 
 	private Grid cloneGrid(Grid grid) {
-		int score = grid.getScore();
 		Tile[] tiles = grid.getTiles();
 		Grid res = new Grid(true);
 
@@ -302,7 +299,6 @@ public class Solver extends TimerTask {
 			res.getTiles()[i] = new Tile(i, tiles[i].getValue()); 
 		}
 		res.updateHighestTile();
-		res.setScore(score);
 		return res;
 	}
 }

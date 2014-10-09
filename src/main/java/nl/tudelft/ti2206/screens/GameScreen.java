@@ -1,10 +1,11 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.drawables.DrawableGrid;
+import nl.tudelft.ti2206.drawables.ScoreDisplay;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
@@ -21,6 +22,9 @@ public class GameScreen extends Screen {
 	/** The score tiles above the Grid. */
 	private ScoreDisplay scores;
 
+	/** The grid that is actually drawn. */
+	private DrawableGrid drawableGrid;
+
 	/** The button to restart the current game. */
 	private RestartButton restartButton;
 
@@ -34,9 +38,12 @@ public class GameScreen extends Screen {
 	public GameScreen() {
 		stage = new Stage();
 		grid = progressHandler.loadGame();
+		drawableGrid = new DrawableGrid(grid.getTiles());
 		restartButton = new RestartButton();
-		scores = new ScoreDisplay(grid);
-		this.setDrawBehavior( new DrawBeige(stage));
+		scores = new ScoreDisplay();
+		grid.addObserver(scores);
+		//grid.addObserver(drawableGrid);
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor to insert Mock objects. For testing only. */
@@ -46,7 +53,8 @@ public class GameScreen extends Screen {
 		this.grid = grid;
 		this.restartButton = button;
 		this.scores = scores;
-		this.setDrawBehavior( new DrawBeige(stage));
+		grid.addObserver(scores);
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override
@@ -55,8 +63,8 @@ public class GameScreen extends Screen {
 		stage.addListener(new InputHandler(grid));
 
 		/* Create the main group and pack everything in it. */
-		grid.setName("Grid");
-		stage.addActor(grid);
+		drawableGrid.setName("Grid");
+		stage.addActor(drawableGrid);
 		stage.addActor(restartButton);
 		stage.addActor(scores);		
 	}

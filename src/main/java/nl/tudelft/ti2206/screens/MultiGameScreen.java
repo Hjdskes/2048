@@ -1,9 +1,9 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.drawables.ScoreDisplay;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
@@ -81,8 +81,8 @@ public class MultiGameScreen extends Screen {
 		localGroup = new Group();
 		remoteGroup = new Group();
 
-		localScores = new ScoreDisplay(localGrid);
-		remoteScores = new ScoreDisplay(remoteGrid);
+		localScores = new ScoreDisplay();
+		remoteScores = new ScoreDisplay();
 
 		remoteInput = new RemoteInputHandler(remoteGrid);
 		networking.addObserver(remoteInput);
