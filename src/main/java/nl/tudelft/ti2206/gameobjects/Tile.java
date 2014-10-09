@@ -153,7 +153,7 @@ public class Tile extends Observable {
 	}
 
 	/** Marks the observable as changed and notifies the observers. */
-	private void changed() {
+	public void changed() {
 		if (!hasChanged()) {
 			setChanged();
 			notifyObservers();

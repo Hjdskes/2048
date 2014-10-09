@@ -106,6 +106,7 @@ public class DrawableTile extends Actor implements Observer {
 				moveAction.finish();
 				setBaseCoordinates();
 			}
+			getActions().clear();
 		}
 	}
 
@@ -257,5 +258,13 @@ public class DrawableTile extends Actor implements Observer {
 	 */
 	private void setSprite(Skin skin) {
 		region.setRegion(skin.getRegion("tile" + this.value));
+	}
+	
+	public int getValue() {
+		return value;
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 }
