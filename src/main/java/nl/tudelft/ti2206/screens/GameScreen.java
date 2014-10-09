@@ -39,7 +39,7 @@ public class GameScreen extends Screen {
 		stage = new Stage();
 		grid = progressHandler.loadGame();
 		drawableGrid = new DrawableGrid(grid.getTiles());
-		restartButton = new RestartButton();
+		restartButton = new RestartButton(grid);
 		scores = new ScoreDisplay();
 		grid.addObserver(scores);
 		//grid.addObserver(drawableGrid);
@@ -76,10 +76,10 @@ public class GameScreen extends Screen {
 		if (grid.getCurrentHighestTile() == 11
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(GameState.WON);
-			screenHandler.add(new WinScreen());
+			screenHandler.add(new WinScreen(grid));
 		} else if (grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(GameState.LOST);
-			screenHandler.add(new LoseScreen());
+			screenHandler.add(new LoseScreen(grid));
 		}
 	}
 	

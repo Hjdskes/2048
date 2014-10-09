@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,10 +23,10 @@ public class WinScreen extends Screen {
 	private RestartButton restartButton;
 
 	/** Constructs a new WinScreen. */
-	public WinScreen() {
+	public WinScreen(Grid grid) {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "wonoverlay");
-		restartButton = new RestartButton();
+		restartButton = new RestartButton(grid);
 		continueButton = new ContinueButton();
 		this.setDrawBehavior( new SimpleDraw(stage));
 	}

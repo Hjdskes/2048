@@ -4,11 +4,8 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.screens.Screen;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -20,7 +17,7 @@ public class RestartButton extends TextButton {
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Constructs a new RestartButton. */
-	public RestartButton() {
+	public RestartButton(final Grid grid) {
 		super("Restart", AssetHandler.getInstance().getSkin());
 		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);
 		this.setY(TwentyFourtyGame.GAP);
@@ -28,12 +25,8 @@ public class RestartButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-//				Screen gameScreen = screenHandler.get(0);
-//				Stage stage = gameScreen.getStage();
-//				Group group = stage.getRoot();
-//				Grid grid = group.findActor("Grid");
-//				screenHandler.removeTop();
-//				grid.restart();
+				screenHandler.removeTop();
+				grid.restart();
 			}
 		});
 	}
