@@ -25,7 +25,7 @@ import org.mockito.MockitoAnnotations;
  */
 public class GridTest {
 	@Mock private TileHandler tileHandler;
-
+	
 	/** The object under test. */
 	private Grid grid;
 

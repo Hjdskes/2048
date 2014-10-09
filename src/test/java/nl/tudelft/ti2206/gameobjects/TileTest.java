@@ -114,4 +114,10 @@ public class TileTest {
 		tile.doubleValue();
 		assertEquals(2, tile.getValue());
 	}
+	
+	@Test
+	public void testToString() {
+		tile.setValue(2048);
+		assertEquals("2048", tile.toString());
+	}
 }
