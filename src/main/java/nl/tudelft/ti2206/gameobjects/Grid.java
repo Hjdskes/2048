@@ -210,7 +210,7 @@ public class Grid extends Observable {
 			int location = getRandomEmptyLocation();
 			int value = initialValue();
 			setTile(location, value);
-			//tiles[location].spawn();
+			tiles[location].spawn();
 			updateHighestTile();
 			changed();
 

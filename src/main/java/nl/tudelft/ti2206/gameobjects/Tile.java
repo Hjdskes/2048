@@ -15,7 +15,7 @@ public class Tile extends Observable {
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
 
-	//private boolean spawning, moving, merging;
+	private boolean spawning, moving, merging;
 
 	/**
 	 * Creates a new Tile with the given value.
@@ -87,7 +87,7 @@ public class Tile extends Observable {
 	public void reset() {
 		setValue(0);
 		setMerged(false);
-		//spawning = moving = merging = false;
+		spawning = moving = merging = false;
 	}
 
 	/**
@@ -97,32 +97,32 @@ public class Tile extends Observable {
 		setValue(++value);
 	}
 
-//	public void merge() {
-//		merging = true;
-//		changed();
-//	}
+	public void merge() {
+		merging = true;
+		changed();
+	}
 	
-//	public void move() {
-//		move = true;
-//		changed();
-//	}
+	public void move() {
+		moving = true;
+		changed();
+	}
 
-//	public void spawn() {
-//		spawning = true;
-//		changed();
-//	}
+	public void spawn() {
+		spawning = true;
+		changed();
+	}
 	
-//	public boolean shouldMerge() {
-//		return merging;
-//	}
+	public boolean shouldMerge() {
+		return merging;
+	}
 	
-//	public boolean shouldMove() {
-//		return move;
-//	}
+	public boolean shouldMove() {
+		return moving;
+	}
 	
-//	public boolean shouldSpawn() {
-//		return spawning;
-//	}
+	public boolean shouldSpawn() {
+		return spawning;
+	}
 
 	private void changed() {
 		if (!hasChanged()) {

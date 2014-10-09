@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.drawables;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -10,11 +12,12 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DrawableTile extends Actor implements Observer {
 	/** Coordinates and offsets used to position the Tile. */
-	private static final int TILE_WIDTH  = 81;
+	private static final int TILE_WIDTH = 81;
 	private static final int TILE_HEIGHT = 81;
 	private static final int TILE_X = 115;
 	private static final int TILE_Y = 403;
@@ -23,10 +26,10 @@ public class DrawableTile extends Actor implements Observer {
 	private TextureRegion region;
 	/** The Skin to retrieve all textures from. */
 	private Skin skin;
-//	/** The Action used to perform a spawn animation. */
-//	private ScaleToAction spawnAction;
-//	/** The Action used to perform a merge animation. */
-//	private ScaleToAction mergeAction;
+	/** The Action used to perform a spawn animation. */
+	private ScaleToAction spawnAction;
+	/** The Action used to perform a merge animation. */
+	private ScaleToAction mergeAction;
 	/** The power of two that makes the value (e.g. 2^1, 2^2, 2^3, 2^4, ...). */
 	private int value;
 	/** The index into the Grid array. */
@@ -63,52 +66,64 @@ public class DrawableTile extends Actor implements Observer {
 		if (value != tile.getValue()) {
 			value = tile.getValue();
 			setSprite(skin);
-		} 
-//		if (tile.shouldMerge()) {
-//			merge();
-//		}
-//		if (tile.shouldMove()) {
-//			move();
-//		}
-//		if (tile.shouldSpawn()) {
-//			spawn();
-//		}
+		}
+		if (tile.shouldMerge()) {
+			merge();
+		}
+		// if (tile.shouldMove()) {
+		// move();
+		// }
+		if (tile.shouldSpawn()) {
+			spawn();
+		}
+		finishActions();
 	}
 
-//	/**
-//	 * Initializes a new spawn animation.
-//	 */
-//	public void spawn() {
-//		this.setScale(0.6f);
-//		spawnAction = new ScaleToAction();
-//		spawnAction.setScale(1f);
-//		spawnAction.setDuration(.3f);
-//		this.addAction(spawnAction);
-//	}
-//
-//	/**
-//	 * Initializes a new merge animation.
-//	 */
-//	public void merge() {
-//		this.setScale(1.4f);
-//		mergeAction = new ScaleToAction();
-//		mergeAction.setScale(1f);
-//		mergeAction.setDuration(.3f);
-//		this.addAction(mergeAction);
-//	}
-//
-//	@Override
-//	public void act(float delta) {
-//		if (getScaleX() > 1) {
-//			mergeAction.act(delta);
-//		} else if (getScaleX() < 1 && value != 0) {
-//			spawnAction.act(delta);
-//		} else if (getScaleX() < 1) {
-//			setScale(1);
-//		} else if (value == 0 && mergeAction != null) {
-//			mergeAction.finish();
-//		}
-//	}
+	private void finishActions() {
+		if (value == 0) {
+			if (getActions().contains(spawnAction, true)) {
+				spawnAction.finish();
+			}
+			if (getActions().contains(mergeAction, true)) {
+				mergeAction.finish();
+			}
+		}
+	}
+
+	/**
+	 * Initializes a new spawn animation.
+	 */
+	public void spawn() {
+		this.setScale(0.6f);
+		spawnAction = new ScaleToAction();
+		spawnAction.setScale(1f);
+		spawnAction.setDuration(.3f);
+		this.addAction(spawnAction);
+	}
+
+	/**
+	 * Initializes a new merge animation.
+	 */
+	public void merge() {
+		this.setScale(1.4f);
+		mergeAction = new ScaleToAction();
+		mergeAction.setScale(1f);
+		mergeAction.setDuration(.3f);
+		this.addAction(mergeAction);
+	}
+
+	@Override
+	public void act(float delta) {
+		if (getScaleX() > 1) {
+			mergeAction.act(delta);
+		} else if (getScaleX() < 1 && value != 0) {
+			spawnAction.act(delta);
+		} else if (getScaleX() < 1) {
+			setScale(1);
+		} else if (value == 0 && mergeAction != null) {
+			mergeAction.finish();
+		}
+	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
