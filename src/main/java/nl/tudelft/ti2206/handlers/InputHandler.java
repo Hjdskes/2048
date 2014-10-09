@@ -66,7 +66,8 @@ public class InputHandler extends InputListener {
 			return true;
 		case Keys.S:
 			if (solver == null) {
-				solver = new Solver(grid, 300);
+				solver = new Solver(grid, 3);
+				solver.solve();
 			} else {
 				solver.cancel();
 				solver = null;
