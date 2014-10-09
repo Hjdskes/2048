@@ -27,8 +27,11 @@ public class TileHandler {
 	 * @param tiles
 	 *            The array holding the tiles.
 	 */
+
 	public TileHandler(Tile[] tiles) {
+
 		this.tiles = tiles;
+
 		scoreIncrement = 0;
 	}
 
@@ -100,6 +103,7 @@ public class TileHandler {
 					if (collider.isMerged()) {
 						collidee.setMerged(true);
 					}
+
 					collider.reset();
 					isMoveMade = true;
 				} else if (!collidee.isMerged() & !collider.isMerged()
@@ -107,6 +111,7 @@ public class TileHandler {
 					collidee.doubleValue();
 					collidee.setMerged(true);
 					collidee.merge();
+
 					collider.reset();
 					scoreIncrement += collidee.getValue();
 					isMoveMade = true;

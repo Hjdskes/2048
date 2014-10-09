@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
@@ -54,7 +52,7 @@ public class Grid extends Actor {
 	/**
 	 * The name of the instance, initialized to the name of the class. Used
 	 * for logging.
-	 */
+	 */ 
 	private String objectName = this.getClass().getSimpleName();
 
 	/** The width of the Grid. */
@@ -113,18 +111,17 @@ public class Grid extends Actor {
 				.get("grid", Texture.class));
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
+		
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(tiles);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
+
 		}
 		if (!isEmpty) {
 			initGrid();
 		}
-
-		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -135,18 +132,22 @@ public class Grid extends Actor {
 		this.region = texture;
 		this.random = new Random();
 		this.tiles = new Tile[NTILES];
+
 		this.iterator = new TileIterator(tiles);
+		
 		this.tileHandler = new TileHandler(tiles);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0, skin, region);
+
 		}
+			
 		if (!isEmpty) {
 			initGrid();
 		}
 
 		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(GameState.RUNNING);
+//		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class Grid extends Actor {
 		logger.info(objectName, "Restarting grid.");
 
 		score = 0;
-			
+		
 		while (iterator.hasNext()) {
 			iterator.next().reset();
 		}
@@ -241,7 +242,7 @@ public class Grid extends Actor {
 		highestTile = 0;
 		updateHighestTile();
 
-		TwentyFourtyGame.setState(GameState.RUNNING);
+//		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -254,7 +255,10 @@ public class Grid extends Actor {
 	 * @param direction
 	 *            The direction in which is to be moved.
 	 */
-	public void move(Direction direction) {
+	public int move(Direction direction) {
+		
+		int newScore = score;
+		
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -275,7 +279,7 @@ public class Grid extends Actor {
 		if (tileHandler.isMoveMade()) {
 			logger.info(objectName, "Move " + direction + " succesfully made.");
 
-			int newScore = score + tileHandler.getScoreIncrement();
+			newScore = score + tileHandler.getScoreIncrement();
 			setScore(newScore);
 			logger.info(objectName, "Score value set to " + newScore + ".");
 
@@ -288,9 +292,12 @@ public class Grid extends Actor {
 					+ " (value = " + value + ").");
 		} else {
 			logger.debug(objectName, "Move " + direction + " ignored.");
+			return -1;
 		}
 
 		tileHandler.reset();
+		
+		return newScore;
 	}
 
 	/**
@@ -305,6 +312,10 @@ public class Grid extends Actor {
 			}
 		}
 		iterator.reset();
+		
+//		if (highestTile > 2048) {
+//			System.out.println("ZOMG HIGHEST TILE ====" + highestTile);
+//		}
 	}
 
 	/**
@@ -492,6 +503,7 @@ public class Grid extends Actor {
 		while (iterator.hasNext()) {
 			iterator.next().draw(batch, parentAlpha);
 		}
+
 		iterator.reset();
 	}
 
@@ -507,4 +519,15 @@ public class Grid extends Actor {
 		res = res.substring(0, res.length() - 1);
 		return res;
 	}
+	
+		@Override
+		public Grid clone() {
+			Grid newGrid = new Grid(true);
+			
+			for (int i = 0; i < tiles.length; i++) {
+				newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
+			//	newGrid.slidingTiles[i] = new SlidingTile(newGrid.tiles[i]);
+			}
+			return newGrid;
+		}
 }

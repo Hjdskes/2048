@@ -46,6 +46,13 @@ tile2048
   orig: 100, 100
   offset: 0, 0
   index: -1
+tile4096
+  rotate: false
+  xy: 614, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 tile256
   rotate: false
   xy: 410, 104

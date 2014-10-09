@@ -1,9 +1,13 @@
 package nl.tudelft.ti2206.handlers;
 
+import java.util.Timer;
+
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.solver.Benchmark;
+import nl.tudelft.ti2206.solver.Benchmark.Strategy;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -25,6 +29,10 @@ public class InputHandler extends InputListener {
 
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
+
+	Timer solver = null;
+
+	private Benchmark bmark;
 
 	/**
 	 * Creates a new InputHandler instance.
@@ -59,6 +67,20 @@ public class InputHandler extends InputListener {
 			logger.debug(className, "User pressed key: ESCAPE");
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
+			return true;
+
+		case Keys.S:
+
+//			if (bmark == null) {
+//				logger.debug(className,
+//						"Solving this grid! At least, trying to...");
+//				bmark = new Benchmark(grid, Strategy.HUMAN, 1, 100, 6);
+//				bmark.start();
+//			} else if (bmark.isRunning()) {
+//				bmark.stop();
+//				bmark = null;
+//				logger.debug(className, "Autosolver stopped.");
+//			}
 			return true;
 		}
 		return false;
