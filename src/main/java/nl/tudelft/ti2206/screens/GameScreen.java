@@ -65,11 +65,12 @@ public class GameScreen extends Screen {
 	public void update() {
 		super.update();
  
-		if (grid.getCurrentHighestTile() == 2048
-				&& !TwentyFourtyGame.isContinuing()) {
-			TwentyFourtyGame.setState(GameState.WON);
-			screenHandler.add(new WinScreen());
-		} else if (grid.getPossibleMoves() == 0) {
+//		if (grid.getCurrentHighestTile() == 11
+//				&& !TwentyFourtyGame.isContinuing()) {
+//			TwentyFourtyGame.setState(GameState.WON);
+//			screenHandler.add(new WinScreen());
+//		} else 
+		if (grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(GameState.LOST);
 			screenHandler.add(new LoseScreen());
 		}

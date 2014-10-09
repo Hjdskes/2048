@@ -109,7 +109,7 @@ public class TileHandler {
 					collidee.setMerged(true);
 					collidee.merge();
 					collider.reset();
-					scoreIncrement += collidee.getValue();
+					scoreIncrement += Math.pow(2, collidee.getValue());
 					isMoveMade = true;
 				}
 			}

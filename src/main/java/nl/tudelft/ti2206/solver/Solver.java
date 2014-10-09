@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.solver;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,8 +11,26 @@ import nl.tudelft.ti2206.gameobjects.Tile;
 
 public class Solver extends TimerTask {
 	private static final int[][] weightMatrices = {
-		{ 3, 2, 1, 0,  2, 1, 0, -1,  1,  0, -1, -2,  0, -1, -2, -3 },
-		{ 0, 1, 2, 3, -1, 0, 1,  2, -2, -1,  0,  1, -3, -2, -1,  0 }
+//		{  8,  7,  6,  5,
+//		   1,  2,  3,  4,
+//		  -4, -3, -2, -1, 
+//		  -5, -6, -7, -8
+//		},
+//		{ -5, -4,  1,  8,
+//		  -6, -3,  2,  7,
+//		  -7, -2,  3,  6,
+//		  -8, -1,  4,  5
+//		},
+		{ 8,  4,  1,  0,
+		  4,  1,  0, -1,
+		  1,  0, -1, -4,
+		  0, -1, -4, -8
+		},
+		{  0,  1,  4, 8,
+		  -1,  0,  1, 4,
+		  -4, -1,  0, 1,
+		  -8, -4, -1, 0
+		}
 	};
 
 	private Grid original;
@@ -29,7 +45,8 @@ public class Solver extends TimerTask {
 
 	@Override
 	public void run() {
-		if (original.getPossibleMoves() == 0 || TwentyFourtyGame.getState() != GameState.RUNNING) {
+		GameState state = TwentyFourtyGame.getState();
+		if (original.getPossibleMoves() == 0 || (state != GameState.CONTINUING &&  state != GameState.RUNNING)) {
 			this.cancel();
 		} else if (!calculating) {
 			System.out.println("Calculating next move...");
@@ -41,7 +58,7 @@ public class Solver extends TimerTask {
 				System.out.println("AUTOSOLVE: FAILED");
 			}
 			calculating = false;
-		}		
+		}
 	}
 
 	public void solve() {
@@ -55,14 +72,17 @@ public class Solver extends TimerTask {
 
 	private double evaluate(Grid grid) {
 		double empty = getEmptyTilesNumber(grid.getTiles());
-		double max = Math.pow(2, grid.getCurrentHighestTile());
-		double monotonicity = getMonotonicity(grid.getTiles());
+		//double max = Math.pow(2, grid.getCurrentHighestTile());
+		//double monotonicity = getMonotonicity(grid.getTiles());
 		double gradient = getGradient(grid.getTiles());
-		double smoothness = getSmoothness(grid.getTiles());
+		//double smoothness = getSmoothness(grid.getTiles());
 		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * monotonicity;
 		//return 0.3 * gradient + 0.1 * smoothness + 0.6 * empty;
 		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * max;
-		return 0.8 * gradient + 0.2 * smoothness;
+		//return 0.8 * gradient + 0.2 * smoothness;
+		//return 0.4 * gradient + 0.6 * empty; // GOOD
+		//return 0.6 * gradient + 0.4 * empty;
+		return gradient;
 	}
 
 	private Direction expectimax(Grid grid, int depth) {
@@ -87,6 +107,10 @@ public class Solver extends TimerTask {
 	private double playerMove(Grid grid, int depth) {
 		if (depth == 0) {
 			return grid.getPossibleMoves() > 0 ? evaluate(grid) : 0;
+		} else if (grid.getCurrentHighestTile() == 11) {
+			return Double.MAX_VALUE;
+		} else if (grid.getPossibleMoves() == 0) {
+			return Double.MIN_VALUE;
 		}
 		double bestValue = 0;
 
@@ -146,9 +170,9 @@ public class Solver extends TimerTask {
 
 	private double getGradient(Tile[] tiles) {
 		double best = 0;
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < weightMatrices.length; i++) {
 			double s = 0;
-			for (int j = 0; j < 16; j++) {
+			for (int j = 0; j < tiles.length; j++) {
 				s += weightMatrices[i][j] * Math.pow(2, tiles[j].getValue());
 			}
 			s = Math.abs(s);
@@ -294,15 +318,14 @@ public class Solver extends TimerTask {
 	}
 
 	private Grid cloneGrid(Grid grid) {
-		int score = grid.getScore();
 		Tile[] tiles = grid.getTiles();
 		Grid res = new Grid(true);
+		Tile[] newTiles = res.getTiles();
 
 		for(int i = 0; i < tiles.length; i++) {
-			res.getTiles()[i] = new Tile(i, tiles[i].getValue()); 
+			newTiles[i] = new Tile(i, tiles[i].getValue()); 
 		}
 		res.updateHighestTile();
-		res.setScore(score);
 		return res;
 	}
 }

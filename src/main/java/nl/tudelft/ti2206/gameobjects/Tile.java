@@ -162,7 +162,7 @@ public class Tile extends Actor {
 	 * Doubles the value of the Tile.
 	 */
 	public void doubleValue() {
-		setValue(value * 2);
+		setValue(++value);
 	}
 
 	/**
