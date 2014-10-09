@@ -35,13 +35,13 @@ public class TileHandlerTest {
 	 * following grid is used:
 	 * 
 	 * +---+---+---+---+ 
-	 * | 8 | 0 | 4 | 8 |
+	 * | 3 | 0 | 2 | 3 |
 	 * +---+---+---+---+ 
-	 * | 0 | 8 | 0 | 0 | 
+	 * | 0 | 3 | 0 | 0 | 
 	 * +---+---+---+---+ 
-	 * | 0 | 0 | 8 | 0 |
+	 * | 0 | 0 | 3 | 0 |
 	 * +---+---+---+---+ 
-	 * | 0 | 0 | 0 | 8 |
+	 * | 0 | 0 | 0 | 3 |
 	 * +---+---+---+---+
 	 *  
 	 * With this grid we can test merges and effects on other tiles.
@@ -58,10 +58,10 @@ public class TileHandlerTest {
 		grid = new Grid(true, skin, region);
 		emptyGrid = new Grid(true, skin, region);
 		for (int i = 0; i < 16; i = i + 5) {
-			grid.getTiles()[i].setValue(8);
+			grid.getTiles()[i].setValue(3);
 		}
-		grid.getTiles()[2].setValue(4);
-		grid.getTiles()[3].setValue(8);
+		grid.getTiles()[2].setValue(2);
+		grid.getTiles()[3].setValue(3);
 		tileHandler = new TileHandler(grid.getTiles());
 	}
 
@@ -72,9 +72,9 @@ public class TileHandlerTest {
 	public void testMoveUp() {
 		tileHandler.moveUp();
 		/* Test if the tile is in the expected location. */
-		assertTrue(grid.getTiles()[1].getValue() == 8);
+		assertTrue(grid.getTiles()[1].getValue() == 3);
 		/* Test if the tile has disappeared from its previous location. */
-		assertFalse(grid.getTiles()[5].getValue() == 8);
+		assertFalse(grid.getTiles()[5].getValue() == 3);
 	}
 
 	/**
@@ -84,9 +84,9 @@ public class TileHandlerTest {
 	public void testMoveRight() {
 		tileHandler.moveRight();
 		/* Test if the tile is in the expected location. */
-		assertTrue(grid.getTiles()[7].getValue() == 8);
+		assertTrue(grid.getTiles()[7].getValue() == 3);
 		/* Test if the tile has disappeared from its previous location. */
-		assertFalse(grid.getTiles()[5].getValue() == 8);
+		assertFalse(grid.getTiles()[5].getValue() == 3);
 	}
 
 	/**
@@ -96,9 +96,9 @@ public class TileHandlerTest {
 	public void testMoveDown() {
 		tileHandler.moveDown();
 		/* Test if the tile is in the expected location. */
-		assertTrue(grid.getTiles()[12].getValue() == 8);
+		assertTrue(grid.getTiles()[12].getValue() == 3);
 		/* Test if the tile has disappeared from its previous location. */
-		assertFalse(grid.getTiles()[0].getValue() == 8);
+		assertFalse(grid.getTiles()[0].getValue() == 3);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class TileHandlerTest {
 	public void testMoveLeft() {
 		tileHandler.moveLeft();
 		/* Test if the tile is in the expected location. */
-		assertTrue(grid.getTiles()[0].getValue() == 8);
+		assertTrue(grid.getTiles()[0].getValue() == 3);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class TileHandlerTest {
 		tileHandler.moveUp();
 		/* Test if the new merged tile is in the expected location and
 		 * if the other tiles have disappeared. */
-		assertEquals(grid.toString(), "8,8,4,16,0,0,8,0,0,0,0,0,0,0,0,0"); 
+		assertEquals(grid.toString(), "3,3,2,4,0,0,3,0,0,0,0,0,0,0,0,0"); 
 	}
 
 	/**
@@ -140,10 +140,10 @@ public class TileHandlerTest {
 	public void testNonMergableTiles() {
 		tileHandler.moveUp();
 		/* Test if the tiles are in their expected locations. */
-		assertTrue(grid.getTiles()[2].getValue() == 4);
-		assertTrue(grid.getTiles()[6].getValue() == 8);
+		assertTrue(grid.getTiles()[2].getValue() == 2);
+		assertTrue(grid.getTiles()[6].getValue() == 3);
 		/* Test if the moved tile has disappeared from its previous location. */
-		assertFalse(grid.getTiles()[10].getValue() == 8);
+		assertFalse(grid.getTiles()[10].getValue() == 3);
 
 	}
 
@@ -155,19 +155,19 @@ public class TileHandlerTest {
 	public void testNonMergableTiles2() {
 		tileHandler.moveRight();
 		/* Test if the tiles are in expected locations. */
-		assertEquals(grid.toString(), "0,8,4,8,0,0,0,8,0,0,0,8,0,0,0,8"); 
+		assertEquals(grid.toString(), "0,3,2,3,0,0,0,3,0,0,0,3,0,0,0,3"); 
 	}
 
 	/**
 	 * Tests if multiple merge combinations can be made.
-	 * In this case: | 8 | 8 | 8 | 8 | ==> | 0 | 0 | 0 | 0 |
-	 *               | 0 | 0 | 0 | 0 |     | 16| 16| 0 | 0 |
+	 * In this case: | 3 | 3 | 3 | 3 | ==> | 0 | 0 | 0 | 0 |
+	 *               | 0 | 0 | 0 | 0 |     | 4 | 4 | 0 | 0 |
 	 */
 	@Test
 	public void testDoubleMerge() {
 		tileHandler.moveLeft();
 		tileHandler.moveDown();
-		assertEquals(grid.toString(), "0,0,0,0,0,0,0,0,16,0,0,0,16,4,8,0");
+		assertEquals(grid.toString(), "0,0,0,0,0,0,0,0,4,0,0,0,4,2,3,0");
 	}
 
 	/**
@@ -175,15 +175,15 @@ public class TileHandlerTest {
 	 * Moving a row of three tiles of the same type should firstly merge
 	 * the tiles from the direction the tiles are being moved.
 	 * For example: 
-	 * | 8 | 8 | 8 | 0 | ===> | 16| 8 | 0 | 0 |
+	 * | 3 | 3 | 3 | 0 | ===> | 4 | 3 | 0 | 0 |
 	 * and not:
-	 * | 8 | 8 | 8 | 0 | ===> | 8 | 16| 0 | 0 |
+	 * | 3 | 3 | 3 | 0 | ===> | 3 | 4 | 0 | 0 |
 	 */
 	@Test
 	public void testMergeOrder() {
 		tileHandler.moveDown();
 		tileHandler.moveLeft();
-		assertEquals(grid.toString(), "0,0,0,0,0,0,0,0,4,0,0,0,16,8,16,0");
+		assertEquals(grid.toString(), "0,0,0,0,0,0,0,0,2,0,0,0,4,3,4,0");
 	}
 
 	/**

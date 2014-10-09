@@ -32,10 +32,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * @author group-21
  */
 public class GridTest {
-	/** The lowest value to start with. */
-	private static final int TWO = 2;
-	/** The highest value to start with. */
-	private static final int FOUR = 4;
 	/** The object under test. */
 	private Grid grid;
 
@@ -86,8 +82,8 @@ public class GridTest {
 				 * Make sure the grid only contains 2's and/or 4's and empty
 				 * tiles.
 				 */
-				if (grid.getTiles()[i].getValue() != TWO
-						&& grid.getTiles()[i].getValue() != FOUR) {
+				if (grid.getTiles()[i].getValue() != Grid.TWO
+						&& grid.getTiles()[i].getValue() != Grid.FOUR) {
 					wrongTiles++;
 				}
 				filledTiles++;
@@ -146,8 +142,10 @@ public class GridTest {
 	 */
 	@Test
 	public void testGetPossibleMovesFalse() {
-		int[] grid_noMoves = { TWO, FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO, TWO,
-				FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO };
+		int[] grid_noMoves = { Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+							   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO,
+							   Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+							   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
 
 		for (int i = 0; i < grid_noMoves.length; i++) {
 			grid.setTile(i, grid_noMoves[i]);
@@ -168,8 +166,10 @@ public class GridTest {
 
 	@Test
 	public void testGetTileNeighbours() {
-		int[] grid_noMoves = { TWO, FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO, TWO,
-				FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO };
+		int[] grid_noMoves = { Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+				   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO,
+				   Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+				   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
 
 		// initialize grid:
 		for (int i = 0; i < grid_noMoves.length; i++)
@@ -181,7 +181,7 @@ public class GridTest {
 		int found = 0;
 
 		for (Tile neighbour : neighbours) {
-			if (neighbour.getValue() == FOUR)
+			if (neighbour.getValue() == Grid.FOUR)
 				found++;
 		}
 		assertEquals(4, found);
@@ -254,8 +254,8 @@ public class GridTest {
 		 */
 		grid.restart();
 		tiles = 0;
-		assertTrue(grid.getCurrentHighestTile() == 2
-				|| grid.getCurrentHighestTile() == 4);
+		assertTrue(grid.getCurrentHighestTile() == Grid.TWO
+				|| grid.getCurrentHighestTile() == Grid.FOUR);
 		for (Tile tile : grid.getTiles()) {
 			if (!tile.isEmpty()) {
 				tiles++;

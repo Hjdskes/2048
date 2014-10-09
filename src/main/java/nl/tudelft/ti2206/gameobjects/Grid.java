@@ -73,10 +73,10 @@ public class Grid extends Actor {
 	private static final int NTILES = 16;
 
 	/** The lowest value to start with. */
-	private static final int TWO = 1;
+	public static final int TWO = 1;
 
 	/** The highest value to start with. */
-	private static final int FOUR = 2;
+	public static final int FOUR = 2;
 
 	/** The area of a Texture the Grid will use to draw itself. */
 	private TextureRegion region;
