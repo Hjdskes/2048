@@ -331,6 +331,14 @@ public class Grid extends Observable {
 	}
 
 	/**
+	 * Sets the Grid's name.
+	 * @param name The new name.
+	 */
+	public void setObjectName(String name) {
+		this.objectName = name;
+	}
+
+	/**
 	 * @return The current score.
 	 */
 	public int getScore() {
