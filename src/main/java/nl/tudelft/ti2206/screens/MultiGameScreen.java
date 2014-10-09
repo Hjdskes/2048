@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.drawables.DrawableGrid;
 import nl.tudelft.ti2206.drawables.ScoreDisplay;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
@@ -22,9 +23,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class MultiGameScreen extends Screen {
 	/** The local grid holding all the local Tiles. */
 	private Grid localGrid;
+	private DrawableGrid localDrawableGrid;
 
 	/** The remote grid holding all the remote Tiles. */
 	private Grid remoteGrid;
+	private DrawableGrid remoteDrawableGrid;
 
 	/** The ScoreDisplay for the local Grid. */
 	private ScoreDisplay localScores;
@@ -70,11 +73,13 @@ public class MultiGameScreen extends Screen {
 
 		localGrid = new Grid(false);
 		remoteGrid = new Grid(false);
-		
+
 		/* Sets the name of the objects. Used for logging */
 		localGrid.setObjectName("LocalGrid");
 		remoteGrid.setObjectName("RemoteGrid");
 
+		localDrawableGrid = new DrawableGrid(localGrid.getTiles());
+		remoteDrawableGrid = new DrawableGrid(remoteGrid.getTiles());
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Opponent", assetHandler.getSkin());
 
@@ -82,7 +87,9 @@ public class MultiGameScreen extends Screen {
 		remoteGroup = new Group();
 
 		localScores = new ScoreDisplay();
+		localGrid.addObserver(localScores);
 		remoteScores = new ScoreDisplay();
+		remoteGrid.addObserver(remoteScores);
 
 		remoteInput = new RemoteInputHandler(remoteGrid);
 		networking.addObserver(remoteInput);
@@ -114,14 +121,14 @@ public class MultiGameScreen extends Screen {
 		you.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		you.setY(2.5f * TwentyFourtyGame.GAP);
 		localGroup.addActor(localScores);
-		localGroup.addActor(localGrid);
+		localGroup.addActor(localDrawableGrid);
 		localGroup.addActor(you);
 
 		/* Create our remote groups and actors. */
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
 		remoteGroup.addActor(remoteScores);
-		remoteGroup.addActor(remoteGrid);
+		remoteGroup.addActor(remoteDrawableGrid);
 		remoteGroup.addActor(opponent);
 		remoteGroup.setX(600);
 
