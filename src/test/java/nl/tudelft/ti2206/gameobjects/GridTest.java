@@ -230,8 +230,8 @@ public class GridTest {
 		 */
 		grid.restart();
 		tiles = 0;
-		assertTrue(grid.getCurrentHighestTile() == 1
-				|| grid.getCurrentHighestTile() == 2);
+		assertTrue(grid.getCurrentHighestTile() == Grid.TWO
+				|| grid.getCurrentHighestTile() == Grid.FOUR);
 		for (Tile tile : grid.getTiles()) {
 			if (!tile.isEmpty()) {
 				tiles++;
