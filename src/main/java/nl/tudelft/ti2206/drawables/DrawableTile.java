@@ -3,8 +3,6 @@ package nl.tudelft.ti2206.drawables;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
-
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
