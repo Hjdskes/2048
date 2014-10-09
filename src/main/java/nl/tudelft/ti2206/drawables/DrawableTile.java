@@ -49,9 +49,12 @@ public class DrawableTile extends Actor implements Observer {
 	 * @param region
 	 *            The TextureRegion this Tile will use to draw itself.
 	 */
-	public DrawableTile(Skin skin, TextureRegion region) {
+	public DrawableTile(int index, int value, Skin skin, TextureRegion region) {
+		this.index = index;
+		this.value = value;
 		this.skin = skin;
 		this.region = region;
+		setSprite(skin);
 	}
 
 	@Override
@@ -64,7 +67,6 @@ public class DrawableTile extends Actor implements Observer {
 //		if (tile.shouldMerge()) {
 //			merge();
 //		}
-		// TODO: uncomment when sliding tiles have been added to this branch
 //		if (tile.shouldMove()) {
 //			move();
 //		}

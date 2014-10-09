@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.drawables.DrawableGrid;
-import nl.tudelft.ti2206.drawables.ScoreDisplay;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -20,7 +20,7 @@ public class GameScreen extends Screen {
 	private Grid grid;
 
 	/** The score tiles above the Grid. */
-	private ScoreDisplay scores;
+	private Scores scores;
 
 	/** The grid that is actually drawn. */
 	private DrawableGrid drawableGrid;
@@ -40,7 +40,8 @@ public class GameScreen extends Screen {
 		grid = progressHandler.loadGame();
 		drawableGrid = new DrawableGrid(grid.getTiles());
 		restartButton = new RestartButton(grid);
-		scores = new ScoreDisplay();
+		scores = new Scores();
+
 		grid.addObserver(scores);
 		//grid.addObserver(drawableGrid);
 		this.setDrawBehavior(new DrawBeige(stage));
@@ -48,7 +49,7 @@ public class GameScreen extends Screen {
 
 	/** Constructor to insert Mock objects. For testing only. */
 	public GameScreen(Stage stage, Grid grid, RestartButton button,
-			ScoreDisplay scores) {
+			Scores scores) {
 		this.stage = stage;
 		this.grid = grid;
 		this.restartButton = button;
@@ -63,7 +64,7 @@ public class GameScreen extends Screen {
 		stage.addListener(new InputHandler(grid));
 
 		/* Create the main group and pack everything in it. */
-		drawableGrid.setName("Grid");
+		//drawableGrid.setName("Grid");
 		stage.addActor(drawableGrid);
 		stage.addActor(restartButton);
 		stage.addActor(scores);		

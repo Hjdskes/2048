@@ -17,16 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
  * displaying scores. It extends Group so an instance of this class can be added
  * to the stage.
  */
-public class ScoreDisplay extends Group implements Observer {
+public class Scores extends Group implements Observer {
 	/** Coordinates and offsets used to position the labels. */
 	private static final int LABEL_X = 100;
 	private static final int LABEL_Y = 520;
 	private static final int HEIGHT = 70;
 	private static final int SCORE_WIDTH = 140;
 	private static final int HIGHEST_WIDTH = 90;
-
-	/** Keeps track of the current score. */
-	private int score;
 
 	/** Keeps track of the current high score. */
 	private int highScore;
@@ -46,25 +43,23 @@ public class ScoreDisplay extends Group implements Observer {
 	 * Creates a new ScoreDisplay object. Automatically creates all textures and
 	 * labels and positions them.
 	 */
-	public ScoreDisplay() {
+	public Scores() {
 		initLabels();
 
 		addLabelsToGroup();
 		setLabelLocations();
-		highestTile = (int) Math.pow(2, PreferenceHandler.getInstance()
-				.getHighestTile());
+		highestTile = PreferenceHandler.getInstance().getHighestTile();
 	}
 
 	/** Constructor for testing purposes only */
-	public ScoreDisplay(Label mockLabel) {
+	public Scores(Label mockLabel) {
 		this.scoreLabel = mockLabel;
 		this.highScoreLabel = mockLabel;
 		this.highestTileLabel = mockLabel;
 
 		addLabelsToGroup();
 		setLabelLocations();
-		highestTile = (int) Math.pow(2, PreferenceHandler.getInstance()
-				.getHighestTile());
+		highestTile = PreferenceHandler.getInstance().getHighestTile();
 	}
 
 	/**
@@ -114,15 +109,6 @@ public class ScoreDisplay extends Group implements Observer {
 	}
 
 	/**
-	 * Updates the all time highest tile value used to determine the value for
-	 * the highestTileLabel
-	 */
-	public void updateAllTimeHighestTile() {
-		highestTile = (int) Math.pow(2, PreferenceHandler.getInstance()
-				.getHighestTile());
-	}
-
-	/**
 	 * @return The x-coordinate of the score tile.
 	 */
 	@Override
@@ -139,17 +125,10 @@ public class ScoreDisplay extends Group implements Observer {
 	}
 
 	/**
-	 * @return The current score.
-	 */
-	public int getScore() {
-		return score;
-	}
-
-	/**
 	 * @return The current high score. Is not necessarily higher than the saved
 	 *         high score. This is checked when saving the game.
 	 */
-	public int getHighscore() {
+	public int getHighScore() {
 		return highScore;
 	}
 
@@ -159,16 +138,6 @@ public class ScoreDisplay extends Group implements Observer {
 	 */
 	public int getHighestTile() {
 		return highestTile;
-	}
-
-	/**
-	 * Sets the current score to the value provided.
-	 * 
-	 * @param score
-	 *            The new score.
-	 */
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 	/**
@@ -203,10 +172,9 @@ public class ScoreDisplay extends Group implements Observer {
 		int currentHighest = (int) Math.pow(2, grid.getCurrentHighestTile());
 		setHighestTile(currentHighest);
 		setHighScore(grid.getScore());
-		setScore(grid.getScore());
 
-		scoreLabel.setText(Integer.toString(highestTile));
-		scoreLabel.setText(Integer.toString(highScore));
-		scoreLabel.setText(Integer.toString(score));
+		highestTileLabel.setText(Integer.toString(highestTile));
+		highScoreLabel.setText(Integer.toString(highScore));
+		scoreLabel.setText(Integer.toString(grid.getScore()));
 	}
 }
