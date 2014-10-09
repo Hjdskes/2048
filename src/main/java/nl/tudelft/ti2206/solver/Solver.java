@@ -43,7 +43,7 @@ public class Solver extends TimerTask {
 	}
 
 	public void solve() {
-		new Timer().schedule(this, 0, 100);
+		new Timer().schedule(this, 0, 50);
 	}
 
 	public Direction findMove(Grid grid, int depth) {
@@ -60,7 +60,8 @@ public class Solver extends TimerTask {
 		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * monotonicity;
 		//return 0.3 * gradient + 0.1 * smoothness + 0.6 * empty;
 		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * max;
-		return 0.8 * gradient + 0.2 * smoothness;
+//		return 0.8 * gradient + 0.2 * smoothness;
+		return 0.7 * monotonicity + 0.1 * smoothness + max + 3.5 * empty;
 	}
 
 	private Direction expectimax(Grid grid, int depth) {
