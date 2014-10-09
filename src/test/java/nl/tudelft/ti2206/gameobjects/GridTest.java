@@ -33,9 +33,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class GridTest {
 	/** The lowest value to start with. */
-	private static final int TWO = 2;
+	private static final int TWO = 1;
 	/** The highest value to start with. */
-	private static final int FOUR = 4;
+	private static final int FOUR = 2;
 	/** The object under test. */
 	private Grid grid;
 
@@ -254,8 +254,8 @@ public class GridTest {
 		 */
 		grid.restart();
 		tiles = 0;
-		assertTrue(grid.getCurrentHighestTile() == 2
-				|| grid.getCurrentHighestTile() == 4);
+		assertTrue(grid.getCurrentHighestTile() == 1
+				|| grid.getCurrentHighestTile() == 2);
 		for (Tile tile : grid.getTiles()) {
 			if (!tile.isEmpty()) {
 				tiles++;

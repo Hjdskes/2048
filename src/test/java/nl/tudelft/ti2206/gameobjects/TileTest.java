@@ -118,9 +118,9 @@ public class TileTest {
 	 */
 	@Test
 	public void testDoubleValue() {
-		tile.setValue(2);
+		tile.setValue(1);
 		tile.doubleValue();
-		assertEquals(4, tile.getValue());
+		assertEquals(2, tile.getValue());
 	}
 
 	/**

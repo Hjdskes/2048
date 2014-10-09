@@ -139,7 +139,7 @@ public class MultiGameScreen extends Screen {
 			screenHandler.add(new ConnectionLostScreen());
 		}
 
-		if (localGrid.getCurrentHighestTile() == 2048
+		if (localGrid.getCurrentHighestTile() == 11
 				|| remoteGrid.getPossibleMoves() == 0) {
 			logger.info(className,
 					"Local player won the multiplayer game. The score of the local player: "
@@ -147,7 +147,7 @@ public class MultiGameScreen extends Screen {
 			TwentyFourtyGame.setState(GameState.WON);
 			screenHandler.add(new MultiWinScreen());
 		} else if (localGrid.getPossibleMoves() == 0
-				|| remoteGrid.getCurrentHighestTile() == 2048) {
+				|| remoteGrid.getCurrentHighestTile() == 11) {
 			logger.info(className,
 					"Local player lost the multiplayer game. The score of the remote player: "
 							+ Integer.toString(remoteGrid.getScore()));

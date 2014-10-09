@@ -40,7 +40,7 @@ public class Tile extends Actor {
 	 */
 	private TextureRegion region;
 
-	/** The value (e.g. 2, 4, 8, 16, ...). */
+	/** The power of two that makes the value (e.g. 2^1, 2^2, 2^3, 2^4, ...). */
 	private int value;
 
 	/** The index into the Grid array. */
@@ -162,7 +162,7 @@ public class Tile extends Actor {
 	 * Doubles the value of the Tile.
 	 */
 	public void doubleValue() {
-		setValue(value * 2);
+		setValue(++value);
 	}
 
 	/**

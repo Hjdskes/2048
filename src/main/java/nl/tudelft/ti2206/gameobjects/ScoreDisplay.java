@@ -49,7 +49,7 @@ public class ScoreDisplay extends Group {
 		initLabels();
 		setLabelLocations();
 		addLabelsToGroup();
-		allTimeHighestValue = PreferenceHandler.getInstance().getHighestTile();
+		allTimeHighestValue = (int) Math.pow(2, PreferenceHandler.getInstance().getHighestTile());
 	}
 
 	/** Constructor for testing purposes only */
@@ -61,7 +61,7 @@ public class ScoreDisplay extends Group {
 
 		addLabelsToGroup();
 		setLabelLocations();
-		allTimeHighestValue = PreferenceHandler.getInstance().getHighestTile();
+		allTimeHighestValue = (int) Math.pow(2, PreferenceHandler.getInstance().getHighestTile());
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class ScoreDisplay extends Group {
 				assetHandler.getSkin(), "highest") {
 			@Override
 			public void act(float delta) {
-				int currentHighest = grid.getCurrentHighestTile();
+				int currentHighest = (int) Math.pow(2, grid.getCurrentHighestTile());
 				String value = Integer
 						.toString(allTimeHighestValue > currentHighest ? allTimeHighestValue
 								: currentHighest);
@@ -134,7 +134,7 @@ public class ScoreDisplay extends Group {
 	 * the highestTileLabel
 	 */
 	public static void updateAllTimeHighestTile() {
-		allTimeHighestValue = PreferenceHandler.getInstance().getHighestTile();
+		allTimeHighestValue = (int) Math.pow(2, PreferenceHandler.getInstance().getHighestTile());
 	}
 
 	/**

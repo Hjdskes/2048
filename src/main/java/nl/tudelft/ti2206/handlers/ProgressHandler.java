@@ -123,7 +123,7 @@ public class ProgressHandler {
 
 			for (int i = 0; i < split.length; i++) {
 				int value = Integer.parseInt(split[i]);
-				grid.setTile(i, value % 2 == 0 ? value : 0);
+				grid.setTile(i, value < 0 ? 0 : value);
 			}
 			return grid;
 		}

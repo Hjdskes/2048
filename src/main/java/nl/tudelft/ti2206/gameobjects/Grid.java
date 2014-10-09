@@ -73,10 +73,10 @@ public class Grid extends Actor {
 	private static final int NTILES = 16;
 
 	/** The lowest value to start with. */
-	private static final int TWO = 2;
+	private static final int TWO = 1;
 
 	/** The highest value to start with. */
-	private static final int FOUR = 4;
+	private static final int FOUR = 2;
 
 	/** The area of a Texture the Grid will use to draw itself. */
 	private TextureRegion region;
@@ -194,7 +194,7 @@ public class Grid extends Actor {
 	 * @param index
 	 *            The Tile's index on the grid.
 	 * @param value
-	 *            The Tile's value (should be a multiple of 2 or 0).
+	 *            The Tile's value (should be a value bigger than zero)).
 	 */
 	public void setTile(int index, int value) {
 		tiles[index].setValue(value);

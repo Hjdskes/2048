@@ -65,7 +65,7 @@ public class GameScreen extends Screen {
 	public void update() {
 		super.update();
  
-		if (grid.getCurrentHighestTile() == 2048
+		if (grid.getCurrentHighestTile() == 11
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(GameState.WON);
 			screenHandler.add(new WinScreen());

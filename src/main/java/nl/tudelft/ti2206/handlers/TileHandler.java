@@ -93,8 +93,7 @@ public class TileHandler {
 		while (iterator.hasNext()) {
 			collidee = collider;
 			collider = iterator.next();
-			if (collider.getValue() == 0 || collidee.isMerged()
-					|| collider.isMerged()) {
+			if (collider.getValue() == 0) {
 				continue;
 			} else {
 				if (collidee.isEmpty()) {
@@ -104,12 +103,13 @@ public class TileHandler {
 					}
 					collider.reset();
 					isMoveMade = true;
-				} else if (collider.getValue() == collidee.getValue()) {
+				} else if (!collider.isMerged() && !collidee.isMerged() &&
+						collider.getValue() == collidee.getValue()) {
 					collidee.doubleValue();
 					collidee.setMerged(true);
 					collidee.merge();
 					collider.reset();
-					scoreIncrement += collidee.getValue();
+					scoreIncrement += Math.pow(2, collidee.getValue());
 					isMoveMade = true;
 				}
 			}
