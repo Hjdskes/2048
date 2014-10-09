@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.drawables.DrawableGrid;
-import nl.tudelft.ti2206.drawables.ScoreDisplay;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -30,10 +30,10 @@ public class MultiGameScreen extends Screen {
 	private DrawableGrid remoteDrawableGrid;
 
 	/** The ScoreDisplay for the local Grid. */
-	private ScoreDisplay localScores;
+	private Scores localScores;
 
 	/** The ScoreDisplay for the remote Grid. */
-	private ScoreDisplay remoteScores;
+	private Scores remoteScores;
 
 	/** The label indicating which Grid is yours. */
 	private Label you;
@@ -86,9 +86,9 @@ public class MultiGameScreen extends Screen {
 		localGroup = new Group();
 		remoteGroup = new Group();
 
-		localScores = new ScoreDisplay();
+		localScores = new Scores();
 		localGrid.addObserver(localScores);
-		remoteScores = new ScoreDisplay();
+		remoteScores = new Scores();
 		remoteGrid.addObserver(remoteScores);
 
 		remoteInput = new RemoteInputHandler(remoteGrid);
@@ -99,7 +99,7 @@ public class MultiGameScreen extends Screen {
 
 	/** Constructor for testing purposes only */
 	public MultiGameScreen(Stage stage, Grid grid, Label label, Group group,
-			ScoreDisplay scores, Networking netMock) {
+			Scores scores, Networking netMock) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.remoteGrid = grid;
