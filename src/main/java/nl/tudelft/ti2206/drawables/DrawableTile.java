@@ -66,6 +66,8 @@ public class DrawableTile extends Actor implements Observer {
 		this.skin = skin;
 		this.region = region;
 		setSprite(skin);
+		updateBaseCoordinates();
+		setBaseCoordinates();
 	}
 
 	@Override

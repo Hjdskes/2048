@@ -1,10 +1,11 @@
 package nl.tudelft.ti2206.drawables;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import nl.tudelft.ti2206.gameobjects.Tile;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,30 +59,32 @@ public class DrawableTileTest {
 		assertEquals(y, 307);
 	}
 
-//	@Test
-//	public void testActSpawnNotEmpty() {
-//		tile.spawn();
-//		assertEquals(.6f, tile.getScaleX(), .01);
-//		tile.act(.15f);
-//		assertNotEquals(.6f, tile.getScaleX(), .01);
-//	}
-//	
-//	@Test
-//	public void testActSpawnEmpty() {
-//		tile.setValue(0);
-//		tile.spawn();
-//		assertEquals(.6f, tile.getScaleX(), .01);
-//		tile.act(.15f);
-//		assertEquals(1, tile.getScaleX(), .01);
-//	}
-//	
-//	@Test
-//	public void testActMerge() {
-//		tile.merge();
-//		assertEquals(1.4f, tile.getScaleX(), .01);
-//		tile.act(.15f);
-//		assertNotEquals(1.4f, tile.getScaleX(), .01);
-//	}
+	@Test
+	public void testActSpawnNotEmpty() {
+		tile.spawn();
+		assertEquals(.6f, tile.getScaleX(), .01);
+		tile.act(.15f);
+		assertNotEquals(.6f, tile.getScaleX(), .01);
+	}
+	
+	@Test
+	public void testActSpawnEmpty() {
+		Tile normal = new Tile(0, 0);
+		normal.addObserver(tile);
+		normal.notifyObservers();
+		tile.spawn();
+		assertEquals(.6f, tile.getScaleX(), .01);
+		tile.act(.15f);
+		assertEquals(1, tile.getScaleX(), .01);
+	}
+	
+	@Test
+	public void testActMerge() {
+		tile.merge();
+		assertEquals(1.4f, tile.getScaleX(), .01);
+		tile.act(.15f);
+		assertNotEquals(1.4f, tile.getScaleX(), .01);
+	}
 
 	/**
 	 * Tests if the draw calls the draw method of Batch.class.
