@@ -19,18 +19,51 @@ import nl.tudelft.ti2206.gameobjects.Tile;
  */
 
 public class HumanSolver {
-
+	
+	/** The index number of the lower left tile. */
+	private static final int LOWER_LEFT = 12;
+	
+	/** Boolean variable for keeping if the last selected move was right. */
 	private static boolean wasRightMove = false;
 
+	/**
+	 * Check if lower left corner is empty.
+	 * @param grid the grid to check
+	 * @return true if lower left corner is empty
+	 */
+	public static boolean emptyLowerLeft(Grid grid) {
+		return grid.getTiles()[LOWER_LEFT].isEmpty();
+	}
+	
+	/**
+	 * Check if the highest tile is in the lower left corner.
+	 * @param grid the grid to check
+	 * @return true if highest tile is in lower left corner
+	 */
+	public static boolean maxLowerLeft(Grid grid) {
+		return grid.getTiles()[LOWER_LEFT].getValue() == grid.getCurrentHighestTile();
+	}
+	
+	/**
+	 * Check whether the lower row is full.
+	 * @param grid the grid to check
+	 * @return true if the lower row is full
+	 */
 	public static boolean lowerRowFull(Grid grid) {
 		Tile[] tiles = grid.getTiles();
 		for (int index = 12; index < 16; index += 1)
 			if (tiles[index].isEmpty())
 				return false;
-		return !isMergePossibleLowerRow(tiles);
+		return !isMergePossibleLowerRow(grid);
 	}
-
-	public static boolean isMergePossibleLowerRow(Tile[] tiles) {
+	
+	/**
+	 * Check whether a merge is possible on the lower row of the grid.
+	 * @param grid the grid to check
+	 * @return true if a merge is possible on the lower row
+	 */
+	public static boolean isMergePossibleLowerRow(Grid grid) {
+		Tile[] tiles = grid.getTiles();
 		for (int i = tiles.length - 4; i < tiles.length - 1; i++) {
 			if (!tiles[i].isEmpty()
 					&& tiles[i].getValue() == tiles[i + 1].getValue()) {
@@ -39,7 +72,13 @@ public class HumanSolver {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Recursive method to check moves to.
+	 * @param ogrid the grid to check
+	 * @param depth recursion depth
+	 * @return how many points a move will gain
+	 */
 	public static int nextMove(Grid ogrid, int depth) {
 		
 		//System.out.println("tryMoves, depth = " + depth);
@@ -63,19 +102,25 @@ public class HumanSolver {
 			int score = cloned.getScore();
 			
 			if (depth > 0)
-				score += nextMove(cloned, depth - 1);
+				score += nextMove(cloned, depth - 1); // recursion!
 			
 			// get highest score possible
 			highest = Math.max(highest, score);
 		}
 		return highest;
 	}
+	
+	/**
+	 * Select a direction to move to based on which direction gives us the
+	 * highest amount of points.
+	 * @param ogrid the grid
+	 * @param depth the depth to check
+	 * @return direction which gives us the highest amount of points
+	 */
+	public static Direction selectDirectionComplex(Grid ogrid, int depth) {
 
-	public static Direction selectDirectionComplex(Grid ogrid) {
-
-//		System.out.println("looking ahead!");
-		
-		int depth = 5;
+		if (depth <= 0)
+			System.out.println("WARNING: depth <= 0!");
 		
 		int score = ogrid.getScore();
 		Direction selected = null;
@@ -86,7 +131,7 @@ public class HumanSolver {
 				return Direction.LEFT;
 		}
 
-		if (!maxLowerLeft(ogrid) && ogrid.getTiles()[12].isEmpty()) {
+		if (!maxLowerLeft(ogrid) && emptyLowerLeft(ogrid)) {
 			return Direction.LEFT;
 		}
 
@@ -105,7 +150,7 @@ public class HumanSolver {
 			// if move actually is possible
 			if (cloned.move(direction) != -1) {
 
-				int pointsAfter = cloned.getScore() + nextMove(cloned, depth);
+				int pointsAfter = cloned.getScore() + nextMove(cloned, depth - 1);
 
 				if (pointsAfter > score) {
 					score = pointsAfter;
@@ -119,7 +164,14 @@ public class HumanSolver {
 
 		return selected;
 	}
-
+	
+	/**
+	 * Fallback method for when other movement selections fail.
+	 * This will select a move in the order: LEFT, DOWN, RIGHT.
+	 * If none of these are possible: move UP.
+	 * @param grid the grid to perform a movement on
+	 * @return direction to perform move to
+	 */
 	public static Direction selectDirectionSimple(Grid grid) {
 		Direction direction = Direction.LEFT;
 
@@ -138,16 +190,21 @@ public class HumanSolver {
 		return direction;
 	}
 
-	public static boolean maxLowerLeft(Grid grid) {
-		return grid.getTiles()[12].getValue() == grid.getCurrentHighestTile();
-	}
 
-
-
-	public static Direction selectMove(Grid grid) {
+	/**
+	 * Select a suitable move on a grid. This will select one of the moves	
+	 * LEFT, DOWN, RIGHT or UP.
+	 * @param grid the grid to check
+	 * @param depth recursion depth
+	 * @return the direction to move into
+	 */
+	public static Direction selectMove(Grid grid, int depth) {
+		
+		// set default direction to LEFT
 		Direction direction = Direction.LEFT;
-
-		direction = selectDirectionComplex(grid.clone());
+		
+		// select a move using our 'complex' algorithm
+		direction = selectDirectionComplex(grid.clone(), depth);
 
 		if (direction == null) {
 
@@ -157,22 +214,5 @@ public class HumanSolver {
 		}
 		return direction;
 	}
-//
-
-//	
-//	public static void autoMove(Grid grid) {
-//		
-////		if (Solver.getStrategy() == Solver.Strategy.RANDOM) {
-//////			Direction direction = Grid.Direction.values()[(int) (Math.random()
-//////					* Grid.Direction.values().length)];
-//////			makeMove(grid, direction);
-////		}
-////		else {
-//			
-//			Direction direction = selectMove(grid);
-//			// make the selected move
-//			makeMove(grid, direction);
-//		}
-////	}
 
 }

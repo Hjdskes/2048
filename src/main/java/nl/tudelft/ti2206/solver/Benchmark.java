@@ -19,26 +19,36 @@ public class Benchmark extends TimerTask {
 	private static int wins = 0;
 	private static int runs = 0;
 
+	private static int succesfulMoves = 0;
+
 	private Timer timer;
 
-	private int delay;
+	private int delay = 20;
 	private int maxruns = 20;
-	private static int succesfulMoves = 0;
-	private Grid original;
-	private Strategy strategy;
-	private boolean running = false;
 
-	public Benchmark(Grid grid, Strategy strategy, int delay, int maxruns) {
-		
-		print("Initialising benchmark: " + maxruns + " games using strategy " + strategy + ", making one move every " + delay + " ms.");
-		
+	private Grid original = null;
+	private Strategy strategy = Strategy.RANDOM;
+	private boolean running = false;
+	private int depth = 0;
+	private boolean printIntermediate = false;
+	private int highestTileReached = 0;
+
+	public Benchmark(Grid grid, Strategy strategy, int delay, int maxruns,
+			int depth) {
+
+		print("Initialising benchmark: " + maxruns + " games using strategy "
+				+ strategy + ", making one move every " + delay + " ms.");
+
 		running = false;
 		runs = 0;
+		highestTileReached = 0;
 
 		setGrid(grid);
 		setDelay(delay);
 		setMaxruns(maxruns);
 		setStrategy(strategy);
+		setDepth(depth);
+		setPrintIntermediate(false);
 	}
 
 	// ///////////
@@ -65,6 +75,23 @@ public class Benchmark extends TimerTask {
 		this.strategy = strategy;
 	}
 
+	private void setDepth(int depth) {
+		this.depth = depth;
+		print("Recursion depth set to " + depth);
+	}
+
+	private int getDepth() {
+		return this.depth;
+	}
+
+	public boolean doPrintIntermediate() {
+		return printIntermediate;
+	}
+
+	public void setPrintIntermediate(boolean printIntermediate) {
+		this.printIntermediate = printIntermediate;
+	}
+
 	// /////////////
 	// start/stop
 	// /////////////
@@ -73,10 +100,11 @@ public class Benchmark extends TimerTask {
 	public void start() {
 
 		print("Benchmark started.");
+		double estimation = (maxruns * (2 + (Math.pow(getDepth() + 1, 4)))) / 100;
+		print("This run will take about " + estimation + " seconds...");
 
 		initTime = System.currentTimeMillis();
-		
-		
+
 		timer = new Timer();
 		timer.schedule(this, 0, delay);
 
@@ -89,7 +117,7 @@ public class Benchmark extends TimerTask {
 		if (isRunning()) {
 			timer.cancel();
 			timer.purge();
-			
+
 			timer = null;
 			running = false;
 			print("Benchmark terminated.");
@@ -107,8 +135,9 @@ public class Benchmark extends TimerTask {
 		} else if (grid.move(direction) != -1) {
 			// print("selected move succesfully performed: " + direction);
 			succesfulMoves += 1;
-		} else
-			print("selected move failed: " + direction);
+		}
+		// else
+		// print("selected move failed: " + direction);
 	}
 
 	public static void printGrid(Grid grid) {
@@ -166,9 +195,11 @@ public class Benchmark extends TimerTask {
 		print("Final statistics: ");
 		print("Games run: " + runs);
 		print("Games won: " + wins + " (" + (runs - wins) + " lost)");
+		print("Recursion depth: " + getDepth());
 		print("Accuracy: " + (wins * 100.0f) / runs + "%");
 		print("Total time elapsed: " + seconds + " seconds");
 		print("Average time per game: " + (seconds / runs) + " seconds");
+		print("Highest tile reached: " + highestTileReached);
 		print("---------------------------------------------------");
 	}
 
@@ -176,16 +207,23 @@ public class Benchmark extends TimerTask {
 	public void run() {
 
 		// keep playing until we run out of moves
-		if (original.getPossibleMoves() == 0) {
+		if (original.getPossibleMoves() == 0) { // ||
+												// original.getCurrentHighestTile()
+												// >= 2048) {
+			stop();
 			runs += 1;
+			highestTileReached = Math.max(highestTileReached,
+					original.getCurrentHighestTile());
 
 			if (original.getCurrentHighestTile() >= 2048) {
 				// we ran out of moves but we still won!
 				wins += 1;
-				printStatsWon();
+				if (doPrintIntermediate())
+					printStatsWon();
 			} else {
 				// we lost
-				printStatsLost();
+				if (doPrintIntermediate())
+					printStatsLost();
 			}
 
 			// restart grid and counter:
@@ -197,10 +235,11 @@ public class Benchmark extends TimerTask {
 
 			Direction direction = null;
 
-			if (strategy == Strategy.RANDOM || strategy == Strategy.ARTHUR) // Arthur's strategy
+			if (strategy == Strategy.RANDOM || strategy == Strategy.ARTHUR) // Arthur's
+																			// strategy
 				direction = RandomSolver.selectMove(original);
 			else if (strategy == Strategy.HUMAN)
-				direction = HumanSolver.selectMove(original);
+				direction = HumanSolver.selectMove(original, getDepth());
 
 			// make the selected move
 			makeMove(original, direction);
@@ -208,7 +247,19 @@ public class Benchmark extends TimerTask {
 
 		if (runs >= maxruns) {
 			printStatsFinal();
-			stop();
+			// stop();
+
+			print("Run is finished, increasing depth from " + getDepth()
+					+ " to " + (getDepth() + 1) + " and restarting...");
+			runs = 0;
+			wins = 0;
+			highestTileReached = 0;
+
+			setDepth(getDepth() + 1);
+
+			double estimation = (maxruns * (2 + (Math.pow(getDepth() + 1, 4)))) / 100;
+			print("This run will take about " + estimation + " seconds...");
+
 		}
 	}
 }

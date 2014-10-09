@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
@@ -54,7 +52,7 @@ public class Grid extends Actor {
 	/**
 	 * The name of the instance, initialized to the name of the class. Used
 	 * for logging.
-	 */
+	 */ 
 	private String objectName = this.getClass().getSimpleName();
 
 	/** The width of the Grid. */
@@ -326,6 +324,10 @@ public class Grid extends Actor {
 			}
 		}
 		iterator.reset();
+		
+//		if (highestTile > 2048) {
+//			System.out.println("ZOMG HIGHEST TILE ====" + highestTile);
+//		}
 	}
 
 	/**
@@ -535,14 +537,14 @@ public class Grid extends Actor {
 		return res;
 	}
 	
-	@Override
-	public Grid clone() {
-		Grid newGrid = new Grid(true);
-		
-		for (int i = 0; i < tiles.length; i++) {
-			newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
-		//	newGrid.slidingTiles[i] = new SlidingTile(newGrid.tiles[i]);
+		@Override
+		public Grid clone() {
+			Grid newGrid = new Grid(true);
+			
+			for (int i = 0; i < tiles.length; i++) {
+				newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
+			//	newGrid.slidingTiles[i] = new SlidingTile(newGrid.tiles[i]);
+			}
+			return newGrid;
 		}
-		return newGrid;
-	}
 }
