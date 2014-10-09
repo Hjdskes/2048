@@ -33,7 +33,7 @@ public class MoveUtility {
 	 */
 	public void update() {
 		movesBackward.push(grid.toString());
-		movesForward = new Stack<String>();
+		movesForward.clear();
 	}
 	
 	/**

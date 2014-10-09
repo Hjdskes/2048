@@ -37,7 +37,7 @@ public class InputHandler extends InputListener {
 	}
 
 	@Override
-	public boolean keyDown(InputEvent event, int keycode) {
+	public boolean keyDown(InputEvent event, int keycode) {		
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
 			logger.debug(className, "User pressed key: DOWN");
