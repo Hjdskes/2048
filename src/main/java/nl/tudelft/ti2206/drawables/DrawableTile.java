@@ -104,6 +104,7 @@ public class DrawableTile extends Actor implements Observer {
 			}
 			if (getActions().contains(moveAction, true)) {
 				moveAction.finish();
+				setBaseCoordinates();
 			}
 		}
 	}
