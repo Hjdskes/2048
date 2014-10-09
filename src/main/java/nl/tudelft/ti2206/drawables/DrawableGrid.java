@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DrawableGrid extends Group {
 	/** Coordinates and offsets used to position the Grid. */
@@ -36,10 +37,11 @@ public class DrawableGrid extends Group {
 	/**
 	 * Constructor for testing purposes to allow mocking.
 	 */
-	public DrawableGrid(Tile[] tiles, TextureRegion texture) {
-		this.region = texture;
+	public DrawableGrid(DrawableTile[] tiles, Skin skin, TextureRegion region) {
+		this.drawableTiles = tiles;
+		this.region = region;
 	}
-
+	
 	/**
 	 * Updates the grid, by updating all the Tiles it contains and checking for
 	 * a new highest value.
@@ -50,11 +52,6 @@ public class DrawableGrid extends Group {
 		for(int i = 0; i < drawableTiles.length; i++) {
 			drawableTiles[i].act(delta);
 		}
-
-		/*updateHighestTile();
-		if (score > highScore) {
-			highScore = score;
-		}*/
 	}
 
 	@Override
