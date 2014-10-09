@@ -77,11 +77,12 @@ public class Grid extends Observable {
 	public Grid(boolean isEmpty) {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles);
-
+		this.tileHandler = new TileHandler(this);
+		
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
 		}
+		
 		if (!isEmpty) {
 			initGrid();
 		}
@@ -141,6 +142,13 @@ public class Grid extends Observable {
 		tiles[index].setValue(value);
 		changed();
 	}
+	
+	public void setTiles(Tile[] tiles) {
+		this.tiles = tiles;
+		this.iterator = new TileIterator(tiles);
+		updateHighestTile();
+		changed();
+	}
 
 	/**
 	 * Resets the grid, by calling reset on all the Tiles it contains,
@@ -148,8 +156,6 @@ public class Grid extends Observable {
 	 */
 	public void restart() {
 		logger.info(objectName, "Restarting grid.");
-
-		score = 0;
 
 		while (iterator.hasNext()) {
 			iterator.next().reset();
@@ -162,6 +168,7 @@ public class Grid extends Observable {
 			ScoreDisplay.updateAllTimeHighestTile();
 		}*/
 
+		score = 0;
 		highestTile = 0;
 		updateHighestTile();
 
@@ -382,7 +389,7 @@ public class Grid extends Observable {
 	public void setTileHandler(TileHandler tileHandler) {
 		this.tileHandler = tileHandler;
 	}
-
+	
 	@Override
 	public String toString() {
 		String res = "";

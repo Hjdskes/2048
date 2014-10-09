@@ -104,7 +104,7 @@ public class TileTest {
 		assertEquals(0, tile.getValue());
 		assertFalse(tile.isMerged());
 	}
-
+	
 	/**
 	 * Tests if doubleValue() correctly doubles the value of the tile.
 	 */

@@ -11,6 +11,8 @@ public class Tile extends Observable {
 
 	/** The index into the Grid array. */
 	private int index;
+	/** The index of the tile to move to. */
+	private int destIndex;
 
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
@@ -27,14 +29,11 @@ public class Tile extends Observable {
 	 */
 	public Tile(int index, int value) {
 		this.index = index;
-
 		setValue(value);
 		setMerged(false);
 	}
 
-	/**
-	 * @return The value of the Tile.
-	 */
+	/** @return The value of the Tile. */
 	public int getValue() {
 		return this.value;
 	}
@@ -55,6 +54,24 @@ public class Tile extends Observable {
 	 */
 	public int getIndex() {
 		return this.index;
+	}
+
+	/**
+	 * @return The index of the Tile to move to.
+	 */
+	public int getDestination() {
+		return destIndex;
+	}
+
+	/**
+	 * Sets the index of the Tile into the Grid array and updates the x and y
+	 * coordinates accordingly.
+	 * 
+	 * @param index
+	 *            The new index.
+	 */
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 	/**
@@ -81,53 +98,70 @@ public class Tile extends Observable {
 		this.isMerged = isMerged;
 	}
 
-	/**
-	 * Resets the Tile to its default state.
-	 */
+	/** Resets the Tile to its default state. */
 	public void reset() {
 		setValue(0);
 		setMerged(false);
 		spawning = moving = merging = false;
+		changed();
 	}
 
-	/**
-	 * Doubles the value of the Tile.
-	 */
+	/** Doubles the value of the Tile. */
 	public void doubleValue() {
 		setValue(++value);
 	}
 
-	public void merge() {
-		merging = true;
-		changed();
-	}
-	
-	public void move() {
-		moving = true;
-		changed();
-	}
-
+	/** Sets spawning to true and notifies the observers. */
 	public void spawn() {
 		spawning = true;
 		changed();
+		spawning = false;
 	}
-	
+
+	/** Sets merging to true and notifies the observers. */
+	public void merge() {
+		merging = true;
+		changed();
+		merging = false;
+	}
+
+	/** Sets moving to true and notifies the observers. */
+	public void move(int destIndex) {
+		moving = true;
+		this.destIndex = destIndex;
+		changed();
+		/*
+		 * After notifying the observers, update this Tile's index. This needs
+		 * to be done after notifying as the destination would otherwise be the
+		 * same as the current index.
+		 */
+		index = destIndex;
+		moving = false;
+	}
+
 	public boolean shouldMerge() {
 		return merging;
 	}
-	
+
 	public boolean shouldMove() {
 		return moving;
 	}
-	
+
 	public boolean shouldSpawn() {
 		return spawning;
+
 	}
 
+	/** Marks the observable as changed and notifies the observers. */
 	private void changed() {
 		if (!hasChanged()) {
 			setChanged();
 			notifyObservers();
 		}
+	}
+
+	@Override
+	public String toString() {
+		return Integer.toString(value);
 	}
 }

@@ -38,17 +38,20 @@ public class Scores extends Group implements Observer {
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
+	/** The singleton PreferenceHandler instance used to acces our saved game. */
+	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
 
 	/**
 	 * Creates a new ScoreDisplay object. Automatically creates all textures and
 	 * labels and positions them.
 	 */
 	public Scores() {
+		highestTile = (int) Math.pow(2, prefsHandler.getHighestTile());
+		highScore = prefsHandler.getHighscore();
 		initLabels();
 
 		addLabelsToGroup();
 		setLabelLocations();
-		highestTile = PreferenceHandler.getInstance().getHighestTile();
 	}
 
 	/** Constructor for testing purposes only */
@@ -59,7 +62,7 @@ public class Scores extends Group implements Observer {
 
 		addLabelsToGroup();
 		setLabelLocations();
-		highestTile = PreferenceHandler.getInstance().getHighestTile();
+		highestTile = prefsHandler.getHighestTile();
 	}
 
 	/**
@@ -68,11 +71,13 @@ public class Scores extends Group implements Observer {
 	 * update the scores.
 	 */
 	private void initLabels() {
-		scoreLabel = new Label("0", assetHandler.getSkin(), "score");
+		scoreLabel = new Label(Integer.toString(prefsHandler.getScore()),
+				assetHandler.getSkin(), "score");
 		scoreLabel.setHeight(HEIGHT);
 		scoreLabel.setWidth(SCORE_WIDTH);
 
-		highScoreLabel = new Label("0", assetHandler.getSkin(), "highscore");
+		highScoreLabel = new Label(Integer.toString(highScore),
+				assetHandler.getSkin(), "highscore");
 		highScoreLabel.setHeight(HEIGHT);
 		highScoreLabel.setWidth(SCORE_WIDTH);
 

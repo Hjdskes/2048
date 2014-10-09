@@ -6,10 +6,12 @@ import java.util.Observer;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.log.Logger;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -20,6 +22,8 @@ public class DrawableTile extends Actor implements Observer {
 	private static final int TILE_X = 115;
 	private static final int TILE_Y = 403;
 
+	private static Logger logger = Logger.getInstance();
+
 	/** The area of a Texture the Tile will use to draw itself. */
 	private TextureRegion region;
 	/** The Skin to retrieve all textures from. */
@@ -28,10 +32,14 @@ public class DrawableTile extends Actor implements Observer {
 	private ScaleToAction spawnAction;
 	/** The Action used to perform a merge animation. */
 	private ScaleToAction mergeAction;
+	/** The Action used to perform a slide animation. */
+	private MoveToAction moveAction;
 	/** The power of two that makes the value (e.g. 2^1, 2^2, 2^3, 2^4, ...). */
 	private int value;
 	/** The index into the Grid array. */
 	private int index;
+	/** The x and y coordinates belonging to the current index. */
+	private float baseX, baseY;
 
 	public DrawableTile(int index, int value) {
 		this.index = index;
@@ -39,6 +47,8 @@ public class DrawableTile extends Actor implements Observer {
 		this.skin = AssetHandler.getInstance().getSkin();
 		this.region = new TextureRegion();
 		setSprite(skin);
+		updateBaseCoordinates();
+		setBaseCoordinates();
 	}
 
 	/**
@@ -65,12 +75,17 @@ public class DrawableTile extends Actor implements Observer {
 			value = tile.getValue();
 			setSprite(skin);
 		}
+		if (index != tile.getIndex()) {
+			index = tile.getIndex();
+			updateBaseCoordinates();
+			setBaseCoordinates();
+		}
 		if (tile.shouldMerge()) {
 			merge();
 		}
-		// if (tile.shouldMove()) {
-		// move();
-		// }
+		 if (tile.shouldMove()) {
+			 move(tile.getDestination());
+		 }
 		if (tile.shouldSpawn()) {
 			spawn();
 		}
@@ -85,6 +100,9 @@ public class DrawableTile extends Actor implements Observer {
 			if (getActions().contains(mergeAction, true)) {
 				mergeAction.finish();
 			}
+			if (getActions().contains(moveAction, true)) {
+				moveAction.finish();
+			}
 		}
 	}
 
@@ -97,6 +115,7 @@ public class DrawableTile extends Actor implements Observer {
 		spawnAction.setScale(1f);
 		spawnAction.setDuration(.3f);
 		this.addAction(spawnAction);
+		logger.debug("Tile", "Spawning a Tile at index " + index + "...");
 	}
 
 	/**
@@ -108,18 +127,38 @@ public class DrawableTile extends Actor implements Observer {
 		mergeAction.setScale(1f);
 		mergeAction.setDuration(.3f);
 		this.addAction(mergeAction);
+		logger.debug("Tile", "Merging tiles at index " + index + "...");
+	}
+
+	/**
+	 * Starts a sliding animation to the x and y coordinates, defined for the
+	 * index provided.
+	 * 
+	 * @param destIndex
+	 *            The index the Tile needs to move to.
+	 */
+	public void move(int destIndex) {
+		index = destIndex;
+		updateBaseCoordinates();
+		moveAction = new MoveToAction();
+		moveAction.setPosition(baseX, baseY);
+		moveAction.setDuration(.08f);
+		this.addAction(moveAction);
+		logger.debug("Tile", "Moving Tile from (" + getX() + ", " + getY()
+				+ ") to (" + baseX + ", " + baseY + ")...");
 	}
 
 	@Override
 	public void act(float delta) {
+		if (value != 0 && (getX() != baseX || getY() != baseY)) {
+			moveAction.act(delta);
+		}
 		if (getScaleX() > 1) {
 			mergeAction.act(delta);
 		} else if (getScaleX() < 1 && value != 0) {
 			spawnAction.act(delta);
 		} else if (getScaleX() < 1) {
 			setScale(1);
-		} else if (value == 0 && mergeAction != null) {
-			mergeAction.finish();
 		}
 	}
 
@@ -130,31 +169,56 @@ public class DrawableTile extends Actor implements Observer {
 				getScaleX(), getScaleY(), 0);
 	}
 
-	@Override
-	public float getX() {
+	/**
+	 * Calculates the x coordinate belonging to the current index and sets the
+	 * baseX variable to the value calculated.
+	 */
+	public void setBaseX() {
 		switch (this.index % 4) {
 		case 1:
-			return TILE_X + TILE_WIDTH + TwentyFourtyGame.GAP;
+			baseX = TILE_X + TILE_WIDTH + TwentyFourtyGame.GAP;
+			break;
 		case 2:
-			return TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			baseX = TILE_X + 2 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			break;
 		case 3:
-			return TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			baseX = TILE_X + 3 * (TILE_WIDTH + TwentyFourtyGame.GAP);
+			break;
 		default:
-			return TILE_X;
+			baseX = TILE_X;
+			break;
 		}
 	}
 
-	@Override
-	public float getY() {
+	/**
+	 * Calculates the y coordinate belonging to the current index and sets the
+	 * baseY variable to the value calculated.
+	 */
+	public void setBaseY() {
 		if (index >= 12) {
-			return TILE_Y - 3 * TILE_HEIGHT - 3 * TwentyFourtyGame.GAP;
+			baseY = TILE_Y - 3 * TILE_HEIGHT - 3 * TwentyFourtyGame.GAP;
 		} else if (index >= 8) {
-			return TILE_Y - 2 * TILE_HEIGHT - 2 * TwentyFourtyGame.GAP;
+			baseY = TILE_Y - 2 * TILE_HEIGHT - 2 * TwentyFourtyGame.GAP;
 		} else if (index >= 4) {
-			return TILE_Y - TILE_HEIGHT - TwentyFourtyGame.GAP;
+			baseY = TILE_Y - TILE_HEIGHT - TwentyFourtyGame.GAP;
 		} else {
-			return TILE_Y;
+			baseY = TILE_Y;
 		}
+	}
+
+	/** Updates the baseX and baseY variables. */
+	private void updateBaseCoordinates() {
+		setBaseX();
+		setBaseY();
+	}
+
+	/**
+	 * sets the x and y coordinates of this tile to the values of baseX and
+	 * baseY.
+	 */
+	private void setBaseCoordinates() {
+		setX(baseX);
+		setY(baseY);
 	}
 
 	/**

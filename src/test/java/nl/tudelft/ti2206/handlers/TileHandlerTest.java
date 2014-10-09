@@ -60,9 +60,10 @@ public class TileHandlerTest {
 		for (int i = 0; i < 16; i = i + 5) {
 			grid.getTiles()[i].setValue(3);
 		}
+		
 		grid.getTiles()[2].setValue(2);
 		grid.getTiles()[3].setValue(3);
-		tileHandler = new TileHandler(grid.getTiles());
+		tileHandler = new TileHandler(grid);
 	}
 
 	/**
@@ -109,6 +110,9 @@ public class TileHandlerTest {
 		tileHandler.moveLeft();
 		/* Test if the tile is in the expected location. */
 		assertTrue(grid.getTiles()[0].getValue() == 3);
+		assertTrue(grid.getTiles()[4].getValue() == 3);
+		assertTrue(grid.getTiles()[8].getValue() == 3);
+		assertTrue(grid.getTiles()[12].getValue() == 3);
 	}
 
 	/**
@@ -116,7 +120,7 @@ public class TileHandlerTest {
 	 */
 	@Test
 	public void testMoveEmptyGrid() {
-		tileHandler = new TileHandler(emptyGrid.getTiles());
+		tileHandler = new TileHandler(emptyGrid);
 		tileHandler.moveDown();
 		assertEquals(emptyGrid.toString(), "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
 	}
@@ -208,7 +212,7 @@ public class TileHandlerTest {
 	 */
 	@Test
 	public void testIsMoveMadeEmptyGrid() {
-		tileHandler = new TileHandler(emptyGrid.getTiles());
+		tileHandler = new TileHandler(emptyGrid);
 		tileHandler.moveUp();
 		assertFalse(tileHandler.isMoveMade());
 
