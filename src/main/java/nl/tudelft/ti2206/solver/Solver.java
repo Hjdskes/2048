@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.solver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,67 +10,197 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
-import nl.tudelft.ti2206.gameobjects.TileIterator;
 
 public class Solver extends TimerTask {
-	private static int ROW_LENGTH = 4;
-	/**
-	 * These constants are to provide weights in the static evaluation function.
-	 */
-	private static double SMOOTH = 0.1; // 0.1
-	private static double EMPTY = 2.7; // 3.5
-	private static double SCORE = 0.0; // 1.0
-	private static double MONO = 1.0; // 0.7
-	private static double MAX = 1.0; // 1.0
+	private static final int[][] weightMatrices = {
+		{ 3, 2, 1, 0,  2, 1, 0, -1,  1,  0, -1, -2,  0, -1, -2, -3 },
+		{ 0, 1, 2, 3, -1, 0, 1,  2, -2, -1,  0,  1, -3, -2, -1,  0 }
+	};
 
 	private Grid original;
-	private Timer timer;
+	private int depth;
+	private boolean calculating;
 
-	public Solver(Grid grid, int delay) {
+	public Solver(Grid grid, int depth) {
 		this.original = grid;
-		this.timer = new Timer();
-		timer.schedule(this, 0, delay);
+		this.depth = depth;
+		this.calculating = false;
 	}
 
-	private void solve() {
-		Grid clone;
-		Direction move = Direction.DOWN;
-		int value = Integer.MIN_VALUE, bestValue = Integer.MIN_VALUE;
-		double increment, empty, monotonicity, max, smoothness;
+	@Override
+	public void run() {
+		if (original.getPossibleMoves() == 0 || TwentyFourtyGame.getState() != GameState.RUNNING) {
+			this.cancel();
+		} else if (!calculating) {
+			System.out.println("Calculating next move...");
+			Direction dir = findMove(original, depth);
+			System.out.println("Direction chosen: " + dir);
+			if (dir != null) {
+				original.move(dir);
+			} else {
+				System.out.println("AUTOSOLVE: FAILED");
+			}
+			calculating = false;
+		}		
+	}
+
+	public void solve() {
+		new Timer().schedule(this, 0, 100);
+	}
+
+	public Direction findMove(Grid grid, int depth) {
+		this.calculating = true;
+		return expectimax(grid, depth);
+	}
+
+	private double evaluate(Grid grid) {
+		double empty = getEmptyTilesNumber(grid.getTiles());
+		double max = Math.pow(2, grid.getCurrentHighestTile());
+		double monotonicity = getMonotonicity(grid.getTiles());
+		double gradient = getGradient(grid.getTiles());
+		double smoothness = getSmoothness(grid.getTiles());
+		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * monotonicity;
+		//return 0.3 * gradient + 0.1 * smoothness + 0.6 * empty;
+		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * max;
+		return 0.8 * gradient + 0.2 * smoothness;
+	}
+
+	private Direction expectimax(Grid grid, int depth) {
+		double bestValue = 0;
+		Direction bestDirection = null;
 
 		for (Direction dir : Direction.values()) {
-			clone = cloneGrid();
-			increment = clone.move(dir);
-			if (increment < 0) {
+			Grid clone = cloneGrid(grid);
+			if (clone.move(dir) < 0) {
 				continue;
 			}
-			empty = getEmptyTiles(clone.getTiles());
-			max = (clone.getCurrentHighestTile() / Math.log(2));
-			monotonicity = getMonotonicity(clone.getTiles());
-			smoothness = getSmoothness(clone.getTiles());
-			value = (int) (EMPTY * empty + SCORE * increment + MAX * max + MONO
-					* monotonicity + SMOOTH * smoothness);
-			if (value > bestValue) {
+
+			double value = computerMove(clone, depth);
+			if (value >= bestValue) {
 				bestValue = value;
-				move = dir;
+				bestDirection = dir;
 			}
 		}
-		original.move(move);
+		return bestDirection;
 	}
 
-	/**
-	 * Returns the neighbors (if any) of a Tile. Skips the empty neighbors. 
-	 * @param tiles The tiles in the Grid to calculate the neighbors from.
-	 * @param index The index of the Tile whose neighbors we want.
-	 * @return An array containing both neighbors in the right and down direction.
-	 */
+	private double playerMove(Grid grid, int depth) {
+		if (depth == 0) {
+			return grid.getPossibleMoves() > 0 ? evaluate(grid) : 0;
+		}
+		double bestValue = 0;
+
+		for (Direction dir : Direction.values()) {
+			Grid clone = cloneGrid(grid);
+			if (clone.move(dir) < 0) {
+				continue;
+			}
+
+//			double value = 0;
+//			if (cache.containsKey(clone.toString())) {
+//				value = cache.get(clone.toString()); 
+//			} else {
+			double value = computerMove(clone, depth - 1);
+//				cache.put(zobrist(clone.getTiles()), value);
+//			}
+
+			if (value > bestValue) {
+				bestValue = value;
+			}
+		}
+		return bestValue;
+	}
+
+	private double computerMove(Grid grid, int depth) {
+		if (depth == 0) {
+			return playerMove(grid, depth);
+		}
+		int[] possibleMoves =    { 1  , 2   };
+		double[] probabilities = { 0.9, 0.1 };
+		double totalScore = 0;
+		double totalWeight = 0;
+
+		for(Tile tile : grid.getTiles()) {
+			if (tile.isEmpty()) {
+				for (int i = 0; i < possibleMoves.length; i++) {
+					Grid clone = cloneGrid(grid);
+					clone.setTile(tile.getIndex(), possibleMoves[i]);
+
+					double value = playerMove(clone, depth - 1);
+					totalScore  += probabilities[i] * value;
+					totalWeight += probabilities[i];
+				}
+			}
+		}
+		return totalWeight == 0 ? 0 : totalScore / totalWeight;
+	}
+
+//	private long zobrist(Tile[] tiles) {
+//		long hash = 0xFFFFFFL;
+//
+//		for(Tile tile : tiles) {
+//			hash ^= tile.getValue();
+//		}
+//		return hash;
+//	}
+
+	private double getGradient(Tile[] tiles) {
+		double best = 0;
+		for (int i = 0; i < 2; i++) {
+			double s = 0;
+			for (int j = 0; j < 16; j++) {
+				s += weightMatrices[i][j] * Math.pow(2, tiles[j].getValue());
+			}
+			s = Math.abs(s);
+			if (s > best) {
+				best = s;
+			}
+		}
+		return best;
+	}
+
+	private double getSmoothness(Tile[] tiles) {
+		double smoothness = 0;
+		double currentValue, targetValue;
+		Tile[] neighbors;
+
+		for (int i = 0; i < 16; i++) {
+			if (!tiles[i].isEmpty()) {
+				currentValue = tiles[i].getValue();
+				neighbors = getTileNeighbors(tiles, i);
+
+				for (Tile tile : neighbors) {
+					if (tile != null) {
+						targetValue = tile.getValue();
+						smoothness -= Math.abs(currentValue - targetValue);	
+					}
+				}
+			}
+		}
+		return smoothness;
+	}
+
+	private double getMonotonicity(Tile[] tiles) {
+		double mono = getMonotonicityHorizontal(tiles);
+		tiles = rotate(tiles, 90);
+		mono += getMonotonicityHorizontal(tiles);
+		tiles = rotate(tiles, 270);
+		return mono;
+	}
+
+	private double getEmptyTilesNumber(Tile[] tiles) {
+		double res = 0;
+		for(int i = 0; i < tiles.length; i++) {
+			if (tiles[i].isEmpty()) {
+				res++;
+			}
+		}
+		return (res == 0 ? res : Math.log(res));
+	}
+
 	private Tile[] getTileNeighbors(Tile[] tiles, int index) {
 		Tile[] neighbors = new Tile[2];
 
-		/*
-		 * Right neighbor: check if the index we're checking is not the right
-		 * edge of the grid by making sure (index + 1) is a not a multiple of 4.
-		 */
 		for (int offset = 1; offset < 4; offset += 1) {
 			if ((index + offset) % 4 != 0 && (index + offset) < tiles.length) {
 				if (!tiles[index + offset].isEmpty()) {
@@ -78,101 +210,38 @@ public class Solver extends TimerTask {
 			}
 		}
 
-		/*
-		 * Lower neighbor: check if the index we're checking is not the bottom
-		 * edge of the grid by making sure (index + 4) is smaller than
-		 * grid.length:
-		 */
 		for (int offset = 4; offset < 16; offset += 4) {
-			if ((index - offset) >= 0) {
-				if (!tiles[index - offset].isEmpty()) {
-					neighbors[1] = tiles[index - offset];
+			if ((index + offset) < tiles.length) {
+				if (!tiles[index + offset].isEmpty()) {
+					neighbors[1] = tiles[index + offset];
 					break;
 				}
 			}
 		}
 
+//		for (int offset = 1; offset < 4; offset += 1) {
+//			if ((index - offset) % 4 != 0 && (index - offset) >= 0) {
+//				if (!tiles[index - offset].isEmpty()) {
+//					neighbors[2] = tiles[index - offset];
+//					break;
+//				}
+//			}
+//		}
+//
+//		for (int offset = 4; offset < 16; offset += 4) {
+//			if ((index - offset) >= 0) {
+//				if (!tiles[index - offset].isEmpty()) {
+//					neighbors[3] = tiles[index - offset];
+//					break;
+//				}
+//			}
+//		}
 		return neighbors;
 	}
 
-	/**
-	 * The smoothness of the Grid is the 'amount' of how adjacent tiles are mergable.
-	 * @param tiles The tiles in the Grid to calculate the smoothness of. 
-	 * @return The 'amount' of smoothness.
-	 */
-	private double getSmoothness(Tile[] tiles) {
-		double smoothness = 0;
-		double currentValue, targetValue;
-		Tile[] neighbors;
-
-		for (int i = 0; i < 16; i++) {
-			if (!tiles[i].isEmpty()) {
-				currentValue = Math.log(tiles[i].getValue()) / Math.log(2);
-				neighbors = getTileNeighbors(tiles, i);
-
-				for (Tile tile : neighbors) {
-					if (tile != null) {
-						targetValue = Math.log(tile.getValue()) / Math.log(2);
-						smoothness -= Math.abs(currentValue - targetValue);
-					}
-				}
-			}
-		}
-		return smoothness;
-	}
-
-	/**
-	 * The monotonicity of the Grid is the 'amount' of how all the tiles are
-	 * either increasing or decreasing along both the horizontal and vertical directions.
-	 *  
-	 * @param tiles The tiles in the Grid to calculate the monotonicity of.
-	 * @return The 'amount' of monotonicity.
-	 */
-	private double getMonotonicity(Tile[] tiles) {
-		double mono = 0;
-
-		mono += getMonotonicityHorizontal(tiles);
-		tiles = rotate(tiles, 90);
-		mono += getMonotonicityHorizontal(tiles);
-		tiles = rotate(tiles, 270);
-		return mono;
-	}
-
 	private double getMonotonicityHorizontal(Tile[] tiles) {
-		// TileIterator iterator = null;
 		double[] totals = new double[2];
 		double currentValue, nextValue;
-
-		// /* For each row in the Grid... */
-		// for (int index = 0; index < tiles.length; index += ROW_LENGTH) {
-		// /* ... create an iterator that iterates over that row only... */
-		// iterator = new TileIterator(Arrays.copyOfRange(tiles, index, index
-		// + ROW_LENGTH));
-		//
-		// /* Ask the first two tiles in that row. We know they exist. */
-		// Tile current = iterator.next();
-		// Tile next = iterator.next();
-		// /* Now for the remaining tiles (2)*/
-		// while (iterator.hasNext()) {
-		// /* Skip all the empty tiles. */
-		// while (next.isEmpty() && iterator.hasNext()) {
-		// next = iterator.next();
-		// }
-		// currentValue = current.isEmpty() ? 0 : ((int) Math
-		// .log(current.getValue() / Math.log(2)));
-		// nextValue = next.isEmpty() ? 0 : ((int) Math.log(next
-		// .getValue() / Math.log(2)));
-		// if (currentValue > nextValue) {
-		// totals[0] += nextValue - currentValue;
-		// } else {
-		// totals[1] += currentValue - nextValue;
-		// }
-		// if (iterator.hasNext()) {
-		// current = next;
-		// next = iterator.next();
-		// }
-		// }
-		// }
 
 		for (int y = 0; y < 4; y++) {
 			int current = 0;
@@ -184,12 +253,10 @@ public class Solver extends TimerTask {
 				if (next >= 4) {
 					next--;
 				}
-				currentValue = tiles[current + 4 * y].isEmpty() ? 0
-						: ((int) Math.log(tiles[current + 4 * y].getValue()
-								/ Math.log(2)));
-				nextValue = tiles[next + 4 * y].isEmpty() ? 0 : ((int) Math
-						.log(tiles[next + 4 * y].getValue() / Math.log(2)));
-				/* If the current is bigger, the order is decreasing */
+				currentValue = tiles[current + 4 * y].getValue();
+				nextValue = tiles[next + 4 * y].getValue();
+				/* If the current is bigger, the order is decreasing.
+				 * Otherwise, it's increasing. */
 				if (currentValue > nextValue) {
 					totals[0] += nextValue - currentValue;
 				} else {
@@ -203,16 +270,6 @@ public class Solver extends TimerTask {
 		return Math.max(totals[0], totals[1]);
 	}
 
-	/**
-	 * Rotates the grid. Taken from:
-	 * https://github.com/bulenkov/2048/blob/master/src/com/bulenkov/game2048/Game2048.java#L184
-	 * 
-	 * @param tiles
-	 *            The tiles to rotate.
-	 * @param angle
-	 *            The angle by which to rotate.
-	 * @return The rotated Grid.
-	 */
 	private Tile[] rotate(Tile[] tiles, int angle) {
 		Tile[] res = new Tile[16];
 
@@ -236,42 +293,16 @@ public class Solver extends TimerTask {
 		return res;
 	}
 
-	/**
-	 * @param tiles The tiles in the Grid to calculate the amount of empty tiles for.
-	 * @return The 2log of the amount of empty tiles.
-	 */
-	private double getEmptyTiles(Tile[] tiles) {
-		double res = 0;
-		TileIterator iterator = new TileIterator(tiles);
-		while (iterator.hasNext()) {
-			if (iterator.next().isEmpty()) {
-				res++;
-			}
-		}
-		iterator.reset();
-		return (res == 0 ? res : Math.log(res));
-	}
-
-	/**
-	 * @return A clone of the original grid.
-	 */
-	private Grid cloneGrid() {
+	private Grid cloneGrid(Grid grid) {
+		int score = grid.getScore();
+		Tile[] tiles = grid.getTiles();
 		Grid res = new Grid(true);
-		TileIterator iterator = new TileIterator(original.getTiles());
-		while (iterator.hasNext()) {
-			res.setTile(iterator.getIndex(), iterator.next().getValue());
-		}
-		iterator.reset();
-		return res;
-	}
 
-	@Override
-	public void run() {
-		if (original.getPossibleMoves() == 0
-				|| TwentyFourtyGame.getState() != GameState.RUNNING) {
-			this.cancel();
-		} else {
-			this.solve();
+		for(int i = 0; i < tiles.length; i++) {
+			res.getTiles()[i] = new Tile(i, tiles[i].getValue()); 
 		}
+		res.updateHighestTile();
+		res.setScore(score);
+		return res;
 	}
 }
