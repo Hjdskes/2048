@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.buttons.RedoButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.buttons.UndoButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -21,6 +23,12 @@ public class GameScreen extends Screen {
 	/** The score tiles above the Grid. */
 	private ScoreDisplay scores;
 
+	/** The button to undo the last move. */
+	private UndoButton undoButton;
+
+	/** The button to redo the last move. */
+	private RedoButton redoButton;
+
 	/** The button to restart the current game. */
 	private RestartButton restartButton;
 
@@ -29,24 +37,28 @@ public class GameScreen extends Screen {
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
-	
+
 	/** Constructs a new GameScreen. */
 	public GameScreen() {
 		stage = new Stage();
 		grid = progressHandler.loadGame();
+		undoButton = new UndoButton();
+		redoButton = new RedoButton();
 		restartButton = new RestartButton();
 		scores = new ScoreDisplay(grid);
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor to insert Mock objects. For testing only. */
-	public GameScreen(Stage stage, Grid grid, RestartButton button,
-			ScoreDisplay scores) {
+	public GameScreen(Stage stage, Grid grid, UndoButton undoButton,
+			RedoButton redoButton, RestartButton button, ScoreDisplay scores) {
 		this.stage = stage;
 		this.grid = grid;
+		this.undoButton = undoButton;
+		this.redoButton = redoButton;
 		this.restartButton = button;
 		this.scores = scores;
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override
@@ -57,14 +69,16 @@ public class GameScreen extends Screen {
 		/* Create the main group and pack everything in it. */
 		grid.setName("Grid");
 		stage.addActor(grid);
+		stage.addActor(undoButton);
+		stage.addActor(redoButton);
 		stage.addActor(restartButton);
-		stage.addActor(scores);		
+		stage.addActor(scores);
 	}
 
 	@Override
 	public void update() {
 		super.update();
- 
+
 		if (grid.getCurrentHighestTile() == 2048
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(GameState.WON);
@@ -74,7 +88,7 @@ public class GameScreen extends Screen {
 			screenHandler.add(new LoseScreen());
 		}
 	}
-	
+
 	@Override
 	public void dispose() {
 		progressHandler.saveGame(grid);
