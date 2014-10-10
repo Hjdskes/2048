@@ -1,18 +1,15 @@
 package nl.tudelft.ti2206.screens;
 
-import java.util.TimerTask;
-
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
-import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.net.Networking;
 import nl.tudelft.ti2206.solver.GridSolver;
+import nl.tudelft.ti2206.solver.GridSolver.Strategy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -20,7 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class UserComputerScreen extends Screen {
-		
+
+	public enum Difficulty {
+		EASY, MEDIUM, HARD, EXTREME
+	}
+
 	/** The local grid holding all the local Tiles. */
 	private Grid localGrid;
 
@@ -48,9 +49,6 @@ public class UserComputerScreen extends Screen {
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
-	/** The singleton reference to the Networking instance. */
-	private static Networking networking = Networking.getInstance();
-
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
@@ -60,50 +58,55 @@ public class UserComputerScreen extends Screen {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
-	/** The InputHandler for the remote Grid. */
-	private RemoteInputHandler remoteInput;
-	
 	private GridSolver gridSolver;
 
+	private Difficulty difficulty;
+
+//	private Label difficultylbl;
+
 	/** Constructs a new MultiGameScreen. */
-	public UserComputerScreen() {
+	public UserComputerScreen(Difficulty difficulty) {
 		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH,
 				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
 
 		localGrid = new Grid(false);
 		computerGrid = new Grid(false);
-		
+
 		/* Sets the name of the objects. Used for logging */
 		localGrid.setObjectName("LocalGrid");
 		computerGrid.setObjectName("RemoteGrid");
 
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Computer", assetHandler.getSkin());
+//		difficultylbl = new Label(difficulty.toString(), assetHandler.getSkin());
 
 		localGroup = new Group();
 		remoteGroup = new Group();
 
 		localScores = new ScoreDisplay(localGrid);
 		remoteScores = new ScoreDisplay(computerGrid);
-		
+
+//		this.difficulty = difficulty;
+
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only */
 	public UserComputerScreen(Stage stage, Grid grid, Label label, Group group,
-			ScoreDisplay scores, Networking netMock) {
+			ScoreDisplay scores) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.computerGrid = grid;
 		this.you = label;
 		this.opponent = label;
+//		this.difficultylbl = label;
+		
 		this.localGroup = group;
 		this.remoteGroup = group;
 		this.localScores = scores;
 		this.remoteScores = scores;
-		networking = netMock;
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override
@@ -120,17 +123,41 @@ public class UserComputerScreen extends Screen {
 		/* Create our remote groups and actors. */
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
+		
+//		difficultylbl.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2 + difficultylbl.getWidth() / 3);
+//		difficultylbl.setY(opponent.getY() - opponent.getHeight() - 2);
+		
 		remoteGroup.addActor(remoteScores);
 		remoteGroup.addActor(computerGrid);
 		remoteGroup.addActor(opponent);
+//		remoteGroup.addActor(difficultylbl);
 		remoteGroup.setX(600);
 
 		stage.addActor(localGroup);
 		stage.addActor(remoteGroup);
 
 		stage.addListener(new LocalInputHandler(localGrid));
+
+		int delay = 1900; // 1.9 seconds
+		int depth = 1;
 		
-		gridSolver = new GridSolver(computerGrid, GridSolver.Strategy.HUMAN, 1, 6);
+		Strategy strategy = Strategy.HUMAN;
+
+		if (difficulty == Difficulty.EASY) {
+			delay = 1600;
+			depth = 1;
+		} else if (difficulty == Difficulty.MEDIUM) {
+			delay = 1200;
+			depth = 3;
+		} else if (difficulty == Difficulty.HARD) {
+			delay = 900;
+			depth = 5;
+		} else {
+			delay = 800;
+			depth = 6;
+		}
+		
+		gridSolver = new GridSolver(computerGrid, strategy, delay, depth);
 		gridSolver.start();
 	}
 
@@ -145,7 +172,7 @@ public class UserComputerScreen extends Screen {
 							+ Integer.toString(localGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.WON);
 			screenHandler.add(new MultiWinScreen());
-			
+
 			gridSolver.stop();
 		} else if (localGrid.getPossibleMoves() == 0
 				|| computerGrid.getCurrentHighestTile() == 2048) {
@@ -154,7 +181,7 @@ public class UserComputerScreen extends Screen {
 							+ Integer.toString(computerGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.LOST);
 			screenHandler.add(new MultiLoseScreen());
-			
+
 			gridSolver.stop();
 		}
 	}
@@ -163,4 +190,4 @@ public class UserComputerScreen extends Screen {
 	public void dispose() {
 		gridSolver.stop();
 	}
-}	
+}

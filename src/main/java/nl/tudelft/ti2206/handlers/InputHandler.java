@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
 import nl.tudelft.ti2206.solver.Benchmark;
-import nl.tudelft.ti2206.solver.Benchmark.Strategy;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -32,7 +31,7 @@ public class InputHandler extends InputListener {
 
 	Timer solver = null;
 
-	private Benchmark bmark;
+//	private Benchmark bmark;
 
 	/**
 	 * Creates a new InputHandler instance.

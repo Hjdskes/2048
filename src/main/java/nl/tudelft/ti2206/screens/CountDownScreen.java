@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.screens;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.screens.UserComputerScreen.Difficulty;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,12 +23,14 @@ public class CountDownScreen extends Screen {
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
 	private long initTime;
+	
+	private Difficulty difficulty;
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Constructs a new MenuScreen. */
-	public CountDownScreen() {
+	public CountDownScreen(Difficulty difficulty) {
 		
 		initTime = System.currentTimeMillis();
 		/*
@@ -41,6 +44,8 @@ public class CountDownScreen extends Screen {
 		set = new Image(assetHandler.getSkin(), "setoverlay");
 		go = new Image(assetHandler.getSkin(), "gooverlay");
 
+		this.difficulty = difficulty;
+		
 		this.setDrawBehavior(new SimpleDraw(stage));
 	}
 
@@ -68,7 +73,7 @@ public class CountDownScreen extends Screen {
 
 		if (seconds >= offset + 2.2) {
 			stage.clear();
-			screenHandler.add(new UserComputerScreen());
+			screenHandler.add(new UserComputerScreen(difficulty));
 		}
 		else if (seconds >= offset + 2) {
 			stage.clear();

@@ -23,7 +23,7 @@ public class TileIterator implements Iterator<Tile> {
 	public boolean hasNext() {
 		/*
 		 * Not sure if tiles can ever be null since we instantiate them all in
-		 * Grid, but better safe than sorry...
+		 * Grid, but rather safe than sorry...
 		 */
 		if (index < tiles.length && tiles[index] != null) {
 			return true;
@@ -45,7 +45,8 @@ public class TileIterator implements Iterator<Tile> {
 	}
 
 	/**
-	 * @return The current index of the iterator.
+	 * Get the current position index of the iterator.
+	 * @return the current index of the iterator
 	 */
 	public int getIndex() {
 		return this.index;
