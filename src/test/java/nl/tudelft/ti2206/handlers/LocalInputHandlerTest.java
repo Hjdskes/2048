@@ -2,6 +2,9 @@ package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
+import java.util.Stack;
+
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
@@ -33,6 +36,8 @@ public class LocalInputHandlerTest {
 		}
 		when(grid.getTiles()).thenReturn(tiles);
 		when(grid.getTileHandler()).thenReturn(new TileHandler(tiles));
+		when(grid.getUndoStack()).thenReturn(new Stack<String>());
+		when(grid.getRedoStack()).thenReturn(new Stack<String>());
 	}
 
 	@Test

@@ -497,23 +497,11 @@ public class Grid extends Actor {
 		return res;
 	}
 	
-	public void addToUndoStack(String string) {
-		undo.push(string);
+	public Stack<String> getUndoStack() {
+		return undo;
 	}
-	
-	public String getPreviousGrid() {
-		return undo.pop();
-	}
-	
-	public void addToRedoStack(String string) {
-		redo.push(string);
-	}
-	
-	public String getGridAfterMove() {
-		return redo.pop();
-	}
-	
-	public void clearRedo() {
-		redo.clear();
+		
+	public Stack<String> getRedoStack() {
+		return redo; 
 	}
 }
