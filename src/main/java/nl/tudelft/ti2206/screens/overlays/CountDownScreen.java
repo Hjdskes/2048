@@ -1,9 +1,12 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.overlays;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.screens.UserComputerScreen.Difficulty;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
+import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen;
+import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen.Difficulty;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -46,13 +49,13 @@ public class CountDownScreen extends Screen {
 
 		this.difficulty = difficulty;
 		
-		this.setDrawBehavior(new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	/** Constructor for testing purposes only. */
 	public CountDownScreen(Stage stage, Label label, TextButton button) {
 		this.stage = stage;
-		this.setDrawBehavior(new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override

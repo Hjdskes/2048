@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.screens.menuscreens.ClientScreen;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.gamescreens;
 
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
@@ -8,6 +8,10 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
+import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
+import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 import nl.tudelft.ti2206.solver.GridSolver;
 import nl.tudelft.ti2206.solver.GridSolver.Strategy;
 
@@ -89,7 +93,7 @@ public class UserComputerScreen extends Screen {
 		computerScores = new Scores();
 		computerGrid.addObserver(computerScores);
 
-		this.setDrawBehavior(new DrawBeige(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	/** Constructor for testing purposes only */
@@ -105,7 +109,7 @@ public class UserComputerScreen extends Screen {
 		this.computerGroup = group;
 		this.localScores = scores;
 		this.computerScores = scores;
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.menuscreens;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,9 @@ import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.gamescreens.MultiGameScreen;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;

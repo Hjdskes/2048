@@ -1,8 +1,10 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.menuscreens;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -94,7 +96,6 @@ public class MultiMenuScreen extends Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				screenHandler.add(new HostScreen());
 			}
-		});
-		
+		});	
 	}
 }

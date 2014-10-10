@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.gamescreens;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.drawables.DrawableGrid;
@@ -9,6 +9,10 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.overlays.LoseScreen;
+import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 

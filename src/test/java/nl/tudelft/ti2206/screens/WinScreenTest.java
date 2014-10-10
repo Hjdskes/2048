@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
 import org.junit.Before;
 import org.junit.Test;

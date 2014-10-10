@@ -4,7 +4,7 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
-import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.screens.menuscreens.MenuScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

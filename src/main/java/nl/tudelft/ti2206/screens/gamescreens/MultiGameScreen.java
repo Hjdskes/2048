@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.gamescreens;
 
 import nl.tudelft.ti2206.drawables.DrawableGrid;
 import nl.tudelft.ti2206.drawables.Scores;
@@ -11,6 +11,11 @@ import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
+import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
+import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -94,7 +99,7 @@ public class MultiGameScreen extends Screen {
 		remoteInput = new RemoteInputHandler(remoteGrid);
 		networking.addObserver(remoteInput);
 		
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only */
@@ -110,7 +115,7 @@ public class MultiGameScreen extends Screen {
 		this.localScores = scores;
 		this.remoteScores = scores;
 		networking = netMock;
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override

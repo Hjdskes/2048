@@ -16,6 +16,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
+import nl.tudelft.ti2206.screens.gamescreens.MultiGameScreen;
 
 import org.junit.Before;
 import org.junit.Test;

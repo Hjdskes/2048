@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.screens.menuscreens.MenuScreen;
 import nl.tudelft.ti2206.solver.Solver;
 
 import com.badlogic.gdx.Input.Keys;

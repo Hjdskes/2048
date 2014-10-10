@@ -12,6 +12,7 @@ import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.gamescreens.GameScreen;
 
 import org.junit.Before;
 import org.junit.Test;

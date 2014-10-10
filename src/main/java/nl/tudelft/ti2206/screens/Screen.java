@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBehavior;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;

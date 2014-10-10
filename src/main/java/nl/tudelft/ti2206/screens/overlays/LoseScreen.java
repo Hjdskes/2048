@@ -1,8 +1,10 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.overlays;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -23,7 +25,7 @@ public class LoseScreen extends Screen {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "lostoverlay");
 		restartButton = new RestartButton(grid);
-		this.setDrawBehavior(new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -31,7 +33,7 @@ public class LoseScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.restartButton = restartButton;
-		this.setDrawBehavior(new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override

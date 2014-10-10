@@ -4,7 +4,7 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.net.Networking;
-import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.screens.menuscreens.MenuScreen;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;

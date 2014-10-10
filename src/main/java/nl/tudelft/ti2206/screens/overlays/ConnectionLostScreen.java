@@ -1,35 +1,37 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.overlays;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
- * The MultiWinScreen is displayed when the local player has won.
+ * The ConnectionLostScreen is displayed when the connection drops.
  */
-public class MultiWinScreen extends Screen {
-	/** The background image. */
+public class ConnectionLostScreen extends Screen {
+	/** The transparent background image. */
 	private Image image;
 
 	/** The button to go back to the menu. */
 	private MenuButton menuButton;
 
-	/** Constructs a new MultiWinScreen. */
-	public MultiWinScreen() {
+	/** Constructs a new ConnectionLostScreen. */
+	public ConnectionLostScreen() {
 		stage = new Stage();
-		image = new Image(AssetHandler.getInstance().getSkin(), "multiwonoverlay");
+		image = new Image(AssetHandler.getInstance().getSkin(), "connectionlostoverlay");
 		menuButton = new MenuButton();
-		this.setDrawBehavior( new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	/** Constructor used for mock insertion */
-	public MultiWinScreen(Stage stage, Image image, MenuButton menuButton) {
+	public ConnectionLostScreen(Stage stage, Image image, MenuButton menuButton) {
 		this.stage = stage;
 		this.image = image;
 		this.menuButton = menuButton;
-		this.setDrawBehavior( new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override

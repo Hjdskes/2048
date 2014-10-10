@@ -1,7 +1,9 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.overlays;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -21,7 +23,7 @@ public class MultiLoseScreen extends Screen {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "multilostoverlay");
 		menuButton = new MenuButton();
-		this.setDrawBehavior( new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -29,7 +31,7 @@ public class MultiLoseScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.menuButton = menuButton;
-		this.setDrawBehavior( new SimpleDraw(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override
