@@ -62,7 +62,7 @@ public class Scores extends Group implements Observer {
 
 		addLabelsToGroup();
 		setLabelLocations();
-		highestTile = prefsHandler.getHighestTile();
+		highestTile = (int) Math.pow(2, prefsHandler.getHighestTile());
 	}
 
 	/**
