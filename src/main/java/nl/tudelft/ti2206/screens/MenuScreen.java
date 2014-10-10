@@ -60,6 +60,7 @@ public class MenuScreen extends Screen {
 		this.stage = stage;
 		this.label = label;
 		this.singlePlayer = button;
+		this.versusComputer = button;
 		this.hostGame = button;
 		this.connect = button;
 		this.setDrawBehavior(new DrawBeige(stage));

@@ -80,9 +80,9 @@ public class MenuScreenTest {
 		screen.create();
 		verify(input).setInputProcessor(stage);
 
-		verify(button, times(3)).setWidth(anyInt());
-		verify(button, times(3)).setX(anyInt());
-		verify(button, times(3)).setY(anyInt());
-		verify(button, times(3)).addListener(any(EventListener.class));
+		verify(button, times(4)).setWidth(anyInt());
+		verify(button, times(4)).setX(anyInt());
+		verify(button, times(4)).setY(anyInt());
+		verify(button, times(4)).addListener(any(EventListener.class));
 	}
 }
