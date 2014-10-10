@@ -30,6 +30,9 @@ public class InputHandler extends InputListener {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
+//	Timer solver = null;
+//	private Benchmark bmark;
+
 	/**
 	 * Creates a new InputHandler instance.
 	 * 

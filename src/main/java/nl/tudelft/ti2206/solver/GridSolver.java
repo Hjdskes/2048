@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.log.Logger;
 
 public class GridSolver extends TimerTask {
 
@@ -24,8 +24,17 @@ public class GridSolver extends TimerTask {
 	private Strategy strategy = Strategy.RANDOM;
 	private boolean running = false;
 	private int depth = 0;
+	
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
+
+	/** Get current class name, used for logging output. */
+	private final String className = this.getClass().getSimpleName();
 
 	public GridSolver(Grid grid, Strategy strategy, int delay, int depth) {
+		
+		logger.debug(className, "Initializing GridSolver...");
+		
 		running = false;
 		succesfulMoves = 0;
 
@@ -70,6 +79,8 @@ public class GridSolver extends TimerTask {
 
 	/** Benchmark start. */
 	public void start() {
+		
+		logger.info(className, "Starting solver...");
 
 		timer = new Timer();
 		timer.schedule(this, 0, delay);
@@ -86,6 +97,8 @@ public class GridSolver extends TimerTask {
 
 			timer = null;
 			running = false;
+			
+			logger.info(className, "Solver stopped.");
 		}
 	}
 
@@ -106,6 +119,7 @@ public class GridSolver extends TimerTask {
 
 		// keep playing until we run out of moves
 		if (original.getPossibleMoves() == 0) {
+			logger.info(className, "Solver cannot make any more moves.");
 			stop();
 		} else {
 
@@ -116,7 +130,9 @@ public class GridSolver extends TimerTask {
 				direction = RandomSolver.selectMove(original);
 			else if (strategy == Strategy.HUMAN)
 				direction = HumanSolver.selectMove(original, getDepth());
-
+			
+			logger.debug(className, "Direction selected: " + direction);
+			
 			// make the selected move
 			makeMove(original, direction);
 		}
