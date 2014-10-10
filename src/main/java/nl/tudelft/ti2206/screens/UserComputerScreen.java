@@ -133,7 +133,7 @@ public class UserComputerScreen extends Screen {
 
 		stage.addListener(new LocalInputHandler(localGrid));
 		
-		gridSolver = new GridSolver(remoteGrid, GridSolver.Strategy.HUMAN, 800, 6);
+		gridSolver = new GridSolver(remoteGrid, GridSolver.Strategy.HUMAN, 1, 6);
 		gridSolver.start();
 	}
 
