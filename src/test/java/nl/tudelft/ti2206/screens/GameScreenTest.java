@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.Before;
@@ -29,29 +29,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreenTest {
-
-	@Mock
-	private Skin skin;
-	@Mock
-	private Stage stage;
-	@Mock
-	private Grid grid;
-	@Mock
-	private Texture texture;
-
-	@Mock
-	private GL20 gl;
-	@Mock
-	private Input input;
-	@Mock
-	private Preferences prefs;
-	@Mock
-	private Viewport viewPort;
-
-	@Mock
-	private ScoreDisplay scores;
-	@Mock
-	private RestartButton button;
+	@Mock private Skin skin;
+	@Mock private Stage stage;
+	@Mock private Grid grid;
+	@Mock private Texture texture;
+	@Mock private GL20 gl;
+	@Mock private Input input;
+	@Mock private Preferences prefs;
+	@Mock private Viewport viewPort;
+	@Mock private Scores scores;
+	@Mock private RestartButton button;
 	
 	private GameScreen screen;
 
@@ -91,7 +78,7 @@ public class GameScreenTest {
 		screen.create();
 		verify(input).setInputProcessor(stage);
 		verify(stage).addListener(any(EventListener.class));
-		verify(stage).addActor(grid);
+		//verify(stage).addActor(grid);
 		verify(stage).addActor(scores);
 		verify(stage).addActor(button);
 	}

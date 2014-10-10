@@ -46,7 +46,7 @@ public class PreferenceHandler {
 			prefs.flush();
 		}
 		if (!prefs.contains("highest")) {
-			prefs.putInteger("highest", 0);
+			prefs.putInteger("highest", 1);
 			prefs.flush();
 		}
 	}

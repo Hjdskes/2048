@@ -33,7 +33,7 @@ public class PreferenceHandlerTest {
 		prefsHandler.initScores();
 		assertEquals(0, prefsHandler.getScore());
 		assertEquals(0, prefsHandler.getHighscore());
-		assertEquals(0, prefsHandler.getHighestTile());
+		assertEquals(1, prefsHandler.getHighestTile());
 	}
 
 	/**

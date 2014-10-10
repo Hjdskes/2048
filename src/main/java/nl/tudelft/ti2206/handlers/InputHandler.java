@@ -1,13 +1,10 @@
 package nl.tudelft.ti2206.handlers;
 
-import java.util.Timer;
-
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.MenuScreen;
-import nl.tudelft.ti2206.solver.Benchmark;
-import nl.tudelft.ti2206.solver.Benchmark.Strategy;
+import nl.tudelft.ti2206.solver.Solver;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,15 +21,14 @@ public class InputHandler extends InputListener {
 	 */
 	private Grid grid;
 
+	/** The solver to automatically solve this game. */
+	private Solver solver;
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
-
-	Timer solver = null;
-
-	private Benchmark bmark;
 
 	/**
 	 * Creates a new InputHandler instance.
@@ -68,9 +64,7 @@ public class InputHandler extends InputListener {
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
 			return true;
-
-		case Keys.S:
-
+//		case Keys.S:
 //			if (bmark == null) {
 //				logger.debug(className,
 //						"Solving this grid! At least, trying to...");
@@ -81,10 +75,19 @@ public class InputHandler extends InputListener {
 //				bmark = null;
 //				logger.debug(className, "Autosolver stopped.");
 //			}
-			return true;
+//			return true;
 		case Keys.R:
 			if (grid != null) {
 				grid.restart();
+			}
+			return true;
+		case Keys.S:
+			if (solver == null) {
+				solver = new Solver(grid, 3);
+				solver.solve();
+			} else {
+				solver.cancel();
+				solver = null;
 			}
 			return true;
 		}

@@ -1,19 +1,12 @@
 package nl.tudelft.ti2206.handlers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * A test class for the progressHandler.
@@ -45,18 +38,12 @@ public class ProgressHandlerTest {
 	 */
 	@Before
 	public void reinitGrid() {
-		Skin skin = mock(Skin.class);
-		AssetHandler.getInstance().setSkin(skin);
-		TextureRegion region = mock(TextureRegion.class);
-		when(skin.getRegion(anyString())).thenReturn(region);
-		Texture texture = mock(Texture.class);
-		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 		/*
 		 * Clear the saved data to make sure the test case can use its own grid,
 		 * score, etc.
 		 */
 		prefsHandler.getPrefs().clear();
-		grid = new Grid(true, skin, region);
+		grid = new Grid(true);
 	}
 
 	/**
@@ -80,6 +67,8 @@ public class ProgressHandlerTest {
 	public void testSaveGame() {
 		int score = 200;
 		grid.setScore(score);
+		grid.setTile(0, 1024);
+		grid.updateHighestTile();
 
 		progressHandler.saveGame(grid);
 
@@ -90,12 +79,38 @@ public class ProgressHandlerTest {
 	 * Tests if a game is loaded correctly.
 	 */
 	@Test
-	public void testLoadGame() {
-		grid.setScore(3000);
+	public void testLoadGameGridParam() {
+		grid.setTile(0, 2);
+		grid.setTile(1, 4);
 		progressHandler.saveGame(grid);
 
 		Grid testGrid = progressHandler.loadGame(grid);
-		testGrid.act(0);
-		assertEquals(testGrid.getHighscore(), 3000);
+		assertEquals("2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0", testGrid.toString());
 	}
+
+	@Test
+	public void testLoadGameFilled() {
+		grid.setTile(0, 2);
+		grid.setTile(1, 4);
+		progressHandler.saveGame(grid);
+
+		Grid grid = progressHandler.loadGame();
+		assertEquals(this.grid.toString(), grid.toString());
+	}
+
+	@Test
+	public void testLoadGameEmpty() {
+		prefsHandler.getPrefs().clear();
+		Grid grid = progressHandler.loadGame();
+		assertEquals("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", this.grid.toString());
+		assertNotEquals(this.grid.toString(), grid.toString());
+	}
+
+	@Test
+	public void testLoadGameCorruptGridString() {
+		prefsHandler.setGrid("0,4");
+		Grid grid = progressHandler.loadGame();
+		assertNotEquals(grid.toString(), prefsHandler.getGrid().toString());
+	}
+
 }

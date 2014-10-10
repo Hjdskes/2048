@@ -11,87 +11,88 @@ tile0
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile1024
+tile10
   rotate: false
   xy: 512, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile128
+tile7
   rotate: false
   xy: 308, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile16
+tile4
   rotate: false
   xy: 206, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile2
+tile1
   rotate: false
   xy: 2, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile2048
+tile11
   rotate: false
   xy: 512, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile4096
-  rotate: false
-  xy: 614, 2
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile256
+tile8
   rotate: false
   xy: 410, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile32
+tile5
   rotate: false
   xy: 206, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile4
+tile2
   rotate: false
   xy: 104, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile512
+tile9
   rotate: false
   xy: 410, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile64
+tile6
   rotate: false
   xy: 308, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile8
+tile3
   rotate: false
   xy: 104, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
+tile12
+  rotate: false
+  xy: 614, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+  

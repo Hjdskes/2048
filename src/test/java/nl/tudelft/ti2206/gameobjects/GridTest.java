@@ -1,11 +1,11 @@
 package nl.tudelft.ti2206.gameobjects;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
@@ -13,7 +13,6 @@ import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
 
 import org.junit.Before;
@@ -21,34 +20,14 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
 /**
  * Test suite for the Grid class.
- * 
- * @author group-21
  */
 public class GridTest {
-	/** The lowest value to start with. */
-	private static final int TWO = 2;
-	/** The highest value to start with. */
-	private static final int FOUR = 4;
+	@Mock private TileHandler tileHandler;
+	
 	/** The object under test. */
 	private Grid grid;
-
-	@Mock
-	private TileHandler tileHandler;
-	@Mock
-	private Skin skin;
-	@Mock
-	private Texture texture;
-	@Mock
-	private TextureRegion region;
-	@Mock
-	private Batch batch;
 
 	/**
 	 * Initializes all the mocks and creates the test object.
@@ -58,14 +37,9 @@ public class GridTest {
 		MockitoAnnotations.initMocks(this);
 		new HeadlessLauncher().launch();
 
-		skin = mock(Skin.class);
-		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
-		when(skin.getRegion(anyString())).thenReturn(region);
-		AssetHandler.getInstance().setSkin(skin);
-
 		tileHandler = mock(TileHandler.class);
 
-		grid = new Grid(false, skin, region);
+		grid = new Grid(false);
 		grid.setTileHandler(tileHandler);
 		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
@@ -86,8 +60,8 @@ public class GridTest {
 				 * Make sure the grid only contains 2's and/or 4's and empty
 				 * tiles.
 				 */
-				if (grid.getTiles()[i].getValue() != TWO
-						&& grid.getTiles()[i].getValue() != FOUR) {
+				if (grid.getTiles()[i].getValue() != Grid.TWO
+						&& grid.getTiles()[i].getValue() != Grid.FOUR) {
 					wrongTiles++;
 				}
 				filledTiles++;
@@ -95,6 +69,12 @@ public class GridTest {
 		}
 		assertEquals(2, filledTiles);
 		assertEquals(0, wrongTiles);
+	}
+
+	@Test
+	public void testSetGetScore() {
+		grid.setScore(200);
+		assertEquals(200, grid.getScore());
 	}
 
 	/**
@@ -106,15 +86,6 @@ public class GridTest {
 		grid.setTile(1, 4096);
 		grid.updateHighestTile();
 		assertEquals(4096, grid.getCurrentHighestTile());
-	}
-
-	/**
-	 * Tests if setHighScore() sets the highscore correctly.
-	 */
-	@Test
-	public void testSetHighScore() {
-		grid.setHighscore(345);
-		assertEquals(grid.getHighscore(), 345);
 	}
 
 	@Test
@@ -146,8 +117,10 @@ public class GridTest {
 	 */
 	@Test
 	public void testGetPossibleMovesFalse() {
-		int[] grid_noMoves = { TWO, FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO, TWO,
-				FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO };
+		int[] grid_noMoves = { Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+							   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO,
+							   Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+							   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
 
 		for (int i = 0; i < grid_noMoves.length; i++) {
 			grid.setTile(i, grid_noMoves[i]);
@@ -168,21 +141,24 @@ public class GridTest {
 
 	@Test
 	public void testGetTileNeighbours() {
-		int[] grid_noMoves = { TWO, FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO, TWO,
-				FOUR, TWO, FOUR, FOUR, TWO, FOUR, TWO };
+		int[] grid_noMoves = { Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+				   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO,
+				   Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
+				   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
 
 		// initialize grid:
-		for (int i = 0; i < grid_noMoves.length; i++)
+		for (int i = 0; i < grid_noMoves.length; i++) {
 			grid.setTile(i, grid_noMoves[i]);
+		}
 
 		// get neighbors for tile at index 5 (should be 4 in total)
 		List<Tile> neighbours = grid.getTileNeighbors(5);
 
 		int found = 0;
-
 		for (Tile neighbour : neighbours) {
-			if (neighbour.getValue() == FOUR)
+			if (neighbour.getValue() == Grid.FOUR) {
 				found++;
+			}
 		}
 		assertEquals(4, found);
 	}
@@ -254,8 +230,8 @@ public class GridTest {
 		 */
 		grid.restart();
 		tiles = 0;
-		assertTrue(grid.getCurrentHighestTile() == 2
-				|| grid.getCurrentHighestTile() == 4);
+		assertTrue(grid.getCurrentHighestTile() == Grid.TWO
+				|| grid.getCurrentHighestTile() == Grid.FOUR);
 		for (Tile tile : grid.getTiles()) {
 			if (!tile.isEmpty()) {
 				tiles++;
@@ -264,52 +240,14 @@ public class GridTest {
 		assertEquals(2, tiles);
 	}
 
-	/**
-	 * Tests if the getters of x, y, width and height are returning the correct
-	 * values.
-	 */
-	@Test
-	public void testGetXYWidthHeight() {
-		int x = (int) grid.getX();
-		int y = (int) grid.getY();
-		int width = (int) grid.getWidth();
-		int height = (int) grid.getHeight();
-		assertEquals(x, 100);
-		assertEquals(y, 100);
-		assertEquals(width, 400);
-		assertEquals(height, 400);
-	}
-
-	@Test
-	public void testAct() {
-		assertFalse(grid.getCurrentHighestTile() == 16);
-		grid.setTile(0, 16);
-		grid.setScore(grid.getHighscore() + 1);
-
-		grid.act(.15f);
-
-		assertTrue(grid.getCurrentHighestTile() == 16);
-		assertTrue(grid.getHighscore() == grid.getScore());
-	}
-
-	@Test
-	public void testDraw() {
-		grid.draw(batch, 1);
-		// verify grid is drawn
-		verify(batch).draw(eq(region), anyInt(), anyInt(), anyInt(), anyInt());
-		// verify tiles are drawn
-		verify(batch, times(16)).draw(eq(region), anyInt(), anyInt(), anyInt(),
-				anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
-	}
-
 	@Test
 	public void testToString() {
-		grid = new Grid(true, skin, region);
+		grid = new Grid(true);
 		assertEquals("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", grid.toString());
 		grid.setTile(0, 2);
 		assertEquals("2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", grid.toString());
 	}
-	
+
 	@Test
 	public void testObjectName() {
 		String objectName = "GridTest";

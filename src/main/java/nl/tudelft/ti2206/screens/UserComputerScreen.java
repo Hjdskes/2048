@@ -1,14 +1,11 @@
 package nl.tudelft.ti2206.screens;
 
-import java.util.TimerTask;
-
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
-import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
@@ -24,14 +21,14 @@ public class UserComputerScreen extends Screen {
 	/** The local grid holding all the local Tiles. */
 	private Grid localGrid;
 
-	/** The remote grid holding all the remote Tiles. */
+	/** The computer grid holding all the computer Tiles. */
 	private Grid computerGrid;
 
 	/** The ScoreDisplay for the local Grid. */
-	private ScoreDisplay localScores;
+	private Scores localScores;
 
-	/** The ScoreDisplay for the remote Grid. */
-	private ScoreDisplay remoteScores;
+	/** The ScoreDisplay for the computer Grid. */
+	private Scores computerScores;
 
 	/** The label indicating which Grid is yours. */
 	private Label you;
@@ -42,8 +39,8 @@ public class UserComputerScreen extends Screen {
 	/** The Group packing all local elements. */
 	private Group localGroup;
 
-	/** The Group packing all remote elements. */
-	private Group remoteGroup;
+	/** The Group packing all computer elements. */
+	private Group computerGroup;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
@@ -60,9 +57,6 @@ public class UserComputerScreen extends Screen {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
-	/** The InputHandler for the remote Grid. */
-	private RemoteInputHandler remoteInput;
-	
 	private GridSolver gridSolver;
 
 	/** Constructs a new MultiGameScreen. */
@@ -76,32 +70,34 @@ public class UserComputerScreen extends Screen {
 		
 		/* Sets the name of the objects. Used for logging */
 		localGrid.setObjectName("LocalGrid");
-		computerGrid.setObjectName("RemoteGrid");
+		computerGrid.setObjectName("ComputerGrid");
 
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Computer", assetHandler.getSkin());
 
 		localGroup = new Group();
-		remoteGroup = new Group();
+		computerGroup = new Group();
 
-		localScores = new ScoreDisplay(localGrid);
-		remoteScores = new ScoreDisplay(computerGrid);
-		
+		localScores = new Scores();
+		localGrid.addObserver(localScores);
+		computerScores = new Scores();
+		computerGrid.addObserver(computerScores);
+
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only */
 	public UserComputerScreen(Stage stage, Grid grid, Label label, Group group,
-			ScoreDisplay scores, Networking netMock) {
+			Scores scores, Networking netMock) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.computerGrid = grid;
 		this.you = label;
 		this.opponent = label;
 		this.localGroup = group;
-		this.remoteGroup = group;
+		this.computerGroup = group;
 		this.localScores = scores;
-		this.remoteScores = scores;
+		this.computerScores = scores;
 		networking = netMock;
 		this.setDrawBehavior( new DrawBeige(stage));
 	}
@@ -114,19 +110,19 @@ public class UserComputerScreen extends Screen {
 		you.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		you.setY(2.5f * TwentyFourtyGame.GAP);
 		localGroup.addActor(localScores);
-		localGroup.addActor(localGrid);
+		//localGroup.addActor(localGrid);
 		localGroup.addActor(you);
 
-		/* Create our remote groups and actors. */
+		/* Create our computer groups and actors. */
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
-		remoteGroup.addActor(remoteScores);
-		remoteGroup.addActor(computerGrid);
-		remoteGroup.addActor(opponent);
-		remoteGroup.setX(600);
+		computerGroup.addActor(computerScores);
+		//computerGroup.addActor(computerGrid);
+		computerGroup.addActor(opponent);
+		computerGroup.setX(600);
 
 		stage.addActor(localGroup);
-		stage.addActor(remoteGroup);
+		stage.addActor(computerGroup);
 
 		stage.addListener(new LocalInputHandler(localGrid));
 		
@@ -150,7 +146,7 @@ public class UserComputerScreen extends Screen {
 		} else if (localGrid.getPossibleMoves() == 0
 				|| computerGrid.getCurrentHighestTile() == 2048) {
 			logger.info(className,
-					"Local player lost the multiplayer game. The score of the remote player: "
+					"Local player lost the multiplayer game. The score of the computer player: "
 							+ Integer.toString(computerGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.LOST);
 			screenHandler.add(new MultiLoseScreen());

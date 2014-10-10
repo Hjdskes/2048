@@ -95,6 +95,10 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
+		if (curState == state) {
+			return;
+		}
+
 		logger.info("TwentyFourtyGame", "Changing current game state to '"
 				+ state + "'.");
 		curState = state;

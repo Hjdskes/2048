@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.gameobjects;
+package nl.tudelft.ti2206.drawables;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,6 +10,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
 import org.junit.Before;
@@ -22,8 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class ScoreDisplayTest {
-
+public class ScoresTest {
 	@Mock
 	private Skin skin;
 	@Mock
@@ -31,14 +32,15 @@ public class ScoreDisplayTest {
 	@Mock
 	private LabelStyle style;
 	@Mock
-	private Grid grid;
-	@Mock
 	private BitmapFont font;
-	
-	private ScoreDisplay scores;
+	@Mock
+	private Grid grid;
+
+	private Scores scores;
 
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
 		AssetHandler.getInstance().setSkin(skin);
 
@@ -47,7 +49,23 @@ public class ScoreDisplayTest {
 		doNothing().when(label).setStyle(any(LabelStyle.class));
 		when(skin.get(anyString(), eq(LabelStyle.class))).thenReturn(style);
 
-		scores = new ScoreDisplay(grid, label);
+		scores = new Scores(label);
+	}
+
+	@Test
+	public void testGetSetHighScore() {
+		scores.setHighScore(20000);
+		assertEquals(20000, scores.getHighScore());
+		scores.setHighScore(10000);
+		assertEquals(20000, scores.getHighScore());
+	}
+
+	@Test
+	public void testGetSetHighestTile() {
+		scores.setHighestTile(99999999);
+		assertEquals(99999999, scores.getHighestTile());
+		scores.setHighestTile(1);
+		assertEquals(99999999, scores.getHighestTile());
 	}
 
 	@Test
@@ -64,11 +82,16 @@ public class ScoreDisplayTest {
 	public void testScoreDisplay() {
 		// make sure the labels are added to the group
 		assertTrue(scores.getChildren().size == 3);
-		
+
 		// make sure the locations are set
 		verify(label, times(3)).setX(anyInt());
 		verify(label, times(3)).setY(anyInt());
 		verify(label, times(3)).setAlignment(anyInt(), anyInt());
 	}
 
+	@Test
+	public void testUpdate() {
+		scores.update(grid, null);
+		verify(label, times(3)).setText(anyString());
+	}
 }

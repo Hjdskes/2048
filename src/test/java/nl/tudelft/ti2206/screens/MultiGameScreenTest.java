@@ -13,7 +13,7 @@ import java.util.Observer;
 
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -33,26 +33,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class MultiGameScreenTest {
-
-	@Mock
-	private Skin skin;
-	@Mock
-	private Stage stage;
-	@Mock
-	private Grid grid;
-	@Mock
-	private Group group;
-	@Mock
-	private Label label;
-	@Mock
-	private ScoreDisplay scores;
-	@Mock
-	private Texture texture;
-	@Mock
-	private Input input;
-	@Mock
-	private Networking networking;
-	
+	@Mock private Skin skin;
+	@Mock private Stage stage;
+	@Mock private Grid grid;
+	@Mock private Group group;
+	@Mock private Label label;
+	@Mock private Scores scores;
+	@Mock private Texture texture;
+	@Mock private Input input;
+	@Mock private Networking networking;
 	
 	private MultiGameScreen screen;
 
@@ -85,7 +74,7 @@ public class MultiGameScreenTest {
 		verify(label, times(2)).setX(anyInt());
 		verify(label, times(2)).setY(anyInt());
 		verify(group, times(2)).addActor(scores);
-		verify(group, times(2)).addActor(grid);
+		//verify(group, times(2)).addActor(grid);
 		verify(group, times(2)).addActor(label);
 		verify(stage).addListener(any(EventListener.class));
 		verify(stage, times(2)).addActor(group);

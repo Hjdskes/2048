@@ -2,18 +2,12 @@ package nl.tudelft.ti2206.gameobjects;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Observable;
 
-import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.handlers.PreferenceHandler;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.TileHandler;
 import nl.tudelft.ti2206.log.Logger;
-
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -24,23 +18,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ 
+ * +---+---+---+---+
  * | 0 | 1 | 2 | 3 |
- * +---+---+---+---+ 
+ * +---+---+---+---+
  * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
+ * +---+---+---+---+
  * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
+ * +---+---+---+---+
  * | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
  * from its index. It can move up or down by adding or subtracting 4 from its
  * index.
- * 
- * The grid will draw all the Tiles it holds.
  */
-public class Grid extends Actor {
+public class Grid extends Observable implements Cloneable {
 	/** This enumeration is used to indicate the direction of a movement. */
 	public enum Direction {
 		DOWN, UP, LEFT, RIGHT;
@@ -49,41 +41,20 @@ public class Grid extends Actor {
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
-	/**
-	 * The name of the instance, initialized to the name of the class. Used
-	 * for logging.
-	 */ 
+	/** The name of the instance, initialized to the name of the class. */
 	private String objectName = this.getClass().getSimpleName();
 
-	/** The width of the Grid. */
-	private static final int GRID_WIDTH = 400;
-
-	/** The height of the Grid. */
-	private static final int GRID_HEIGHT = 400;
-
-	/** The base Grid x-coordinate. */
-	private static final int GRID_X = 100;
-
-	/** The base Grid y-coordinate. */
-	private static final int GRID_Y = 100;
-
 	/** The grid contains sixteen tiles. */
-	private static final int NTILES = 16;
+	public static final int NTILES = 16;
 
 	/** The lowest value to start with. */
-	private static final int TWO = 2;
+	public static final int TWO = 1;
 
 	/** The highest value to start with. */
-	private static final int FOUR = 4;
-
-	/** The area of a Texture the Grid will use to draw itself. */
-	private TextureRegion region;
+	public static final int FOUR = 2;
 
 	/** The array containing all sixteen tiles. */
 	private Tile[] tiles;
-
-	/** A randomizer is needed for filling tiles. */
-	private Random random;
 
 	/** The TileIterator is used to iterate over the tiles. */
 	private TileIterator iterator;
@@ -91,14 +62,11 @@ public class Grid extends Actor {
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
 
-	/** The highest tile value present in the Grid. */
-	private int highestTile;
-
-	/** Keeps track of the current score. */
+	/** The current score of the Grid. */
 	private int score;
 
-	/** Keeps track of the current high score. */
-	private int highScore;
+	/** The highest tile value present in the Grid. */
+	private int highestTile;
 
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
@@ -107,14 +75,9 @@ public class Grid extends Actor {
 	 *            True if the grid should be empty, false otherwise.
 	 */
 	public Grid(boolean isEmpty) {
-		this.region = new TextureRegion(AssetHandler.getInstance().getSkin()
-				.get("grid", Texture.class));
-		this.random = new Random();
 		this.tiles = new Tile[NTILES];
-		
 		this.iterator = new TileIterator(tiles);
-		this.tileHandler = new TileHandler(tiles);
-
+		this.tileHandler = new TileHandler(this);
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
 
@@ -122,32 +85,6 @@ public class Grid extends Actor {
 		if (!isEmpty) {
 			initGrid();
 		}
-	}
-
-	/**
-	 * Constructor for testing purposes: takes a Skin, a TextureRegion and a
-	 * Tile as parameters to allow mocking.
-	 */
-	public Grid(boolean isEmpty, Skin skin, TextureRegion texture) {
-		this.region = texture;
-		this.random = new Random();
-		this.tiles = new Tile[NTILES];
-
-		this.iterator = new TileIterator(tiles);
-		
-		this.tileHandler = new TileHandler(tiles);
-
-		for (int i = 0; i < tiles.length; i++) {
-			tiles[i] = new Tile(i, 0, skin, region);
-
-		}
-			
-		if (!isEmpty) {
-			initGrid();
-		}
-
-		/* After loading the grid, start the game. */
-//		TwentyFourtyGame.setState(GameState.RUNNING);
 	}
 
 	/**
@@ -172,9 +109,9 @@ public class Grid extends Actor {
 	 * @return A new valid location.
 	 */
 	private int getRandomEmptyLocation() {
-		int index = random.nextInt(tiles.length);
+		int index = (int)(Math.random() * tiles.length);
 		while (!tiles[index].isEmpty() && getPossibleMoves() > 0) {
-			index = random.nextInt(tiles.length);
+			index = (int)(Math.random() * tiles.length);
 		}
 		return index;
 	}
@@ -186,7 +123,7 @@ public class Grid extends Actor {
 	 * @return A random value, being either 2 or 4.
 	 */
 	private int initialValue() {
-		return random.nextInt(10) < 9 ? TWO : FOUR;
+		return Math.random() < 0.9 ? TWO : FOUR;
 	}
 
 	/**
@@ -195,30 +132,24 @@ public class Grid extends Actor {
 	 * @param index
 	 *            The Tile's index on the grid.
 	 * @param value
-	 *            The Tile's value (should be a multiple of 2 or 0).
+	 *            The Tile's value (should be a value bigger than zero)).
 	 */
 	public void setTile(int index, int value) {
 		tiles[index].setValue(value);
+		changed();
 	}
 
 	/**
-	 * Updates the grid, by updating all the Tiles it contains and checking for
-	 * a new highest value.
+	 * Sets this Grid's tiles to the provided array.
+	 * @param tiles The tiles to set.
 	 */
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		while (iterator.hasNext()) {
-			iterator.next().act(delta);
-		}
-		iterator.reset();
-
+	public void setTiles(Tile[] tiles) {
+		this.tiles = tiles;
+		this.iterator = new TileIterator(tiles);
 		updateHighestTile();
-		if (score > highScore) {
-			highScore = score;
-		}
+		changed();
 	}
-
+	
 	/**
 	 * Resets the grid, by calling reset on all the Tiles it contains,
 	 * reinitializing itself and checking for the new highest value.
@@ -226,23 +157,23 @@ public class Grid extends Actor {
 	public void restart() {
 		logger.info(objectName, "Restarting grid.");
 
-		score = 0;
-		
 		while (iterator.hasNext()) {
 			iterator.next().reset();
 		}
 		iterator.reset();
 		initGrid();
-		
-		if (highestTile > PreferenceHandler.getInstance().getHighestTile()) {
+
+		/*if (highestTile > PreferenceHandler.getInstance().getHighestTile()) {
 			PreferenceHandler.getInstance().setHighest(highestTile);
 			ScoreDisplay.updateAllTimeHighestTile();
-		}
-		
+		}*/
+
+		score = 0;
 		highestTile = 0;
 		updateHighestTile();
 
-//		TwentyFourtyGame.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(GameState.RUNNING);
+		changed();
 	}
 
 	/**
@@ -254,11 +185,11 @@ public class Grid extends Actor {
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
+	 * @return The increment in score of this move, or -1 if no move was made.
 	 */
 	public int move(Direction direction) {
-		
-		int newScore = score;
-		
+		int increment = -1;
+
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -279,14 +210,16 @@ public class Grid extends Actor {
 		if (tileHandler.isMoveMade()) {
 			logger.info(objectName, "Move " + direction + " succesfully made.");
 
-			newScore = score + tileHandler.getScoreIncrement();
-			setScore(newScore);
-			logger.info(objectName, "Score value set to " + newScore + ".");
+			increment = tileHandler.getScoreIncrement();
+			score += increment;
+			logger.info(objectName, "Score value set to " + score + ".");
 
 			int location = getRandomEmptyLocation();
 			int value = initialValue();
 			setTile(location, value);
 			tiles[location].spawn();
+			updateHighestTile();
+			changed();
 
 			logger.debug(objectName, "New tile set at location " + location
 					+ " (value = " + value + ").");
@@ -296,8 +229,7 @@ public class Grid extends Actor {
 		}
 
 		tileHandler.reset();
-		
-		return newScore;
+		return increment;
 	}
 
 	/**
@@ -395,18 +327,27 @@ public class Grid extends Actor {
 		return neighbors;
 	}
 
-	/**
-	 * @return The array containing all the Tiles.
-	 */
-	public Tile[] getTiles() {
-		return tiles;
+	private void changed() {
+		if (!hasChanged()) {
+			setChanged();
+			notifyObservers();
+		}
 	}
 
 	/**
-	 * @return The highest Tile value.
+	 * Sets the current score.
+	 * @param score The current score.
 	 */
-	public int getCurrentHighestTile() {
-		return highestTile;
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	/**
+	 * Sets the Grid's name.
+	 * @param name The new name.
+	 */
+	public void setObjectName(String name) {
+		this.objectName = name;
 	}
 
 	/**
@@ -417,11 +358,17 @@ public class Grid extends Actor {
 	}
 
 	/**
-	 * @return The current high score. Is not necessarily higher than the saved
-	 *         high score. This is checked when saving the game.
+	 * @return The highest Tile value.
 	 */
-	public int getHighscore() {
-		return highScore;
+	public int getCurrentHighestTile() {
+		return highestTile;
+	}
+
+	/**
+	 * @return The array containing all the Tiles.
+	 */
+	public Tile[] getTiles() {
+		return tiles;
 	}
 
 	/**
@@ -448,65 +395,6 @@ public class Grid extends Actor {
 		this.tileHandler = tileHandler;
 	}
 
-	/**
-	 * Sets the current score to the value provided.
-	 * 
-	 * @param score
-	 *            The new score.
-	 */
-	public void setScore(int score) {
-		this.score = score;
-	}
-
-	/**
-	 * Sets the current high score to the value provided.
-	 * 
-	 * @param highScore
-	 *            The new high score.
-	 */
-	public void setHighscore(int highScore) {
-		this.highScore = highScore;
-	}
-
-	/**
-	 * Sets the name of this instance.
-	 * 
-	 * @param name The name for this instance.
-	 */
-	public void setObjectName(String name) {
-		this.objectName = name;
-	}
-
-	@Override
-	public float getX() {
-		return GRID_X;
-	}
-
-	@Override
-	public float getY() {
-		return GRID_Y;
-	}
-
-	@Override
-	public float getWidth() {
-		return GRID_WIDTH;
-	}
-
-	@Override
-	public float getHeight() {
-		return GRID_HEIGHT;
-	}
-
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(region, getX(), getY(), getWidth(), getHeight());
-		while (iterator.hasNext()) {
-			iterator.next().draw(batch, parentAlpha);
-		}
-
-		iterator.reset();
-	}
-
 	@Override
 	public String toString() {
 		String res = "";
@@ -520,14 +408,14 @@ public class Grid extends Actor {
 		return res;
 	}
 	
-		@Override
-		public Grid clone() {
-			Grid newGrid = new Grid(true);
-			
-			for (int i = 0; i < tiles.length; i++) {
-				newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
-			//	newGrid.slidingTiles[i] = new SlidingTile(newGrid.tiles[i]);
-			}
-			return newGrid;
+	@Override
+	public Grid clone() {
+		Grid newGrid = new Grid(true);
+
+		for (int i = 0; i < tiles.length; i++) {
+			newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
 		}
+		newGrid.setScore(score);
+		return newGrid;
+	}
 }

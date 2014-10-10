@@ -1,10 +1,11 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.drawables.DrawableGrid;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
@@ -19,7 +20,10 @@ public class GameScreen extends Screen {
 	private Grid grid;
 
 	/** The score tiles above the Grid. */
-	private ScoreDisplay scores;
+	private Scores scores;
+
+	/** The grid that is actually drawn. */
+	private DrawableGrid drawableGrid;
 
 	/** The button to restart the current game. */
 	private RestartButton restartButton;
@@ -34,19 +38,23 @@ public class GameScreen extends Screen {
 	public GameScreen() {
 		stage = new Stage();
 		grid = progressHandler.loadGame();
-		restartButton = new RestartButton();
-		scores = new ScoreDisplay(grid);
-		this.setDrawBehavior( new DrawBeige(stage));
+		drawableGrid = new DrawableGrid(grid.getTiles());
+		restartButton = new RestartButton(grid);
+		scores = new Scores();
+
+		grid.addObserver(scores);
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor to insert Mock objects. For testing only. */
 	public GameScreen(Stage stage, Grid grid, RestartButton button,
-			ScoreDisplay scores) {
+			Scores scores) {
 		this.stage = stage;
 		this.grid = grid;
 		this.restartButton = button;
 		this.scores = scores;
-		this.setDrawBehavior( new DrawBeige(stage));
+		grid.addObserver(scores);
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override
@@ -55,8 +63,7 @@ public class GameScreen extends Screen {
 		stage.addListener(new InputHandler(grid));
 
 		/* Create the main group and pack everything in it. */
-		grid.setName("Grid");
-		stage.addActor(grid);
+		stage.addActor(drawableGrid);
 		stage.addActor(restartButton);
 		stage.addActor(scores);		
 	}
@@ -65,13 +72,13 @@ public class GameScreen extends Screen {
 	public void update() {
 		super.update();
  
-		if (grid.getCurrentHighestTile() == 2048
+		if (grid.getCurrentHighestTile() == 11
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(GameState.WON);
-			screenHandler.add(new WinScreen());
+			screenHandler.add(new WinScreen(grid));
 		} else if (grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(GameState.LOST);
-			screenHandler.add(new LoseScreen());
+			screenHandler.add(new LoseScreen(grid));
 		}
 	}
 	

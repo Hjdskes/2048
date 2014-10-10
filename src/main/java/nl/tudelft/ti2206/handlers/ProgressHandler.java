@@ -9,7 +9,6 @@ import nl.tudelft.ti2206.log.Logger;
  * saved game.
  */
 public class ProgressHandler {
-
 	/** A singleton reference to the this class. */
 	private static ProgressHandler instance = new ProgressHandler();
 
@@ -39,7 +38,6 @@ public class ProgressHandler {
 		logger.info(className, "Saving game to preference file...");
 
 		int highest = grid.getCurrentHighestTile();
-		int highscore = grid.getHighscore();
 		int score = grid.getScore();
 
 		if (!TwentyFourtyGame.isLost()) {
@@ -50,8 +48,8 @@ public class ProgressHandler {
 		if (highest > prefsHandler.getHighestTile()) {
 			prefsHandler.setHighest(highest);
 		}
-		if (highscore > prefsHandler.getHighscore()) {
-			prefsHandler.setHighscore(highscore);
+		if (score > prefsHandler.getHighscore()) {
+			prefsHandler.setHighscore(score);
 		}
 
 		logger.info(
@@ -86,8 +84,8 @@ public class ProgressHandler {
 	public Grid loadGame(Grid grid) {
 		logger.info(className, "Loading game from preference file...");
 
-		grid.setHighscore(prefsHandler.getHighscore());
 		grid.setScore(prefsHandler.getScore());
+		grid.updateHighestTile();
 
 		logger.info(
 				className,
@@ -114,16 +112,15 @@ public class ProgressHandler {
 		if (filledTiles.equals("")) {
 			return new Grid(false);
 		} else {
-			Grid grid = new Grid(true);
 			String[] split = filledTiles.split(",");
-
 			if (split.length != 16) {
-				return grid;
+				return new Grid(false);
 			}
-
+			
+			Grid grid = new Grid(true);
 			for (int i = 0; i < split.length; i++) {
 				int value = Integer.parseInt(split[i]);
-				grid.setTile(i, value % 2 == 0 ? value : 0);
+				grid.setTile(i, value < 0 ? 0 : value);
 			}
 			return grid;
 		}

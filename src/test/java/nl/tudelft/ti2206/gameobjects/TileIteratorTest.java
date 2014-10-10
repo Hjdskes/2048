@@ -39,7 +39,7 @@ public class TileIteratorTest {
 
 		tiles = new Tile[16];
 		for (int i = 0; i < tiles.length; i++) {
-			tiles[i] = new Tile(i, i+1, skin, texture);
+			tiles[i] = new Tile(i, i+1);
 		}
 		iterator = new TileIterator(tiles);
 	}
@@ -84,6 +84,14 @@ public class TileIteratorTest {
 		}
 		index = iterator.next().getIndex();
 		assertEquals(5, index);
+	}
+	
+	@Test
+	public void testRemove() {
+		TileIterator copy = iterator;
+		iterator.remove();
+		// verify nothing happened
+		assertEquals(copy, iterator);
 	}
 
 }
