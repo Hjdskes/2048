@@ -60,7 +60,6 @@ public class TileHandlerTest {
 		for (int i = 0; i < 16; i = i + 5) {
 			grid.getTiles()[i].setValue(3);
 		}
-		
 		grid.getTiles()[2].setValue(2);
 		grid.getTiles()[3].setValue(3);
 		tileHandler = new TileHandler(grid);

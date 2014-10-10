@@ -1,75 +1,12 @@
 
 tiles.png
-size: 714,204
+size: 612,204
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 tile0
   rotate: false
   xy: 2, 104
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile1
-  rotate: false
-  xy: 2, 2
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile2
-  rotate: false
-  xy: 104, 104
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile3
-  rotate: false
-  xy: 104, 2
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile4
-  rotate: false
-  xy: 206, 104
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile5
-  rotate: false
-  xy: 206, 2
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile6
-  rotate: false
-  xy: 308, 104
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile7
-  rotate: false
-  xy: 308, 2
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile8
-  rotate: false
-  xy: 410, 104
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-tile9
-  rotate: false
-  xy: 410, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
@@ -81,6 +18,27 @@ tile10
   orig: 100, 100
   offset: 0, 0
   index: -1
+tile7
+  rotate: false
+  xy: 308, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+tile4
+  rotate: false
+  xy: 206, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+tile1
+  rotate: false
+  xy: 2, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 tile11
   rotate: false
   xy: 512, 2
@@ -88,9 +46,44 @@ tile11
   orig: 100, 100
   offset: 0, 0
   index: -1
-tile12
+tile8
   rotate: false
-  xy: 614, 104
+  xy: 410, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+tile5
+  rotate: false
+  xy: 206, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+tile2
+  rotate: false
+  xy: 104, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+tile9
+  rotate: false
+  xy: 410, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+tile6
+  rotate: false
+  xy: 308, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+tile3
+  rotate: false
+  xy: 104, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0

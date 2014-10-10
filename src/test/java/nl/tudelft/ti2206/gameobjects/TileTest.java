@@ -44,8 +44,8 @@ public class TileTest {
 	 */
 	@Test
 	public void testGetValue() {
-		tile.setValue(2048);
-		assertEquals(2048, tile.getValue());
+		tile.setValue(11);
+		assertEquals(11, tile.getValue());
 	}
 
 	/**
