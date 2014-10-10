@@ -3,8 +3,8 @@ package nl.tudelft.ti2206.handlers;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 
-public class RedoCommand extends Command{
-	
+public class RedoCommand extends Command {
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
@@ -13,7 +13,7 @@ public class RedoCommand extends Command{
 	 * logging.
 	 */
 	private String objectName = this.getClass().getSimpleName();
-	
+
 	public RedoCommand(Grid grid) {
 		super(grid);
 	}
@@ -36,7 +36,5 @@ public class RedoCommand extends Command{
 			logger.info(objectName, "Redo Stack is empty! Redo not conducted.");
 		}
 	}
-	
-	
 
 }

@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.handlers;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 
-public class UndoCommand extends Command{
+public class UndoCommand extends Command {
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
@@ -13,7 +13,7 @@ public class UndoCommand extends Command{
 	 * logging.
 	 */
 	private String objectName = this.getClass().getSimpleName();
-	
+
 	public UndoCommand(Grid grid) {
 		super(grid);
 	}
@@ -35,8 +35,7 @@ public class UndoCommand extends Command{
 		} else {
 			logger.info(objectName, "Undo Stack is empty! Undo not conducted.");
 		}
-		
+
 	}
-	
 
 }

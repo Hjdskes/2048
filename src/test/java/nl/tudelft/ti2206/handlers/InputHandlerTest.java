@@ -9,7 +9,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.handlers.InputHandler;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -31,8 +31,8 @@ public class InputHandlerTest {
 	/**
 	 * Initialize all mocks and creates a new InputHandler.
 	 */
-	@BeforeClass
-	public static void setUpBeforeClass() {
+	@Before
+	public void setUp() {
 		grid = Mockito.mock(Grid.class);
 		handler = new InputHandler(grid);
 		tile = Mockito.mock(Tile.class);
@@ -55,8 +55,8 @@ public class InputHandlerTest {
 	}
 
 	/**
-	 * Make sure the move method is called with the correct parameter when the
-	 * down arrow key is pressed.
+	 * Make sure the MoveDownCommand is set for moving the tiles when the down
+	 * arrow key is pressed.
 	 */
 	@Test
 	public void testKeyDownDown() {
@@ -65,8 +65,8 @@ public class InputHandlerTest {
 	}
 
 	/**
-	 * Make sure the move method is called with the correct parameter when the
-	 * up arrow key is pressed.
+	 * Make sure the MoveUpCommand is set for moving the tiles when the up arrow
+	 * key is pressed.
 	 */
 	@Test
 	public void testKeyDownUp() {
@@ -75,8 +75,8 @@ public class InputHandlerTest {
 	}
 
 	/**
-	 * Make sure the move method is called with the correct parameter when the
-	 * left arrow key is pressed.
+	 * Make sure the MoveLeftCommand is set for moving the tiles when the left
+	 * arrow key is pressed.
 	 */
 	@Test
 	public void testKeyDownLeft() {
@@ -85,8 +85,8 @@ public class InputHandlerTest {
 	}
 
 	/**
-	 * Make sure the move method is called with the correct parameter when the
-	 * right arrow key is pressed.
+	 * Make sure the MoveRightCommand is set for moving the tiles when the right
+	 * arrow key is pressed.
 	 */
 	@Test
 	public void testKeyDownRight() {
@@ -100,5 +100,25 @@ public class InputHandlerTest {
 	@Test
 	public void testKeyDownInvalid() {
 		assertEquals(false, handler.keyDown(null, Keys.BACKSLASH));
+	}
+
+	/**
+	 * Make sure the RedoCommand is set for moving the tiles when the R key is
+	 * pressed
+	 */
+	@Test
+	public void testKeyRedo() {
+		handler.keyDown(null, Keys.R);
+		assertTrue(handler.getCommand() instanceof RedoCommand);
+	}
+
+	/**
+	 * Make sure the UndoCommand is set for moving the tiles when the Backspace
+	 * key is pressed.
+	 */
+	@Test
+	public void testKeyUndo() {
+		handler.keyDown(null, Keys.BACKSPACE);
+		assertTrue(handler.getCommand() instanceof UndoCommand);
 	}
 }
