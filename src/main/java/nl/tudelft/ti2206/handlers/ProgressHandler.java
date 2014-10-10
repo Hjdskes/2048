@@ -112,13 +112,12 @@ public class ProgressHandler {
 		if (filledTiles.equals("")) {
 			return new Grid(false);
 		} else {
-			Grid grid = new Grid(true);
 			String[] split = filledTiles.split(",");
-
 			if (split.length != 16) {
-				return grid;
+				return new Grid(false);
 			}
-
+			
+			Grid grid = new Grid(true);
 			for (int i = 0; i < split.length; i++) {
 				int value = Integer.parseInt(split[i]);
 				grid.setTile(i, value < 0 ? 0 : value);
