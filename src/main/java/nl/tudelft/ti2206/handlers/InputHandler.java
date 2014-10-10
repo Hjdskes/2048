@@ -82,6 +82,11 @@ public class InputHandler extends InputListener {
 //				logger.debug(className, "Autosolver stopped.");
 //			}
 			return true;
+		case Keys.R:
+			if (grid != null) {
+				grid.restart();
+			}
+			return true;
 		}
 		return false;
 	}
