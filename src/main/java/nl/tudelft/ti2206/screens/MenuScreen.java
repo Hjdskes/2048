@@ -24,10 +24,7 @@ public class MenuScreen extends Screen {
 	private TextButton singlePlayer;
 
 	/** The button to go to the host menu. */
-	private TextButton hostGame;
-
-	/** The button to go to the client menu. */
-	private TextButton connect;
+	private TextButton multiPlayer;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
@@ -48,10 +45,9 @@ public class MenuScreen extends Screen {
 		stage = new Stage();
 		label = new Label("Choose your destiny!", assetHandler.getSkin());
 		singlePlayer = new TextButton("Singleplayer", assetHandler.getSkin());
-		versusComputer = new TextButton("VS Computer",
+		versusComputer = new TextButton("You vs Computer",
 				assetHandler.getSkin());
-		hostGame = new TextButton("Host a game", assetHandler.getSkin());
-		connect = new TextButton("Join a game", assetHandler.getSkin());
+		multiPlayer = new TextButton("Multiplayer", assetHandler.getSkin());
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
@@ -61,8 +57,7 @@ public class MenuScreen extends Screen {
 		this.label = label;
 		this.singlePlayer = button;
 		this.versusComputer = button;
-		this.hostGame = button;
-		this.connect = button;
+		this.multiPlayer = button;
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
@@ -71,7 +66,7 @@ public class MenuScreen extends Screen {
 		super.create();
 
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getWidth() / 2);
-		label.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + label.getHeight() + 6
+		label.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + label.getHeight() + 8
 				* TwentyFourtyGame.GAP);
 
 		singlePlayer.setWidth(200);
@@ -80,34 +75,32 @@ public class MenuScreen extends Screen {
 		singlePlayer.setY(label.getY() - label.getHeight() - 6
 				* TwentyFourtyGame.GAP);
 
-		versusComputer.setWidth(200);
+		versusComputer.setWidth(320);
 		versusComputer.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- versusComputer.getWidth() / 2);
-		versusComputer.setY(singlePlayer.getY() - 2 
+		versusComputer.setY(singlePlayer.getY() - singlePlayer.getHeight() - 2
 				* TwentyFourtyGame.GAP);
 
-		hostGame.setWidth(200);
-		hostGame.setX(TwentyFourtyGame.GAME_WIDTH / 2 - hostGame.getWidth() / 2);
-		hostGame.setY(singlePlayer.getY() - singlePlayer.getHeight() - 2
+		
+		multiPlayer.setWidth(200);
+		multiPlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2 - multiPlayer.getWidth() / 2);
+		multiPlayer.setY(versusComputer.getY() - versusComputer.getHeight() - 2
 				* TwentyFourtyGame.GAP);
-
-		connect.setWidth(200);
-		connect.setX(TwentyFourtyGame.GAME_WIDTH / 2 - connect.getWidth() / 2);
-		connect.setY(hostGame.getY() - hostGame.getHeight() - 2
-				* TwentyFourtyGame.GAP);
+		
+//		hostGame.setWidth(200);
+//		hostGame.setX(TwentyFourtyGame.GAME_WIDTH / 2 - hostGame.getWidth() / 2);
+//		hostGame.setY(singlePlayer.getY() - singlePlayer.getHeight() - 2
+//				* TwentyFourtyGame.GAP);
+//
+//		connect.setWidth(200);
+//		connect.setX(TwentyFourtyGame.GAME_WIDTH / 2 - connect.getWidth() / 2);
+//		connect.setY(hostGame.getY() - hostGame.getHeight() - 2
+//				* TwentyFourtyGame.GAP);
 
 		stage.addActor(label);
 		stage.addActor(singlePlayer);
 		stage.addActor(versusComputer);
-		stage.addActor(hostGame);
-		stage.addActor(connect);
-
-		versusComputer.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new UserComputerScreen());
-			}
-		});
+		stage.addActor(multiPlayer);
 
 		singlePlayer.addListener(new ClickListener() {
 			@Override
@@ -115,17 +108,30 @@ public class MenuScreen extends Screen {
 				screenHandler.add(new GameScreen());
 			}
 		});
-		hostGame.addListener(new ClickListener() {
+		
+		versusComputer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new HostScreen());
+				screenHandler.add(new CountDownScreen());
 			}
 		});
-		connect.addListener(new ClickListener() {
+		
+		multiPlayer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new ClientScreen());
+				screenHandler.add(new MultiMenuScreen());
 			}
 		});
+		
+		
+//		multiPlayer.addListener(new 
+//				);
+		
+//		connect.addListener(new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				screenHandler.add(new ClientScreen());
+//			}
+//		});
 	}
 }

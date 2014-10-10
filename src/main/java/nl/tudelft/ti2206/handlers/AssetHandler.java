@@ -62,15 +62,18 @@ public class AssetHandler {
 		manager.load("images/cursor.png", Texture.class);
 		manager.load("images/button.png", Texture.class);
 		manager.load("images/grid.png", Texture.class);
-		manager.load("images/lostoverlay.png", Texture.class);
-		manager.load("images/wonoverlay.png", Texture.class);
-		manager.load("images/multilostoverlay.png",
+		manager.load("images/overlays/lostoverlay.png", Texture.class);
+		manager.load("images/overlays/wonoverlay.png", Texture.class);
+		manager.load("images/overlays/multilostoverlay.png",
 				Texture.class);
-		manager.load("images/multiwonoverlay.png",
+		manager.load("images/overlays/multiwonoverlay.png",
 				Texture.class);
-		manager.load("images/connectionlostoverlay.png",
+		manager.load("images/overlays/connectionlostoverlay.png",
 				Texture.class);
-
+		
+		manager.load("images/overlays/getreadyoverlay.png", Texture.class);
+		manager.load("images/overlays/setoverlay.png", Texture.class);
+		manager.load("images/overlays/gooverlay.png", Texture.class);
 		/*
 		 * Instruct the asset manager to load everything in its queue, block
 		 * until this is done.
@@ -108,16 +111,27 @@ public class AssetHandler {
 		skin.add("grid", manager.get("images/grid.png",
 				Texture.class));
 		skin.add("lostoverlay", manager.get(
-				"images/lostoverlay.png", Texture.class));
+				"images/overlays/lostoverlay.png", Texture.class));
 		skin.add("wonoverlay", manager.get(
-				"images/wonoverlay.png", Texture.class));
+				"images/overlays/wonoverlay.png", Texture.class));
 		skin.add("multilostoverlay", manager
-				.get("images/multilostoverlay.png",
+				.get("images/overlays/multilostoverlay.png",
 						Texture.class));
 		skin.add("multiwonoverlay", manager.get(
-				"images/multiwonoverlay.png", Texture.class));
+				"images/overlays/multiwonoverlay.png", Texture.class));
 		skin.add("connectionlostoverlay", manager.get(
-				"images/connectionlostoverlay.png",
+				"images/overlays/connectionlostoverlay.png",
+				Texture.class));
+		
+		
+		skin.add("getreadyoverlay", manager.get(
+				"images/overlays/getreadyoverlay.png",
+				Texture.class));
+		skin.add("setoverlay", manager.get(
+				"images/overlays/setoverlay.png",
+				Texture.class));
+		skin.add("gooverlay", manager.get(
+				"images/overlays/gooverlay.png",
 				Texture.class));
 	}
 

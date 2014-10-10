@@ -14,7 +14,7 @@ public class GridSolver extends TimerTask {
 	}
 
 	private static int succesfulMoves;
-	
+
 	private Timer timer;
 
 	private int delay = 20;
@@ -24,11 +24,10 @@ public class GridSolver extends TimerTask {
 	private Strategy strategy = Strategy.RANDOM;
 	private boolean running = false;
 	private int depth = 0;
-	private int highestTileReached = 0;
 
 	public GridSolver(Grid grid, Strategy strategy, int delay, int depth) {
 		running = false;
-		highestTileReached = 0;
+		succesfulMoves = 0;
 
 		setGrid(grid);
 		setDelay(delay);
@@ -98,28 +97,16 @@ public class GridSolver extends TimerTask {
 
 		if (direction == null) {
 		} else if (grid.move(direction) != -1) {
-			// print("selected move succesfully performed: " + direction);
 			succesfulMoves += 1;
 		}
-		// else
-		// print("selected move failed: " + direction);
 	}
 
 	@Override
 	public void run() {
 
 		// keep playing until we run out of moves
-		if (original.getPossibleMoves() == 0) { // ||
-												// original.getCurrentHighestTile()
-												// >= 2048) {
+		if (original.getPossibleMoves() == 0) {
 			stop();
-			highestTileReached = Math.max(highestTileReached,
-					original.getCurrentHighestTile());
-
-			// restart grid and counter:
-			original.restart();
-			succesfulMoves = 0;
-
 		} else {
 
 			Direction direction = null;

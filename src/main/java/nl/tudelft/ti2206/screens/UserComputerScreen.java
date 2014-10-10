@@ -25,7 +25,7 @@ public class UserComputerScreen extends Screen {
 	private Grid localGrid;
 
 	/** The remote grid holding all the remote Tiles. */
-	private Grid remoteGrid;
+	private Grid computerGrid;
 
 	/** The ScoreDisplay for the local Grid. */
 	private ScoreDisplay localScores;
@@ -72,11 +72,11 @@ public class UserComputerScreen extends Screen {
 		stage = new Stage();
 
 		localGrid = new Grid(false);
-		remoteGrid = new Grid(false);
+		computerGrid = new Grid(false);
 		
 		/* Sets the name of the objects. Used for logging */
 		localGrid.setObjectName("LocalGrid");
-		remoteGrid.setObjectName("RemoteGrid");
+		computerGrid.setObjectName("RemoteGrid");
 
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Computer", assetHandler.getSkin());
@@ -85,10 +85,7 @@ public class UserComputerScreen extends Screen {
 		remoteGroup = new Group();
 
 		localScores = new ScoreDisplay(localGrid);
-		remoteScores = new ScoreDisplay(remoteGrid);
-
-		remoteInput = new RemoteInputHandler(remoteGrid);
-		networking.addObserver(remoteInput);
+		remoteScores = new ScoreDisplay(computerGrid);
 		
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
@@ -98,7 +95,7 @@ public class UserComputerScreen extends Screen {
 			ScoreDisplay scores, Networking netMock) {
 		this.stage = stage;
 		this.localGrid = grid;
-		this.remoteGrid = grid;
+		this.computerGrid = grid;
 		this.you = label;
 		this.opponent = label;
 		this.localGroup = group;
@@ -124,7 +121,7 @@ public class UserComputerScreen extends Screen {
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
 		remoteGroup.addActor(remoteScores);
-		remoteGroup.addActor(remoteGrid);
+		remoteGroup.addActor(computerGrid);
 		remoteGroup.addActor(opponent);
 		remoteGroup.setX(600);
 
@@ -133,7 +130,7 @@ public class UserComputerScreen extends Screen {
 
 		stage.addListener(new LocalInputHandler(localGrid));
 		
-		gridSolver = new GridSolver(remoteGrid, GridSolver.Strategy.HUMAN, 1, 6);
+		gridSolver = new GridSolver(computerGrid, GridSolver.Strategy.HUMAN, 1, 6);
 		gridSolver.start();
 	}
 
@@ -142,7 +139,7 @@ public class UserComputerScreen extends Screen {
 		super.update();
 
 		if (localGrid.getCurrentHighestTile() == 2048
-				|| remoteGrid.getPossibleMoves() == 0) {
+				|| computerGrid.getPossibleMoves() == 0) {
 			logger.info(className,
 					"Local player won the multiplayer game. The score of the local player: "
 							+ Integer.toString(localGrid.getScore()));
@@ -151,10 +148,10 @@ public class UserComputerScreen extends Screen {
 			
 			gridSolver.stop();
 		} else if (localGrid.getPossibleMoves() == 0
-				|| remoteGrid.getCurrentHighestTile() == 2048) {
+				|| computerGrid.getCurrentHighestTile() == 2048) {
 			logger.info(className,
 					"Local player lost the multiplayer game. The score of the remote player: "
-							+ Integer.toString(remoteGrid.getScore()));
+							+ Integer.toString(computerGrid.getScore()));
 			TwentyFourtyGame.setState(GameState.LOST);
 			screenHandler.add(new MultiLoseScreen());
 			
@@ -164,5 +161,6 @@ public class UserComputerScreen extends Screen {
 
 	@Override
 	public void dispose() {
+		gridSolver.stop();
 	}
 }	
