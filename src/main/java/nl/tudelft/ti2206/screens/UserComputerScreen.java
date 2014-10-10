@@ -153,7 +153,7 @@ public class UserComputerScreen extends Screen {
 			delay = 900;
 			depth = 5;
 		} else {
-			delay = 800;
+			delay = 650;
 			depth = 6;
 		}
 		

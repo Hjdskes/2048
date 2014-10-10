@@ -87,10 +87,10 @@ public class DifficultySelectScreen extends Screen {
 				/ 2);
 		hardButton.setY(mediumButton.getY() - easyButton.getHeight() - 2
 				* TwentyFourtyGame.GAP);
-		
+
 		extremeButton.setWidth(200);
-		extremeButton.setX(TwentyFourtyGame.GAME_WIDTH / 2 - extremeButton.getWidth()
-				/ 2);
+		extremeButton.setX(TwentyFourtyGame.GAME_WIDTH / 2
+				- extremeButton.getWidth() / 2);
 		extremeButton.setY(hardButton.getY() - mediumButton.getHeight() - 2
 				* TwentyFourtyGame.GAP);
 
@@ -119,6 +119,13 @@ public class DifficultySelectScreen extends Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				screenHandler.add(new CountDownScreen(Difficulty.HARD));
+			}
+		});
+
+		extremeButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				screenHandler.add(new CountDownScreen(Difficulty.EXTREME));
 			}
 		});
 	}

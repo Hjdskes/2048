@@ -32,6 +32,9 @@ public class GridSolver extends TimerTask {
 	private final String className = this.getClass().getSimpleName();
 
 	public GridSolver(Grid grid, Strategy strategy, int delay, int depth) {
+		
+		logger.debug(className, "Initializing GridSolver...");
+		
 		running = false;
 		succesfulMoves = 0;
 
@@ -127,7 +130,9 @@ public class GridSolver extends TimerTask {
 				direction = RandomSolver.selectMove(original);
 			else if (strategy == Strategy.HUMAN)
 				direction = HumanSolver.selectMove(original, getDepth());
-
+			
+			logger.debug(className, "Direction selected: " + direction);
+			
 			// make the selected move
 			makeMove(original, direction);
 		}
