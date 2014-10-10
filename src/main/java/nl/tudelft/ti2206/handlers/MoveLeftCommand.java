@@ -6,6 +6,7 @@ public class MoveLeftCommand extends Command {
 
 	public MoveLeftCommand(Grid grid) {
 		super(grid);
+		this.grid.getUndoStack().push(grid.toString());
 	}
 
 	@Override

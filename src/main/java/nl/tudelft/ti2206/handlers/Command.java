@@ -28,7 +28,6 @@ public abstract class Command {
 	public Command(Grid grid) {
 		this.tileHandler = grid.getTileHandler();
 		this.grid = grid;
-		this.grid.getUndoStack().push(grid.toString());
 	}
 
 	/**
@@ -42,50 +41,6 @@ public abstract class Command {
 		for (int i = 0; i < temp.length; i++) {
 			grid.setTile(i, Integer.parseInt(temp[i]));
 		}
-	}
-
-	/**
-	 * Undo the previous move by setting the old grid as the current one.
-	 */
-	public void undo() {
-		if (!grid.getUndoStack().isEmpty()) {
-			this.grid.getRedoStack().push(grid.toString());
-			String oldGrid = grid.getUndoStack().pop();
-			setStringAsGrid(oldGrid);
-			int score = grid.getScore() / 2;
-			if (grid.getScore() == grid.getHighscore()) {
-				grid.setHighscore(score);
-			}
-			grid.setScore(score);
-
-			logger.info(objectName, "Undo succesfully conducted, new score is "
-					+ score);
-		} else {
-			logger.info(objectName, "Undo Stack is empty! Undo not conducted.");
-		}
-
-	}
-
-	/**
-	 * Gets the grid after the move from the Redo Stack and sets this as the main grid.
-	 */
-	public void redo() {
-		if (!grid.getRedoStack().isEmpty()) {
-			String newGrid = grid.getRedoStack().pop();
-			setStringAsGrid(newGrid);
-
-			int score = grid.getScore() * 2;
-			if (grid.getScore() == grid.getHighscore()) {
-				grid.setHighscore(score);
-			}
-			grid.setScore(score);
-
-			logger.info(objectName, "Redo succesfully conducted, new score is "
-					+ score);
-		} else {
-			logger.info(objectName, "Redo Stack is empty! Redo not conducted.");
-		}
-
 	}
 
 	/**

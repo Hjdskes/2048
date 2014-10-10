@@ -68,11 +68,13 @@ public class InputHandler extends InputListener {
 			return true;
 		case Keys.BACKSPACE:
 			logger.debug(className, "User pressed key: BACKSPACE");
-			command.undo();
+			setCommand(new UndoCommand(grid));
+			command.execute();
 			return true;
 		case Keys.R:
 			logger.debug(className, "User pressed key: R");
-			command.redo();
+			setCommand(new RedoCommand(grid));
+			command.execute();
 			return true;
 			
 		}

@@ -6,6 +6,7 @@ public class MoveUpCommand extends Command {
 
 	public MoveUpCommand(Grid grid) {
 		super(grid);
+		this.grid.getUndoStack().push(grid.toString());
 	}
 	
 	@Override
