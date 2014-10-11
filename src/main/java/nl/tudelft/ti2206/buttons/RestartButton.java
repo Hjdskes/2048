@@ -17,9 +17,13 @@ public class RestartButton extends TextButton {
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Constructs a new RestartButton. */
-	public RestartButton(final Grid grid) {
+	public RestartButton(final Grid grid, boolean center) {
 		super("Restart", AssetHandler.getInstance().getSkin());
-		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);
+		if (center) {
+			this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);
+		} else {
+			this.setX(TwentyFourtyGame.GAME_WIDTH / 2 + 2*TwentyFourtyGame.GAP);
+		}
 		this.setY(TwentyFourtyGame.GAP);
 
 		this.addListener(new ClickListener() {

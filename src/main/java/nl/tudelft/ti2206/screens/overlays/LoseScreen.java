@@ -24,7 +24,7 @@ public class LoseScreen extends Screen {
 	public LoseScreen(Grid grid) {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "lostoverlay");
-		restartButton = new RestartButton(grid);
+		restartButton = new RestartButton(grid, true);
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
