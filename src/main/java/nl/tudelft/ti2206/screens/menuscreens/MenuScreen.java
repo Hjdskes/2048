@@ -49,7 +49,7 @@ public class MenuScreen extends Screen {
 		label = new Label("Choose your destiny!", assetHandler.getSkin());
 		singlePlayer = new TextButton("Singleplayer", assetHandler.getSkin());
 		multiPlayer = new TextButton("Multiplayer", assetHandler.getSkin());
-		versusComputer = new TextButton("Challenge computer",
+		versusComputer = new TextButton("Challenge me!",
 				assetHandler.getSkin());
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
@@ -72,19 +72,19 @@ public class MenuScreen extends Screen {
 		label.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + label.getHeight() + 8
 				* TwentyFourtyGame.GAP);
 
-		singlePlayer.setWidth(200);
+		singlePlayer.setWidth(220);
 		singlePlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- singlePlayer.getWidth() / 2);
 		singlePlayer.setY(label.getY() - label.getHeight() - 6
 				* TwentyFourtyGame.GAP);
 
-		multiPlayer.setWidth(200);
+		multiPlayer.setWidth(220);
 		multiPlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- multiPlayer.getWidth() / 2);
 		multiPlayer.setY(singlePlayer.getY() - singlePlayer.getHeight() - 2
 				* TwentyFourtyGame.GAP);
 
-		versusComputer.setWidth(320);
+		versusComputer.setWidth(220);
 		versusComputer.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- versusComputer.getWidth() / 2);
 		versusComputer.setY(multiPlayer.getY() - multiPlayer.getHeight() - 4

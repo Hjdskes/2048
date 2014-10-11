@@ -57,14 +57,15 @@ public class Solver extends TimerTask {
 				!TwentyFourtyGame.isRunning() || !TwentyFourtyGame.isContinuing()) {
 			this.cancel();
 		} else if (!calculating) {
-			System.out.println("Calculating next move...");
+		//	System.out.println("Calculating next move...");
 			Direction dir = findMove(original, depth);
-			System.out.println("Direction chosen: " + dir);
+		//	System.out.println("Direction chosen: " + dir);
 			if (dir != null) {
 				original.move(dir);
-			} else {
-				System.out.println("AUTOSOLVE: FAILED");
-			}
+			} 
+			//else {
+			//	System.out.println("AUTOSOLVE: FAILED");
+			//}
 			calculating = false;
 		}
 	}
@@ -112,8 +113,8 @@ public class Solver extends TimerTask {
 				bestValue = value;
 				bestDirection = dir;
 			}
-			final long t1 = System.currentTimeMillis();
-			System.out.println("Total time: " + (t1 - t0));
+			//final long t1 = System.currentTimeMillis();
+			//System.out.println("Total time: " + (t1 - t0));
 		}
 		return bestDirection;
 	}
