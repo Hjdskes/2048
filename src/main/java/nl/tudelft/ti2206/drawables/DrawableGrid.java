@@ -15,7 +15,7 @@ public class DrawableGrid extends Group {
 	private static final int GRID_WIDTH = 400;
 	private static final int GRID_HEIGHT = 400;
 	private static final int GRID_X = 100;
-	private static final int GRID_Y = 100;
+	public static final int GRID_Y = 100;
 
 	/** The area of a Texture the Grid will use to draw itself. */
 	private TextureRegion region;

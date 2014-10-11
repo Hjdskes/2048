@@ -1,16 +1,21 @@
 package nl.tudelft.ti2206.screens.gamescreens;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import nl.tudelft.ti2206.buttons.HintButton;
 import nl.tudelft.ti2206.buttons.RedoButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.buttons.SolveButton;
 import nl.tudelft.ti2206.buttons.UndoButton;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.screens.gamescreens.GameScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +42,7 @@ public class GameScreenTest {
 	@Mock private Preferences prefs;
 	@Mock private Viewport viewPort;
 	@Mock private Scores scores;
+	@Mock private HintButton hintButton;
 	@Mock private RestartButton restartButton;
 	@Mock private SolveButton solveButton;
 	@Mock private UndoButton undoButton;
@@ -51,7 +57,7 @@ public class GameScreenTest {
 		new HeadlessLauncher().launch();
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
-		screen = new GameScreen(stage, grid, restartButton, solveButton, undoButton, redoButton, scores);
+		screen = new GameScreen(stage, grid, restartButton, hintButton, solveButton, undoButton, redoButton, scores);
 
 		Gdx.gl = gl;
 		Gdx.input = input;
