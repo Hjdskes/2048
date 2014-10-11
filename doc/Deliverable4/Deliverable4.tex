@@ -10,7 +10,7 @@
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \newcommand{\tab}{\hspace*{2em}}
 
-\title{\huge\textbf{Deliverable 3}}
+\title{\huge\textbf{Deliverable 4}}
 \author{Piet van Agtmaal 4321278\\
 	    Jochem Heijltjes 1534041\\
 		Arthur Hovanesyan 4322711\\
@@ -24,20 +24,31 @@
 \thispagestyle{empty} %geen page numbering op opening pagina
 \end{titlepage}
 
-\newpage\section{Introduction}
-
-2048 is a very popular game created by by Gabriele Cirulli, based on 1024 by
-Veewo Studio and conceptually similar to Threes by Asher Vollmer.\\
+\newpage\section{Preamble}
 
 We are five Computer Science students at the Delft University of Technology,
 The Netherlands. We created a clone of the original 2048 game for the course
 Software Engineering Methods.\\
 
-We didn't just make a clone of the original 2048 game, we also added
-multiplayer functionality. Now you can challenge your neighbours, your
+The goal of this course is to teach us how to develop software by applying the most appropriate software engineering practices, given the context of development.\\
+
+We would like to thank our teacher Dr. Bachelli and our Teaching Assistants Moritz and Aimee for guiding us through this project.\\
+
+Thank you for reading this report!\\
+
+\newpage\section{Introduction}
+
+2048 is a very popular game created by by Gabriele Cirulli, based on 1024 by
+Veewo Studio and conceptually similar to Threes by Asher Vollmer.\\
+
+For this project we were asked to create a clone of the game 2048 in the Object-Oriented programming language Java, so that's what we did!\\
+
+We didn't only make a clone of the original 2048 game, we also added
+multiplayer functionality, automatic solvers, playing against the computer. 
+Now you can challenge your computer, your neighbours, your
 coworkers, your kids or even the Queen of England to play a game of 2048!\\
 
-This document tells you everything you need to know to get started. Technical aspects of
+This document tells you everything you need to know about our project. Technical aspects of
 the game are covered in here as well.\\
 
 Setting up a multiplayer game is really straightforward, however. Just make sure incoming connections to port TCP/2048 reach the hosting machine! Yes, port 2048! Who would have thunk* it? More details are up ahead!\\
@@ -93,6 +104,21 @@ system's network interfaces. In case you wish to play over the internet,
 please make sure connections on this port are forwarded to your local address
 on your NAT device. Consult the manual of your network products for more 
 information.
+
+
+\subsection{Challenging your computer}
+
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum quam vel enim consectetur sollicitudin. Aenean eget justo at diam condimentum blandit. Vestibulum massa lectus, tincidunt tincidunt ligula ac, venenatis imperdiet libero. Quisque at sem risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus efficitur augue felis, vitae tristique elit laoreet in. Suspendisse non elit dapibus, pharetra velit et, scelerisque tellus.
+
+Pellentesque eu mattis nibh. Aliquam quis ultrices nibh. Praesent gravida et orci in tincidunt. Suspendisse vel elementum mauris. Aliquam odio eros, cursus nec luctus id, elementum at orci. Integer malesuada ipsum condimentum rhoncus vestibulum. Phasellus cursus non ligula at semper.
+
+Donec molestie sed sapien eu malesuada. Nulla at faucibus tellus, molestie placerat neque. Nulla non viverra eros, a pretium nisi. Integer scelerisque pellentesque massa a consectetur. Sed sodales urna in sem laoreet ultrices. Fusce vitae est mattis, aliquet ipsum non, faucibus tortor. Pellentesque velit leo, molestie in pretium at, congue quis urna. Nulla tincidunt iaculis neque in ullamcorper. In lacinia eu libero vel tincidunt. Sed dolor nibh, efficitur sit amet lectus quis, commodo iaculis mi. Cras iaculis eget tortor ut elementum. Cras magna nibh, maximus a pharetra in, convallis quis felis. Aenean finibus metus eget lectus aliquam, et semper nisi interdum. Nulla pellentesque risus ut metus ultrices interdum. Vivamus convallis malesuada mauris non scelerisque. Aenean ante risus, imperdiet eu dui nec, auctor luctus lacus.
+
+Integer rutrum, velit ac laoreet scelerisque, tortor felis fringilla dolor, eu faucibus risus sapien et odio. Duis sit amet urna tristique, iaculis purus id, sodales tortor. Pellentesque nibh velit, pulvinar vitae velit et, finibus suscipit leo. Morbi ac quam ex. Sed eu pharetra enim. Cras id lobortis elit. Phasellus pulvinar magna sit amet malesuada mollis. Morbi nec enim sed magna fringilla suscipit. Sed malesuada elementum quam id cursus. Ut maximus est vel arcu rutrum, at eleifend justo ullamcorper. Vivamus malesuada urna sit amet rutrum porttitor. Maecenas nulla ipsum, tincidunt at dui sed, convallis tincidunt lorem. Sed placerat tellus in est molestie fermentum. Duis tincidunt volutpat consequat. Morbi sodales elementum justo, eget iaculis lorem.
+
+Sed lorem quam, fringilla id gravida sit amet, feugiat ut lectus. Mauris accumsan tellus sed sapien bibendum fringilla. Donec rhoncus tellus vel ipsum scelerisque, ac sollicitudin ligula tincidunt. Integer a dolor augue. Donec vehicula augue id sapien cursus semper. Praesent dui eros, lobortis non feugiat et, sagittis sed mauris. Sed velit quam, dignissim et nibh rhoncus, accumsan ullamcorper lectus. Vestibulum elementum, neque rhoncus egestas viverra, ex arcu vulputate libero, sit amet consectetur lorem orci ac risus. Vivamus feugiat, neque tincidunt bibendum aliquam, ante tortor congue leo, quis volutpat augue mauris a libero. Vivamus arcu lectus, ornare id augue in, vehicula luctus felis. Ut vestibulum tortor tortor, sit amet maximus enim malesuada quis. Cras ac tempor leo, sed faucibus neque. Ut dictum odio lectus, ut vehicula urna maximus non. 
 
 \subsection{Logging}
 The game supports several commandline arguments for logging.\\
