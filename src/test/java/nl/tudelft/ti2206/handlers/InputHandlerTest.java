@@ -28,7 +28,6 @@ public class InputHandlerTest {
 	 */
 	@Before
 	public void setUp() {
-		(new HeadlessLauncher()).launch();
 		grid = new Grid(false);
 		inputHandler = new InputHandler(grid);
 	}
