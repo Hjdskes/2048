@@ -11,8 +11,6 @@ import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen.Difficulty;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 /**
  * The MenuScreen is used on start-up, to have the user choose between
@@ -20,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  */
 public class CountDownScreen extends Screen {
 	/** The background images. */
-	private Image getready, set, go;
+	private Image getReady, set, go;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
@@ -30,7 +28,7 @@ public class CountDownScreen extends Screen {
 	private Difficulty difficulty;
 
 	/** The singleton reference to the ScreenHandler class. */
-	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
+	private ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Constructs a new MenuScreen. */
 	public CountDownScreen(Difficulty difficulty) {
@@ -43,7 +41,7 @@ public class CountDownScreen extends Screen {
 		Gdx.graphics.setDisplayMode(TwentyFourtyGame.GAME_WIDTH,
 				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
-		getready = new Image(assetHandler.getSkin(), "getreadyoverlay");
+		getReady = new Image(assetHandler.getSkin(), "getreadyoverlay");
 		set = new Image(assetHandler.getSkin(), "setoverlay");
 		go = new Image(assetHandler.getSkin(), "gooverlay");
 
@@ -53,16 +51,16 @@ public class CountDownScreen extends Screen {
 	}
 
 	/** Constructor for testing purposes only. */
-	public CountDownScreen(Stage stage, Label label, TextButton button) {
+	public CountDownScreen(Stage stage, Image image) {
 		this.stage = stage;
+		getReady = set = go = image;
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override
 	public void create() {
 		super.create();
-
-		stage.addActor(getready);
+		stage.addActor(getReady);
 	}
 
 	@Override
