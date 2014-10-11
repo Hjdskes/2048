@@ -32,11 +32,6 @@ public class TwentyFourtyGame extends Game {
 	/** The gap between all the elements. */
 	public static final int GAP = 15;
 
-	/** Enumeration indicating what state the game is currently in. */
-//	public static enum GameState {
-//		RUNNING, LOST, WON, CONTINUING
-//	}
-
 	/** The current state of the game. */
 	private static GameState curState;
 	
@@ -109,8 +104,8 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
-//		logger.info("TwentyFourtyGame", "Changing current game state to '"
-//				+ state + "'.");
+		logger.info("TwentyFourtyGame", "Changing current game state to '"
+				+ state.getClass().getSimpleName() + "'.");
 		curState = state;
 	}
 
