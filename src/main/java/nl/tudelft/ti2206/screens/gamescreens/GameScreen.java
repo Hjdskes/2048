@@ -55,7 +55,7 @@ public class GameScreen extends Screen {
 		stage = new Stage();
 		grid = progressHandler.loadGame();
 		drawableGrid = new DrawableGrid(grid.getTiles());
-		restartButton = new RestartButton(grid, false);
+		restartButton = new RestartButton(grid, true);
 		solveButton = new SolveButton(grid);
 		undoButton = new UndoButton(grid);
 		redoButton = new RedoButton(grid);

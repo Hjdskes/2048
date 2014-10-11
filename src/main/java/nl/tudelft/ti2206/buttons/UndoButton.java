@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.buttons;
 
+import nl.tudelft.ti2206.drawables.DrawableTile;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -16,9 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class UndoButton extends TextButton {
 	/** Constructs a new UndoButton. */
 	public UndoButton(final Grid grid) {
-		super("Undo", AssetHandler.getInstance().getSkin());
-		this.setX( (TwentyFourtyGame.GAME_WIDTH / 4) - this.getPrefWidth() / 2);
-		this.setY(TwentyFourtyGame.GAP);
+		super("Undo", AssetHandler.getInstance().getSkin(), "small");
+		this.setHeight(50);
+		this.setWidth(DrawableTile.TILE_WIDTH);
+		this.setX(DrawableTile.TILE_X + 2 * DrawableTile.TILE_WIDTH + 2 * TwentyFourtyGame.GAP);
+		this.setY(100 / 2 - this.getHeight() / 2);
 
 		this.addListener(new ClickListener() {
 			@Override
