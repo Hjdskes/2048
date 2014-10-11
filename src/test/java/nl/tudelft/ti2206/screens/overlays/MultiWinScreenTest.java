@@ -1,17 +1,16 @@
 package nl.tudelft.ti2206.screens.overlays;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
+import nl.tudelft.ti2206.screens.gamescreens.MultiGameScreen;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -24,41 +23,25 @@ public class MultiWinScreenTest {
 	@Mock
 	private BitmapFont font;
 	@Mock
+	private MultiGameScreen screen;
+	@Mock
 	private Stage stage;
 	@Mock
 	private Image image;
 	@Mock
 	private MenuButton button;
-	@Mock
-	private Input input;
-	
-	private MultiWinScreen screen;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		Gdx.input = input;
-		screen = new MultiWinScreen(stage, image, button);
+		when(screen.getStage()).thenReturn(stage);
 	}
 
 	@Test
 	public void testCreate() {
-		screen.create();
-		
-		verify(input).setInputProcessor(stage);
+		MultiWinScreen screen = new MultiWinScreen(stage, image, button);
+		assertNotNull(screen);
 		verify(stage).addActor(image);
 		verify(stage).addActor(button);
 	}
-
-	@Test
-	public void testDraw() {
-		screen.draw();
-		verify(stage).draw();
-	}
-
-	@Test
-	public void testIsOverlay() {
-		assertTrue(screen.isOverlay());
-	}
-
 }

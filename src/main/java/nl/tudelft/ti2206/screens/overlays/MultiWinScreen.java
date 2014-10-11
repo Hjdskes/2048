@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.screens.overlays;
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.Screen;
-import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -11,19 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 /**
  * The MultiWinScreen is displayed when the local player has won.
  */
-public class MultiWinScreen extends Screen {
+public class MultiWinScreen {
 	/** The background image. */
 	private Image image;
 
 	/** The button to go back to the menu. */
 	private MenuButton menuButton;
+	
+	private Stage stage;
 
 	/** Constructs a new MultiWinScreen. */
-	public MultiWinScreen() {
-		stage = new Stage();
+	public MultiWinScreen(Screen parent) {
+		stage = parent.getStage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "multiwonoverlay");
 		menuButton = new MenuButton();
-		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	/** Constructor used for mock insertion */
@@ -31,18 +31,11 @@ public class MultiWinScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.menuButton = menuButton;
-		this.setDrawBehavior(new DrawSimple(stage));
+		addActors();
 	}
 
-	@Override
-	public void create() {
-		super.create();
+	public void addActors() {
 		stage.addActor(image);
 		stage.addActor(menuButton);
-	}
-
-	@Override
-	public boolean isOverlay() {
-		return true;
 	}
 }

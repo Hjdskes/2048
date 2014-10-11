@@ -6,7 +6,6 @@ import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.overlays.LoseScreen;
 import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
-import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 
 /**
  * The RunningState class is used to define a possible state of the game. It is
@@ -29,7 +28,8 @@ public class RunningState implements GameState {
 		if (grid.getCurrentHighestTile() == 11
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.findScreen("GameScreen").addWonOverlay(grid);
+			screenHandler.findScreen("GameScreen")
+					.addOverlay(false, true, grid);
 		} else if (grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
 			screenHandler.add(new LoseScreen(grid));
@@ -45,7 +45,8 @@ public class RunningState implements GameState {
 							+ Integer.toString(localgrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.add(new MultiWinScreen());
+			screenHandler.findScreen("MultiGameScreen").addOverlay(true, true,
+					null);
 		}
 
 		/* Waiting condition: I am out of moves */
