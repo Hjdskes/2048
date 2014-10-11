@@ -181,6 +181,8 @@ public class Grid extends Observable implements Cloneable {
 		score = 0;
 		highestTile = 0;
 		updateHighestTile();
+		undo.clear();
+		redo.clear();
 
 		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 		changed();

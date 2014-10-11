@@ -6,6 +6,9 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
+import nl.tudelft.ti2206.state.GameState;
+import nl.tudelft.ti2206.state.LostState;
+import nl.tudelft.ti2206.state.WonState;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -36,8 +39,11 @@ public class RestartButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				ScreenHandler.getInstance().restart();
+				GameState state = TwentyFourtyGame.getState();
 				grid.restart();
+				if (state instanceof LostState || state instanceof WonState) {
+					ScreenHandler.getInstance().restart();
+				}
 			}
 		});
 	}
