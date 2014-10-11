@@ -4,6 +4,8 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBehavior;
 import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
+import nl.tudelft.ti2206.screens.overlays.LoseScreen;
+import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
 import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
@@ -97,6 +99,10 @@ public abstract class Screen implements Disposable {
 			new WinScreen(this, grid);
 		} else if (!isMulti && isWon) {
 			new MultiWinScreen(this);
+		} else if (!isMulti && !isWon) {
+			new LoseScreen(this, grid);
+		} else {
+			new MultiLoseScreen(this);
 		}
 	}
 
