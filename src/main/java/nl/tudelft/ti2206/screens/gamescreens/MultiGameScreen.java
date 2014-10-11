@@ -127,7 +127,7 @@ public class MultiGameScreen extends Screen {
 		localGroup.addActor(you);
 
 		/* Create our remote groups and actors. */
-		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
+		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - opponent.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
 		remoteGroup.addActor(remoteScores);
 		remoteGroup.addActor(remoteDrawableGrid);
@@ -148,6 +148,7 @@ public class MultiGameScreen extends Screen {
 	public void setYouLabel(String string, Color color){
 		you.setText(string);
 		you.setColor(color);
+		you.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 	}
 
 	/** Sets the label indicating your opponent's Grid to the supplied text and color.
@@ -158,6 +159,7 @@ public class MultiGameScreen extends Screen {
 	public void setOpponentLabel(String string, Color color){
 		opponent.setText(string);
 		opponent.setColor(color);
+		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - opponent.getPrefWidth() / 2);
 	}
 
 	@Override
