@@ -24,3 +24,16 @@ white
   orig: 512, 512
   offset: 0, 0
   index: -1
+
+fonts3.png
+size: 514,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+whiteLarge
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1

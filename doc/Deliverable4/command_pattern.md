@@ -1,0 +1,7 @@
+#Command pattern
+
+We implemented the command pattern because we wanted to undo and redo the movements made by the player. After deciding to implement the command pattern we also wanted to make commands for the movements, as every move was a clear command.
+
+###Implementation 
+
+We have decided to make the Command an abstract class as there where pieces of code that was used in every command so it would be beneficial to have that code in the Command class as a method.  The invoker of a command is the InputHandler. This object invokes the execute() method of the command that is currently set. We have made a command for every direction of movement for the grid. These command have as a receiver the TileHandler. TileHandler preforms the actual actions of moving the tiles in the grid.We have also made a command for undo and a command for redo. These commands have as a receiver the Grid. The Grid object keeps two stacks of strings, one stack keeps track of the previous grid when a move is made and the other stack keeps track of the grid before an undo command is executed. The undo and redo command pop a string of the correct stack and sets it as the current grid.This implementation made it possible to remove the move() method as it could be handled by the current command instead.

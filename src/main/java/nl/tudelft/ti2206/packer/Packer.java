@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.packer;
+//package nl.tudelft.ti2206.packer;
 //import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 //
 //
