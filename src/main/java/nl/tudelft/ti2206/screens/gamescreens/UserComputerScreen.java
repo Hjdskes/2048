@@ -5,7 +5,7 @@ import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.handlers.LocalInputHandler;
+import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
@@ -66,8 +66,6 @@ public class UserComputerScreen extends Screen {
 
 	private DrawableGrid computerGridDraw;
 
-	// private Label difficultylbl;
-
 	/** Constructs a new MultiGameScreen. */
 	public UserComputerScreen(Difficulty difficulty) {
 		Gdx.graphics.setDisplayMode(2 * TwentyFourtyGame.GAME_WIDTH,
@@ -86,8 +84,6 @@ public class UserComputerScreen extends Screen {
 
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Computer", assetHandler.getSkin());
-		// difficultylbl = new Label(difficulty.toString(),
-		// assetHandler.getSkin());
 
 		localGroup = new Group();
 		computerGroup = new Group();
@@ -108,7 +104,6 @@ public class UserComputerScreen extends Screen {
 		this.computerGrid = grid;
 		this.you = label;
 		this.opponent = label;
-		// this.difficultylbl = label;
 		this.localGroup = group;
 		this.computerGroup = group;
 		this.localScores = scores;
@@ -123,14 +118,10 @@ public class UserComputerScreen extends Screen {
 		setUpLocalActors();
 		setUpRemoteActors();
 
-		// difficultylbl.setX(TwentyFourtyGame.GAME_WIDTH / 2 -
-		// you.getPrefWidth() / 2 + difficultylbl.getWidth() / 3);
-		// difficultylbl.setY(opponent.getY() - opponent.getHeight() - 2);
-
 		stage.addActor(localGroup);
 		stage.addActor(computerGroup);
 
-		stage.addListener(new LocalInputHandler(localGrid));
+		stage.addListener(new InputHandler(localGrid));
 
 		adjustToDifficulty();
 		gridSolver.start();
