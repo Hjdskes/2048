@@ -7,6 +7,11 @@ import nl.tudelft.ti2206.screens.MultiGameScreen;
 import nl.tudelft.ti2206.screens.MultiLoseScreen;
 import nl.tudelft.ti2206.screens.MultiWinScreen;
 
+/**
+ * The WaitingState class is used to define a possible state of the game.
+ * It is the state where a player must wait for the opponent to play until he is our of legal moves.
+ */
+
 public class WaitingState implements GameState{
 
 	/** The singleton reference to the Logger instance. */
@@ -15,15 +20,21 @@ public class WaitingState implements GameState{
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
+	/**
+	 * The update(grid) method is used to update singleplayer states.
+	 */
 	@Override
 	public void update(Grid grid) {
-
 	}
 
+	/**
+	 * The update(grid,grid) method is used to update multiplayer states.
+	 * Contains state change conditions.
+	 */
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {
 
-		/** Lose condition: I lose while waiting if he gets a higher score than mine*/
+		/* Lose condition: I lose while waiting if he gets a higher score than mine*/
 		if(localgrid.getScore() < remotegrid.getScore()) {
 
 			logger.info(className,
@@ -34,7 +45,7 @@ public class WaitingState implements GameState{
 			MultiGameScreen.screenHandler.add(new MultiLoseScreen());
 		}
 		
-		/** Win condition: i win because he couldn't beat my score and we both ran out of moves*/
+		/* Win condition: i win because he couldn't beat my score and we both ran out of moves*/
 		if(localgrid.getScore() > remotegrid.getScore() 
 			&& (remotegrid.getPossibleMoves() == 0)) {
 

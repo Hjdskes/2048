@@ -7,9 +7,13 @@ import nl.tudelft.ti2206.screens.GameScreen;
 import nl.tudelft.ti2206.screens.LoseScreen;
 import nl.tudelft.ti2206.screens.MultiGameScreen;
 import nl.tudelft.ti2206.screens.MultiLoseScreen;
-import nl.tudelft.ti2206.screens.MultiWaitScreen;
 import nl.tudelft.ti2206.screens.MultiWinScreen;
 import nl.tudelft.ti2206.screens.WinScreen;
+
+/**
+ * The RunningState class is used to define a possible state of the game.
+ * It is the state where the game is active and the player has not lost yet.
+ */
 
 public class RunningState implements GameState {
 
@@ -19,9 +23,10 @@ public class RunningState implements GameState {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 	
-	public RunningState() {
-	}
-
+	/**
+	 * The update(grid) method is used to update singleplayer states.
+	 * Contains state change conditions.
+	 */
 	@Override
 	public void update(Grid grid) {
 		if (grid.getCurrentHighestTile() == 2048) {
@@ -33,9 +38,13 @@ public class RunningState implements GameState {
 		}
 	}
 
+	/**
+	 * The update(grid,grid) method is used to update multiplayer states.
+	 * Contains state change conditions.
+	 */
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {
-		/** Win condition: I merged 2048 */
+		/* Win condition: I merged 2048 */
 		if (localgrid.getCurrentHighestTile() == 2048) { 
 			
 			logger.info(className,
@@ -47,7 +56,7 @@ public class RunningState implements GameState {
 
 		}
 		
-		/** Waiting condition: I am out of moves */
+		/* Waiting condition: I am out of moves */
 		if (localgrid.getPossibleMoves() == 0) {
 			
 			logger.info(className,
@@ -56,11 +65,11 @@ public class RunningState implements GameState {
 			
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
 			
-			//doesn't work as it should yet
+
 			//MultiGameScreen.screenHandler.add(new MultiWaitScreen());
 		}
 		
-		/** Losing condition: He merged 2048 */
+		/* Losing condition: He merged 2048 */
 		if(remotegrid.getCurrentHighestTile() == 2048) {
 			
 			logger.info(className,
@@ -71,7 +80,7 @@ public class RunningState implements GameState {
 			MultiGameScreen.screenHandler.add(new MultiLoseScreen());
 		}
 		
-		/** Losing condition: Same score, but he was first. */
+		/* Losing condition: Same score, but he was first. */
 		if ((localgrid.getPossibleMoves() == 0)  && 
 			(remotegrid.getPossibleMoves() == 0) &&
 			(localgrid.getScore() < remotegrid.getScore())) { 

@@ -1,28 +1,27 @@
 package nl.tudelft.ti2206.state;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.handlers.InputHandler;
-import nl.tudelft.ti2206.screens.GameScreen;
-import nl.tudelft.ti2206.screens.LoseScreen;
+
+/**
+ * The WonState class is used to define a possible state of the game.
+ * It is the state where the player has lost according to a lose condition.
+ */
 
 public class LostState implements GameState{
-
-private InputHandler inputhandler;
 	
-	public LostState(){
-		//inputhandler = handler; 
-	}
-
+	/**
+	* The update(grid) method is used to update singleplayer states.
+	*/
 	@Override
 	public void update(Grid grid) {
-		//GameScreen.screenHandler.add(new LoseScreen());
 		
 	}
 
+	/**
+	 * The update(grid,grid) method is used to update multiplayer states.
+	 */
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
