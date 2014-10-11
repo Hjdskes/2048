@@ -455,6 +455,7 @@ public class Grid extends Observable implements Cloneable {
 			newGrid.tiles[i] = new Tile(i, tiles[i].getValue());
 		}
 		newGrid.setScore(score);
+		newGrid.highestTile = highestTile;
 		return newGrid;
 	}
 }

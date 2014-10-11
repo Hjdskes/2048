@@ -1,12 +1,14 @@
 package nl.tudelft.ti2206.gameobjects;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Stack;
 
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
@@ -81,10 +83,10 @@ public class GridTest {
 	 */
 	@Test
 	public void testGetHighestTile() {
-		grid.setTile(0, 2048);
-		grid.setTile(1, 4096);
+		grid.setTile(0, 11);
+		grid.setTile(1, 12);
 		grid.updateHighestTile();
-		assertEquals(4096, grid.getCurrentHighestTile());
+		assertEquals(12, grid.getCurrentHighestTile());
 	}
 
 	@Test
@@ -170,6 +172,12 @@ public class GridTest {
 		assertTrue(grid.getTileHandler() instanceof TileHandler);
 	}
 
+	@Test
+	public void testGetRedoStack() {
+		Stack<String> redoStack = new Stack<>();
+		assertEquals(redoStack, grid.getRedoStack());
+	}
+	
 	/**
 	 * Tests if restart() correctly resets all tiles and the current highest
 	 * tile.
@@ -182,10 +190,10 @@ public class GridTest {
 		 * Set two extra tiles on the grid (they can possible overlap, so no
 		 * assert is possible here) and confirm the highest tile.
 		 */
-		grid.setTile(4, 2048);
-		grid.setTile(3, 4096);
+		grid.setTile(4, 11);
+		grid.setTile(3, 12);
 		grid.updateHighestTile();
-		assertEquals(4096, grid.getCurrentHighestTile());
+		assertEquals(12, grid.getCurrentHighestTile());
 
 		/*
 		 * Now upon restart, the highest value should be 2 or 4 and there should
@@ -242,5 +250,16 @@ public class GridTest {
 		when(tileHandler.getScoreIncrement()).thenReturn(20);
 		grid.updateScore(tileHandler.getScoreIncrement());
 		assertEquals(grid.getScore(), score + 20);
+	}
+	
+	@Test
+	public void testClone() {
+		String old = grid.toString();
+		int oldHighestTile = grid.getCurrentHighestTile();
+		Grid clone = grid.clone();
+		assertEquals(old, clone.toString());
+		assertEquals(oldHighestTile, clone.getCurrentHighestTile());
+		grid.setTile(0, 11);
+		assertNotEquals(grid.toString(), clone.toString());
 	}
 }
