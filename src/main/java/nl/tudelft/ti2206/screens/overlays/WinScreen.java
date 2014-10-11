@@ -38,9 +38,9 @@ public class WinScreen {
 	}
 
 	/** Constructor for testing only */
-	public WinScreen(Screen parent, Image image, RestartButton rButton,
+	public WinScreen(Stage stage, Image image, RestartButton rButton,
 			ContinueButton cButton) {
-		this.stage = parent.getStage();
+		this.stage = stage;
 		this.image = image;
 		restartButton = rButton;
 		continueButton = cButton;

@@ -4,7 +4,6 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.screens.overlays.LoseScreen;
 
 /**
  * The RunningState class is used to define a possible state of the game. It is
@@ -31,7 +30,8 @@ public class RunningState implements GameState {
 					.addOverlay(false, true, grid);
 		} else if (grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.add(new LoseScreen(grid));
+			screenHandler.findScreen("GameScreen").addOverlay(false, false,
+					grid);
 		}
 	}
 

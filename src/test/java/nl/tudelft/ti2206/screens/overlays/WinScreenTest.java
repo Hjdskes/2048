@@ -2,10 +2,8 @@ package nl.tudelft.ti2206.screens.overlays;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.screens.gamescreens.GameScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +22,6 @@ public class WinScreenTest {
 	private RestartButton restartButton;
 	@Mock
 	private ContinueButton continueButton;
-	@Mock
-	private GameScreen gameScreen;
 
 	/**
 	 * Initialize all mock objects and the object under test
@@ -33,12 +29,11 @@ public class WinScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		when(gameScreen.getStage()).thenReturn(stage);
 	}
 
 	@Test
 	public void testCreate() {
-		WinScreen screen = new WinScreen(gameScreen, image, restartButton,
+		WinScreen screen = new WinScreen(stage, image, restartButton,
 				continueButton);
 		assertNotNull(screen);
 		verify(stage).addActor((Image) image);
