@@ -1,7 +1,9 @@
 package nl.tudelft.ti2206.screens;
 
+import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBehavior;
+import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -87,6 +89,15 @@ public abstract class Screen implements Disposable {
 		stage.act();
 	}
 
+	public void addWonOverlay(Grid grid) {
+		new WinScreen(this, grid);
+	}
+	
+	public void restart() {
+		stage.getActors().clear();
+		create();
+	}
+	
 	@Override
 	public void dispose() {
 		logger.debug(className, "Closing window...");
