@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.tudelft.ti2206.solver;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
