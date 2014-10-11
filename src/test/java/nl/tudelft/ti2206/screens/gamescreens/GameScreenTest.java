@@ -1,16 +1,21 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.gamescreens;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.drawables.Scores;
+import nl.tudelft.ti2206.buttons.RedoButton;
+import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.buttons.SolveButton;
+import nl.tudelft.ti2206.buttons.UndoButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.screens.menuscreens.MultiMenuScreen;
+import nl.tudelft.ti2206.screens.gamescreens.GameScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,13 +27,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class MultiMenuScreenTest {
+public class GameScreenTest {
 	@Mock private Skin skin;
 	@Mock private Stage stage;
 	@Mock private Grid grid;
@@ -38,11 +42,12 @@ public class MultiMenuScreenTest {
 	@Mock private Preferences prefs;
 	@Mock private Viewport viewPort;
 	@Mock private Scores scores;
-	@Mock private TextButton button;
-	@Mock private Label label;
+	@Mock private RestartButton restartButton;
+	@Mock private SolveButton solveButton;
+	@Mock private UndoButton undoButton;
+	@Mock private RedoButton redoButton;
 	
-	
-	private MultiMenuScreen screen;
+	private GameScreen screen;
 
 	/** Sets up all mock objects and the object under test */
 	@Before
@@ -51,7 +56,7 @@ public class MultiMenuScreenTest {
 		new HeadlessLauncher().launch();
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
-		screen = new MultiMenuScreen(stage, label, button);
+		screen = new GameScreen(stage, grid, restartButton, solveButton, undoButton, redoButton, scores);
 
 		Gdx.gl = gl;
 		Gdx.input = input;
@@ -79,11 +84,13 @@ public class MultiMenuScreenTest {
 	public void testCreate() {
 		screen.create();
 		verify(input).setInputProcessor(stage);
-	//	verify(stage).addListener(any(EventListener.class));
-	//	verify(stage).addActor(grid);
-	//	verify(stage).addActor(scores);
-	//	verify(stage).addActor(button);
-		verify(stage).addActor(label);
+		verify(stage).addListener(any(EventListener.class));
+		//verify(stage).addActor(grid);
+		verify(stage).addActor(scores);
+		verify(stage).addActor(restartButton);
+		verify(stage).addActor(solveButton);
+		verify(stage).addActor(undoButton);
+		verify(stage).addActor(redoButton);
 	}
 
 	/**
@@ -92,8 +99,8 @@ public class MultiMenuScreenTest {
 	@Test
 	public void testDraw() {
 		screen.draw();
-	//	verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
-	//	verify(gl).glClear(anyInt());
+		verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
+		verify(gl).glClear(anyInt());
 		verify(stage).draw();
 	}
 }

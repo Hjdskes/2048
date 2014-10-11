@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.gamescreens;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -8,13 +8,15 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.drawables.Scores;
+
+import java.util.Observer;
+
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
-import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen;
-import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen.Difficulty;
+import nl.tudelft.ti2206.screens.gamescreens.MultiGameScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,27 +33,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class UserComputerScreenTest {
-	@Mock
-	private Skin skin;
-	@Mock
-	private Stage stage;
-	@Mock
-	private Grid grid;
-	@Mock
-	private Group group;
-	@Mock
-	private Label label;
-	@Mock
-	private Scores scores;
-	@Mock
-	private Texture texture;
-	@Mock
-	private Input input;
-	@Mock
-	private Networking networking;
-
-	private UserComputerScreen screen;
+public class MultiGameScreenTest {
+	@Mock private Skin skin;
+	@Mock private Stage stage;
+	@Mock private Grid grid;
+	@Mock private Group group;
+	@Mock private Label label;
+	@Mock private Scores scores;
+	@Mock private Texture texture;
+	@Mock private Input input;
+	@Mock private Networking networking;
+	
+	private MultiGameScreen screen;
 
 	/** Sets up all mock objects and the object under test */
 	@Before
@@ -61,13 +54,14 @@ public class UserComputerScreenTest {
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 
-		screen = new UserComputerScreen(stage, grid, label, group, scores,
-				Difficulty.EXTREME);
+		screen = new MultiGameScreen(stage, grid, label, group, scores, networking);
 
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 		doNothing().when(group).addActor(any(Actor.class));
 
+		doNothing().when(networking).deleteObserver(any(Observer.class));
+		
 		when(label.getPrefWidth()).thenReturn(0f);
 	}
 
@@ -81,7 +75,7 @@ public class UserComputerScreenTest {
 		verify(label, times(2)).setX(anyInt());
 		verify(label, times(2)).setY(anyInt());
 		verify(group, times(2)).addActor(scores);
-		// verify(group, times(2)).addActor(grid);
+		//verify(group, times(2)).addActor(grid);
 		verify(group, times(2)).addActor(label);
 		verify(stage).addListener(any(EventListener.class));
 		verify(stage, times(2)).addActor(group);
@@ -89,6 +83,7 @@ public class UserComputerScreenTest {
 
 	@Test
 	public void testDispose() {
-		// screen.dispose();
+		screen.dispose();
+		verify(networking).deleteObserver(any(Observer.class));
 	}
 }

@@ -1,12 +1,15 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.menuscreens;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.screens.menuscreens.MenuScreen;
+import nl.tudelft.ti2206.buttons.MenuButton;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.menuscreens.HostScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,15 +20,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
-public class MenuScreenTest {
+public class HostScreenTest {
 
 	@Mock
 	private Skin skin;
@@ -34,26 +36,30 @@ public class MenuScreenTest {
 	@Mock
 	private Stage stage;
 	@Mock
-	private Cell<Label> labelCell;
+	private Table table;
 	@Mock
-	private Cell<TextButton> buttonCell;
+	private Cell<Label> cell;
 	@Mock
 	private Label label;
 	@Mock
 	private TextField field;
 	@Mock
-	private TextButton button;
+	private MenuButton menuButton;
 	@Mock
 	private GL20 gl;
 	@Mock
 	private Input input;
 
-	private MenuScreen screen;
+	private HostScreen screen;
 
 	@Before
 	public void setUp() {
+		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
-		screen = new MenuScreen(stage, label, button);
+		Skin skin = mock(Skin.class);
+		AssetHandler.getInstance().setSkin(skin);
+
+		screen = new HostScreen(stage, table, label, label, menuButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
@@ -61,13 +67,11 @@ public class MenuScreenTest {
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
 
-		when(labelCell.padTop(anyInt())).thenReturn(labelCell);
-		when(labelCell.padBottom(anyInt())).thenReturn(labelCell);
-		when(labelCell.row()).thenReturn(labelCell);
-
-		when(buttonCell.padTop(anyInt())).thenReturn(buttonCell);
-		when(buttonCell.padBottom(anyInt())).thenReturn(buttonCell);
-		when(buttonCell.row()).thenReturn(buttonCell);
+		when(cell.padTop(anyInt())).thenReturn(cell);
+		when(cell.padBottom(anyInt())).thenReturn(cell);
+		when(cell.row()).thenReturn(cell);
+		
+		when(table.getCell(label)).thenReturn(cell);
 	}
 
 	@Test
@@ -79,11 +83,30 @@ public class MenuScreenTest {
 	@Test
 	public void testCreate() {
 		screen.create();
-		verify(input).setInputProcessor(stage);
 
-		verify(button, times(3)).setWidth(anyInt());
-		verify(button, times(3)).setX(anyInt());
-		verify(button, times(3)).setY(anyInt());
-		verify(button, times(3)).addListener(any(EventListener.class));
+		verify(table, times(4)).add(label);
+		verify(cell, times(4)).padTop(anyInt());
+		verify(cell, times(4)).padBottom(anyInt());
+		verify(cell, times(4)).row();
+
+		verify(stage).addActor(table); 
+		verify(stage).addActor(menuButton);
+
+		verify(input).setInputProcessor(stage);
+	}
+
+	@Test
+	public void testDraw() {
+		screen.draw();
+		verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
+		verify(gl).glClear(anyInt());
+		
+		verify(stage).draw();
+	}
+
+	@Test
+	public void testUpdate() {
+		screen.update();
+		verify(stage).act();
 	}
 }

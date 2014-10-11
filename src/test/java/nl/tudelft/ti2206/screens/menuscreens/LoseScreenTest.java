@@ -1,9 +1,10 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.menuscreens;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
-import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
+import nl.tudelft.ti2206.buttons.RestartButton;
+import nl.tudelft.ti2206.screens.overlays.LoseScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class MultiLoseScreenTest {
-
+public class LoseScreenTest {
 	@Mock
 	private Skin skin;
 	@Mock
@@ -28,26 +28,32 @@ public class MultiLoseScreenTest {
 	@Mock
 	private Image image;
 	@Mock
-	private MenuButton button;
+	private RestartButton restartButton;
 	@Mock
 	private Input input;
-	
-	private MultiLoseScreen screen;
-	
+
+	private LoseScreen screen;
+
+	/**
+	 * Initialize all mock objects and the object under test
+	 */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+		screen = new LoseScreen(stage, image, restartButton);
 		Gdx.input = input;
-		screen = new MultiLoseScreen(stage, image, button);
+		doNothing().when(input).setInputProcessor(stage);
 	}
 
+	/**
+	 * Tests if all the required methods are called when show() is called.
+	 */
 	@Test
 	public void testCreate() {
 		screen.create();
-		
-		verify(input).setInputProcessor(stage);
+
 		verify(stage).addActor(image);
-		verify(stage).addActor(button);
+		verify(stage).addActor(restartButton);
 	}
 
 	@Test
