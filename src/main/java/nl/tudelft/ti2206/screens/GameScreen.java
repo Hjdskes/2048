@@ -27,7 +27,7 @@ public class GameScreen extends Screen {
 	private ProgressHandler progressHandler = ProgressHandler.getInstance();
 
 	/** The singleton reference to the ScreenHandler class. */
-	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
+	public static ScreenHandler screenHandler = ScreenHandler.getInstance();
 	
 	/** Constructs a new GameScreen. */
 	public GameScreen() {
@@ -63,15 +63,16 @@ public class GameScreen extends Screen {
 	@Override
 	public void update() {
 		super.update();
- 
-		if (grid.getCurrentHighestTile() == 2048
-				&& !TwentyFourtyGame.isContinuing()) {
-			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.add(new WinScreen());
-		} else if (grid.getPossibleMoves() == 0) {
-			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.add(new LoseScreen());
-		}
+		TwentyFourtyGame.getState().update(grid);
+		
+//		if (grid.getCurrentHighestTile() == 2048
+//				&& !TwentyFourtyGame.isContinuing()) {
+//			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+//			screenHandler.add(new WinScreen());
+//		} else if (grid.getPossibleMoves() == 0) {
+//			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+//			screenHandler.add(new LoseScreen());
+//		}
 	}
 	
 	@Override

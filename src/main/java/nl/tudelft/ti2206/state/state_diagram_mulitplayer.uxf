@@ -94,8 +94,8 @@ First 2048-tile merged.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>380</x>
-      <y>60</y>
+      <x>420</x>
+      <y>80</y>
       <w>370</w>
       <h>30</h>
     </coordinates>
