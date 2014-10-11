@@ -51,16 +51,6 @@ public abstract class Screen implements Disposable {
 	}
 
 	/**
-	 * Determines if the screen is an overlay or not. Overlays will not cause
-	 * screens below it to automatically exit.
-	 * 
-	 * @return True if the screen is an overlay, false otherwise.
-	 */
-	public boolean isOverlay() {
-		return false;
-	}
-
-	/**
 	 * Pauses the screen.
 	 */
 	public void pause() {
@@ -109,13 +99,17 @@ public abstract class Screen implements Disposable {
 			new MultiWinScreen(this);
 		}
 	}
-	
+
+	/**
+	 * Adds a ConnectionLostScreen to the current screen.
+	 */
 	public void addConnectionLostOverlay() {
 		new ConnectionLostScreen(this);
 	}
 
 	/**
-	 * 
+	 * Restarts the current Screen, removing all actors and re-adding the wanted
+	 * actors.
 	 */
 	public void restart() {
 		stage.getActors().clear();
