@@ -175,7 +175,7 @@ public class ScreenHandlerTest {
 		
 		screenHandler.removeTop();
 		// make sure nothing happens
-		verifyNoMoreInteractions(screen);
+		verify(screen).restart();
 	}
 	
 	@Test
