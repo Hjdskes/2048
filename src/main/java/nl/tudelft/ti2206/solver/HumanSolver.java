@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.tudelft.ti2206.solver;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -118,9 +115,6 @@ public class HumanSolver {
 	 * @return direction which gives us the highest amount of points
 	 */
 	public static Direction selectDirectionComplex(Grid ogrid, int depth) {
-
-		if (depth <= 0)
-			System.out.println("WARNING: depth <= 0!");
 		
 		int score = ogrid.getScore();
 		Direction selected = null;

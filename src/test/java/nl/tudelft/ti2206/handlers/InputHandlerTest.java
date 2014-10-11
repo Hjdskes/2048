@@ -1,10 +1,8 @@
 package nl.tudelft.ti2206.handlers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 
 import org.junit.Before;
@@ -86,15 +84,5 @@ public class InputHandlerTest {
 	@Test
 	public void testKeyDownInvalid() {
 		assertEquals(false, inputHandler.keyDown(null, Keys.BACKSLASH));
-	}
-
-	/**
-	 * Make sure the grid is restarted when the R key is pressed.
-	 */
-	@Test
-	public void testKeyDownRestart() {
-		String old = grid.toString();
-		inputHandler.keyDown(null, Keys.R);
-		assertNotEquals(old, grid.toString());
 	}
 }
