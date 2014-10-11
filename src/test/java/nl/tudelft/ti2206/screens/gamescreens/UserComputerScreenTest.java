@@ -17,8 +17,6 @@ import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen.Difficulty;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

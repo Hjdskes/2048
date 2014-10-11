@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>0</y>
+      <w>300</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>RunningState
+--
+--
++update(Grid grid): void
++update(Grid localgrid, Grid remotegrid): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>190</y>
+      <w>300</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>WaitingState
+--
+--
++update(Grid grid): void
++update(Grid localgrid, Grid remotegrid): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>360</y>
+      <w>300</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+GameState
+--
+--
++update(Grid grid): void
++update(Grid localgrid, Grid remotegrid): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>400</y>
+      <w>300</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>ContinuingState
+--
+--
++update(Grid grid): void
++update(Grid localgrid, Grid remotegrid): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>90</y>
+      <w>300</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>LostState
+--
+--
++update(Grid grid): void
++update(Grid localgrid, Grid remotegrid): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>290</y>
+      <w>300</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>WonState
+--
+--
++update(Grid grid): void
++update(Grid localgrid, Grid remotegrid): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>400</x>
+      <y>0</y>
+      <w>350</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>TwentyFourtyGame
+--
+-curState: GameState
+-runningState = new RunningState(): GameState
+-wonState = new WonState(): GameState
+-lostState = new LostState(): GameState
+-continuingState = new ContinuingState(): GameState
+-waitingState = new WaitingState(): GameState
+--
++getState(): GameState
++setState(GameState state): void
++getRunningState(): GameState
++getWonState(): GameState
++getLostState(): GameState
++getContinuingState(): GameState
++getWaitingState(): GameState
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>70</y>
+      <w>100</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;290.0;60.0;290.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>170</y>
+      <w>100</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;220.0;50.0;220.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>250</y>
+      <w>100</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;170.0;40.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>360</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;100.0;30.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>470</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>250</y>
+      <w>30</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+0..*</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

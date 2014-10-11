@@ -18,8 +18,8 @@ public class MenuButton extends TextButton {
 	/** Constructs a new MenuButton. */
 	public MenuButton() {
 		super("Menu", AssetHandler.getInstance().getSkin());
-		this.setX(TwentyFourtyGame.GAME_WIDTH / 4 - this.getPrefWidth() / 2);
-		this.setY(5 * TwentyFourtyGame.GAP);
+		this.setX(2 * TwentyFourtyGame.GAP);
+		this.setY(2 * TwentyFourtyGame.GAP);
 
 		this.addListener(new ClickListener() {
 			@Override

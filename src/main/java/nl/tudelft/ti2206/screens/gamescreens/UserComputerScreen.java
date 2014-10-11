@@ -6,14 +6,10 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
-import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
-import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
-import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
-import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 import nl.tudelft.ti2206.solver.GridSolver;
 import nl.tudelft.ti2206.solver.GridSolver.Strategy;
 
@@ -61,9 +57,6 @@ public class UserComputerScreen extends Screen {
 
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
-
-	/** The singleton reference to the ScreenHandler class. */
-	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	private GridSolver gridSolver;
 
