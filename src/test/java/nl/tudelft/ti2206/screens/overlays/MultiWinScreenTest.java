@@ -1,9 +1,9 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.overlays;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
+import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class ConnectionLostScreenTest {
+public class MultiWinScreenTest {
 
 	@Mock
 	private Skin skin;
@@ -32,13 +32,13 @@ public class ConnectionLostScreenTest {
 	@Mock
 	private Input input;
 	
-	private ConnectionLostScreen screen;
+	private MultiWinScreen screen;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		Gdx.input = input;
-		screen = new ConnectionLostScreen(stage, image, button);
+		screen = new MultiWinScreen(stage, image, button);
 	}
 
 	@Test

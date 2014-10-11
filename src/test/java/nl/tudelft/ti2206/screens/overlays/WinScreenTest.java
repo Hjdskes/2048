@@ -1,10 +1,11 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.overlays;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
+import nl.tudelft.ti2206.buttons.ContinueButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.screens.overlays.LoseScreen;
+import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class LoseScreenTest {
+public class WinScreenTest {
 	@Mock
 	private Skin skin;
 	@Mock
@@ -30,9 +31,11 @@ public class LoseScreenTest {
 	@Mock
 	private RestartButton restartButton;
 	@Mock
+	private ContinueButton continueButton;
+	@Mock
 	private Input input;
 
-	private LoseScreen screen;
+	private WinScreen screen;
 
 	/**
 	 * Initialize all mock objects and the object under test
@@ -40,7 +43,7 @@ public class LoseScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new LoseScreen(stage, image, restartButton);
+		screen = new WinScreen(stage, image, restartButton, continueButton);
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 	}
@@ -54,6 +57,7 @@ public class LoseScreenTest {
 
 		verify(stage).addActor(image);
 		verify(stage).addActor(restartButton);
+		verify(stage).addActor(continueButton);
 	}
 
 	@Test

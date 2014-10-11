@@ -1,11 +1,9 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.overlays;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
-import nl.tudelft.ti2206.buttons.ContinueButton;
-import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.screens.overlays.WinScreen;
+import nl.tudelft.ti2206.buttons.MenuButton;
+import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class WinScreenTest {
+public class MultiLoseScreenTest {
+
 	@Mock
 	private Skin skin;
 	@Mock
@@ -29,35 +28,26 @@ public class WinScreenTest {
 	@Mock
 	private Image image;
 	@Mock
-	private RestartButton restartButton;
-	@Mock
-	private ContinueButton continueButton;
+	private MenuButton button;
 	@Mock
 	private Input input;
-
-	private WinScreen screen;
-
-	/**
-	 * Initialize all mock objects and the object under test
-	 */
+	
+	private MultiLoseScreen screen;
+	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new WinScreen(stage, image, restartButton, continueButton);
 		Gdx.input = input;
-		doNothing().when(input).setInputProcessor(stage);
+		screen = new MultiLoseScreen(stage, image, button);
 	}
 
-	/**
-	 * Tests if all the required methods are called when show() is called.
-	 */
 	@Test
 	public void testCreate() {
 		screen.create();
-
+		
+		verify(input).setInputProcessor(stage);
 		verify(stage).addActor(image);
-		verify(stage).addActor(restartButton);
-		verify(stage).addActor(continueButton);
+		verify(stage).addActor(button);
 	}
 
 	@Test

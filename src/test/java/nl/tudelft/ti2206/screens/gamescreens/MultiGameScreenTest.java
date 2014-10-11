@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.gamescreens;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;

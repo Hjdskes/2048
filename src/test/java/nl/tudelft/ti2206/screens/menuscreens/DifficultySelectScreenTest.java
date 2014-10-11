@@ -1,21 +1,15 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.menuscreens;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.RedoButton;
-import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.buttons.SolveButton;
-import nl.tudelft.ti2206.buttons.UndoButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.screens.gamescreens.GameScreen;
 import nl.tudelft.ti2206.screens.menuscreens.DifficultySelectScreen;
 
 import org.junit.Before;
@@ -28,7 +22,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;

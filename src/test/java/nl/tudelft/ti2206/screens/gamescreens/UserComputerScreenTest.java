@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.screens;
+package nl.tudelft.ti2206.screens.gamescreens;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -62,7 +62,7 @@ public class UserComputerScreenTest {
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 
 		screen = new UserComputerScreen(stage, grid, label, group, scores,
-				Difficulty.EASY);
+				Difficulty.EXTREME);
 
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
