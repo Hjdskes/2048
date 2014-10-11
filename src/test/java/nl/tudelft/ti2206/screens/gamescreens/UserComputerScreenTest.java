@@ -13,11 +13,12 @@ import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.net.Networking;
-import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen;
 import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen.Difficulty;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -85,10 +86,5 @@ public class UserComputerScreenTest {
 		verify(group, times(2)).addActor(label);
 		verify(stage).addListener(any(EventListener.class));
 		verify(stage, times(2)).addActor(group);
-	}
-
-	@Test
-	public void testDispose() {
-		// screen.dispose();
 	}
 }

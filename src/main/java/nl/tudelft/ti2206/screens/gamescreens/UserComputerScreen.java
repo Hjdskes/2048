@@ -73,7 +73,7 @@ public class UserComputerScreen extends Screen {
 
 	private DrawableGrid computerGridDraw;
 
-//	private Label difficultylbl;
+	// private Label difficultylbl;
 
 	/** Constructs a new MultiGameScreen. */
 	public UserComputerScreen(Difficulty difficulty) {
@@ -83,7 +83,7 @@ public class UserComputerScreen extends Screen {
 
 		localGrid = new Grid(false);
 		computerGrid = new Grid(false);
-		
+
 		localGridDraw = new DrawableGrid(localGrid.getTiles());
 		computerGridDraw = new DrawableGrid(computerGrid.getTiles());
 
@@ -93,7 +93,8 @@ public class UserComputerScreen extends Screen {
 
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Computer", assetHandler.getSkin());
-//		difficultylbl = new Label(difficulty.toString(), assetHandler.getSkin());
+		// difficultylbl = new Label(difficulty.toString(),
+		// assetHandler.getSkin());
 
 		localGroup = new Group();
 		computerGroup = new Group();
@@ -103,7 +104,7 @@ public class UserComputerScreen extends Screen {
 		computerScores = new Scores();
 		computerGrid.addObserver(computerScores);
 
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only */
@@ -114,7 +115,7 @@ public class UserComputerScreen extends Screen {
 		this.computerGrid = grid;
 		this.you = label;
 		this.opponent = label;
-//		this.difficultylbl = label;
+		// this.difficultylbl = label;
 		this.localGroup = group;
 		this.computerGroup = group;
 		this.localScores = scores;
@@ -126,31 +127,49 @@ public class UserComputerScreen extends Screen {
 	public void create() {
 		super.create();
 
-		/* Create our local groups and actors. */
+		setUpLocalActors();
+		setUpRemoteActors();
+
+		// difficultylbl.setX(TwentyFourtyGame.GAME_WIDTH / 2 -
+		// you.getPrefWidth() / 2 + difficultylbl.getWidth() / 3);
+		// difficultylbl.setY(opponent.getY() - opponent.getHeight() - 2);
+
+		stage.addActor(localGroup);
+		stage.addActor(computerGroup);
+
+		stage.addListener(new LocalInputHandler(localGrid));
+
+		adjustToDifficulty();
+		gridSolver.start();
+	}
+
+	/** Create our local groups and actors. */
+	private void setUpLocalActors() {
 		you.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		you.setY(2.5f * TwentyFourtyGame.GAP);
 		localGroup.addActor(localScores);
 		localGroup.addActor(localGridDraw);
 		localGroup.addActor(you);
+	}
 
-		/* Create our computer groups and actors. */
+	/** Create our computer groups and actors. */
+	private void setUpRemoteActors() {
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
 		computerGroup.addActor(computerScores);
 		computerGroup.addActor(computerGridDraw);
 		computerGroup.addActor(opponent);
 		computerGroup.setX(600);
-//		difficultylbl.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2 + difficultylbl.getWidth() / 3);
-//		difficultylbl.setY(opponent.getY() - opponent.getHeight() - 2);
-		
-		stage.addActor(localGroup);
-		stage.addActor(computerGroup);
+	}
 
-		stage.addListener(new LocalInputHandler(localGrid));
-
+	/**
+	 * Sets the solver's delay, recursion depth and strategy w.r.t the set
+	 * difficulty, i.e. sets the number of brain cells for the AI solver.
+	 */
+	private void adjustToDifficulty() {
 		int delay = 1900; // 1.9 seconds
 		int depth = 1;
-		
+
 		Strategy strategy = Strategy.HUMAN;
 
 		if (difficulty == Difficulty.EASY) {
@@ -166,9 +185,7 @@ public class UserComputerScreen extends Screen {
 			delay = 650;
 			depth = 6;
 		}
-		
 		gridSolver = new GridSolver(computerGrid, strategy, delay, depth);
-		gridSolver.start();
 	}
 
 	/** Sets the label indicating your Grid to the supplied text and color.
