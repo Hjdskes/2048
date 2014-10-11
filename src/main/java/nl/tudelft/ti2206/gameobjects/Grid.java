@@ -144,6 +144,7 @@ public class Grid extends Observable implements Cloneable {
 	public void setTile(int index, int value) {
 		tiles[index].setValue(value);
 		changed();
+		updateHighestTile();
 	}
 
 	/**

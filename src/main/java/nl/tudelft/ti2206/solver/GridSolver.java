@@ -10,7 +10,7 @@ import nl.tudelft.ti2206.log.Logger;
 public class GridSolver extends TimerTask {
 
 	public enum Strategy {
-		HUMAN, RANDOM, ARTHUR
+		HUMAN
 	}
 
 	private static int succesfulMoves;
@@ -21,7 +21,7 @@ public class GridSolver extends TimerTask {
 	private int maxruns = 20;
 
 	private Grid original = null;
-	private Strategy strategy = Strategy.RANDOM;
+	private Strategy strategy = Strategy.HUMAN;
 	private boolean running = false;
 	private int depth = 0;
 	
@@ -125,10 +125,7 @@ public class GridSolver extends TimerTask {
 
 			Direction direction = null;
 
-			if (strategy == Strategy.RANDOM || strategy == Strategy.ARTHUR) // Arthur's
-																			// strategy
-				direction = RandomSolver.selectMove(original);
-			else if (strategy == Strategy.HUMAN)
+			if (strategy == Strategy.HUMAN)
 				direction = HumanSolver.selectMove(original, getDepth());
 			
 			logger.debug(className, "Direction selected: " + direction);

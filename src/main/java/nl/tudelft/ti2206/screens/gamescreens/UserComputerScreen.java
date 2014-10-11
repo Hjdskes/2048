@@ -107,7 +107,7 @@ public class UserComputerScreen extends Screen {
 
 	/** Constructor for testing purposes only */
 	public UserComputerScreen(Stage stage, Grid grid, Label label, Group group,
-			Scores scores) {
+			Scores scores, Difficulty difficulty) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.computerGrid = grid;
