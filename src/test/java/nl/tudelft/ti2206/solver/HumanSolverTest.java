@@ -119,7 +119,7 @@ public class HumanSolverTest {
 	 * .
 	 */
 	@Test
-	public void testSelectDirectionComplexleft() {
+	public void testSelectDirectionComplexLeft() {
 
 		grid.setTile(12, 0); // lower left is empty
 		grid.setTile(13, 2);
@@ -137,8 +137,9 @@ public class HumanSolverTest {
 	 * .
 	 */
 	@Test
-	public void testSelectDirectionComplexNull() {
+	public void testSelectDirectionComplexDown() {
 		
+		grid.restart();
 		grid.setTile(8, 64);
 		grid.setTile(9, 128);
 		grid.setTile(10, 128);
@@ -151,7 +152,7 @@ public class HumanSolverTest {
 		
 		Direction direction = HumanSolver.selectDirectionComplex(grid, 3);
 
-		assertEquals(null, direction);
+		assertEquals(Direction.DOWN, direction);
 	}
 	
 	/**
@@ -173,14 +174,28 @@ public class HumanSolverTest {
 		assertEquals(Direction.LEFT, direction);
 	}
 
-
 	/**
 	 * Test method for
 	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
-	public void testSelectDirectionSimpleDOWN() {
+	public void testSelectDirectionSimpleRight() {
+		Tile[] tiles = grid.getTiles();
+		
+		tiles[12].setValue(16);
+
+		Direction direction = HumanSolver.selectDirectionSimple(grid);
+
+		assertEquals(Direction.RIGHT, direction);
+	}
+	/**
+	 * Test method for
+	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * .
+	 */
+	@Test
+	public void testSelectDirectionSimpleDown() {
 		Tile[] tiles = grid.getTiles();
 
 		tiles[0].setValue(2);
@@ -264,12 +279,13 @@ public class HumanSolverTest {
 	 */
 	@Test
 	public void testSelectMove() {
-
+		
+		grid.restart();
 		Direction direction = HumanSolver.selectMove(grid, 1);
 
 		// since our grid is empty, the only direction
-		// selectMove should return is UP
-		assertEquals(Direction.UP, direction);
+		// selectMove should return is LEFT
+		assertEquals(Direction.LEFT, direction);
 
 	}
 
