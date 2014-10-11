@@ -1,12 +1,7 @@
 package nl.tudelft.ti2206.screens.gamescreens;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.buttons.RedoButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.buttons.SolveButton;
@@ -85,14 +80,13 @@ public class GameScreenTest {
 		screen.create();
 		verify(input).setInputProcessor(stage);
 		verify(stage).addListener(any(EventListener.class));
-		//verify(stage).addActor(grid);
 		verify(stage).addActor(scores);
 		verify(stage).addActor(restartButton);
 		verify(stage).addActor(solveButton);
 		verify(stage).addActor(undoButton);
 		verify(stage).addActor(redoButton);
 	}
-
+	
 	/**
 	 * Tests if all required methods are called on screen.draw().
 	 */
