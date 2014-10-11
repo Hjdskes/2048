@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.handlers.TileHandler;
@@ -92,6 +91,8 @@ public class Grid extends Actor {
 
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
+	
+	//private StateHandler inputHandler;
 
 	/** The highest tile value present in the Grid. */
 	private int highestTile;
@@ -122,9 +123,10 @@ public class Grid extends Actor {
 		if (!isEmpty) {
 			initGrid();
 		}
+		//stateHandler = new InputHandler(this);
 
 		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/**
@@ -146,7 +148,7 @@ public class Grid extends Actor {
 		}
 
 		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/**
@@ -241,7 +243,7 @@ public class Grid extends Actor {
 		highestTile = 0;
 		updateHighestTile();
 
-		TwentyFourtyGame.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/**

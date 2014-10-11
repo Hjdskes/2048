@@ -6,8 +6,8 @@ public class WonState implements GameState{
 
 private InputHandler inputhandler;
 	
-	public WonState(InputHandler handler){
-		inputhandler = handler; 
+	public WonState(){
+		//inputhandler = handler; 
 	}
 	
 	@Override

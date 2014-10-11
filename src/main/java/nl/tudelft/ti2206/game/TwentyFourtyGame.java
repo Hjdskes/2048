@@ -5,6 +5,12 @@ import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
 import nl.tudelft.ti2206.screens.MenuScreen;
+import nl.tudelft.ti2206.state.ContinuingState;
+import nl.tudelft.ti2206.state.GameState;
+import nl.tudelft.ti2206.state.LostState;
+import nl.tudelft.ti2206.state.RunningState;
+import nl.tudelft.ti2206.state.WaitingState;
+import nl.tudelft.ti2206.state.WonState;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -27,13 +33,21 @@ public class TwentyFourtyGame extends Game {
 	public static final int GAP = 15;
 
 	/** Enumeration indicating what state the game is currently in. */
-	public static enum GameState {
-		RUNNING, LOST, WON, CONTINUING
-	}
+//	public static enum GameState {
+//		RUNNING, LOST, WON, CONTINUING
+//	}
 
 	/** The current state of the game. */
 	private static GameState curState;
-
+	
+	/** List of possible States*/
+	private static GameState runningState = new RunningState();
+	private static GameState wonState = new WonState();
+	private static GameState lostState = new LostState();
+	private static GameState continuingState = new ContinuingState();
+	private static GameState waitingState = new WaitingState();
+	
+	
 	/** The AssetHandler instance. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
@@ -95,8 +109,8 @@ public class TwentyFourtyGame extends Game {
 	 *            The new state of the game.
 	 */
 	public static void setState(GameState state) {
-		logger.info("TwentyFourtyGame", "Changing current game state to '"
-				+ state + "'.");
+//		logger.info("TwentyFourtyGame", "Changing current game state to '"
+//				+ state + "'.");
 		curState = state;
 	}
 
@@ -104,29 +118,41 @@ public class TwentyFourtyGame extends Game {
 	 * @return True if the game is currently running.
 	 */
 	public static boolean isRunning() {
-		return (curState == GameState.RUNNING);
+		return (curState instanceof RunningState);
 	}
 
 	/**
 	 * @return True if the current game is lost.
 	 */
 	public static boolean isLost() {
-		return (curState == GameState.LOST);
+		return (curState instanceof LostState);
 	}
 
 	/**
 	 * @return True if the current game is won.
 	 */
 	public static boolean isWon() {
-		return (curState == GameState.WON);
+		return (curState instanceof WonState);
 	}
 
 	/**
 	 * @return True if game is in continuing state.
 	 */
 	public static boolean isContinuing() {
-		return (curState == GameState.CONTINUING);
+		return 	(curState instanceof ContinuingState);
 	}
+	
+	public static boolean isWaiting() {
+		return (curState instanceof WaitingState);
+	}
+	
+
+
+	public static GameState getRunningState() { 	return runningState; 	}
+	public static GameState getWonState() { 		return wonState;		}
+	public static GameState getLostState() { 		return lostState; 		}
+	public static GameState getContinuingState() { 	return continuingState;	}
+	public static GameState getWaitingState() { 	return waitingState;	}
 
 	/** Mock insertion method. Used for testing only. */
 	public void setMockObjects(ScreenHandler screenHandlerMock,

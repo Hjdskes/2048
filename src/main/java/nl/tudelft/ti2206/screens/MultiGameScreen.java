@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.screens;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.ScoreDisplay;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -144,14 +143,14 @@ public class MultiGameScreen extends Screen {
 			logger.info(className,
 					"Local player won the multiplayer game. The score of the local player: "
 							+ Integer.toString(localGrid.getScore()));
-			TwentyFourtyGame.setState(GameState.WON);
+			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
 			screenHandler.add(new MultiWinScreen());
 		} else if (localGrid.getPossibleMoves() == 0
 				|| remoteGrid.getCurrentHighestTile() == 2048) {
 			logger.info(className,
 					"Local player lost the multiplayer game. The score of the remote player: "
 							+ Integer.toString(remoteGrid.getScore()));
-			TwentyFourtyGame.setState(GameState.LOST);
+			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
 			screenHandler.add(new MultiLoseScreen());
 		}
 	}

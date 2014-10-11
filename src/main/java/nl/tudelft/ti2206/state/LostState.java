@@ -6,8 +6,8 @@ public class LostState implements GameState{
 
 private InputHandler inputhandler;
 	
-	public LostState(InputHandler handler){
-		inputhandler = handler; 
+	public LostState(){
+		//inputhandler = handler; 
 	}
 
 	@Override

@@ -6,8 +6,8 @@ public class RunningState implements GameState{
 	
 	private InputHandler inputhandler;
 	
-	public RunningState(InputHandler handler){
-		inputhandler = handler; 
+	public RunningState(){
+		//inputhandler = handler; 
 	}	
 	
 	@Override

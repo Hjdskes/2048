@@ -6,8 +6,8 @@ public class ContinuingState implements GameState{
 
 private InputHandler inputhandler;
 	
-	public ContinuingState(InputHandler handler){
-		inputhandler = handler; 
+	public ContinuingState(){ 
+		//inputhandler = handler; 
 	}
 	
 	@Override
