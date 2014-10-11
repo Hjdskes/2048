@@ -21,7 +21,7 @@ public class SolveButton extends TextButton {
 		super("Solve", AssetHandler.getInstance().getSkin(), "small");
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
-		this.setX(DrawableTile.TILE_X + DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP);
+		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2 - TwentyFourtyGame.GAP / 2);
 		this.setY(100 / 2 - this.getHeight() / 2);
 
 		this.addListener(new ClickListener() {

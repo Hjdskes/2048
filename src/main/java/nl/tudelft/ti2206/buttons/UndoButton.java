@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.buttons;
 
+import nl.tudelft.ti2206.drawables.DrawableGrid;
 import nl.tudelft.ti2206.drawables.DrawableTile;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -20,8 +21,8 @@ public class UndoButton extends TextButton {
 		super("Undo", AssetHandler.getInstance().getSkin(), "small");
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
-		this.setX(DrawableTile.TILE_X + 2 * DrawableTile.TILE_WIDTH + 2 * TwentyFourtyGame.GAP);
-		this.setY(100 / 2 - this.getHeight() / 2);
+		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2 - TwentyFourtyGame.GAP / 2 + 3 * (DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP));
+		this.setY(DrawableGrid.GRID_Y / 2 - this.getHeight() / 2);
 
 		this.addListener(new ClickListener() {
 			@Override

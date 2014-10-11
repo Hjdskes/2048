@@ -113,6 +113,10 @@ public class GridSolver extends TimerTask {
 			succesfulMoves += 1;
 		}
 	}
+	
+	public static int getSuccesfulMoves() {
+		return succesfulMoves;
+	}
 
 	@Override
 	public void run() {
@@ -125,13 +129,19 @@ public class GridSolver extends TimerTask {
 
 			Direction direction = null;
 
-			if (strategy == Strategy.HUMAN)
+			if (strategy == Strategy.HUMAN) {
 				direction = HumanSolver.selectMove(original, getDepth());
+			}
 			
 			logger.debug(className, "Direction selected: " + direction);
 			
 			// make the selected move
 			makeMove(original, direction);
 		}
+	}
+	
+	/** Setter for testing purposes only */
+	public void setLogger(Logger logger) {
+		GridSolver.logger = logger;
 	}
 }
