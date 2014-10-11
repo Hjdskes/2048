@@ -22,14 +22,12 @@ public class SolveButton extends TextButton {
 		super("Solve", AssetHandler.getInstance().getSkin(), "small");
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
-		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2
-				- TwentyFourtyGame.GAP / 2);
+		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2 - TwentyFourtyGame.GAP / 2);
 		this.setY(100 / 2 - this.getHeight() / 2);
 
 		gridSolver = new GridSolver(grid, Strategy.HUMAN, 750, 6);
 
 		this.addListener(new ClickListener() {
-
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (gridSolver == null) {
