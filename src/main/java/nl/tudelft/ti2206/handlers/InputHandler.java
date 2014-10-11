@@ -60,9 +60,6 @@ public class InputHandler extends InputListener {
 			ProgressHandler.getInstance().saveGame(grid);
 			ScreenHandler.getInstance().add(new MenuScreen());
 			return true;
-//		case Keys.B:
-//			grid.setTile(0,1024);
-//			return true;
 		}
 
 		return false;

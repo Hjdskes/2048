@@ -68,9 +68,6 @@ public class LocalInputHandler extends InputListener {
 			networking.sendString("MOVE[R]");
 			sendGrid();
 			return true;
-//		case Keys.B:
-//			grid.setTile(0,1024);
-//			return true;
 		}
 		return false;
 	}

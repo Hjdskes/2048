@@ -20,17 +20,10 @@ public class WaitingState implements GameState{
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
-	/**
-	 * The update(grid) method is used to update singleplayer states.
-	 */
 	@Override
 	public void update(Grid grid) {
 	}
 
-	/**
-	 * The update(grid,grid) method is used to update multiplayer states.
-	 * Contains state change conditions.
-	 */
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {
 

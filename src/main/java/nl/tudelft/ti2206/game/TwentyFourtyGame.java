@@ -137,12 +137,18 @@ public class TwentyFourtyGame extends Game {
 		return 	(curState instanceof ContinuingState);
 	}
 	
+	/**
+	 * @return True if game is in waiting state.
+	 */
 	public static boolean isWaiting() {
 		return (curState instanceof WaitingState);
 	}
 	
 
-
+	/**
+	 * The getters for returning the different possible states of the class. 
+	 * 		@return GameState
+	 */
 	public static GameState getRunningState() { 	return runningState; 	}
 	public static GameState getWonState() { 		return wonState;		}
 	public static GameState getLostState() { 		return lostState; 		}

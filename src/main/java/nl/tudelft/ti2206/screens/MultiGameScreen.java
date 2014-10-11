@@ -11,6 +11,7 @@ import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -32,10 +33,10 @@ public class MultiGameScreen extends Screen {
 	private ScoreDisplay remoteScores;
 
 	/** The label indicating which Grid is yours. */
-	public 	static Label you;
+	private Label you;
 
 	/** The label indicating which Grid is your opponent's. */
-	public 	static Label opponent;
+	private Label opponent;
 
 	/** The Group packing all local elements. */
 	private Group localGroup;
@@ -131,6 +132,16 @@ public class MultiGameScreen extends Screen {
 
 	}
 
+	public void setYouLabel(String string, Color color){
+		you.setText(string);
+		you.setColor(color);
+	}
+	
+	public void setOpponentLabel(String string, Color color){
+		opponent.setText(string);
+		opponent.setColor(color);
+	}
+	
 	@Override
 	public void update() {
 		super.update();
@@ -139,7 +150,15 @@ public class MultiGameScreen extends Screen {
 			screenHandler.add(new ConnectionLostScreen());
 		}
 		
-		TwentyFourtyGame.getState().update(localGrid, remoteGrid);
+		if (TwentyFourtyGame.isWaiting()) {
+			this.setYouLabel("WAITING", Color.RED);
+		}
+		
+		if(remoteGrid.getPossibleMoves() == 0) {
+			this.setOpponentLabel("WAITING", Color.RED);
+		}
+		
+		TwentyFourtyGame.getState().update(localGrid, remoteGrid);	
 	}
 
 	@Override

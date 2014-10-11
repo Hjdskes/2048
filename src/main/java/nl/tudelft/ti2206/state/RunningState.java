@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.state;
 
-import com.badlogic.gdx.graphics.Color;
-
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
@@ -25,10 +23,6 @@ public class RunningState implements GameState {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 	
-	/**
-	 * The update(grid) method is used to update singleplayer states.
-	 * Contains state change conditions.
-	 */
 	@Override
 	public void update(Grid grid) {
 		if (grid.getCurrentHighestTile() == 2048) {
@@ -40,10 +34,6 @@ public class RunningState implements GameState {
 		}
 	}
 
-	/**
-	 * The update(grid,grid) method is used to update multiplayer states.
-	 * Contains state change conditions.
-	 */
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {
 		/* Win condition: I merged 2048 */
@@ -66,9 +56,6 @@ public class RunningState implements GameState {
 					+ Integer.toString(localgrid.getScore()));
 			
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
-			
-			MultiGameScreen.you.setText("WAITING");
-			MultiGameScreen.you.setColor(Color.RED);
 		}
 		
 		/* Losing condition: He merged 2048 */
@@ -93,12 +80,6 @@ public class RunningState implements GameState {
 			
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
 			MultiGameScreen.screenHandler.add(new MultiLoseScreen());
-		}
-		
-		else if (remotegrid.getPossibleMoves() == 0) {
-			
-			MultiGameScreen.opponent.setText("WAITING");
-			MultiGameScreen.opponent.setColor(Color.RED);
 		}
 	}
 }

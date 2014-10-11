@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.state;
 import nl.tudelft.ti2206.gameobjects.Grid;
 
 /**
- * The WonState class is used to define a possible state of the game.
+ * The ContinuingState class is used to define a possible state of the game.
  * It is the state where the player has chosen to continue after he has won
  * in a singleplayer game.
  */
