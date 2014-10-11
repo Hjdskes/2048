@@ -219,4 +219,8 @@ public class TileHandler {
 		this.scoreIncrement = 0;
 		this.isMoveMade = false;
 	}
+	
+	public void setTiles(Tile[] tiles){
+		this.tiles = tiles;
+	}
 }

@@ -62,10 +62,10 @@ public class ScoresTest {
 
 	@Test
 	public void testGetSetHighestTile() {
-		scores.setHighestTile(99999999);
-		assertEquals(99999999, scores.getHighestTile());
+		scores.setHighestTile(Integer.MAX_VALUE);
+		assertEquals(Integer.MAX_VALUE, scores.getHighestTile());
 		scores.setHighestTile(1);
-		assertEquals(99999999, scores.getHighestTile());
+		assertEquals(Integer.MAX_VALUE, scores.getHighestTile());
 	}
 
 	@Test

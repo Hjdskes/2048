@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.gameobjects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Stack;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
@@ -67,6 +68,10 @@ public class Grid extends Observable implements Cloneable {
 
 	/** The highest tile value present in the Grid. */
 	private int highestTile;
+	
+	private Stack<String> undo;
+	
+	private Stack<String> redo;
 
 	/**
 	 * Creates a new Grid with NTILES Tile objects.
@@ -78,9 +83,11 @@ public class Grid extends Observable implements Cloneable {
 		this.tiles = new Tile[NTILES];
 		this.iterator = new TileIterator(tiles);
 		this.tileHandler = new TileHandler(this);
+		this.undo = new Stack<String>();
+		this.redo = new Stack<String>();
+
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
-
 		}
 		if (!isEmpty) {
 			initGrid();
@@ -211,25 +218,49 @@ public class Grid extends Observable implements Cloneable {
 			logger.info(objectName, "Move " + direction + " succesfully made.");
 
 			increment = tileHandler.getScoreIncrement();
-			score += increment;
-			logger.info(objectName, "Score value set to " + score + ".");
-
-			int location = getRandomEmptyLocation();
-			int value = initialValue();
-			setTile(location, value);
-			tiles[location].spawn();
+			updateScore(increment);
+			spawnNewTile();
 			updateHighestTile();
 			changed();
-
-			logger.debug(objectName, "New tile set at location " + location
-					+ " (value = " + value + ").");
 		} else {
 			logger.debug(objectName, "Move " + direction + " ignored.");
-			return -1;
 		}
 
 		tileHandler.reset();
 		return increment;
+	}
+
+	/**
+	 * Updates the score with the score increment from the TileHandler class.
+	 */
+	public void updateScore(int increment) {
+		int newScore = score + increment;
+		setScore(newScore);
+
+		logger.info(objectName, "Score value set to " + newScore + ".");
+	}
+
+	/**
+	 * Gets a new random empty location and spawn a new tile there.
+	 */
+	public void spawnNewTile() {
+		int location = getRandomEmptyLocation();
+		int value = initialValue();
+		setTile(location, value);
+		tiles[location].spawn();
+
+		logger.debug(objectName, "New tile set at location " + location
+				+ " (value = " + value + ").");
+	}
+
+	/**
+	 * This method is called after the TileHandler has been given a direction.
+	 */
+	public void updateMove() {
+		if (tileHandler.isMoveMade()) {
+			this.updateScore(tileHandler.getScoreIncrement());
+			this.spawnNewTile();
+		}
 	}
 
 	/**
@@ -244,10 +275,6 @@ public class Grid extends Observable implements Cloneable {
 			}
 		}
 		iterator.reset();
-		
-//		if (highestTile > 2048) {
-//			System.out.println("ZOMG HIGHEST TILE ====" + highestTile);
-//		}
 	}
 
 	/**
@@ -335,22 +362,6 @@ public class Grid extends Observable implements Cloneable {
 	}
 
 	/**
-	 * Sets the current score.
-	 * @param score The current score.
-	 */
-	public void setScore(int score) {
-		this.score = score;
-	}
-
-	/**
-	 * Sets the Grid's name.
-	 * @param name The new name.
-	 */
-	public void setObjectName(String name) {
-		this.objectName = name;
-	}
-
-	/**
 	 * @return The current score.
 	 */
 	public int getScore() {
@@ -385,6 +396,14 @@ public class Grid extends Observable implements Cloneable {
 		return objectName;
 	}
 
+	public Stack<String> getUndoStack() {
+		return undo;
+	}
+		
+	public Stack<String> getRedoStack() {
+		return redo; 
+	}
+
 	/**
 	 * Sets the TileHandler object used by the grid.
 	 * 
@@ -393,6 +412,26 @@ public class Grid extends Observable implements Cloneable {
 	 */
 	public void setTileHandler(TileHandler tileHandler) {
 		this.tileHandler = tileHandler;
+	}
+
+	/**
+	 * Sets the current score to the value provided.
+	 * 
+	 * @param score
+	 *            The new score.
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	/**
+	 * Sets the name of this instance.
+	 * 
+	 * @param name
+	 *            The name for this instance.
+	 */
+	public void setObjectName(String name) {
+		this.objectName = name;
 	}
 
 	@Override
