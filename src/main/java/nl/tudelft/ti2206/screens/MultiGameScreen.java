@@ -32,10 +32,10 @@ public class MultiGameScreen extends Screen {
 	private ScoreDisplay remoteScores;
 
 	/** The label indicating which Grid is yours. */
-	private Label you;
+	public 	static Label you;
 
 	/** The label indicating which Grid is your opponent's. */
-	private Label opponent;
+	public 	static Label opponent;
 
 	/** The Group packing all local elements. */
 	private Group localGroup;
@@ -128,6 +128,7 @@ public class MultiGameScreen extends Screen {
 		stage.addActor(remoteGroup);
 
 		stage.addListener(new LocalInputHandler(localGrid));
+
 	}
 
 	@Override

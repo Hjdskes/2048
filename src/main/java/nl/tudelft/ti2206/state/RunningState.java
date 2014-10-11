@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.state;
 
+import com.badlogic.gdx.graphics.Color;
+
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
@@ -65,8 +67,8 @@ public class RunningState implements GameState {
 			
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
 			
-
-			//MultiGameScreen.screenHandler.add(new MultiWaitScreen());
+			MultiGameScreen.you.setText("WAITING");
+			MultiGameScreen.you.setColor(Color.RED);
 		}
 		
 		/* Losing condition: He merged 2048 */
@@ -93,5 +95,10 @@ public class RunningState implements GameState {
 			MultiGameScreen.screenHandler.add(new MultiLoseScreen());
 		}
 		
+		else if (remotegrid.getPossibleMoves() == 0) {
+			
+			MultiGameScreen.opponent.setText("WAITING");
+			MultiGameScreen.opponent.setColor(Color.RED);
+		}
 	}
 }
