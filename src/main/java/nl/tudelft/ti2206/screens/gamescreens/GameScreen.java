@@ -7,15 +7,11 @@ import nl.tudelft.ti2206.buttons.UndoButton;
 import nl.tudelft.ti2206.drawables.DrawableGrid;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.InputHandler;
 import nl.tudelft.ti2206.handlers.ProgressHandler;
-import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.screens.Screen;
-import nl.tudelft.ti2206.screens.overlays.LoseScreen;
-import nl.tudelft.ti2206.screens.overlays.WinScreen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -46,9 +42,6 @@ public class GameScreen extends Screen {
 
 	/** The singleton reference to the ProgressHandler class. */
 	private ProgressHandler progressHandler = ProgressHandler.getInstance();
-
-	/** The singleton reference to the ScreenHandler class. */
-	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Constructs a new GameScreen. */
 	public GameScreen() {
@@ -97,15 +90,7 @@ public class GameScreen extends Screen {
 	@Override
 	public void update() {
 		super.update();
- 
-		if (grid.getCurrentHighestTile() == 11
-				&& !TwentyFourtyGame.isContinuing()) {
-			TwentyFourtyGame.setState(GameState.WON);
-			screenHandler.add(new WinScreen(grid));
-		} else if (grid.getPossibleMoves() == 0) {
-			TwentyFourtyGame.setState(GameState.LOST);
-			screenHandler.add(new LoseScreen(grid));
-		}
+		TwentyFourtyGame.getState().update(grid);
 	}
 
 	@Override

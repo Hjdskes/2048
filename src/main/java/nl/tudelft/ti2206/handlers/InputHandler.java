@@ -29,8 +29,8 @@ public class InputHandler extends InputListener {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
-//	Timer solver = null;
-//	private Benchmark bmark;
+	//Timer solver = null;
+	//private Benchmark bmark;
 
 	private Command command;
 
@@ -43,7 +43,7 @@ public class InputHandler extends InputListener {
 	public InputHandler(Grid grid) {
 		this.grid = grid;
 	}
-
+	
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
 		switch (keycode) {
@@ -99,6 +99,7 @@ public class InputHandler extends InputListener {
 			}
 			return true;
 		}
+
 		return false;
 	}
 	

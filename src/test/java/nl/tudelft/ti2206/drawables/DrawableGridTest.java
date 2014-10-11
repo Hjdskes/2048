@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
@@ -57,7 +56,7 @@ public class DrawableGridTest {
 			tiles[i] = tile;
 		}
 		grid = new DrawableGrid(tiles, skin, region);
-		TwentyFourtyGame.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/**
