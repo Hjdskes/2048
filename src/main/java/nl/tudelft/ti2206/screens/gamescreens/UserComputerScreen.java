@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.screens.gamescreens;
 
+import nl.tudelft.ti2206.drawables.DrawableGrid;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
@@ -9,6 +10,7 @@ import nl.tudelft.ti2206.handlers.LocalInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
 import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
@@ -66,6 +68,10 @@ public class UserComputerScreen extends Screen {
 
 	private Difficulty difficulty;
 
+	private DrawableGrid localGridDraw;
+
+	private DrawableGrid computerGridDraw;
+
 //	private Label difficultylbl;
 
 	/** Constructs a new MultiGameScreen. */
@@ -76,6 +82,9 @@ public class UserComputerScreen extends Screen {
 
 		localGrid = new Grid(false);
 		computerGrid = new Grid(false);
+		
+		localGridDraw = new DrawableGrid(localGrid.getTiles());
+		computerGridDraw = new DrawableGrid(computerGrid.getTiles());
 
 		/* Sets the name of the objects. Used for logging */
 		localGrid.setObjectName("LocalGrid");
@@ -93,7 +102,7 @@ public class UserComputerScreen extends Screen {
 		computerScores = new Scores();
 		computerGrid.addObserver(computerScores);
 
-		this.setDrawBehavior(new DrawSimple(stage));
+		this.setDrawBehavior( new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only */
@@ -120,14 +129,14 @@ public class UserComputerScreen extends Screen {
 		you.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		you.setY(2.5f * TwentyFourtyGame.GAP);
 		localGroup.addActor(localScores);
-		//localGroup.addActor(localGrid);
+		localGroup.addActor(localGridDraw);
 		localGroup.addActor(you);
 
 		/* Create our computer groups and actors. */
 		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
 		computerGroup.addActor(computerScores);
-		//computerGroup.addActor(computerGrid);
+		computerGroup.addActor(computerGridDraw);
 		computerGroup.addActor(opponent);
 		computerGroup.setX(600);
 //		difficultylbl.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2 + difficultylbl.getWidth() / 3);
