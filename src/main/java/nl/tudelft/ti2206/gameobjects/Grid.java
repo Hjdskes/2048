@@ -6,7 +6,6 @@ import java.util.Observable;
 import java.util.Stack;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.handlers.TileHandler;
 import nl.tudelft.ti2206.log.Logger;
 
@@ -92,6 +91,9 @@ public class Grid extends Observable implements Cloneable {
 		if (!isEmpty) {
 			initGrid();
 		}
+
+		/* After loading the grid, start the game. */
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/**
@@ -180,7 +182,7 @@ public class Grid extends Observable implements Cloneable {
 		highestTile = 0;
 		updateHighestTile();
 
-		TwentyFourtyGame.setState(GameState.RUNNING);
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 		changed();
 	}
 

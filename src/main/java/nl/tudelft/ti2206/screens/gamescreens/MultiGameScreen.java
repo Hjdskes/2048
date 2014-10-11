@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.screens.gamescreens;
 import nl.tudelft.ti2206.drawables.DrawableGrid;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
@@ -14,10 +13,9 @@ import nl.tudelft.ti2206.net.Networking;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
-import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
-import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -143,6 +141,26 @@ public class MultiGameScreen extends Screen {
 		stage.addListener(new LocalInputHandler(localGrid));
 	}
 
+	/** Sets the label indicating your Grid to the supplied text and color.
+	 * 
+	 * @param string The text to set.
+	 * @param color The color to use.
+	 */
+	public void setYouLabel(String string, Color color){
+		you.setText(string);
+		you.setColor(color);
+	}
+
+	/** Sets the label indicating your opponent's Grid to the supplied text and color.
+	 * 
+	 * @param string The text to set.
+	 * @param color The color to use.
+	 */
+	public void setOpponentLabel(String string, Color color){
+		opponent.setText(string);
+		opponent.setColor(color);
+	}
+
 	@Override
 	public void update() {
 		super.update();
@@ -151,21 +169,17 @@ public class MultiGameScreen extends Screen {
 			screenHandler.add(new ConnectionLostScreen());
 		}
 
-		if (localGrid.getCurrentHighestTile() == 11
-				|| remoteGrid.getPossibleMoves() == 0) {
+		if (TwentyFourtyGame.isWaiting()) {
 			logger.info(className,
-					"Local player won the multiplayer game. The score of the local player: "
-							+ Integer.toString(localGrid.getScore()));
-			TwentyFourtyGame.setState(GameState.WON);
-			screenHandler.add(new MultiWinScreen());
-		} else if (localGrid.getPossibleMoves() == 0
-				|| remoteGrid.getCurrentHighestTile() == 11) {
+					"Local player is out of moves! Waiting for the remote player...");
+			this.setYouLabel("WAITING", Color.RED);
+		} else if(remoteGrid.getPossibleMoves() == 0) {
 			logger.info(className,
-					"Local player lost the multiplayer game. The score of the remote player: "
-							+ Integer.toString(remoteGrid.getScore()));
-			TwentyFourtyGame.setState(GameState.LOST);
-			screenHandler.add(new MultiLoseScreen());
+					"Remote player is out of moves! Waiting for the local player...");
+			this.setOpponentLabel("WAITING", Color.RED);
 		}
+
+		TwentyFourtyGame.getState().update(localGrid, remoteGrid);
 	}
 
 	@Override

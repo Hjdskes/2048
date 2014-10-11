@@ -6,7 +6,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.game.TwentyFourtyGame.GameState;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
@@ -54,9 +53,8 @@ public class Solver extends TimerTask {
 
 	@Override
 	public void run() {
-		GameState state = TwentyFourtyGame.getState();
-		if (original.getPossibleMoves() == 0
-				|| (state != GameState.CONTINUING && state != GameState.RUNNING)) {
+		if (original.getPossibleMoves() == 0 ||
+				!TwentyFourtyGame.isRunning() || !TwentyFourtyGame.isContinuing()) {
 			this.cancel();
 		} else if (!calculating) {
 			System.out.println("Calculating next move...");
