@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.handlers;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -75,5 +76,16 @@ public class ScreenHandlerTest {
 	public void testUpdate() {
 		screenHandler.update();
 		verify(screen).update();
+	}
+	
+	@Test
+	public void testRestart() {
+		screenHandler.restart();
+		verify(screen).restart();
+	}
+	
+	@Test
+	public void testGetScreen() {
+		assertEquals(screen, screenHandler.getScreen());
 	}
 }
