@@ -106,7 +106,9 @@ public class ScreenHandler {
 		screenStack.peek().update();
 		for (int i = screenStack.size() - 1; i >= 0; i--) {
 			Screen screen = screenStack.get(i);
-			remove(screen);
+			if (screen == null) {
+				screenStack.remove(i);
+			}
 		}
 	}
 
