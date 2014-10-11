@@ -25,13 +25,14 @@ public class MenuScreen extends Screen {
 	/** The button to launch a singleplayer game. */
 	private TextButton singlePlayer;
 
-	/** The button to go to the host menu. */
+	/** The button to go to the multiplayer menu. */
 	private TextButton multiPlayer;
+
+	/** The button to launch a player versus computer game. */
+	private TextButton versusComputer;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
-
-	private TextButton versusComputer;
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
@@ -111,7 +112,7 @@ public class MenuScreen extends Screen {
 		versusComputer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new DifficultySelectScreen());
+				screenHandler.add(new DifficultyScreen());
 			}
 		});
 	}

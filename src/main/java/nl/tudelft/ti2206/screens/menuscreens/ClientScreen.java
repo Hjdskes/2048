@@ -77,9 +77,8 @@ public class ClientScreen extends Screen {
 	public void create() {
 		super.create();
 
-		play.setX((TwentyFourtyGame.GAME_WIDTH / 4) * 3 - play.getPrefWidth()
-				/ 2);
-		play.setY(5 * TwentyFourtyGame.GAP);
+		play.setX(TwentyFourtyGame.GAME_WIDTH - 2 * TwentyFourtyGame.GAP - play.getWidth()); 
+		play.setY(2 * TwentyFourtyGame.GAP);
 		addPlayButtonListener();
 
 		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);

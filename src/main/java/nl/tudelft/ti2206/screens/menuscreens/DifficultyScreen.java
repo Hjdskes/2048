@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.screens.menuscreens;
 
+import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
@@ -9,7 +10,6 @@ import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen.Difficulty;
 import nl.tudelft.ti2206.screens.overlays.CountDownScreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,15 +17,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * The MenuScreen is used on start-up, to have the user choose between
- * singleplayer, hosting a game or connecting to another player.
+ * The DifficultyScreen is used to select a difficulty for the computer
+ * to play against.
  */
-public class DifficultySelectScreen extends Screen {
+public class DifficultyScreen extends Screen {
 	/** The main label. */
 	private Label label;
 
-	/** The button to launch a singleplayer game. */
+	/** The buttons to choose the difficulty. */
 	private TextButton easyButton, mediumButton, hardButton, extremeButton;
+
+	/** The button to go back to the main menu. */
+	private MenuButton menuButton;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
@@ -33,14 +36,8 @@ public class DifficultySelectScreen extends Screen {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
-	/** Constructs a new MenuScreen. */
-	public DifficultySelectScreen() {
-		/*
-		 * To resize the display when we get back to the menu from a multiplayer
-		 * session.
-		 */
-		Gdx.graphics.setDisplayMode(TwentyFourtyGame.GAME_WIDTH,
-				TwentyFourtyGame.GAME_HEIGHT, false);
+	/** Constructs a new DifficultyScreen. */
+	public DifficultyScreen() {
 		stage = new Stage();
 		label = new Label("Select your difficulty!", assetHandler.getSkin());
 
@@ -48,12 +45,13 @@ public class DifficultySelectScreen extends Screen {
 		mediumButton = new TextButton("Medium", assetHandler.getSkin());
 		hardButton = new TextButton("Hard", assetHandler.getSkin());
 		extremeButton = new TextButton("Extreme", assetHandler.getSkin());
+		menuButton = new MenuButton();
 
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only. */
-	public DifficultySelectScreen(Stage stage, Label label, TextButton button) {
+	public DifficultyScreen(Stage stage, Label label, MenuButton menuButton, TextButton button) {
 		this.stage = stage;
 		this.label = label;
 
@@ -61,6 +59,7 @@ public class DifficultySelectScreen extends Screen {
 		this.mediumButton = button;
 		this.hardButton = button;
 		this.extremeButton = button;
+		this.menuButton = menuButton;
 
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
@@ -104,6 +103,7 @@ public class DifficultySelectScreen extends Screen {
 		stage.addActor(mediumButton);
 		stage.addActor(hardButton);
 		stage.addActor(extremeButton);
+		stage.addActor(menuButton);
 
 		easyButton.addListener(new ClickListener() {
 			@Override

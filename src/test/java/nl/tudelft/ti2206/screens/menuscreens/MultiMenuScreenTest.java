@@ -6,11 +6,11 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.screens.menuscreens.MultiMenuScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,6 +38,7 @@ public class MultiMenuScreenTest {
 	@Mock private Preferences prefs;
 	@Mock private Viewport viewPort;
 	@Mock private Scores scores;
+	@Mock private MenuButton menuButton;
 	@Mock private TextButton button;
 	@Mock private Label label;
 	
@@ -51,7 +52,7 @@ public class MultiMenuScreenTest {
 		new HeadlessLauncher().launch();
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
-		screen = new MultiMenuScreen(stage, label, button);
+		screen = new MultiMenuScreen(stage, label, menuButton, button);
 
 		Gdx.gl = gl;
 		Gdx.input = input;
