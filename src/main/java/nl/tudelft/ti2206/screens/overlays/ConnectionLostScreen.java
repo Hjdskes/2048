@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.screens.overlays;
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.Screen;
-import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -11,19 +10,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 /**
  * The ConnectionLostScreen is displayed when the connection drops.
  */
-public class ConnectionLostScreen extends Screen {
+public class ConnectionLostScreen {
 	/** The transparent background image. */
 	private Image image;
 
 	/** The button to go back to the menu. */
 	private MenuButton menuButton;
 
+	/** The stage of the parent screen */
+	private Stage stage;
+	
 	/** Constructs a new ConnectionLostScreen. */
-	public ConnectionLostScreen() {
-		stage = new Stage();
+	public ConnectionLostScreen(Screen parent) {
+		stage = parent.getStage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "connectionlostoverlay");
 		menuButton = new MenuButton();
-		this.setDrawBehavior(new DrawSimple(stage));
+		addActors();
 	}
 
 	/** Constructor used for mock insertion */
@@ -31,18 +33,11 @@ public class ConnectionLostScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.menuButton = menuButton;
-		this.setDrawBehavior(new DrawSimple(stage));
+		addActors();
 	}
 
-	@Override
-	public void create() {
-		super.create();
+	public void addActors() {
 		stage.addActor(image);
 		stage.addActor(menuButton);
-	}
-
-	@Override
-	public boolean isOverlay() {
-		return true;
 	}
 }

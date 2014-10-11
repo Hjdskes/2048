@@ -3,6 +3,9 @@ package nl.tudelft.ti2206.screens;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBehavior;
+import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
+import nl.tudelft.ti2206.screens.overlays.LoseScreen;
+import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
 import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
@@ -20,14 +23,14 @@ import com.badlogic.gdx.utils.Disposable;
 public abstract class Screen implements Disposable {
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
-	
+
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
 	/** The scene graph. */
 	protected Stage stage;
-	
-	/**	The DrawBehavior variable to determine the draw implementation */
+
+	/** The DrawBehavior variable to determine the draw implementation */
 	protected DrawBehavior drawbehavior;
 
 	/**
@@ -44,19 +47,9 @@ public abstract class Screen implements Disposable {
 	public void draw() {
 		drawbehavior.draw();
 	}
-	
-	public void setDrawBehavior(DrawBehavior newDrawBehavior){
+
+	public void setDrawBehavior(DrawBehavior newDrawBehavior) {
 		drawbehavior = newDrawBehavior;
-	}
-	
-	/**
-	 * Determines if the screen is an overlay or not. Overlays will not cause
-	 * screens below it to automatically exit.
-	 * 
-	 * @return True if the screen is an overlay, false otherwise.
-	 */
-	public boolean isOverlay() {
-		return false;
 	}
 
 	/**
@@ -90,19 +83,45 @@ public abstract class Screen implements Disposable {
 		stage.act();
 	}
 
-	public void addOverlay(boolean isMulti, boolean isWon, Grid grid) {
+	/**
+	 * Adds a Lost or Won overlay, depending on whether the game is won, lost,
+	 * and if it's in multiplayer mode.
+	 * 
+	 * @param isMulti
+	 *            True if the game is in Multiplayer mode.
+	 * @param isWon
+	 *            True if the game is won.
+	 * @param grid
+	 *            The grid of the current game.
+	 */
+	public void addLWOverlay(boolean isMulti, boolean isWon, Grid grid) {
 		if (isMulti && isWon) {
 			new WinScreen(this, grid);
 		} else if (!isMulti && isWon) {
 			new MultiWinScreen(this);
+		} else if (!isMulti && !isWon) {
+			new LoseScreen(this, grid);
+		} else {
+			new MultiLoseScreen(this);
 		}
 	}
-	
+
+	/**
+	 * Adds a ConnectionLostScreen to the current screen.
+	 */
+	public void addConnectionLostOverlay() {
+		new ConnectionLostScreen(this);
+	}
+
+	/**
+	 * Restarts the current Screen, removing all actors and re-adding the wanted
+	 * actors.
+	 */
 	public void restart() {
 		stage.getActors().clear();
 		create();
 	}
-	
+
 	@Override
 	public void dispose() {
 		logger.debug(className, "Closing window...");

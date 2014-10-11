@@ -37,7 +37,7 @@ public class WaitingState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.findScreen("MultiGameScreen").addOverlay(true, false,
+			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, false,
 					null);
 		}
 
@@ -52,7 +52,7 @@ public class WaitingState implements GameState {
 							+ Integer.toString(localgrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.findScreen("MultiGameScreen").addOverlay(true, true,
+			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, true,
 					null);
 		}
 	}

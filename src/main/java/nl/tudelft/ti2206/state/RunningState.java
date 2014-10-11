@@ -27,10 +27,10 @@ public class RunningState implements GameState {
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
 			screenHandler.findScreen("GameScreen")
-					.addOverlay(false, true, grid);
+					.addLWOverlay(false, true, grid);
 		} else if (grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.findScreen("GameScreen").addOverlay(false, false,
+			screenHandler.findScreen("GameScreen").addLWOverlay(false, false,
 					grid);
 		}
 	}
@@ -44,7 +44,7 @@ public class RunningState implements GameState {
 							+ Integer.toString(localgrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.findScreen("MultiGameScreen").addOverlay(true, true,
+			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, true,
 					null);
 		}
 
@@ -64,7 +64,7 @@ public class RunningState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.findScreen("MultiGameScreen").addOverlay(true, false,
+			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, false,
 					null);
 		}
 
@@ -78,7 +78,7 @@ public class RunningState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.findScreen("MultiGameScreen").addOverlay(true, false,
+			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, false,
 					null);
 		}
 	}

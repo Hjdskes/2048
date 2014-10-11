@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class ConnectionLostScreenTest {
+public class MultiWaitScreenTest {
 
 	@Mock
 	private Skin skin;
@@ -24,19 +24,16 @@ public class ConnectionLostScreenTest {
 	@Mock
 	private MenuButton button;
 	
-	private ConnectionLostScreen screen;
-	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new ConnectionLostScreen(stage, image, button);
 	}
 
 	@Test
 	public void testCreate() {
+		MultiWaitScreen screen = new MultiWaitScreen(stage, image, button);
 		assertNotNull(screen);
 		verify(stage).addActor(image);
 		verify(stage).addActor(button);
-	}
-
+ 	}
 }
