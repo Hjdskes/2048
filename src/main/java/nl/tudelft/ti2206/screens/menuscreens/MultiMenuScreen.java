@@ -5,6 +5,7 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -54,7 +55,8 @@ public class MultiMenuScreen extends Screen {
 		this.stage = stage;
 		this.label = label;
 		this.connect = button;
-		this.setDrawBehavior(new DrawBeige(stage));
+		this.host = button;
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override

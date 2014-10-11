@@ -5,6 +5,7 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 import nl.tudelft.ti2206.screens.gamescreens.UserComputerScreen.Difficulty;
 import nl.tudelft.ti2206.screens.overlays.CountDownScreen;
 
@@ -61,7 +62,7 @@ public class DifficultySelectScreen extends Screen {
 		this.hardButton = button;
 		this.extremeButton = button;
 
-		this.setDrawBehavior(new DrawBeige(stage));
+		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
 	@Override
