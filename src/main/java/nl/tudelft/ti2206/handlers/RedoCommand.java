@@ -22,11 +22,10 @@ public class RedoCommand extends Command {
 	public void execute() {
 		if (!grid.getRedoStack().isEmpty()) {
 			String newGrid = grid.getRedoStack().pop();
-			setStringAsGrid(newGrid);
-
+			grid.getUndoStack().push(grid.toString());
 			int score = grid.getScore() * 2;
 			grid.setScore(score);
-
+			setStringAsGrid(newGrid);
 			logger.info(objectName, "Redo succesfully conducted, new score is "
 					+ score);
 		} else {
