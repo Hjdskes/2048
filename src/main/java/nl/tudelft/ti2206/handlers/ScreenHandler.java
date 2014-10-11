@@ -20,9 +20,10 @@ public class ScreenHandler {
 	private static Stack<Screen> screenStack = new Stack<Screen>();
 
 	/** Overrides the default constructor. */
-	private ScreenHandler() { }
+	private ScreenHandler() {
+	}
 
-	/** 
+	/**
 	 * 
 	 * @return The singleton instance of the ScreenHandler.
 	 */
@@ -131,6 +132,7 @@ public class ScreenHandler {
 	 */
 	public void removeTop() {
 		if (screenStack.size() == 1) {
+			screenStack.get(0).restart();
 			return;
 		}
 
@@ -148,5 +150,21 @@ public class ScreenHandler {
 			return null;
 		}
 		return screenStack.get(index);
+	}
+
+	/**
+	 * Returns the Screen of class, given by the String className.
+	 * 
+	 * @param target
+	 *            The name of the ScreenClass to find.
+	 * @return The found screen, null if no screen of class target is found.
+	 */
+	public Screen findScreen(String target) {
+		for (Screen screen : screenStack) {
+			if (screen.getClass().getSimpleName().equals(target)) {
+				return screen;
+			}
+		}
+		return null;
 	}
 }

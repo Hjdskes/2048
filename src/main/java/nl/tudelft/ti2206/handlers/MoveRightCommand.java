@@ -20,5 +20,6 @@ public class MoveRightCommand extends Command {
 		this.grid.getUndoStack().push(grid.toString());
 		tileHandler.moveRight();
 		updateAndSpawn();
+		this.grid.getRedoStack().clear();
 	}
 }

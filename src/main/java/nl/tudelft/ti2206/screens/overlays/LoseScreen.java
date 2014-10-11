@@ -4,7 +4,6 @@ import nl.tudelft.ti2206.buttons.RestartButton;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.Screen;
-import nl.tudelft.ti2206.screens.drawbehaviour.DrawSimple;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,19 +12,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * The LoseScreen is displayed when the player has lost. It is semi-transparent,
  * and offers the ability to restart.
  */
-public class LoseScreen extends Screen {
+public class LoseScreen {
 	/** The background image. */
 	private Image image;
 
 	/** The button used to restart the game. */
 	private RestartButton restartButton;
 
+	/** The stage of the parent screen */
+	private Stage stage;
+
 	/** Constructs a new LoseScreen. */
-	public LoseScreen(Grid grid) {
-		stage = new Stage();
+	public LoseScreen(Screen parent, Grid grid) {
+		stage = parent.getStage();
+
 		image = new Image(AssetHandler.getInstance().getSkin(), "lostoverlay");
 		restartButton = new RestartButton(grid, false);
-		this.setDrawBehavior(new DrawSimple(stage));
+
+		addActors();
 	}
 
 	/** Constructor used for mock insertion */
@@ -33,19 +37,11 @@ public class LoseScreen extends Screen {
 		this.stage = stage;
 		this.image = image;
 		this.restartButton = restartButton;
-		this.setDrawBehavior(new DrawSimple(stage));
+		addActors();
 	}
 
-	@Override
-	public void create() {
-		super.create();
-
+	public void addActors() {
 		stage.addActor(image);
 		stage.addActor(restartButton);
-	}
-
-	@Override
-	public boolean isOverlay() {
-		return true;
 	}
 }

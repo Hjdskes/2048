@@ -1,19 +1,14 @@
-package nl.tudelft.ti2206.screens.menuscreens;
+package nl.tudelft.ti2206.screens.overlays;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doNothing;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.buttons.RestartButton;
-import nl.tudelft.ti2206.screens.overlays.LoseScreen;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -22,15 +17,11 @@ public class LoseScreenTest {
 	@Mock
 	private Skin skin;
 	@Mock
-	private BitmapFont font;
-	@Mock
 	private Stage stage;
 	@Mock
 	private Image image;
 	@Mock
 	private RestartButton restartButton;
-	@Mock
-	private Input input;
 
 	private LoseScreen screen;
 
@@ -41,8 +32,6 @@ public class LoseScreenTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		screen = new LoseScreen(stage, image, restartButton);
-		Gdx.input = input;
-		doNothing().when(input).setInputProcessor(stage);
 	}
 
 	/**
@@ -50,21 +39,8 @@ public class LoseScreenTest {
 	 */
 	@Test
 	public void testCreate() {
-		screen.create();
-
+		assertNotNull(screen);
 		verify(stage).addActor(image);
 		verify(stage).addActor(restartButton);
 	}
-
-	@Test
-	public void testDraw() {
-		screen.draw();
-		verify(stage).draw();
-	}
-
-	@Test
-	public void testIsOverlay() {
-		assertTrue(screen.isOverlay());
-	}
-
 }
