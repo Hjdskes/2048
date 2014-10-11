@@ -4,7 +4,6 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
 
 /**
  * The WaitingState class is used to define a possible state of the game. It is
@@ -38,7 +37,8 @@ public class WaitingState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.add(new MultiLoseScreen());
+			screenHandler.findScreen("MultiGameScreen").addOverlay(true, false,
+					null);
 		}
 
 		/*

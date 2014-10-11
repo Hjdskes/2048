@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -20,8 +19,6 @@ public class MultiWinScreenTest {
 
 	@Mock
 	private Skin skin;
-	@Mock
-	private BitmapFont font;
 	@Mock
 	private MultiGameScreen screen;
 	@Mock

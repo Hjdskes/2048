@@ -5,7 +5,6 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.overlays.LoseScreen;
-import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
 
 /**
  * The RunningState class is used to define a possible state of the game. It is
@@ -65,7 +64,8 @@ public class RunningState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.add(new MultiLoseScreen());
+			screenHandler.findScreen("MultiGameScreen").addOverlay(true, false,
+					null);
 		}
 
 		/* Losing condition: Same score, but he was first. */
@@ -78,7 +78,8 @@ public class RunningState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.add(new MultiLoseScreen());
+			screenHandler.findScreen("MultiGameScreen").addOverlay(true, false,
+					null);
 		}
 	}
 }
