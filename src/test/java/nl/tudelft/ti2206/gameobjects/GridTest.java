@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -164,42 +163,6 @@ public class GridTest {
 	}
 
 	/**
-	 * Tests the move method when moving down.
-	 */
-	@Test
-	public void testMoveDown() {
-		grid.move(Direction.DOWN);
-		verify(tileHandler).moveDown();
-	}
-
-	/**
-	 * Tests the move method when moving up.
-	 */
-	@Test
-	public void testMoveUp() {
-		grid.move(Direction.UP);
-		verify(tileHandler).moveUp();
-	}
-
-	/**
-	 * Tests the move method when moving left.
-	 */
-	@Test
-	public void testMoveLeft() {
-		grid.move(Direction.LEFT);
-		verify(tileHandler).moveLeft();
-	}
-
-	/**
-	 * Tests the move method when moving right.
-	 */
-	@Test
-	public void testMoveRight() {
-		grid.move(Direction.RIGHT);
-		verify(tileHandler).moveRight();
-	}
-
-	/**
 	 * Tests if getTileHandler() correctly returns the tileHandler.
 	 */
 	@Test
@@ -252,6 +215,32 @@ public class GridTest {
 	public void testObjectName() {
 		String objectName = "GridTest";
 		grid.setObjectName(objectName);
-		assertEquals(objectName, grid.getObjectName());	
+		assertEquals(objectName, grid.getObjectName());
 	}
- }
+
+	@Test
+	public void testSpawnTile() {
+		int count = 0;
+		for (int i = 0; i < grid.getTiles().length; i++) {
+			if (!grid.getTiles()[i].isEmpty()) {
+				count++;
+			}
+		}
+		grid.spawnNewTile();
+		int count2 = 0;
+		for (int i = 0; i < grid.getTiles().length; i++) {
+			if (!grid.getTiles()[i].isEmpty()) {
+				count2++;
+			}
+		}
+		assertEquals(count2, count + 1);
+	}
+	
+	@Test
+	public void testUpdateScore() {
+		int score = grid.getScore();
+		when(tileHandler.getScoreIncrement()).thenReturn(20);
+		grid.updateScore(tileHandler.getScoreIncrement());
+		assertEquals(grid.getScore(), score + 20);
+	}
+}

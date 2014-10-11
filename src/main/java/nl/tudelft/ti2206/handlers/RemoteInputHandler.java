@@ -5,7 +5,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
 
@@ -28,6 +27,9 @@ public class RemoteInputHandler implements Observer {
 
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
+	
+	/** The recent command of the remote player */
+	private Command command;
 
 	/**
 	 * Creates a new RemoteInputHandler instance.
@@ -60,7 +62,8 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public void moveUp() {
 		logger.info(this.getClass().getSimpleName(), "Remote player moves UP");
-		grid.move(Direction.UP);
+		setCommand(new MoveUpCommand(grid));
+		command.execute();
 	}
 
 	/**
@@ -68,7 +71,8 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public void moveDown() {
 		logger.info(this.getClass().getSimpleName(), "Remote player moves DOWN");
-		grid.move(Direction.DOWN);
+		setCommand(new MoveDownCommand(grid));
+		command.execute();
 	}
 
 	/**
@@ -77,7 +81,8 @@ public class RemoteInputHandler implements Observer {
 	public void moveRight() {
 		logger.info(this.getClass().getSimpleName(),
 				"Remote player moves RIGHT");
-		grid.move(Direction.RIGHT);
+		setCommand(new MoveRightCommand(grid));
+		command.execute();
 	}
 
 	/**
@@ -85,7 +90,8 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public void moveLeft() {
 		logger.info(this.getClass().getSimpleName(), "Remote player moves LEFT");
-		grid.move(Direction.LEFT);
+		setCommand(new MoveLeftCommand(grid));
+		command.execute();
 	}
 
 	@Override
@@ -166,5 +172,13 @@ public class RemoteInputHandler implements Observer {
 	/** Used to insert a Mock for Logger. */
 	public void setLogger(Logger loggerMock) {
 		logger = loggerMock;
+	}
+	
+	public void setCommand(Command command) {
+		this.command = command;
+	}
+	
+	public Command getCommand() {
+		return command;
 	}
 }
