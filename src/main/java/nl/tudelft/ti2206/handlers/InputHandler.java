@@ -4,6 +4,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.menuscreens.MenuScreen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -63,7 +64,12 @@ public class InputHandler extends InputListener {
 		case Keys.ESCAPE:
 			logger.debug(className, "User pressed key: ESCAPE");
 			ProgressHandler.getInstance().saveGame(grid);
-			ScreenHandler.getInstance().add(new MenuScreen());
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run() {
+					ScreenHandler.getInstance().set(new MenuScreen());
+				}
+			});
 			return true;
 		}
 		return false;

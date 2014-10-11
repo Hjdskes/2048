@@ -26,12 +26,10 @@ public class RunningState implements GameState {
 		if (grid.getCurrentHighestTile() == 11
 				&& !TwentyFourtyGame.isContinuing()) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.findScreen("GameScreen")
-					.addLWOverlay(false, true, grid);
+			screenHandler.getScreen().addLWOverlay(false, true, grid);
 		} else if (grid.getPossibleMoves() == 0) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.findScreen("GameScreen").addLWOverlay(false, false,
-					grid);
+			screenHandler.getScreen().addLWOverlay(false, false, grid);
 		}
 	}
 
@@ -44,8 +42,7 @@ public class RunningState implements GameState {
 							+ Integer.toString(localgrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, true,
-					null);
+			screenHandler.getScreen().addLWOverlay(true, true, null);
 		}
 
 		/* Waiting condition: I am out of moves */
@@ -64,8 +61,7 @@ public class RunningState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, false,
-					null);
+			screenHandler.getScreen().addLWOverlay(true, false, null);
 		}
 
 		/* Losing condition: Same score, but he was first. */
@@ -78,8 +74,7 @@ public class RunningState implements GameState {
 							+ Integer.toString(remotegrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.findScreen("MultiGameScreen").addLWOverlay(true, false,
-					null);
+			screenHandler.getScreen().addLWOverlay(true, false, null);
 		}
 	}
 }

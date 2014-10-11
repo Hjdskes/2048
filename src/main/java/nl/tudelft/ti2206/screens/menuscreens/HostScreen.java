@@ -142,7 +142,7 @@ public class HostScreen extends Screen {
 				String addr = networking.getRemoteAddress();
 				addresses.setText(addr);
 
-				ScreenHandler.getInstance().add(new MultiGameScreen());
+				ScreenHandler.getInstance().set(new MultiGameScreen());
 			} else if (networking.errorOccured()) {
 
 				// This never really happens, but whatever...

@@ -65,7 +65,7 @@ public class TwentyFourtyGame extends Game {
 				.internal("skin.json"));
 
 		/* Push a menu screen onto the screen stack. */
-		screenHandler.add(new MenuScreen());
+		screenHandler.set(new MenuScreen());
 	}
 
 	@Override

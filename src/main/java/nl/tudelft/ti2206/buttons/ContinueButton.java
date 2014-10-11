@@ -23,7 +23,7 @@ public class ContinueButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				TwentyFourtyGame.setState(TwentyFourtyGame.getContinuingState());
-				ScreenHandler.getInstance().removeTop();
+				ScreenHandler.getInstance().restart();
 			}
 		});
 	}

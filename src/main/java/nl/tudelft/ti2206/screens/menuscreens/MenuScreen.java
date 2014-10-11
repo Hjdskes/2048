@@ -98,21 +98,21 @@ public class MenuScreen extends Screen {
 		singlePlayer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new GameScreen());
+				screenHandler.set(new GameScreen());
 			}
 		});
 
 		multiPlayer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new MultiMenuScreen());
+				screenHandler.set(new MultiMenuScreen());
 			}
 		});
 		
 		versusComputer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new DifficultyScreen());
+				screenHandler.set(new DifficultyScreen());
 			}
 		});
 	}

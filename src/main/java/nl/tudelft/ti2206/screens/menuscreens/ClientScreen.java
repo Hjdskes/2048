@@ -121,7 +121,7 @@ public class ClientScreen extends Screen {
 		super.update();
 
 		if (networking.isConnected()) {
-			ScreenHandler.getInstance().add(new MultiGameScreen());
+			ScreenHandler.getInstance().set(new MultiGameScreen());
 		} else {
 
 			if (networking.errorOccured()) {

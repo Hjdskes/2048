@@ -25,7 +25,7 @@ public class MenuButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Networking.getInstance().disconnect();
-				ScreenHandler.getInstance().add(new MenuScreen());
+				ScreenHandler.getInstance().set(new MenuScreen());
 			}
 		});
 	}

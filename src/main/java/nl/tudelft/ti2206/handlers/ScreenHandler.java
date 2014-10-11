@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.handlers;
 
-import java.util.Stack;
-
 import nl.tudelft.ti2206.screens.Screen;
 
 import com.badlogic.gdx.Gdx;
@@ -9,15 +7,13 @@ import com.badlogic.gdx.Gdx;
 /**
  * The ScreenHandler is responsible for managing all the screens.
  * 
- * It keeps a stack of all our screens and draws them from top to bottom, which
- * enables us to draw transparent screens, such as, for example, the WinScreen.
+ * It keeps a reference to the current screen to be able to modify the screen.
  */
 public class ScreenHandler {
 	/** The unique singleton instance of this class. */
 	private static ScreenHandler instance = new ScreenHandler();
 
-	/** The stack containing all the screens. */
-	private static Stack<Screen> screenStack = new Stack<Screen>();
+	private Screen screen;
 
 	/** Overrides the default constructor. */
 	private ScreenHandler() {
@@ -31,53 +27,45 @@ public class ScreenHandler {
 		return instance;
 	}
 
-	/** Sets the stack. Used for testing. */
-	public void setScreenStack(Stack<Screen> screens) {
-		screenStack = screens;
-	}
-
 	/**
-	 * Adds the specified screen to the stack.
+	 * Sets the specified screen to be the current screen. Disposes the current
+	 * screen if it is not null and resizes the screen if necessary.
 	 *
 	 * @param screen
 	 *            The screen.
 	 */
-	public void add(Screen screen) {
+	public void set(Screen screen) {
+		if (this.screen != null) {
+			dispose();
+		}
+		this.screen = screen;
 		screen.create();
 		screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		screenStack.push(screen);
 	}
 
 	/**
-	 * Disposes cleanly of all the screens.
+	 * Disposes cleanly of the screen.
 	 * */
 	public void dispose() {
-		for (Screen screen : screenStack) {
-			screen.dispose();
-		}
-		screenStack.clear();
+		screen.dispose();
 	}
 
 	/**
-	 * Draws all screens in the stack.
+	 * Draws the screen.
 	 */
 	public void draw() {
-		for (Screen screen : screenStack) {
-			screen.draw();
-		}
+		screen.draw();
 	}
 
 	/**
-	 * Pauses all screens in the stack.
+	 * Pauses the screen.
 	 */
 	public void pause() {
-		for (Screen screen : screenStack) {
-			screen.pause();
-		}
+		screen.pause();
 	}
 
 	/**
-	 * Resizes all screens in the stack
+	 * Resizes the screen.
 	 *
 	 * @param width
 	 *            The new game window width (in pixels).
@@ -85,82 +73,34 @@ public class ScreenHandler {
 	 *            The new game window height (in pixels).
 	 */
 	public void resize(int width, int height) {
-		for (Screen screen : screenStack) {
-			screen.resize(width, height);
-		}
+		screen.resize(width, height);
 	}
 
 	/**
-	 * Resumes all screens in the stack.
+	 * Resumes the screen.
 	 */
 	public void resume() {
-		for (Screen screen : screenStack) {
-			screen.resume();
-		}
+		screen.resume();
 	}
 
 	/**
-	 * Updates all screens in the stack.
+	 * Updates the screen.
 	 */
 	public void update() {
-		screenStack.peek().update();
-		for (int i = screenStack.size() - 1; i >= 0; i--) {
-			Screen screen = screenStack.get(i);
-			if (screen == null) {
-				screenStack.remove(i);
-			}
-		}
+		screen.update();
 	}
 
 	/**
-	 * Removes the specified screen from the stack.
-	 *
-	 * @param screen
-	 *            The screen.
+	 * Restarts the current screen.
 	 */
-	public void remove(Screen screen) {
-		screen.dispose();
-		screenStack.remove(screen);
+	public void restart() {
+		screen.restart();
 	}
 
 	/**
-	 * Removes the top screen and places input back into the new top screen.
+	 * @return The current screen.
 	 */
-	public void removeTop() {
-		if (screenStack.size() == 1) {
-			screenStack.get(0).restart();
-			return;
-		}
-
-		remove(screenStack.peek());
-		screenStack.peek().resume();
-	}
-
-	/**
-	 * @param index
-	 *            The index of the Screen to return.
-	 * @return The Screen at index index.
-	 */
-	public Screen get(int index) {
-		if (index < 0 || index > screenStack.size()) {
-			return null;
-		}
-		return screenStack.get(index);
-	}
-
-	/**
-	 * Returns the Screen of class, given by the String className.
-	 * 
-	 * @param target
-	 *            The name of the ScreenClass to find.
-	 * @return The found screen, null if no screen of class target is found.
-	 */
-	public Screen findScreen(String target) {
-		for (Screen screen : screenStack) {
-			if (screen.getClass().getSimpleName().equals(target)) {
-				return screen;
-			}
-		}
-		return null;
+	public Screen getScreen() {
+		return screen;
 	}
 }

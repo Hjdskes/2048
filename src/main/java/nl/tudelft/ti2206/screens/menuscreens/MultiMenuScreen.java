@@ -87,14 +87,14 @@ public class MultiMenuScreen extends Screen {
 		connect.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new ClientScreen());
+				screenHandler.set(new ClientScreen());
 			}
 		});
 		
 		host.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new HostScreen());
+				screenHandler.set(new HostScreen());
 			}
 		});	
 	}

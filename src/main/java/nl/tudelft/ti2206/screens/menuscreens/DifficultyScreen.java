@@ -108,28 +108,28 @@ public class DifficultyScreen extends Screen {
 		easyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new CountDownScreen(Difficulty.EASY));
+				screenHandler.set(new CountDownScreen(Difficulty.EASY));
 			}
 		});
 
 		mediumButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new CountDownScreen(Difficulty.MEDIUM));
+				screenHandler.set(new CountDownScreen(Difficulty.MEDIUM));
 			}
 		});
 
 		hardButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new CountDownScreen(Difficulty.HARD));
+				screenHandler.set(new CountDownScreen(Difficulty.HARD));
 			}
 		});
 
 		extremeButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				screenHandler.add(new CountDownScreen(Difficulty.EXTREME));
+				screenHandler.set(new CountDownScreen(Difficulty.EXTREME));
 			}
 		});
 	}

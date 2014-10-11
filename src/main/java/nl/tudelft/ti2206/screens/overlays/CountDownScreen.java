@@ -74,7 +74,7 @@ public class CountDownScreen extends Screen {
 
 		if (seconds >= offset + 2.2) {
 			stage.clear();
-			screenHandler.add(new UserComputerScreen(difficulty));
+			screenHandler.set(new UserComputerScreen(difficulty));
 		}
 		else if (seconds >= offset + 2) {
 			stage.clear();
