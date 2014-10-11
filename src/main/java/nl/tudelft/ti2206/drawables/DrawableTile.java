@@ -17,9 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DrawableTile extends Actor implements Observer {
 	/** Coordinates and offsets used to position the Tile. */
-	private static final int TILE_WIDTH = 81;
+	public static final int TILE_WIDTH = 81;
 	private static final int TILE_HEIGHT = 81;
-	private static final int TILE_X = 115;
+	public static final int TILE_X = 115;
 	private static final int TILE_Y = 403;
 
 	private static Logger logger = Logger.getInstance();

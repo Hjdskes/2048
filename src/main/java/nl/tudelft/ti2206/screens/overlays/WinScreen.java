@@ -28,7 +28,7 @@ public class WinScreen extends Screen {
 	public WinScreen(Grid grid) {
 		stage = new Stage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "wonoverlay");
-		restartButton = new RestartButton(grid, true);
+		restartButton = new RestartButton(grid, false);
 		continueButton = new ContinueButton();
 		this.setDrawBehavior(new DrawSimple(stage));
 	}

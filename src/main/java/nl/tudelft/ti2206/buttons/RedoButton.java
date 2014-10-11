@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.buttons;
 
+import nl.tudelft.ti2206.drawables.DrawableTile;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -16,9 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class RedoButton extends TextButton {
 	/** Constructs a new RedoButton. */
 	public RedoButton(final Grid grid) {
-		super("Redo", AssetHandler.getInstance().getSkin());
-		this.setX((TwentyFourtyGame.GAME_WIDTH / 4)*3 - this.getPrefWidth() / 2);
-		this.setY(TwentyFourtyGame.GAP);
+		super("Redo", AssetHandler.getInstance().getSkin(), "small");
+		this.setHeight(50);
+		this.setWidth(DrawableTile.TILE_WIDTH);
+		this.setX(DrawableTile.TILE_X + 3 * DrawableTile.TILE_WIDTH + 3 * TwentyFourtyGame.GAP);
+		this.setY(100 / 2 - this.getHeight() / 2);
 
 		this.addListener(new ClickListener() {
 			@Override

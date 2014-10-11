@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.buttons;
 
+import nl.tudelft.ti2206.drawables.DrawableTile;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -17,9 +18,11 @@ public class SolveButton extends TextButton {
 
 	/** Constructs a new SolveButton. */
 	public SolveButton(final Grid grid) {
-		super("Solve", AssetHandler.getInstance().getSkin());
-		this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - 2*TwentyFourtyGame.GAP - this.getWidth());
-		this.setY(TwentyFourtyGame.GAP);
+		super("Solve", AssetHandler.getInstance().getSkin(), "small");
+		this.setHeight(50);
+		this.setWidth(DrawableTile.TILE_WIDTH);
+		this.setX(DrawableTile.TILE_X + DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP);
+		this.setY(100 / 2 - this.getHeight() / 2);
 
 		this.addListener(new ClickListener() {
 			@Override

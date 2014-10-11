@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.buttons;
 
+import nl.tudelft.ti2206.drawables.DrawableTile;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
@@ -17,14 +18,19 @@ public class RestartButton extends TextButton {
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Constructs a new RestartButton. */
-	public RestartButton(final Grid grid, boolean center) {
+	public RestartButton(final Grid grid, boolean ingame) {
 		super("Restart", AssetHandler.getInstance().getSkin());
-		if (center) {
-			this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getPrefWidth() / 2);
+		if (ingame) {
+			TextButtonStyle style = AssetHandler.getInstance().getSkin().get("small", TextButtonStyle.class);
+			this.setStyle(style);
+			this.setHeight(50);
+			this.setWidth(DrawableTile.TILE_WIDTH);
+			this.setX(DrawableTile.TILE_X);
+			this.setY(100 / 2 - this.getHeight() / 2);
 		} else {
-			this.setX(TwentyFourtyGame.GAME_WIDTH / 2 + 2*TwentyFourtyGame.GAP);
+			this.setX(TwentyFourtyGame.GAME_WIDTH / 2 - this.getWidth() / 2);
+			this.setY(TwentyFourtyGame.GAP);
 		}
-		this.setY(TwentyFourtyGame.GAP);
 
 		this.addListener(new ClickListener() {
 			@Override
