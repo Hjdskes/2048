@@ -10,9 +10,8 @@ import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
-import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.screens.Screen;
-import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -166,7 +165,7 @@ public class MultiGameScreen extends Screen {
 		super.update();
 
 		if (networking.isConnectionLost()) {
-			screenHandler.add(new ConnectionLostScreen());
+			screenHandler.findScreen("MultiGameScreen").addConnectionLostOverlay();
 		}
 
 		if (TwentyFourtyGame.isWaiting()) {
