@@ -35,8 +35,10 @@ public class SolveButton extends TextButton {
 				if (gridSolver == null) {
 					gridSolver = new GridSolver(grid, Strategy.HUMAN, 750, 6);
 				}
+				
 				if (gridSolver.isRunning()) {
 					gridSolver.stop();
+					gridSolver = null;
 				} else {
 					gridSolver.start();
 				}
