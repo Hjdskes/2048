@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.screens;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBehavior;
+import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
 import com.badlogic.gdx.Gdx;
@@ -89,8 +90,12 @@ public abstract class Screen implements Disposable {
 		stage.act();
 	}
 
-	public void addWonOverlay(Grid grid) {
-		new WinScreen(this, grid);
+	public void addOverlay(boolean isMulti, boolean isWon, Grid grid) {
+		if (isMulti && isWon) {
+			new WinScreen(this, grid);
+		} else if (!isMulti && isWon) {
+			new MultiWinScreen(this);
+		}
 	}
 	
 	public void restart() {
