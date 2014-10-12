@@ -118,7 +118,8 @@ You can now challenge and play against your computer. After starting the game, y
 
 Depending on your selection, the computer will make moves at a timed interval. The higher the difficulty you select, the shorter the computer will wait between moves and the better calculated its movements are.\\
 
-The solver algorithm behind the \texttt{Easy} option is able to complete about 15\% of the grids, but only one move is made after each 1.6 second. The same algorithm is used for the other options, but it will be more accurate when calculating a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
+The solver algorithm behind the \texttt{Easy} option is able to complete about
+15\% of the grids, but only one move is made after each 1.6 seconds. The same algorithm is used for the other options, but it will be more accurate when calculating a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
 
 If either player (you or the computer) ends up with a full grid, the game will wait for the other to complete the game before finally announcing either of you winner or loser.\\
 
@@ -264,20 +265,29 @@ we will provide (in natural language) a description of why and how the pattern
 is implemented, together with a class- and sequence diagram.
 
 \subsection{The Command pattern}
-We implemented the command pattern because we wanted to undo and redo the movements made by the player. After deciding to implement the command pattern we also wanted to make commands for the movements, as every move was a clear command.
+The Command pattern is implemented because it would make sense for the different
+movements one can make on the grid. If possible, it will also be used to at a
+new tile to the grid randomly or via the AI.\\
+
+We also implemented the command pattern because we wanted to undo and redo the
+movements made by the player.
 
 \subsubsection{The implementation}
-We have decided to make the \texttt{Command} class an abstract class as there where pieces of code that was used in every command so it would be beneficial to have that code in the Command class as a method.  The invoker of a command is the \texttt{InputHandler} class. It will invoke the command using the standard method: 
-\begin{verbatim}
-execute()
-\end{verbatim}
-We have made a command for every direction of movement for the grid. These command have as a receiver the \texttt{TileHandler} class. \texttt{TileHandler} preforms the actual actions of moving the tiles in the grid.\\
+The \texttt{Command} class is an abstract class, because there are pieces of
+code that every command would have to define. The invoker of a command is the
+\texttt{InputHandler} class. It will invoke the class' method using the abstract
+\texttt{execute()} method. We have made a \texttt{Command} class for every direction of
+movement for the grid. These \texttt{Command} classes have as a receiver the
+\texttt{TileHandler} class, because that performs the actual actions
+of moving the tiles in the grid.\\
 
-We have also made a command for undo and a command for redo. These commands have as a receiver the class \texttt{Grid}. The \texttt{Grid} class keeps two stacks of strings, one stack keeps track of the previous grid when a move is made and the other stack keeps track of the grid before an undo command is executed. The undo and redo command pop a string of the correct stack and sets it as the current grid. This is all done in the method:
-\begin{verbatim}
-execute()
-\end{verbatim}
-
+We have also made a \texttt{Command} class for undo and another for redo. These
+commands have as a receiver the \texttt{Grid} they operate on. The \texttt{Grid} class
+keeps two stacks of strings: one stack keeps track of the previous grid when a
+move is made and the other stack keeps track of the grid before an undo
+command is executed. The undo and redo commands pop a string of the correct
+stack, setting it as the current grid. This is all done in their own implementation
+of the abstract \texttt{execute()} method.
 
 \newpage
 \subsubsection{The class- and sequence diagram}
@@ -288,9 +298,28 @@ execute()
 \centerline{\includegraphics[scale=0.5]{sources/commandPatternSequence}}
 
 \newpage\subsection{The State pattern}
-Blablabla
+Before the implementation, the game had different states that were defined and 
+
+set in the TwentyFourtyGame class. This responsibility did not entirely belong 
+inside this class and it was cumbersome to work with; for example, having the
+opponent wait while his grid is full was impossible.\\
+
+By implementing the state pattern we reduced duplicated code and 
+made our states a lot more flexible. Since they are now their own classes, we 
+can easily define state-specific behaviour, making our game not only easier to
+maintain but als opening the door for future changes.
 
 \subsubsection{The implementation}
+
+The existing states have been replaced with classes that implement the GameState interface. 
+Because of this, we can dynamically set the current state through polymorphism.
+Different game modes have different states and conditions for a state change. To handle this,
+the GameState interface contains two update-methods that differ by their arguments:
+one is used for the singleplayer mode, while the other is used for the multiplayer modes.\\
+
+In the state class we can then look at the game's grid and change states if needed.\\
+
+If a condition is met, we add a new screen to the ScreenStack and set the current state to the needed one.
 
 \newpage\subsubsection{The class- and sequence diagram}
 \textbf{The class diagram:}\\
@@ -330,7 +359,7 @@ The goal of this report was to explain how we developed our 2048 clone and how
 and why we implemented several features. 
 The development of the game was shown to have been undertaken in several consecutive steps. First of all we created just a fully working clone of the original 2048 game. Then, we implemented a multiplayer mode where the player can play against others over the network. After that we refactored our entire game and implemented several design patterns and added several extra features we thought of ourselves.
 
-The three extra features we implemented were:
+The three extra features we implemented were:\\
 - An artificial intelligence that can solve games by itself;\\
 - Playing against the computer via this AI;\\
 - Undo and redo functionality\\
