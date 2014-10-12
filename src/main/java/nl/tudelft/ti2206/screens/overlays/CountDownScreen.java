@@ -51,7 +51,8 @@ public class CountDownScreen extends Screen {
 	}
 
 	/** Constructor for testing purposes only. */
-	public CountDownScreen(Stage stage, Image image) {
+	public CountDownScreen(long initTime, Stage stage, Image image) {
+		this.initTime = initTime;
 		this.stage = stage;
 		getReady = set = go = image;
 		this.setDrawBehavior(new DrawSimple(stage));
