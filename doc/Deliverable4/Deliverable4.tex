@@ -282,12 +282,10 @@ movement for the grid. These \texttt{Command} classes have as a receiver the
 of moving the tiles in the grid.\\
 
 We have also made a \texttt{Command} class for undo and another for redo. These
-commands have as a receiver: the \texttt{Grid} ,which they operate on. The \texttt{Grid} class
+commands have as a receiver the \texttt{Grid} on which they operate. The \texttt{Grid} class
 keeps two stacks of strings: one stack keeps track of the previous grid and the other stack 
 keeps track of the grid before an undo command is executed. 
-The undo and redo commands pop a string of the correct
-stack and set it as the current grid. This is all done in their own implementation
-of the abstract \texttt{execute()} method.
+The undo and redo commands pop a string of the correct stack and set it as the current grid. This is all done in their own implementation of the abstract \texttt{execute()} method.
 
 \newpage
 \subsubsection{The class- and sequence diagram}
