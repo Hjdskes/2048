@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -62,10 +63,12 @@ public class ScoresTest {
 
 	@Test
 	public void testGetSetHighestTile() {
+		int curScore = Gdx.app.getPreferences("2048").getInteger("highscore");
 		scores.setHighestTile(Integer.MAX_VALUE);
 		assertEquals(Integer.MAX_VALUE, scores.getHighestTile());
 		scores.setHighestTile(1);
 		assertEquals(Integer.MAX_VALUE, scores.getHighestTile());
+		Gdx.app.getPreferences("2048").putInteger("highscore", curScore);
 	}
 
 	@Test
