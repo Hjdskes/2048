@@ -125,6 +125,9 @@ public class UserComputerScreen extends Screen {
 
 		adjustToDifficulty();
 		gridSolver.start();
+
+		/* After creating the screen, start the game. */
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/** Create our local groups and actors. */

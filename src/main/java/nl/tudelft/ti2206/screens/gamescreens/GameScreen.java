@@ -92,6 +92,9 @@ public class GameScreen extends Screen {
 		stage.addActor(scores);		
 		stage.addActor(undoButton);
 		stage.addActor(redoButton);
+
+		/* After creating the screen, start the game. */
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	@Override

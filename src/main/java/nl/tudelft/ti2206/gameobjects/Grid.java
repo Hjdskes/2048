@@ -91,9 +91,6 @@ public class Grid extends Observable implements Cloneable {
 		if (!isEmpty) {
 			initGrid();
 		}
-
-		/* After loading the grid, start the game. */
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/**
