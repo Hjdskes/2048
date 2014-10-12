@@ -82,8 +82,8 @@ public class RunningState implements GameState {
 				&& (localgrid.getScore() > remotegrid.getScore())) {
 
 			logger.info(className,
-					"Local player lost the multiplayer game. The score of the remote player: "
-							+ Integer.toString(remotegrid.getScore()));
+					"Local player won the multiplayer game. The score of the local player: "
+							+ Integer.toString(localgrid.getScore()));
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
 			screenHandler.getScreen().addLWOverlay(true, true, null);
