@@ -1,5 +1,10 @@
 package nl.tudelft.ti2206.screens.overlays;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.screens.Screen;
@@ -16,15 +21,17 @@ public class MultiWinScreen {
 
 	/** The button to go back to the menu. */
 	private MenuButton menuButton;
-	
+
 	private Stage stage;
 
 	/** Constructs a new MultiWinScreen. */
 	public MultiWinScreen(Screen parent) {
 		stage = parent.getStage();
-		image = new Image(AssetHandler.getInstance().getSkin(), "multiwonoverlay");
+		image = new Image(AssetHandler.getInstance().getSkin(),
+				"multiwonoverlay");
 		menuButton = new MenuButton();
 		addActors();
+
 	}
 
 	/** Constructor used for mock insertion */

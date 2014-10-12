@@ -1,9 +1,12 @@
 package nl.tudelft.ti2206.solver;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.log.Logger.LogLevel;
 
@@ -17,25 +20,37 @@ public class SolverTest {
 	private Logger logger = Logger.getInstance();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		logger.setLevel(LogLevel.NONE);
 		grid = new Grid(true);
 		grid.setTile(0, 1);
 		grid.setTile(1, 2);
-		solver = new Solver(grid, 3);
+		solver = new Solver(grid, 1);
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
-//	@Test
-//	public void testRun() {
-//		grid.setTile(0, 2);
-//		String old = grid.toString();
-//		solver.run();
-//		// Make sure the solver has stopped
-//		//assertFalse(solver.cancel());
-//		// Make sure the grid has changed
-//		assertNotEquals(old, grid.toString());
-//		solver.cancel();
-//	}
+	@Test
+	public void testRun() {
+		grid.setTile(0, 2);
+		String old = grid.toString();
+		solver.run();
+		// Make sure the solver has stopped
+		assertFalse(solver.cancel());
+		// Make sure the grid has changed
+		assertNotEquals(old, grid.toString());
+		solver.cancel();
+	}
+	
+	@Test
+	public void testRunDone() {
+		// make sure the grid is empty
+		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		grid = new Grid(true);
+		String old = grid.toString();
+		solver.run();
+		// make sure no move has been made
+		assertEquals(old, grid.toString());
+	}
 
 	@Test
 	public void testSolve() {
@@ -56,9 +71,6 @@ public class SolverTest {
 		solver.cancel();
 	}
 
-	// FIXME: make sure it makes a move down or up when 2 1024 tiles are located
-	// above each other
-
 	@Test
 	public void testFindMoveVertical() {
 		grid.setTile(0, 10);
@@ -69,5 +81,11 @@ public class SolverTest {
 		assertTrue(rightMoveMade);
 		solver.cancel();
 	}
-
+	
+	@Test 
+	public void testDepth0() {
+		grid = new Grid(true);
+		solver = new Solver(grid, 0);
+		assertEquals(null, solver.findMove(grid, 0));
+	}
 }
