@@ -18,26 +18,18 @@ public class Solver extends TimerTask {
 	private static Logger logger = Logger.getInstance();
 
 	private static final int[][] weightMatrices = {
-		{  8,  7,  6,  5,
-		   1,  2,  3,  4,
-		  -4, -3, -2, -1, 
-		  -5, -6, -7, -8
-		},
-		{ -5, -4,  1,  8,
-		  -6, -3,  2,  7,
-		  -7, -2,  3,  6,
-		  -8, -1,  4,  5
-		},
-//		{ 8,  4,  1,  0,
-//		  4,  1,  0, -1,
-//		  1,  0, -1, -4,
-//		  0, -1, -4, -8
-//		},
-//		{  0,  1,  4, 8,
-//		  -1,  0,  1, 4,
-//		  -4, -1,  0, 1,
-//		  -8, -4, -1, 0
-//		}
+			{ 8, 7, 6, 5, 1, 2, 3, 4, -4, -3, -2, -1, -5, -6, -7, -8 },
+			{ -5, -4, 1, 8, -6, -3, 2, 7, -7, -2, 3, 6, -8, -1, 4, 5 },
+	// { 8, 4, 1, 0,
+	// 4, 1, 0, -1,
+	// 1, 0, -1, -4,
+	// 0, -1, -4, -8
+	// },
+	// { 0, 1, 4, 8,
+	// -1, 0, 1, 4,
+	// -4, -1, 0, 1,
+	// -8, -4, -1, 0
+	// }
 	};
 
 	private Grid original;
@@ -52,8 +44,9 @@ public class Solver extends TimerTask {
 
 	@Override
 	public void run() {
-		if (original.getPossibleMoves() == 0 ||
-				!TwentyFourtyGame.isRunning() || !TwentyFourtyGame.isContinuing()) {
+		if (original.getPossibleMoves() == 0
+				|| (!TwentyFourtyGame.isRunning() && !TwentyFourtyGame
+						.isContinuing())) {
 			this.cancel();
 		} else if (!calculating) {
 			Direction dir = findMove(original, depth);
@@ -80,19 +73,21 @@ public class Solver extends TimerTask {
 
 	private double evaluate(Grid grid) {
 		double empty = getEmptyTilesNumber(grid.getTiles());
-		//double max = Math.pow(2, grid.getCurrentHighestTile());
-		//double monotonicity = getMonotonicity(grid.getTiles());
+		// double max = Math.pow(2, grid.getCurrentHighestTile());
+		// double monotonicity = getMonotonicity(grid.getTiles());
 		double gradient = getGradient(grid.getTiles());
-		//double smoothness = getSmoothness(grid.getTiles());
-		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * monotonicity;
-		//return 0.3 * gradient + 0.1 * smoothness + 0.6 * empty;
-		//return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * max;
-		//return 0.8 * gradient + 0.2 * smoothness;
-		//return 0.4 * gradient + 0.6 * empty; //GOOD
-		//return 0.4 * gradient + Math.log(grid.getScore()) * empty + grid.getScore(); // GOOD
-		return 0.6 * gradient + 0.4 * empty; //BETTER?
-		//return 0.6 * empty + 0.4 * gradient + 0.1 * smoothness ;
-		//return gradient + grid.getScore();
+		// double smoothness = getSmoothness(grid.getTiles());
+		// return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 *
+		// monotonicity;
+		// return 0.3 * gradient + 0.1 * smoothness + 0.6 * empty;
+		// return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * max;
+		// return 0.8 * gradient + 0.2 * smoothness;
+		// return 0.4 * gradient + 0.6 * empty; //GOOD
+		// return 0.4 * gradient + Math.log(grid.getScore()) * empty +
+		// grid.getScore(); // GOOD
+		return 0.6 * gradient + 0.4 * empty; // BETTER?
+		// return 0.6 * empty + 0.4 * gradient + 0.1 * smoothness ;
+		// return gradient + grid.getScore();
 	}
 
 	private Direction expectimax(Grid grid, int depth) {
@@ -132,7 +127,7 @@ public class Solver extends TimerTask {
 
 			double value = 0;
 			if (cache.containsKey(zobrist(clone.getTiles()))) {
-				value = cache.get(zobrist(clone.getTiles())); 
+				value = cache.get(zobrist(clone.getTiles()));
 			} else {
 				value = computerMove(clone, depth - 1);
 				cache.put(zobrist(clone.getTiles()), value);
@@ -150,7 +145,7 @@ public class Solver extends TimerTask {
 		if (depth == 0) {
 			return playerMove(grid, cache, depth);
 		}
-		int[] possibleMoves =    { 1  , 2   };
+		int[] possibleMoves = { 1, 2 };
 		double[] probabilities = { 0.9, 0.1 };
 		double totalScore = 0;
 		double totalWeight = 0;
@@ -162,7 +157,7 @@ public class Solver extends TimerTask {
 					clone.setTile(tile.getIndex(), possibleMoves[i]);
 
 					double value = playerMove(clone, cache, depth - 1);
-					totalScore  += probabilities[i] * value;
+					totalScore += probabilities[i] * value;
 					totalWeight += probabilities[i];
 				}
 			}
@@ -170,10 +165,9 @@ public class Solver extends TimerTask {
 		return totalWeight == 0 ? 0 : totalScore / totalWeight;
 	}
 
-
 	private long zobrist(Tile[] tiles) {
 		long hash = 3485734985L;
-		for(Tile tile : tiles) {
+		for (Tile tile : tiles) {
 			hash ^= 46527859L * tile.getValue();
 		}
 		return hash;
