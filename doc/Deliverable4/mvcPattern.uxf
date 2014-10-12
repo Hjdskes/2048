@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>70</y>
+      <w>329</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.drawables::DrawableTile
+--
+-spawnAction: ScaleToAction
+-mergeAction: ScaleToAction
+-moveAction: MoveToAction
+-value: int
+-index: int
+--
++update(Observable o, Object arg): void
++spawn(): void
++merge(): void
++move(int destIndex): void
++draw(Batch batch, float parentAlpha): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>903</x>
+      <y>231</y>
+      <w>175</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.gameobjects::Tile
+--
+-value: int
+-index: int
+-destIndex: int
+-isMerged: boolean
+-spawning, moving, merging: boolean
+--
++Tile(int index, int value): ctor
++setMerged(boolean isMerged): void
++reset(): void
++spawn(): void
++merge(): void
++move(int destIndex): void
++changed(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>70</y>
+      <w>336</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.drawables::DrawableGrid
+--
+-GRID_WIDTH = 400: int
+-GRID_HEIGHT = 400: int
+-GRID_X = 100: int
++GRID_Y = 100: int
+-region: TextureRegion
+-drawableTiles: DrawableTile[]
+--
++DrawableGrid(Tile[] tiles): ctor
++DrawableGrid(DrawableTile[] tiles, Skin skin, TextureRegion region): ctor
++draw(Batch batch, float parentAlpha): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>252</x>
+      <y>448</y>
+      <w>315</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.drawables::Scores
+--
+-highScore: int
+-highestTile: int
+-scoreLabel: Label
+-highScoreLabel: Label
+-highestTileLabel: Label
+--
+-addLabelsToGroup(): void
++setHighScore(int highScore): void
++setHighestTile(int highestTile): void
++update(Observable o, Object arg): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>553</x>
+      <y>119</y>
+      <w>91</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+contains &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>532</y>
+      <w>98</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+observes &gt;</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>644</x>
+      <y>462</y>
+      <w>252</w>
+      <h>203</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.gameobjects::Grid
+--
+-tiles: Tile[]
+-tileHandler: TileHandler
+-score: int
+-highestTile: int
+--
++Grid(boolean isEmpty): ctor
++setTile(int index, int value): void
++setTiles(Tile[] tiles): void
++restart(): void
++move(Direction direction): int
++updateScore(int increment): void
++spawnNewTile(): void
++updateMove(): void
++updateHighestTile(): void
+-changed(): void
++clone(): Grid
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>805</x>
+      <y>210</y>
+      <w>112</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+
+
+observes &gt;</panel_attributes>
+    <additional_attributes>140.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>777</x>
+      <y>364</y>
+      <w>140</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+
+
+contains &gt;</panel_attributes>
+    <additional_attributes>10.0;140.0;180.0;10.0</additional_attributes>
+  </element>
+</diagram>
