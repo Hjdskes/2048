@@ -95,7 +95,7 @@ public class MultiGameScreen extends Screen {
 
 		remoteInput = new RemoteInputHandler(remoteGrid);
 		networking.addObserver(remoteInput);
-		
+
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
@@ -127,7 +127,8 @@ public class MultiGameScreen extends Screen {
 		localGroup.addActor(you);
 
 		/* Create our remote groups and actors. */
-		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - opponent.getPrefWidth() / 2);
+		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - opponent.getPrefWidth()
+				/ 2);
 		opponent.setY(2.5f * TwentyFourtyGame.GAP);
 		remoteGroup.addActor(remoteScores);
 		remoteGroup.addActor(remoteDrawableGrid);
@@ -140,26 +141,34 @@ public class MultiGameScreen extends Screen {
 		stage.addListener(new LocalInputHandler(localGrid));
 	}
 
-	/** Sets the label indicating your Grid to the supplied text and color.
+	/**
+	 * Sets the label indicating your Grid to the supplied text and color.
 	 * 
-	 * @param string The text to set.
-	 * @param color The color to use.
+	 * @param string
+	 *            The text to set.
+	 * @param color
+	 *            The color to use.
 	 */
-	public void setYouLabel(String string, Color color){
+	public void setYouLabel(String string, Color color) {
 		you.setText(string);
 		you.setColor(color);
 		you.setX(TwentyFourtyGame.GAME_WIDTH / 2 - you.getPrefWidth() / 2);
 	}
 
-	/** Sets the label indicating your opponent's Grid to the supplied text and color.
+	/**
+	 * Sets the label indicating your opponent's Grid to the supplied text and
+	 * color.
 	 * 
-	 * @param string The text to set.
-	 * @param color The color to use.
+	 * @param string
+	 *            The text to set.
+	 * @param color
+	 *            The color to use.
 	 */
-	public void setOpponentLabel(String string, Color color){
+	public void setOpponentLabel(String string, Color color) {
 		opponent.setText(string);
 		opponent.setColor(color);
-		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - opponent.getPrefWidth() / 2);
+		opponent.setX(TwentyFourtyGame.GAME_WIDTH / 2 - opponent.getPrefWidth()
+				/ 2);
 	}
 
 	@Override
@@ -174,7 +183,7 @@ public class MultiGameScreen extends Screen {
 			logger.info(className,
 					"Local player is out of moves! Waiting for the remote player...");
 			this.setYouLabel("WAITING", Color.RED);
-		} else if(remoteGrid.getPossibleMoves() == 0) {
+		} else if (remoteGrid.getPossibleMoves() == 0) {
 			logger.info(className,
 					"Remote player is out of moves! Waiting for the local player...");
 			this.setOpponentLabel("WAITING", Color.RED);

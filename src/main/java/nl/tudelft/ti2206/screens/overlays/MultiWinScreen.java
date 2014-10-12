@@ -24,6 +24,7 @@ public class MultiWinScreen {
 		stage = parent.getStage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "multiwonoverlay");
 		menuButton = new MenuButton();
+		addActors();
 	}
 
 	/** Constructor used for mock insertion */
