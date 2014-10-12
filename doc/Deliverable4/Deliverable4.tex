@@ -101,7 +101,7 @@ networking problems.
 To connect to another player, choose the \texttt{Join a game} option in the
 \texttt{Multiplayer} menu. The application will try to connect to the remote address you
 entered, on port 2048, using TCP.\\
-Making sure your opponent starts hosting before you try to connect or your connection attempt will fail.
+Make sure your opponent starts hosting before you try to connect or your connection attempt will fail.
 
 \subsubsection{Hosting a game}
 To have another player connect to you, choose the \texttt{Host a game} option
@@ -118,7 +118,7 @@ You can now challenge and play against your computer. After starting the game, y
 
 Depending on your selection, the computer will make moves at a timed interval. The higher the difficulty you select, the shorter the computer will wait between moves and the better calculated its movements are.\\
 
-The solver algorithm behind the \texttt{Easy} option is able to complete about 15\% of the grids, but only one move is made every after 1.6 second. The same algorithm is used for the other options, but it will be more accurate when calculating a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
+The solver algorithm behind the \texttt{Easy} option is able to complete about 15\% of the grids, but only one move is made after each 1.6 second. The same algorithm is used for the other options, but it will be more accurate when calculating a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
 
 If either player (you or the computer) ends up with a full grid, the game will wait for the other to complete the game before finally announcing either of you winner or loser.\\
 
@@ -185,7 +185,7 @@ first iteration where we really made use of our tests. During the MVC
 refactoring, our tests came in handy for regression testing. As such, the test
 frequency was higher than it normally was. The only area in which we didn't test
 much are the solvers, because they are hard to predict with their random
-factors. (They are covered now, but not while they were developed).
+factors. (They are covered now, but not while they were being developed).
 
 \subsection{Testing methods}
 Visual tests involved actually playing the game and analyzing logging output
