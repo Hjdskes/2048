@@ -4,9 +4,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.buttons.HintButton;
 import nl.tudelft.ti2206.buttons.RedoButton;
 import nl.tudelft.ti2206.buttons.RestartButton;
@@ -14,6 +12,7 @@ import nl.tudelft.ti2206.buttons.SolveButton;
 import nl.tudelft.ti2206.buttons.UndoButton;
 import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 
@@ -102,5 +101,15 @@ public class GameScreenTest {
 		verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
 		verify(gl).glClear(anyInt());
 		verify(stage).draw();
+	}
+	
+	@Test
+	public void testUpdate() {
+		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		reset(grid);
+		screen.update();
+		verifyNoMoreInteractions(grid);
+		verify(stage).act();
+		
 	}
 }
