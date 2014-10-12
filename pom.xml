@@ -4,14 +4,23 @@
 
 	<groupId>nl.tudelft.ti2206</groupId>
 	<artifactId>2048</artifactId>
-	<version>2.2.0-SNAPSHOT</version>
+	<version>2.2.1-SNAPSHOT</version>
 
 	<prerequisites>
 		<maven>3.1.0</maven>
 	</prerequisites>
 
 	<name>2048Game</name>
-	<description>Our super-duper mega-epic twentyfourtygame!</description>
+	<description>Our awesome twentyfourtygame!
+
+Includes features such as:
+- Automatic grid solving (in singleplayer mode);
+- Movement hints (in singleplayer mode);
+- Undo/redo (in singleplayer mode);
+- Multiplayer (over TCP);
+- Playing against the computer.
+
+Have fun!</description>
 
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -129,4 +138,9 @@
 			</plugin>
 		</plugins>
 	</build>
+	<url>https://devhub.ewi.tudelft.nl/projects/TI2206/groups/21</url>
+	<organization>
+		<name>Delft University of Technology</name>
+		<url>http://www.tudelft.nl/</url>
+	</organization>
 </project>
