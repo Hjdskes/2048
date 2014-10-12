@@ -62,7 +62,7 @@ public class MultiGameScreen extends Screen {
 	private final String className = this.getClass().getSimpleName();
 
 	/** The singleton reference to the ScreenHandler class. */
-	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
+	private ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** The InputHandler for the remote Grid. */
 	private RemoteInputHandler remoteInput;
@@ -100,8 +100,9 @@ public class MultiGameScreen extends Screen {
 	}
 
 	/** Constructor for testing purposes only */
-	public MultiGameScreen(Stage stage, Grid grid, Label label, Group group,
+	public MultiGameScreen(ScreenHandler handler, Stage stage, Grid grid, Label label, Group group,
 			Scores scores, Networking netMock) {
+		this.screenHandler = handler;
 		this.stage = stage;
 		this.localGrid = grid;
 		this.remoteGrid = grid;

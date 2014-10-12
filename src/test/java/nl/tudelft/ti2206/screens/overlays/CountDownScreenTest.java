@@ -32,12 +32,28 @@ public class CountDownScreenTest {
 		MockitoAnnotations.initMocks(this);
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
-		screen = new CountDownScreen(stage, image);
+		screen = new CountDownScreen(System.currentTimeMillis() + 10, stage, image);
 	}
 
 	@Test
 	public void testCreate() {
 		screen.create();
+		verify(stage).addActor(image);
+	}
+	
+	@Test
+	public void testUpdateGo() {
+		screen = new CountDownScreen(System.currentTimeMillis() - 4000, stage, image);
+		screen.update();
+		verify(stage).clear();
+		verify(stage).addActor(image);
+	}
+	
+	@Test
+	public void testUpdateSet() {
+		screen = new CountDownScreen(System.currentTimeMillis() - 2000, stage, image);
+		screen.update();
+		verify(stage).clear();
 		verify(stage).addActor(image);
 	}
 }
