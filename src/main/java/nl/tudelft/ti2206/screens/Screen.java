@@ -27,6 +27,9 @@ public abstract class Screen implements Disposable {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
+	/** True if the stage of the screen contains actors of an overlay. */
+	private boolean hasOverlay;
+	
 	/** The scene graph. */
 	protected Stage stage;
 
@@ -104,6 +107,7 @@ public abstract class Screen implements Disposable {
 		} else {
 			new MultiLoseScreen(this);
 		}
+		hasOverlay = true;
 	}
 
 	/**
@@ -111,6 +115,7 @@ public abstract class Screen implements Disposable {
 	 */
 	public void addConnectionLostOverlay() {
 		new ConnectionLostScreen(this);
+		hasOverlay = true;
 	}
 
 	/**
@@ -120,6 +125,7 @@ public abstract class Screen implements Disposable {
 	public void restart() {
 		stage.getActors().clear();
 		create();
+		hasOverlay = false;
 	}
 
 	@Override
@@ -133,5 +139,9 @@ public abstract class Screen implements Disposable {
 	 */
 	public Stage getStage() {
 		return stage;
+	}
+	
+	public boolean hasOverlay() {
+		return hasOverlay;
 	}
 }

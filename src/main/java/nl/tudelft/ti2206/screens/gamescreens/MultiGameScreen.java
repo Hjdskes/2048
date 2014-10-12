@@ -175,7 +175,8 @@ public class MultiGameScreen extends Screen {
 	public void update() {
 		super.update();
 
-		if (networking.isConnectionLost()) {
+		if (!screenHandler.getScreen().hasOverlay()
+				&& networking.isConnectionLost()) {
 			screenHandler.getScreen().addConnectionLostOverlay();
 		}
 
