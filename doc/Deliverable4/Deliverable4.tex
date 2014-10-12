@@ -179,15 +179,24 @@ kinds of testing we have done. Lastly, we will present the results of the
 testing procedure.
 
 \subsection{Test frequency}
-In this section we will discuss how frequently we tested our game. Due to the
-design patters we implemented, testing was essential. We tested using our
-unit tests (locally and on Devhub as well) and visual tests. Implementing
-iterators caused some problems that only arised during our visual tests. These
-were, however, resolved immediately.
+In this section we will discuss how frequently we tested our game. This is the
+first iteration where we really made use of our tests. During the MVC
+refactoring, our tests game in handy for regression testing. As such, the test
+frequency was higher than it normally was. The only area in which we didn't test
+much are the solvers, because they are hard to predict with their random
+factors. (They are covered now, but not during their development).
 
 \subsection{Testing methods}
 Visual tests involved actually playing the game and analyzing logging output
 manually. Unit tests simply check object properties with certain input.
+
+Visual testing was used a lot this sprint when developing the solvers. This is
+partly because of their randomness, but also because visual testing is just
+plain easier here: when the static evaluation function changed, it's just easier
+to run the game and look at the output than having to change the unit test and
+then discovering the random factor is causing your test to fail. Also, a complex
+piece of code such as the solver is not really testable with unit testing and
+therefore, we mostly resorted to visual testing.
 
 \subsection{Test results}
 EclEmma is the tool we used for analyzing and measuring our test coverage.
@@ -196,30 +205,57 @@ branch and instruction coverage.\\
 
 The results are as follows:
 \begin{description}
-	\item Line coverage: 73.0\%
-	\item Branch coverage: 66.9\%
-	\item Instruction coverage: 71.3\%
+	\item Line coverage: 77.7\%
+	\item Branch coverage: 71.7\%
+	\item Instruction coverage: 75.4\%
 \end{description}
 As with previous deliverables, we faced the same issues with code that requires
 graphically rendering our game. 
 
 \subsection{Conclusion}
-Although our test results are lower than we had planned to achieve, we believe
-our project has again been tested sufficiently.
+The Model View Controller actually allowed us to test some code that was
+previously untestable, so our coverage has again increased.
+
+As always, we are confident our code is sufficiently tested.
 
 \newpage\section{Exercise 1 - 20-Time}
-In this section we will describe what we have implemented as extra feature.
+In this section we will describe the extra features we have implemented.
 
 We implemented the following extra features:
 \begin{description}
-	\item Automatic grid solving and playing against the computer
-	\item Undo and redo functionality
+	\item An AI that automatically solves the grid;
+	\item The possibility to play against the computer;
+	\item The option to ask the AI for a hint in singleplayer mode;
+	\item Undo and redo functionality.
 \end{description}
 
-We choose to implement an automatic grid solving feature because the idea seemed challenging to us. Two members of team tried to implement their own algorithm. Both are included in the production code, however, because one of them isn't entirely finished it's only implemented for hinting the player into a direction in Single player mode.\\
-The other solver is capable of solving at least 35\% of the grids. However, only the "Challenge me!" mode, where the player will compete against the computer, fully utilizes this solver algorithm.\\
+We chose to implement an AI feature, because the idea seemed challenging to us.
+Two members of our team tried to implement their own algorithm. One mimics the
+"human strategy", which basically is to keep one corner static and move
+everything into it. The other is based on the expectimax algorithm with a more
+complicated static evaluation function. This second solver is not entirely
+finished, because it only sporadically wins a game.\\
 
-The undo and redo functionality is part of the Single player mode to give the player the opportunity to correct mistakes when trying to solve the puzzle. We chose to implement this feature because one of our team members likes this feature on the original game and he's unable to solve any puzzle without it. :P
+Both are included in the production code, however. The second solver is the only
+one capable of giving the player a fair hint, because it is not tied to one
+static corner. The other solver is capable of solving at least 35\% of the grids
+and as such, is used to solve the grid in singleplayer mode and to act as
+opponent when playing against the computer.\\
+
+The undo and redo functionality is part of the singleplayer mode to give the
+player the opportunity to correct mistakes when trying to solve the game. We
+chose to implement this feature because one of our team members likes this
+feature on the original game and he's unable to solve any puzzle without it.
+
+The undo and redo functionality were implemented after implementing the command
+pattern, so for the design documents please skip ahead. There are no design
+documents for the AI.\\
+
+The requirements that we haven't met this sprint are the win-rate of 50\% for
+the AI and the possibility of letting the AI decide where to place the new tiles
+after a valid move. The AI turned out to be even more complicated than expected,
+so it cost us more time to get to where we are now than we anticipated. If
+possible, we will continue the development into the next sprint.
 
 \newpage\section{Exercise 2 - Design patterns}
 In this section we will discuss the two chosen design patterns. Per pattern,
@@ -245,10 +281,10 @@ execute()
 \newpage
 \subsubsection{The class- and sequence diagram}
 \textbf{The class diagram:}\\
-\centerline{\includegraphics[scale=0.4]{commandPatternUML}}
+\centerline{\includegraphics[scale=0.4]{sources/commandPatternUML}}
 
 \newpage\textbf{The sequence diagram:}\\
-\centerline{\includegraphics[scale=0.5]{commandPatternSequence}}
+\centerline{\includegraphics[scale=0.5]{sources/commandPatternSequence}}
 
 \newpage\subsection{The State pattern}
 Blablabla
@@ -257,36 +293,49 @@ Blablabla
 
 \newpage\subsubsection{The class- and sequence diagram}
 \textbf{The class diagram:}\\
-\centerline{\includegraphics[scale=0.7]{statePatternUML}}
+\centerline{\includegraphics[scale=0.7]{sources/statePatternUML}}
 
 \newpage\textbf{The sequence diagram:}\\
-\centerline{\includegraphics[scale=1]{statePatternSequence}}
+\centerline{\includegraphics[scale=1]{sources/statePatternSequence}}
 
 \newpage\section{Exercise 3 - One more design pattern}
 \subsection{The MVC pattern}
+We like clear structure in our code. On way to improve this was to use MVC, so
+we chose MVC as extra design pattern to implement. Another reason for
+implementing MVC was that it would be beneficial to the AI and it could possibly
+improve our testing coverage by making more things testable on (the headless)
+Devhub.
+
 \subsubsection{The implementation}
+Basically, we just split our \texttt{Grid} and \texttt{Tile} classes into
+\texttt{Grid}, \texttt{DrawableGrid}, \texttt{Tile} and \texttt{DrawableTile}.\\
+
+The \texttt{Grid} and \texttt{Tile} classes are now \texttt{Observable} and
+notify the \texttt{DrawableTile} and \texttt{Scores} classes when they have
+changed. The \texttt{DrawableGrid} class is merely a container class for the
+\texttt{DrawableTile} instances and is also responsible for drawing the grid in
+the screen.\\
 
 \newpage\subsubsection{The class- and sequence diagram}
 \textbf{The class diagram:}\\
-\centerline{\includegraphics[scale=0.7]{statePatternUML}}
+\centerline{\includegraphics[scale=0.7]{sources/mvcPattern}}
 
 \newpage\textbf{The sequence diagram:}\\
-\centerline{\includegraphics[scale=0.7]{MVCsequence2}}
-
-
-\centerline{\includegraphics[scale=0.7]{mvcPattern}}
+\centerline{\includegraphics[scale=0.7]{sources/MVCPatternsequence}}
 
 \newpage\section{Conclusion}
 
-The goal of this report was to explain how we developed our 2048 clone, how and why we implemented several features. 
+The goal of this report was to explain how we developed our 2048 clone and how
+and why we implemented several features. 
 The development of the game was shown to have been undertaken in several consecutive steps. First of all we created just a fully working clone of the original 2048 game. Then, we implemented a multiplayer mode where the player can play against others over the network. After that we refactored our entire game and implemented several design patterns and added several extra features we thought of ourselves.
 
 The three extra features we implemented were:
-- Automatic grid solving 
-- Playing against the computer 
+- An artificial intelligence that can solve games by itself;
+- Playing against the computer via this AI;
 - Undo and redo functionality
 
-The latest design pattern we implemented is the MVC (Model-View-Controller) pattern.
+The latest design patterns we have implemented are the command pattern, the
+state pattern and the MVC (Model-View-Controller) pattern.
 
 We hope you enjoyed reading this report. Have fun playing 2048!
 
