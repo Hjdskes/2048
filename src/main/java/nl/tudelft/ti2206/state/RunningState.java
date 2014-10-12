@@ -21,6 +21,12 @@ public class RunningState implements GameState {
 	/** The singleton reference to the ScreenHandler class. */
 	private ScreenHandler screenHandler = ScreenHandler.getInstance();
 
+	public RunningState() {}
+	/** Constructor for mock insertion only. */
+	public RunningState(ScreenHandler h) {
+		this.screenHandler = h;
+	}
+	
 	@Override
 	public void update(Grid grid) {
 		if (grid.getCurrentHighestTile() == 11) {
@@ -33,60 +39,78 @@ public class RunningState implements GameState {
 	}
 
 	@Override
-	public void update(Grid localgrid, Grid remotegrid) {
+	public void update(Grid localGrid, Grid remoteGrid) {
 		/* Win condition: I merged 2048 */
-		if (localgrid.getCurrentHighestTile() == 11) {
-			logger.info(className,
-					"Local player won the multiplayer game. The score of the local player: "
-							+ Integer.toString(localgrid.getScore()));
-
-			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-			screenHandler.getScreen().addLWOverlay(true, true, null);
-		}
-
-		/* Waiting condition: I am out of moves */
-		if (localgrid.getPossibleMoves() == 0) {
-			logger.info(className,
-					"Local player ran out of moves. The score of the local player: "
-							+ Integer.toString(localgrid.getScore()));
-
-			TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
+		if (localGrid.getCurrentHighestTile() == 11) {
+			localWon(localGrid);
 		}
 
 		/* Losing condition: He merged 2048 */
-		if (remotegrid.getCurrentHighestTile() == 11) {
-			logger.info(className,
-					"Local player lost the multiplayer game. The score of the remote player: "
-							+ Integer.toString(remotegrid.getScore()));
-
-			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.getScreen().addLWOverlay(true, false, null);
+		else if (remoteGrid.getCurrentHighestTile() == 11) {
+			remoteWon(remoteGrid);
 		}
 
 		/* Losing condition: Same score, but he was first. */
-		if ((localgrid.getPossibleMoves() == 0)
-				&& (remotegrid.getPossibleMoves() == 0)
-				&& (localgrid.getScore() < remotegrid.getScore())) {
-
-			logger.info(className,
-					"Local player lost the multiplayer game. The score of the remote player: "
-							+ Integer.toString(remotegrid.getScore()));
-
-			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.getScreen().addLWOverlay(true, false, null);
+		else if ((localGrid.getPossibleMoves() == 0)
+				&& (remoteGrid.getPossibleMoves() == 0)
+				&& (localGrid.getScore() < remoteGrid.getScore())) {
+			remoteScoreHigher(remoteGrid);
 		}
-
+		
 		/* Win condition: Same score, but I was first. */
-		if ((localgrid.getPossibleMoves() == 0)
-				&& (remotegrid.getPossibleMoves() == 0)
-				&& (localgrid.getScore() > remotegrid.getScore())) {
-
-			logger.info(className,
-					"Local player lost the multiplayer game. The score of the remote player: "
-							+ Integer.toString(remotegrid.getScore()));
-
-			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
-			screenHandler.getScreen().addLWOverlay(true, true, null);
+		else if ((localGrid.getPossibleMoves() == 0)
+				&& (remoteGrid.getPossibleMoves() == 0)
+				&& (localGrid.getScore() > remoteGrid.getScore())) {
+			localScoreHigher(localGrid);
 		}
+		
+		/* Waiting condition: I am out of moves */
+		else if (localGrid.getPossibleMoves() == 0) {
+			localLost(localGrid);
+		}
+	}
+	
+	private void localWon(Grid localGrid) {
+		logger.info(className,
+				"Local player won the multiplayer game. The score of the local player: "
+						+ Integer.toString(localGrid.getScore()));
+
+		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		screenHandler.getScreen().addLWOverlay(true, true, null);
+	}
+	
+	private void localLost(Grid localGrid) {
+		logger.info(className,
+				"Local player ran out of moves. The score of the local player: "
+						+ Integer.toString(localGrid.getScore()));
+
+		TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
+	}
+	
+	private void remoteWon(Grid remoteGrid) {
+		logger.info(className,
+				"Local player lost the multiplayer game. The score of the remote player: "
+						+ Integer.toString(remoteGrid.getScore()));
+
+		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		screenHandler.getScreen().addLWOverlay(true, false, null);
+	}
+	
+	private void remoteScoreHigher(Grid remoteGrid) {
+		logger.info(className,
+				"Local player lost the multiplayer game. The score of the remote player: "
+						+ Integer.toString(remoteGrid.getScore()));
+
+		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		screenHandler.getScreen().addLWOverlay(true, false, null);
+	}
+	
+	private void localScoreHigher(Grid localGrid) {
+		logger.info(className,
+				"Local player won the multiplayer game. The score of the local player: "
+						+ Integer.toString(localGrid.getScore()));
+
+		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		screenHandler.getScreen().addLWOverlay(true, true, null);
 	}
 }
