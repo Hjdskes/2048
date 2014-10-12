@@ -265,11 +265,11 @@ we will provide (in natural language) a description of why and how the pattern
 is implemented, together with a class- and sequence diagram.
 
 \subsection{The Command pattern}
-The Command pattern is implemented because it would make sense for the different
-movements one can make on the grid. If possible, it will also be used to at a
-new tile to the grid randomly or via the AI.\\
+The Command pattern is implemented because it made a lot of sense to do the grid 
+movements through commands. If possible, it will also be used to add a
+new tile to the grid randomly or via the Solver.\\
 
-We also implemented the command pattern because we wanted to undo and redo the
+Another reason to implement the Command pattern was because we wanted to undo and redo the
 movements made by the player.
 
 \subsubsection{The implementation}
@@ -282,11 +282,11 @@ movement for the grid. These \texttt{Command} classes have as a receiver the
 of moving the tiles in the grid.\\
 
 We have also made a \texttt{Command} class for undo and another for redo. These
-commands have as a receiver the \texttt{Grid} they operate on. The \texttt{Grid} class
-keeps two stacks of strings: one stack keeps track of the previous grid when a
-move is made and the other stack keeps track of the grid before an undo
-command is executed. The undo and redo commands pop a string of the correct
-stack, setting it as the current grid. This is all done in their own implementation
+commands have as a receiver: the \texttt{Grid} ,which they operate on. The \texttt{Grid} class
+keeps two stacks of strings: one stack keeps track of the previous grid and the other stack 
+keeps track of the grid before an undo command is executed. 
+The undo and redo commands pop a string of the correct
+stack and set it as the current grid. This is all done in their own implementation
 of the abstract \texttt{execute()} method.
 
 \newpage
@@ -311,7 +311,7 @@ maintain but als opening the door for future changes.
 
 \subsubsection{The implementation}
 
-The existing states have been replaced with classes that implement the GameState interface. 
+The existing states have been replaced with classes that implement the GameState interface.
 Because of this, we can dynamically set the current state through polymorphism.
 Different game modes have different states and conditions for a state change. To handle this,
 the GameState interface contains two update-methods that differ by their arguments:
