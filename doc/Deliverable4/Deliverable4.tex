@@ -89,9 +89,9 @@ can even be on the other side of the planet and you can still kick their
 asses!\\
 
 Your goal is to reach the 2048 tile and to get more points than your opponent.  In case you
-are unable to reach the 2048 tile (e.g., because you lost), your opponent will either win or lose if they have more points. 
+are unable to reach the 2048 tile (because your grid is full), your opponent will either win or lose if they have more points. 
 
-In case your grid is full, you will need to wait for your opponent to make the last move on their grid.
+In case your grid is full, you will need to wait for your opponent to make the last move on their grid.\\
 
 We will now briefly explain how to connect to eachother. Please refer to the
 documentation of your networking equipment or software in case you experience
@@ -100,7 +100,8 @@ networking problems.
 \subsubsection{Joining a game}
 To connect to another player, choose the \texttt{Join a game} option in the
 \texttt{Multiplayer} menu. The application will try to connect to the remote address you
-entered, on port 2048, using TCP.
+entered, on port 2048, using TCP.\\
+Making sure your opponent starts hosting before you try to connect or your connection attempt will fail.
 
 \subsubsection{Hosting a game}
 To have another player connect to you, choose the \texttt{Host a game} option
@@ -113,11 +114,11 @@ information.
 
 \subsection{Challenging your computer}
 
-You can now challenge and play against your computer. After starting the game, you will see the main menu. In the main menu, pick the option \texttt{Challenge me!}. In the next menu you can select the difficulty you want to play on.\\
+You can now challenge and play against your computer. After starting the game, you will see the main menu. In the main menu, pick the \texttt{Challenge me!} option. In the next menu you can select the difficulty you want to play on.\\
 
 Depending on your selection, the computer will make moves at a timed interval. The higher the difficulty you select, the shorter the computer will wait between moves and the better calculated its movements are.\\
 
-The solver algorithm behind the \texttt{Easy} option is able to win about 15\%, but only one move is made every after 1.6 second. The same algorithm is used for the other options, but it will be more accurate when trying to make a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
+The solver algorithm behind the \texttt{Easy} option is able to complete about 15\% of the grids, but only one move is made every after 1.6 second. The same algorithm is used for the other options, but it will be more accurate when calculating a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
 
 If either player (you or the computer) ends up with a full grid, the game will wait for the other to complete the game before finally announcing either of you winner or loser.\\
 
@@ -181,10 +182,10 @@ testing procedure.
 \subsection{Test frequency}
 In this section we will discuss how frequently we tested our game. This is the
 first iteration where we really made use of our tests. During the MVC
-refactoring, our tests game in handy for regression testing. As such, the test
+refactoring, our tests came in handy for regression testing. As such, the test
 frequency was higher than it normally was. The only area in which we didn't test
 much are the solvers, because they are hard to predict with their random
-factors. (They are covered now, but not during their development).
+factors. (They are covered now, but not while they were developed).
 
 \subsection{Testing methods}
 Visual tests involved actually playing the game and analyzing logging output
@@ -193,7 +194,7 @@ manually. Unit tests simply check object properties with certain input.
 Visual testing was used a lot this sprint when developing the solvers. This is
 partly because of their randomness, but also because visual testing is just
 plain easier here: when the static evaluation function changed, it's just easier
-to run the game and look at the output than having to change the unit test and
+to run the game and look at the output rather than having to change the unit test and
 then discovering the random factor is causing your test to fail. Also, a complex
 piece of code such as the solver is not really testable with unit testing and
 therefore, we mostly resorted to visual testing.
@@ -231,14 +232,14 @@ We implemented the following extra features:
 
 We chose to implement an AI feature, because the idea seemed challenging to us.
 Two members of our team tried to implement their own algorithm. One mimics the
-"human strategy", which basically is to keep one corner static and move
+"human strategy", which basically is to keep one corner populated and move
 everything into it. The other is based on the expectimax algorithm with a more
 complicated static evaluation function. This second solver is not entirely
 finished, because it only sporadically wins a game.\\
 
 Both are included in the production code, however. The second solver is the only
 one capable of giving the player a fair hint, because it is not tied to one
-static corner. The other solver is capable of solving at least 35\% of the grids
+fixed corner. The other solver is capable of solving at least 35\% of the grids
 and as such, is used to solve the grid in singleplayer mode and to act as
 opponent when playing against the computer.\\
 
