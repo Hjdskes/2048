@@ -139,6 +139,9 @@ public class MultiGameScreen extends Screen {
 		stage.addActor(remoteGroup);
 
 		stage.addListener(new LocalInputHandler(localGrid));
+
+		/* After creating the screen, start the game. */
+		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 
 	/**

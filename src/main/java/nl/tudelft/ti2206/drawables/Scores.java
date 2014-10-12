@@ -25,21 +25,21 @@ public class Scores extends Group implements Observer {
 	private static final int SCORE_WIDTH = 140;
 	private static final int HIGHEST_WIDTH = 90;
 
-	/** Keeps track of the current high score. */
-	private int highScore;
-
-	/** The highest tile value saved. */
-	private int highestTile;
+	/** The singleton AssetHandler instance used to access our assets. */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
+	/** The singleton PreferenceHandler instance used to acces our saved game. */
+	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
 
 	/** Labels to display scores. */
 	private Label scoreLabel;
 	private Label highScoreLabel;
 	private Label highestTileLabel;
 
-	/** The singleton AssetHandler instance used to access our assets. */
-	private AssetHandler assetHandler = AssetHandler.getInstance();
-	/** The singleton PreferenceHandler instance used to acces our saved game. */
-	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
+	/** Keeps track of the current high score. */
+	private int highScore;
+
+	/** The highest tile value saved. */
+	private int highestTile;
 
 	/**
 	 * Creates a new ScoreDisplay object. Automatically creates all textures and
@@ -67,8 +67,7 @@ public class Scores extends Group implements Observer {
 
 	/**
 	 * Initializes all Labels for the scores. It creates the label and sets its
-	 * style and location. Furthermore, the act method is declared to be able to
-	 * update the scores.
+	 * style and location.
 	 */
 	private void initLabels() {
 		scoreLabel = new Label(Integer.toString(prefsHandler.getScore()),
