@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.solver.Solver;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,7 +32,10 @@ public class HintButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Direction direction = solver.findMove(grid, 7);
-				grid.move(direction);
+				if (direction != null)
+					grid.move(direction);
+				else
+					Logger.getInstance().error(this.getClass().getSimpleName(), "direction == null (ignored");
 			}
 		});
 	}

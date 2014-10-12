@@ -24,7 +24,7 @@ public class GridSolver extends TimerTask {
 	private Strategy strategy = Strategy.HUMAN;
 	private boolean running = false;
 	private int depth = 0;
-	
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
@@ -32,9 +32,9 @@ public class GridSolver extends TimerTask {
 	private final String className = this.getClass().getSimpleName();
 
 	public GridSolver(Grid grid, Strategy strategy, int delay, int depth) {
-		
+
 		logger.debug(className, "Initializing GridSolver...");
-		
+
 		running = false;
 		succesfulMoves = 0;
 
@@ -79,13 +79,18 @@ public class GridSolver extends TimerTask {
 
 	/** Benchmark start. */
 	public void start() {
-		
-		logger.info(className, "Starting solver...");
 
-		timer = new Timer();
-		timer.schedule(this, 0, delay);
-
-		running = true;
+		if (!isRunning()) {
+			logger.info(className, "Starting solver...");
+			
+			if (timer == null) {
+				timer = new Timer();
+			
+				timer.schedule(this, 0, delay);
+			}
+			
+			running = true;
+		}
 	}
 
 	/** Stop benchmark. */
@@ -97,7 +102,7 @@ public class GridSolver extends TimerTask {
 
 			timer = null;
 			running = false;
-			
+
 			logger.info(className, "Solver stopped.");
 		}
 	}
@@ -113,7 +118,7 @@ public class GridSolver extends TimerTask {
 			succesfulMoves += 1;
 		}
 	}
-	
+
 	public static int getSuccesfulMoves() {
 		return succesfulMoves;
 	}
@@ -132,14 +137,14 @@ public class GridSolver extends TimerTask {
 			if (strategy == Strategy.HUMAN) {
 				direction = HumanSolver.selectMove(original, getDepth());
 			}
-			
+
 			logger.debug(className, "Direction selected: " + direction);
-			
+
 			// make the selected move
 			makeMove(original, direction);
 		}
 	}
-	
+
 	/** Setter for testing purposes only */
 	public void setLogger(Logger logger) {
 		GridSolver.logger = logger;

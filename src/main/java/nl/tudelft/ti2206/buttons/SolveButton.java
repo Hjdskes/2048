@@ -22,22 +22,42 @@ public class SolveButton extends TextButton {
 		super("Solve", AssetHandler.getInstance().getSkin(), "small");
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
-		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2 - TwentyFourtyGame.GAP / 2);
+		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2
+				- TwentyFourtyGame.GAP / 2);
 		this.setY(100 / 2 - this.getHeight() / 2);
-
-		gridSolver = new GridSolver(grid, Strategy.HUMAN, 750, 6);
 
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (gridSolver == null) {
-					gridSolver = new GridSolver(grid, Strategy.HUMAN, 750, 6);
+
+				// if we don't make a new GridSolver object, we won't be able to
+				// reschedule the task and we'll get
+				// java.lang.IllegalStateException: Task already scheduled or
+				// cancelled
+				// doing the following solves this problem: create a new GridSolver
+				
+				// so first check if a GridSolver object exists, check if it's running
+				// and stop it if it is
+
+				boolean wasRunning = false;
+
+				if (gridSolver != null) {
+					if (gridSolver.isRunning()) {
+						gridSolver.stop();
+						wasRunning = true;
+					}
+					gridSolver = null;
 				}
 				
-				if (gridSolver.isRunning()) {
-					gridSolver.stop();
-					gridSolver = null;
-				} else {
+				// in case it wasn't previously running, create a new GridSolver instance
+				// and simply start it
+
+				if (!wasRunning) {
+					// setup GridSolver with HUMAN strategy to make one move
+					// every 650 milliseconds
+					// 650 ms should be enough to allow the user to see what it's
+					// doing but not completely bore the user to death
+					gridSolver = new GridSolver(grid, Strategy.HUMAN, 650, 6);
 					gridSolver.start();
 				}
 			}
