@@ -23,8 +23,7 @@ public class RunningState implements GameState {
 
 	@Override
 	public void update(Grid grid) {
-		if (grid.getCurrentHighestTile() == 11
-				&& !TwentyFourtyGame.isContinuing()) {
+		if (grid.getCurrentHighestTile() == 11) {
 			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
 			screenHandler.getScreen().addLWOverlay(false, true, grid);
 		} else if (grid.getPossibleMoves() == 0) {
@@ -75,6 +74,19 @@ public class RunningState implements GameState {
 
 			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
 			screenHandler.getScreen().addLWOverlay(true, false, null);
+		}
+
+		/* Win condition: Same score, but I was first. */
+		if ((localgrid.getPossibleMoves() == 0)
+				&& (remotegrid.getPossibleMoves() == 0)
+				&& (localgrid.getScore() > remotegrid.getScore())) {
+
+			logger.info(className,
+					"Local player lost the multiplayer game. The score of the remote player: "
+							+ Integer.toString(remotegrid.getScore()));
+
+			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+			screenHandler.getScreen().addLWOverlay(true, true, null);
 		}
 	}
 }

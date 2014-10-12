@@ -95,9 +95,9 @@ public abstract class Screen implements Disposable {
 	 *            The grid of the current game.
 	 */
 	public void addLWOverlay(boolean isMulti, boolean isWon, Grid grid) {
-		if (isMulti && isWon) {
+		if (!isMulti && isWon) {
 			new WinScreen(this, grid);
-		} else if (!isMulti && isWon) {
+		} else if (isMulti && isWon) {
 			new MultiWinScreen(this);
 		} else if (!isMulti && !isWon) {
 			new LoseScreen(this, grid);
