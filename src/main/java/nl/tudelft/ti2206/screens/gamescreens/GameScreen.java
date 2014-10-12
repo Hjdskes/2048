@@ -47,6 +47,8 @@ public class GameScreen extends Screen {
 	/** The singleton reference to the ProgressHandler class. */
 	private ProgressHandler progressHandler = ProgressHandler.getInstance();
 
+	private InputHandler inputHandler;
+	
 	/** Constructs a new GameScreen. */
 	public GameScreen() {
 		stage = new Stage();
@@ -61,6 +63,8 @@ public class GameScreen extends Screen {
 
 		grid.addObserver(scores);
 		this.setDrawBehavior(new DrawBeige(stage));
+		
+		inputHandler = new InputHandler(grid);
 	}
 
 	/** Constructor to insert Mock objects. For testing only. */
@@ -82,7 +86,7 @@ public class GameScreen extends Screen {
 	@Override
 	public void create() {
 		super.create();
-		stage.addListener(new InputHandler(grid));
+		stage.addListener(inputHandler);
 
 		/* Create the main group and pack everything in it. */
 		stage.addActor(drawableGrid);
