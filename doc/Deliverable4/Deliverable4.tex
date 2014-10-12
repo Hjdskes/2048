@@ -39,10 +39,11 @@ The Netherlands. We created a clone of the original 2048 game for the course
 Software Engineering Methods.\\
 
 The goal of this course is to teach us how to develop software by applying the most appropriate software engineering practices, given the context of development.\\
+We were asked to make a clone of the game 2048, then apply several design strategies to it and add a few extra features. This report covers what we have done, why and how.\\
 
 We would like to thank our teacher Dr. Bachelli and our Teaching Assistants Moritz Beller and Aimee Ferouge for guiding us through this project.\\
 
-Thank you for reading this report!\\
+Thank you for taking interest in this report. We hope you will enjoy reading our report and playing 2048!
 
 \newpage\section{Introduction}
 
@@ -50,7 +51,7 @@ Thank you for reading this report!\\
 Veewo Studio and conceptually similar to Threes by Asher Vollmer.\\
 For this project we were asked to create a clone of the game 2048 in the Object-Oriented programming language Java, so that's what we did!\\
 
-We didn't only make a clone of the original 2048 game, we also added
+We didn't just make a clone of the original 2048 game, we also added
 multiplayer functionality, automatic solvers allowing you to play against the computer and 
 undo/redo functionality. 
 Now you can challenge your computer, your neighbours, your
@@ -59,14 +60,8 @@ coworkers, your kids or even the Queen of England to play a game of 2048!\\
 The purpose of this report is to present how we implemented several features/techniques and why they were implemented.\\
 This document tells you everything you need to know about our project and to get you started playing 2048. Technical aspects of the game are covered in here as well.\\
 
- The structure of this report is as follows. Chapter three describes how to play 2048 and all the functionalities that are implemented. The next chapter explains how the the application is tested and how quality is being ensured. Chapter five will conclude this report. 
-
-
-Good luck and have fun!\\
-
-\textbf{P.S.:} We, the developers, are not reliable in case of frustration. ;)\\
-
-\textbf{*} See: http://english.stackexchange.com/questions/55577/proper-usage-of-the-word-thunk
+ The structure of this report is as follows. Chapter three describes how to play 2048 and all the functionalities that are implemented. The next chapter explains how the the application is tested and how quality is being ensured. Chapter six covers the design patterns we have implemented including the corresponding class and sequence diagrams. The next chapter, chapter 7 will explain the extra design pattern we have chosen, why and how we implemented it.\\
+Finally, chapter eight will conclude this report. \\
 
 \newpage\section{How to play 2048}
 
@@ -78,11 +73,11 @@ to use the logging features.
 After starting the application you will see the main menu. In the main menu,
 click the \texttt{Singleplayer} button to start your singleplayer game.\\
 
-You move the tiles with the arrow keys. Each time two tiles with the same
+Using the arrow keys you can move the tiles on the grid. Each time two tiles with the same
 number collide, the numbers are added and the two tiles merge. Your goal is to
 reach the 2048 tile!\\
 
-To return to the menu, click the \texttt{Escape} button any time. Don't worry,
+To return to the menu, press \texttt{Escape} any time. Don't worry,
 your current game will be saved for you! (This also applies to closing the
 game!).
 
@@ -94,7 +89,9 @@ can even be on the other side of the planet and you can still kick their
 asses!\\
 
 Your goal is to reach the 2048 tile and get more points than your opponent.  In case you
-are unable to reach the 2048 tile (e.g., because you lost), your opponent will either win or lose if they have more points or if their grid is full.\\
+are unable to reach the 2048 tile (e.g., because you lost), your opponent will either win or lose if they have more points. 
+
+In case your grid is full, you will need to wait for your opponent to make the last move on their grid.
 
 We will now briefly explain how to connect to eachother. Please refer to the
 documentation of your networking equipment or software in case you experience
@@ -116,13 +113,15 @@ information.
 
 \subsection{Challenging your computer}
 
-You can now challenge and play against your computer. After starting the game, you will see the main menu. In the main menu, pick the option \texttt{Challenge me}. In the next menu you can select the difficulty you want to play on.\\
+You can now challenge and play against your computer. After starting the game, you will see the main menu. In the main menu, pick the option \texttt{Challenge me!}. In the next menu you can select the difficulty you want to play on.\\
 
 Depending on your selection, the computer will make moves at a timed interval. The higher the difficulty you select, the shorter the computer will wait between moves and the better calculated its movements are.\\
 
-If either player (you or the computer) ends up with a full grid, the game will wait before the other to complete the game before announcing either of you winner or loser.\\
+The solver algorithm behind the \texttt{Easy} option is able to win about 15\%, but only one move is made every after 1.6 second. The same algorithm is used for the other options, but it will be more accurate when trying to make a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
 
-Whoever has the highest amount of points in the end, wins.
+If either player (you or the computer) ends up with a full grid, the game will wait for the other to complete the game before finally announcing either of you winner or loser.\\
+
+Whoever has the highest amount of points in the end wins the game.
 
 \subsection{Logging}
 The game supports several commandline arguments for logging.\\
@@ -217,6 +216,11 @@ We implemented the following extra features:
 	\item Undo and redo functionality
 \end{description}
 
+We choose to implement an automatic grid solving feature because the idea seemed challenging to us. Two members of team tried to implement their own algorithm. Both are included in the production code, however, because one of them isn't entirely finished it's only implemented for hinting the player into a direction in Single player mode.\\
+The other solver is capable of solving at least 35\% of the grids. However, only the "Challenge me!" mode, where the player will compete against the computer, fully utilizes this solver algorithm.\\
+
+The undo and redo functionality is part of the Single player mode to give the player the opportunity to correct mistakes when trying to solve the puzzle. We chose to implement this feature because one of our team members likes this feature on the original game and he's unable to solve any puzzle without it. :P
+
 \newpage\section{Exercise 2 - Design patterns}
 In this section we will discuss the two chosen design patterns. Per pattern,
 we will provide (in natural language) a description of why and how the pattern
@@ -274,14 +278,16 @@ Blablabla
 
 \newpage\section{Conclusion}
 
-
 The goal of this report was to explain how we developed our 2048 clone, how and why we implemented several features. 
-The development of the game was shown to have been undertaken in several consecutive steps. First of all .... Then .... Finally...
-As a design pattern, the MVC (Model-View-Controller) was used.
+The development of the game was shown to have been undertaken in several consecutive steps. First of all we created just a fully working clone of the original 2048 game. Then, we implemented a multiplayer mode where the player can play against others over the network. After that we refactored our entire game and implemented several design patterns and added several extra features we thought of ourselves.
 
-Three extra features were also implemented. These were the following: 
+The three extra features we implemented were:
 - Automatic grid solving 
 - Playing against the computer 
 - Undo and redo functionality
+
+The latest design pattern we implemented is the MVC (Model-View-Controller) pattern.
+
+We hope you enjoyed reading this report. Have fun playing 2048!
 
 \end{document}
