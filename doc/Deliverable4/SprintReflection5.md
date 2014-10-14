@@ -34,7 +34,14 @@ As a user, I want to have the option to redo the move I made after I have undone
 ## Main Problems encountered
 
 ***Description***  
-The solver using the expectimax algorithm turned out to be very hard to implement. We have tried other algorithms, namely the alpha-beta and minimax, but these also did not work. We will continue developing this solver the next sprint.
+The non-human-like solver turned out to be very complicated to make. We started
+by implementing the minimax algorithm, but this turned out to be too slow on a
+decent recursion depth. We tried to circumvent this by converting minimax to
+alpha-beta, but againt this did not work. After more research, we discovered the
+expectimax algorithm and implemented it accordingly. The speed is now decent
+(with a hashmap of previously evaluated grids) and it works properly until it
+gets to a 1024 and a bit more. We will continue to look into this in the next
+sprint.
 
 ***Reaction***  
 We kept trying and continued doing research until we were out of time.
