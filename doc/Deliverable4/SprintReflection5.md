@@ -36,6 +36,6 @@ As a user, I want to have the option to redo the move I made after I have undone
 ***Description***  
 The solver using the expectimax algorithm turned out to be very hard to implement. We have tried other algorithms, namely the alpha-beta and minimax, but these also did not work. We will continue developing this solver the next sprint.
 
-***Reaction***
+***Reaction***  
 We kept trying and continued doing research until we were out of time.
 
