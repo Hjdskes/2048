@@ -210,7 +210,7 @@ public class Benchmark extends TimerTask {
 		if (original.getPossibleMoves() == 0) { // ||
 												// original.getCurrentHighestTile()
 												// >= 2048) {
-			stop();
+			//stop();
 			runs += 1;
 			highestTileReached = Math.max(highestTileReached,
 					original.getCurrentHighestTile());
