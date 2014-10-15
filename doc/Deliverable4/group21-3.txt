@@ -1,0 +1,25 @@
+Feedback on assignment 3
+
+ex 1.1: I love the game. It's much better than the original by now :-). The swooshy feeling of how the tiles move. The solver, and what a satisfying feeling it is to see it almost fail (after some time you really start to sympethize with the computer and hope he'll solve it), and then somehow magically recover by nicely merging two 512 tiles into each other. Just for showing off, why not create a solver mode that is 10x faster? I actually let it run a few times now and saw it win ... :) Hm, do you know whether it is principally possible to solve all 2048 games? I guess not ...
+
+Also regarding your logger, debug output can slow-down things considerably (esp. on Windows console output is super-slow!!), so why not make logging optional in the menu (please create a small requirement for this and implement it for assignment 5). 30/30
+
+ex 1.2: I had to laugh at the effort estimation both in difficulty and time. Regarding package structure I wouldn't expect a top-level package buttons. Can you group all graphics packages under nl.tudelft.ti2206.graphics? Then, move the logic to ...ti2206.logic
+
+I had to give you some penalty because there still is not one single file group21-3.pdf and I had some difficulty associating your solutions with the questions. Please be more careful in having the same numbering to make that easier for me (especially after correcting 5 other groups I just want to find the answers ... fast). 12/15
+
+ex 2: Very nice. Also good implementatioins. Well-chosen design patterns.
+
+Nitpicks: 
+- Comand.java: Isn't objectName actually classSimpleName and does it really need to be an instance variable (all instances share the same value)?
+- Why <<Java class>> in UML?
+- I find the role name + directed verb combination difficult to read. Don't the direction and the role (or, more precise: placement of the role) even contradict each other (e.g. invoker, receiver)? http://stackoverflow.com/questions/16732607/role-name-in-association-relationship
+28/30
+
+ex 3: Both implementation and architecture-wise, I like your change a lot. But it's not a MVC pattern, when C is missing :). 
+5/15
+
+SCRUM: 9/10
+Quality: 10/10
+
+General remark in your documents: Can you please add more meta-information like a date, and exactly which exercise you are referring? Thanks!!
