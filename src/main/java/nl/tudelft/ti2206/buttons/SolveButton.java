@@ -54,10 +54,10 @@ public class SolveButton extends TextButton {
 
 				if (!wasRunning) {
 					// setup GridSolver with HUMAN strategy to make one move
-					// every 650 milliseconds
-					// 650 ms should be enough to allow the user to see what it's
+					// every 350 milliseconds
+					// 350 ms should be enough to allow the user to see what it's
 					// doing but not completely bore the user to death
-					gridSolver = new GridSolver(grid, Strategy.HUMAN, 650, 6);
+					gridSolver = new GridSolver(grid, Strategy.HUMAN, 350, 6);
 					gridSolver.start();
 				}
 			}
