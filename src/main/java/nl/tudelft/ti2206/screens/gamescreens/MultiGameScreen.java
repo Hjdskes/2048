@@ -8,7 +8,6 @@ import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.LocalInputHandler;
 import nl.tudelft.ti2206.handlers.RemoteInputHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.net.Networking;
 import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
@@ -54,12 +53,6 @@ public class MultiGameScreen extends Screen {
 
 	/** The singleton reference to the Networking instance. */
 	private static Networking networking = Networking.getInstance();
-
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
-
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
 
 	/** The singleton reference to the ScreenHandler class. */
 	private ScreenHandler screenHandler = ScreenHandler.getInstance();
@@ -185,13 +178,10 @@ public class MultiGameScreen extends Screen {
 		}
 
 		if (TwentyFourtyGame.isWaiting()) {
-			logger.info(className,
-					"Local player is out of moves! Waiting for the remote player...");
 			this.setYouLabel("WAITING", Color.RED);
 		} else if (remoteGrid.getPossibleMoves() == 0) {
-			logger.info(className,
-					"Remote player is out of moves! Waiting for the local player...");
 			this.setOpponentLabel("WAITING", Color.RED);
+			//screenHandler.getScreen().addMultiWaitScreenOverlay(false);;
 		}
 
 		TwentyFourtyGame.getState().update(localGrid, remoteGrid);

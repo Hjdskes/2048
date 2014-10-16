@@ -83,7 +83,8 @@ public class RunningState implements GameState {
 		logger.info(className,
 				"Local player ran out of moves. The score of the local player: "
 						+ Integer.toString(localGrid.getScore()));
-
+		
+		screenHandler.getScreen().addMultiWaitScreenOverlay(true);
 		TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
 	}
 	
