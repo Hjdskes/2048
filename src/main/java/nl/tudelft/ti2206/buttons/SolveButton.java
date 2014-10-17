@@ -12,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to call a solver to solve the game.
+ * A button to call a solver to solve the game. Extends the
+ * TextButton class from the GDX library.
  */
 public class SolveButton extends TextButton {
 	private GridSolver gridSolver;

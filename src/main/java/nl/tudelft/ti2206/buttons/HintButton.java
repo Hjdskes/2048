@@ -14,7 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to call a solver and make it perform one move.
+ * A button to call a solver and make it perform one move. Extends the
+ * TextButton class from the GDX library.
  */
 public class HintButton extends TextButton {
 	private Solver solver;
@@ -24,7 +25,9 @@ public class HintButton extends TextButton {
 		super("Hint", AssetHandler.getInstance().getSkin(), "small");
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
-		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2 - TwentyFourtyGame.GAP / 2 + DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP);
+		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2
+				- TwentyFourtyGame.GAP / 2 + DrawableTile.TILE_WIDTH
+				+ TwentyFourtyGame.GAP);
 		this.setY(DrawableGrid.GRID_Y / 2 - this.getHeight() / 2);
 		solver = new Solver(grid, 7);
 
@@ -35,7 +38,8 @@ public class HintButton extends TextButton {
 				if (direction != null)
 					grid.move(direction);
 				else
-					Logger.getInstance().error(this.getClass().getSimpleName(), "direction == null (ignored");
+					Logger.getInstance().error(this.getClass().getSimpleName(),
+							"direction == null (ignored");
 			}
 		});
 	}
