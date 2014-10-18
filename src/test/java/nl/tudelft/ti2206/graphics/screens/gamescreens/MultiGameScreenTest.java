@@ -20,6 +20,7 @@ import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.net.Networking;
+import nl.tudelft.ti2206.utils.states.RunningState;
 import nl.tudelft.ti2206.utils.states.WaitingState;
 
 import org.junit.Before;
@@ -89,6 +90,9 @@ public class MultiGameScreenTest {
 
 		when(label.getPrefWidth()).thenReturn(0f);
 		when(handler.getScreen()).thenReturn(screen);
+		
+		RunningState.getInstance().setScreenHandler(handler);
+		WaitingState.getInstance().setScreenHandler(handler);
 	}
 
 	/**
@@ -152,20 +156,20 @@ public class MultiGameScreenTest {
 		verify(screen).addConnectionLostOverlay();
 	}
 
-	// @Test
-	// public void testUpdateWaiting() {
-	// TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
-	// gameScreen.update();
-	// verify(stage).act();
-	// verify(label).setText("WAITING");
-	// }
+	 @Test
+	 public void testUpdateWaiting() {
+	 TwentyFourtyGame.setState(WaitingState.getInstance());
+	 gameScreen.update();
+	 verify(stage).act();
+	 verify(label).setText("WAITING");
+	 }
 
-	// @Test
-	// public void testUpdateRemoteLost() {
-	// TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
-	// when(grid.getPossibleMoves()).thenReturn(0);
-	// gameScreen.update();
-	// verify(stage).act();
-	// verify(label).setText("WAITING");
-	// }
+	 @Test
+	 public void testUpdateRemoteLost() {
+	 TwentyFourtyGame.setState(RunningState.getInstance());
+	 when(grid.getPossibleMoves()).thenReturn(0);
+	 gameScreen.update();
+	 verify(stage).act();
+	 verify(label).setText("WAITING");
+	 }
 }

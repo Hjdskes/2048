@@ -37,7 +37,8 @@ public class RunningStateTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		state = new RunningState(screenHandler);
+		state = RunningState.getInstance();
+		state.setScreenHandler(screenHandler);
 		when(screenHandler.getScreen()).thenReturn(screen);
 	}
 

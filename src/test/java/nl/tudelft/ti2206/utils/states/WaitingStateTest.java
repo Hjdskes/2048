@@ -38,7 +38,8 @@ public class WaitingStateTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		state = new WaitingState(screenHandler);
+		state = WaitingState.getInstance();
+		state.setScreenHandler(screenHandler);
 		when(screenHandler.getScreen()).thenReturn(screen);
 	}
 

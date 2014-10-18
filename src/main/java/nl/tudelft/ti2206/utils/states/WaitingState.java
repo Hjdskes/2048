@@ -33,11 +33,6 @@ public class WaitingState implements GameState {
 		return instance;
 	}
 
-	/** Constructor for testing only. */
-	public WaitingState(ScreenHandler h) {
-		screenHandler = h;
-	}
-
 	@Override
 	public void update(Grid grid) {
 	}
@@ -85,5 +80,10 @@ public class WaitingState implements GameState {
 
 		TwentyFourtyGame.setState(WonState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, true, null);
+	}
+	
+	/** For testing purposes only */
+	public void setScreenHandler(ScreenHandler handler) {
+		screenHandler = handler;
 	}
 }

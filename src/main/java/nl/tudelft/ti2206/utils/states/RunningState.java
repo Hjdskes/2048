@@ -22,15 +22,10 @@ public class RunningState implements GameState {
 	private final String className = this.getClass().getSimpleName();
 
 	/** The singleton reference to the ScreenHandler class. */
-	private ScreenHandler screenHandler = ScreenHandler.getInstance();
+	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Overrides the default constructor. */
 	private RunningState() {}
-	
-	/** Constructor for mock insertion only. */
-	public RunningState(ScreenHandler h) {
-		this.screenHandler = h;
-	}
 	
 	/** @return The singleton instance of the state*/
 	public static RunningState getInstance() {
@@ -130,5 +125,10 @@ public class RunningState implements GameState {
 
 		TwentyFourtyGame.setState(WonState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, true, null);
+	}
+	
+	/** For testing purposes only */
+	public void setScreenHandler(ScreenHandler handler) {
+		screenHandler = handler;
 	}
 }
