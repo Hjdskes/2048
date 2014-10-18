@@ -47,8 +47,15 @@ public class WaitingState implements GameState {
 		 * Win condition: i win because he couldn't beat my score and we both
 		 * ran out of moves
 		 */
-		if (localGrid.getScore() > remoteGrid.getScore()
+		else if (localGrid.getScore() > remoteGrid.getScore()
 				&& (remoteGrid.getPossibleMoves() == 0)) {
+			win(localGrid);
+		}
+		
+		/* Win condition: Both ran out of moves, same score but i was first. */
+		else if ((localGrid.getPossibleMoves() == 0) && 
+				(remoteGrid.getPossibleMoves() == 0)
+				&& (localGrid.getScore() == remoteGrid.getScore())) {
 			win(localGrid);
 		}
 	}

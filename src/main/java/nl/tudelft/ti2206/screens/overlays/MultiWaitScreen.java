@@ -29,6 +29,7 @@ public class MultiWaitScreen {
 		menuButton = new MenuButton();
 		addActors();
 		
+		//Set the overlay on the other side of the screen if its the opponent.
 		if(!localWaiting)
 			image.setX(TwentyFourtyGame.GAME_WIDTH);
 	}

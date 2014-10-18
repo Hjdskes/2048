@@ -53,4 +53,15 @@ public class WaitingStateTest {
 		assertTrue(TwentyFourtyGame.isWon());
 		verify(screen).addLWOverlay(true, true, null);
 	}
+	
+	@Test
+	public void testMultiSameScoreWin() {
+		when(grid.getPossibleMoves()).thenReturn(0);
+		when(remote.getPossibleMoves()).thenReturn(0);
+		when(grid.getScore()).thenReturn(50);
+		when(remote.getScore()).thenReturn(50);
+		state.update(grid, remote);
+		assertTrue(TwentyFourtyGame.isWon());
+		verify(screen).addLWOverlay(true, true, null);
+	}
 }

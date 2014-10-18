@@ -50,18 +50,25 @@ public class RunningState implements GameState {
 			remoteWon(remoteGrid);
 		}
 
-		/* Losing condition: Same score, but he was first. */
+		/* Losing condition: Both are out of moves, he has a higher score. */
 		else if ((localGrid.getPossibleMoves() == 0)
 				&& (remoteGrid.getPossibleMoves() == 0)
 				&& (localGrid.getScore() < remoteGrid.getScore())) {
 			remoteScoreHigher(remoteGrid);
 		}
 		
-		/* Win condition: Same score, but I was first. */
-		else if ((localGrid.getPossibleMoves() == 0)
-				&& (remoteGrid.getPossibleMoves() == 0)
+		/* Win condition: He is out of moves, i have a higher score. */
+		else if ((localGrid.getPossibleMoves() == 0) && 
+				(remoteGrid.getPossibleMoves() == 0)
 				&& (localGrid.getScore() > remoteGrid.getScore())) {
 			localScoreHigher(localGrid);
+		}
+		
+		/* Lose condition: Both ran out of moves, same score but he was first. */
+		else if ((localGrid.getPossibleMoves() == 0) && 
+				(remoteGrid.getPossibleMoves() == 0)
+				&& (localGrid.getScore() == remoteGrid.getScore())) {
+			remoteWon(localGrid);
 		}
 		
 		/* Waiting condition: I am out of moves */

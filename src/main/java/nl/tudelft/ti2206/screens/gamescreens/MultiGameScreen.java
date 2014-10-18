@@ -179,9 +179,10 @@ public class MultiGameScreen extends Screen {
 
 		if (TwentyFourtyGame.isWaiting()) {
 			this.setYouLabel("WAITING", Color.RED);
-		} else if (remoteGrid.getPossibleMoves() == 0) {
+		} else if (remoteGrid.getPossibleMoves() == 0 &&
+				!screenHandler.getScreen().hasOverlay()) {
 			this.setOpponentLabel("WAITING", Color.RED);
-			//screenHandler.getScreen().addMultiWaitScreenOverlay(false);;
+			screenHandler.getScreen().addMultiWaitScreenOverlay(false);;
 		}
 
 		TwentyFourtyGame.getState().update(localGrid, remoteGrid);
