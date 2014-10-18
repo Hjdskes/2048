@@ -85,13 +85,4 @@ public class TileIteratorTest {
 		index = iterator.next().getIndex();
 		assertEquals(5, index);
 	}
-	
-	@Test
-	public void testRemove() {
-		TileIterator copy = iterator;
-		iterator.remove();
-		// verify nothing happened
-		assertEquals(copy, iterator);
-	}
-
 }

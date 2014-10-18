@@ -7,10 +7,10 @@ import java.util.Iterator;
  * without having to care about the internal representation.
  */
 public class TileIterator implements Iterator<Tile> {
-	/** A reference to the collection of Tiles. */
+	/** A reference to the array of Tiles. */
 	private Tile[] tiles;
 
-	/** The current position in the collection. */
+	/** The current position in the array. */
 	private int index;
 
 	/** Constructs a new TileIterator. */
@@ -21,14 +21,7 @@ public class TileIterator implements Iterator<Tile> {
 
 	@Override
 	public boolean hasNext() {
-		/*
-		 * Not sure if tiles can ever be null since we instantiate them all in
-		 * Grid, but rather safe than sorry...
-		 */
-		if (index < tiles.length && tiles[index] != null) {
-			return true;
-		}
-		return false;
+		return index < tiles.length;
 	}
 
 	@Override
@@ -45,19 +38,9 @@ public class TileIterator implements Iterator<Tile> {
 	}
 
 	/**
-	 * Get the current position index of the iterator.
-	 * @return the current index of the iterator
+	 * @return The current index of the iterator.
 	 */
 	public int getIndex() {
 		return this.index;
-	}
-
-	/**
-	 * Apparently on Windows we have to implement this method, but we don't use
-	 * it so we leave it empty.
-	 */
-	@Override
-	public void remove() {
-
 	}
 }

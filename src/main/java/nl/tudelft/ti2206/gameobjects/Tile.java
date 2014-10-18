@@ -17,6 +17,7 @@ public class Tile extends Observable {
 	/** Indicates whether this Tile has been merged in the current move. */
 	private boolean isMerged;
 
+	/** Indicates whether a Tile should spawn, move or merge. */
 	private boolean spawning, moving, merging;
 
 	/**
@@ -33,13 +34,15 @@ public class Tile extends Observable {
 		setMerged(false);
 	}
 
-	/** @return The value of the Tile. */
+	/** 
+	 * @return The value of the Tile. 
+	 * */
 	public int getValue() {
 		return this.value;
 	}
 
 	/**
-	 * Sets the value of the Tile and updates its sprite.
+	 * Sets the value of the Tile and notifies its observers.
 	 * 
 	 * @param value
 	 *            The new value.
@@ -139,17 +142,19 @@ public class Tile extends Observable {
 		moving = false;
 	}
 
+	/** @return True iff the tile should merge. */
 	public boolean shouldMerge() {
 		return merging;
 	}
 
+	/** @return True iff the tile should move. */
 	public boolean shouldMove() {
 		return moving;
 	}
 
+	/** @return True iff the tile should spawn. */
 	public boolean shouldSpawn() {
 		return spawning;
-
 	}
 
 	/** Marks the observable as changed and notifies the observers. */
