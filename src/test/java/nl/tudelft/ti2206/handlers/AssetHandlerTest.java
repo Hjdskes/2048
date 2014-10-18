@@ -32,7 +32,7 @@ public class AssetHandlerTest {
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private static AssetHandler assetHandler = AssetHandler.getInstance();
-	
+
 	/**
 	 * Sets up the test environment. Mockito is used extensively to prevent GL
 	 * related classes and methods from throwing NullPointerExceptions when
@@ -49,7 +49,8 @@ public class AssetHandlerTest {
 		assetHandler.setSkin(skin);
 
 		textureAtlas = mock(TextureAtlas.class);
-		when(manager.get(anyString(), eq(TextureAtlas.class))).thenReturn(textureAtlas);
+		when(manager.get(anyString(), eq(TextureAtlas.class))).thenReturn(
+				textureAtlas);
 	}
 
 	/**
@@ -64,17 +65,24 @@ public class AssetHandlerTest {
 		verify(skin, times(4)).addRegions(textureAtlas);
 	}
 
+	/**
+	 * Tests if the getter of the skin does return the correct skin.
+	 */
 	@Test
 	public void testGetSkin() {
 		assertEquals(skin, assetHandler.getSkin());
 	}
-	
+
+	/**
+	 * Test if the skin is loaded when the loadSkinFile() method is called. We
+	 * test this by verifying if the load() method is called of the mocked skin.
+	 */
 	@Test
 	public void testLoadSkinFile() {
 		assetHandler.loadSkinFile(Gdx.files.internal("resources/skin.json"));
 		verify(skin).load(Gdx.files.internal("resources/skin.json"));
 	}
-	
+
 	/**
 	 * Tests if the manager is disposed.
 	 */
