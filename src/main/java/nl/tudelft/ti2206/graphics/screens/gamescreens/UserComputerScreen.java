@@ -63,12 +63,14 @@ public class UserComputerScreen extends Screen {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
+	/** The reference to the class handling the AI. */
 	private GridSolver gridSolver;
-
+	
+	/** The difficulty level of the CPU. */
 	private Difficulty difficulty;
 
+	/** The graphical grids. */
 	private DrawableGrid localGridDraw;
-
 	private DrawableGrid computerGridDraw;
 
 	/** Constructs a new MultiGameScreen. */
@@ -125,7 +127,6 @@ public class UserComputerScreen extends Screen {
 
 		stage.addActor(localGroup);
 		stage.addActor(computerGroup);
-
 		stage.addListener(new InputHandler(localGrid));
 
 		adjustToDifficulty();
