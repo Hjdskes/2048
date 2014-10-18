@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DrawableGrid extends Group {
 	/** Coordinates and offsets used to position the Grid. */
@@ -23,7 +22,12 @@ public class DrawableGrid extends Group {
 	/** The array containing all sixteen tiles. */
 	private DrawableTile[] drawableTiles;
 
+	/**
+	 * Constructs the DrawableGrid and fills the DrawableTile array with tiles,
+	 * adding observers on the fly.
+	 */
 	public DrawableGrid(Tile[] tiles) {
+		setMetrics();
 		this.drawableTiles = new DrawableTile[Grid.NTILES];
 		this.region = new TextureRegion(AssetHandler.getInstance().getSkin()
 				.get("grid", Texture.class));
@@ -35,11 +39,20 @@ public class DrawableGrid extends Group {
 	}
 
 	/**
-	 * Constructor for testing purposes to allow mocking.
+	 * Constructor for testing purposes only.
 	 */
-	public DrawableGrid(DrawableTile[] tiles, Skin skin, TextureRegion region) {
+	public DrawableGrid(DrawableTile[] tiles, TextureRegion region) {
+		setMetrics();
 		this.drawableTiles = tiles;
 		this.region = region;
+	}
+
+	/** Sets the size and location of the grid. */
+	private void setMetrics() {
+		setX(GRID_X);
+		setY(GRID_Y);
+		setWidth(GRID_WIDTH);
+		setHeight(GRID_HEIGHT);
 	}
 	
 	/**
@@ -49,29 +62,9 @@ public class DrawableGrid extends Group {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		for(int i = 0; i < drawableTiles.length; i++) {
+		for (int i = 0; i < drawableTiles.length; i++) {
 			drawableTiles[i].act(delta);
 		}
-	}
-
-	@Override
-	public float getX() {
-		return GRID_X;
-	}
-
-	@Override
-	public float getY() {
-		return GRID_Y;
-	}
-
-	@Override
-	public float getWidth() {
-		return GRID_WIDTH;
-	}
-
-	@Override
-	public float getHeight() {
-		return GRID_HEIGHT;
 	}
 
 	@Override

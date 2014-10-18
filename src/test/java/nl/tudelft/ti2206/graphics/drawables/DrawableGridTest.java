@@ -57,7 +57,7 @@ public class DrawableGridTest {
 		for (int i = 0; i < Grid.NTILES; i++) {
 			tiles[i] = tile;
 		}
-		grid = new DrawableGrid(tiles, skin, region);
+		grid = new DrawableGrid(tiles, region);
 		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
 	}
 

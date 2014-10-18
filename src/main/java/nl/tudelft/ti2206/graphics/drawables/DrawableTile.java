@@ -22,22 +22,26 @@ public class DrawableTile extends Actor implements Observer {
 	public static final int TILE_X = 115;
 	private static final int TILE_Y = 403;
 
+	/** The singleton reference to the Logger. */
 	private static Logger logger = Logger.getInstance();
 
 	/** The area of a Texture the Tile will use to draw itself. */
 	private TextureRegion region;
 	/** The Skin to retrieve all textures from. */
 	private Skin skin;
+
 	/** The Action used to perform a spawn animation. */
 	private ScaleToAction spawnAction;
 	/** The Action used to perform a merge animation. */
 	private ScaleToAction mergeAction;
 	/** The Action used to perform a slide animation. */
 	private MoveToAction moveAction;
+
 	/** The power of two that makes the value (e.g. 2^1, 2^2, 2^3, 2^4, ...). */
 	private int value;
 	/** The index into the Grid array. */
 	private int index;
+
 	/** The x and y coordinates belonging to the current index. */
 	private float baseX, baseY;
 
@@ -47,53 +51,77 @@ public class DrawableTile extends Actor implements Observer {
 		this.skin = AssetHandler.getInstance().getSkin();
 		this.region = new TextureRegion();
 		setSprite(skin);
+		setMetrics();
 		updateBaseCoordinates();
 		setBaseCoordinates();
 	}
 
 	/**
-	 * Constructor for testing purposes: takes a Skin and a TextureRegion as
-	 * parameters to allow mocking.
+	 * Constructor for testing purposes: takes a TextureRegion as parameters to
+	 * allow mocking.
 	 * 
-	 * @param skin
-	 *            The Skin object to retrieve all Drawables and styles from.
 	 * @param region
 	 *            The TextureRegion this Tile will use to draw itself.
 	 */
-	public DrawableTile(int index, int value, Skin skin, TextureRegion region) {
+	public DrawableTile(int index, int value, TextureRegion region) {
 		this.index = index;
 		this.value = value;
-		this.skin = skin;
+		this.skin = AssetHandler.getInstance().getSkin();
 		this.region = region;
 		setSprite(skin);
+		setMetrics();
 		updateBaseCoordinates();
 		setBaseCoordinates();
+	}
+
+	private void setMetrics() {
+		setWidth(TILE_WIDTH);
+		setHeight(TILE_HEIGHT);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		Tile tile = (Tile) o;
+		updateValue(tile);
+		updateIndex(tile);
+		updateAnimations(tile);
+	}
+
+	/** Updates the value if the value of the observed Tile has changed. */
+	private void updateValue(Tile tile) {
 		if (value != tile.getValue()) {
 			value = tile.getValue();
 			setSprite(skin);
 		}
+	}
+
+	/** Updates the index if the index of the observed Tile has changed. */
+	private void updateIndex(Tile tile) {
 		if (index != tile.getIndex()) {
 			index = tile.getIndex();
 			updateBaseCoordinates();
 			setBaseCoordinates();
 		}
+	}
+
+	/** Updates the animations after the observed Tile has changed. */
+	private void updateAnimations(Tile tile) {
 		if (tile.shouldMerge()) {
 			merge();
 		}
-		 if (tile.shouldMove()) {
-			 move(tile.getDestination());
-		 }
+		if (tile.shouldMove()) {
+			move(tile.getDestination());
+		}
 		if (tile.shouldSpawn()) {
 			spawn();
 		}
 		finishActions();
 	}
 
+	/**
+	 * Finished the current animations if stopping conditions are met by the
+	 * observed Tile.
+	 */
 	private void finishActions() {
 		if (value == 0) {
 			if (getActions().contains(spawnAction, true)) {
@@ -239,16 +267,6 @@ public class DrawableTile extends Actor implements Observer {
 		return getHeight() / 2 - getHeight() * getScaleY() / 2;
 	}
 
-	@Override
-	public float getWidth() {
-		return TILE_WIDTH;
-	}
-
-	@Override
-	public float getHeight() {
-		return TILE_HEIGHT;
-	}
-
 	/**
 	 * Moves the TextureRegion to the new Texture, belonging to the current
 	 * value of the Tile.
@@ -259,11 +277,13 @@ public class DrawableTile extends Actor implements Observer {
 	private void setSprite(Skin skin) {
 		region.setRegion(skin.getRegion("tile" + this.value));
 	}
-	
+
+	/** Returns the value of the DrawableTile. */
 	public int getValue() {
 		return value;
 	}
-	
+
+	/** Returns the index of the DrawableTile. */
 	public int getIndex() {
 		return index;
 	}

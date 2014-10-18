@@ -7,6 +7,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,8 @@ public class DrawableTileTest {
 	@Before
 	public void setup() {	
 		MockitoAnnotations.initMocks(this);
-		tile = new DrawableTile(5, 0, skin, texture);
+		AssetHandler.getInstance().setSkin(skin);
+		tile = new DrawableTile(5, 0, texture);
 	}
 
 	@Test
