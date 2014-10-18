@@ -13,6 +13,7 @@ import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.utils.handlers.ProgressHandler;
 import nl.tudelft.ti2206.utils.input.InputHandler;
+import nl.tudelft.ti2206.utils.states.RunningState;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -98,7 +99,7 @@ public class GameScreen extends Screen {
 		stage.addActor(redoButton);
 
 		/* After creating the screen, start the game. */
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+		TwentyFourtyGame.setState(RunningState.getInstance());
 	}
 
 	@Override

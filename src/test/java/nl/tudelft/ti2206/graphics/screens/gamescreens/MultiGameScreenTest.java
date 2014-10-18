@@ -18,9 +18,9 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.graphics.drawables.Scores;
 import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
-import nl.tudelft.ti2206.graphics.screens.gamescreens.MultiGameScreen;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.net.Networking;
+import nl.tudelft.ti2206.utils.states.WaitingState;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -144,7 +144,7 @@ public class MultiGameScreenTest {
 	 */
 	@Test
 	public void testUpdateConnectionLost() {
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
+		TwentyFourtyGame.setState(WaitingState.getInstance());
 		when(networking.isConnectionLost()).thenReturn(true);
 		when(grid.getPossibleMoves()).thenReturn(1);
 		gameScreen.update();

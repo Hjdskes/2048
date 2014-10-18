@@ -8,6 +8,7 @@ import java.util.Stack;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.utils.handlers.TileHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.states.RunningState;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.
@@ -181,7 +182,7 @@ public class Grid extends Observable implements Cloneable {
 		undo.clear();
 		redo.clear();
 
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+		TwentyFourtyGame.setState(RunningState.getInstance());
 		changed();
 	}
 

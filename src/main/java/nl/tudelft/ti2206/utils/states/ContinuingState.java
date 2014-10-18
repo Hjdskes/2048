@@ -9,16 +9,22 @@ import nl.tudelft.ti2206.gameobjects.Grid;
  */
 public class ContinuingState implements GameState{
 	
-	/**
-	* The update(grid) method is used to update singleplayer states.
-	*/
+	/** The unique singleton instance of this class. */
+	private static ContinuingState instance = new ContinuingState();
+	
+	/** Overrides the default constructor. */
+	private ContinuingState() {		
+	}
+	
+	/** @return The singleton instance of the state*/
+	public static ContinuingState getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void update(Grid grid) {	
 	}
 
-	/**
-	 * The update(grid,grid) method is used to update multiplayer states.
-	 */
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {	
 	}

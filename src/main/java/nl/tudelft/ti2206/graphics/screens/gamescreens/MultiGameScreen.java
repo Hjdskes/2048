@@ -12,6 +12,7 @@ import nl.tudelft.ti2206.utils.input.LocalInputHandler;
 import nl.tudelft.ti2206.utils.input.RemoteInputHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.net.Networking;
+import nl.tudelft.ti2206.utils.states.RunningState;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -142,7 +143,7 @@ public class MultiGameScreen extends Screen {
 		stage.addListener(new LocalInputHandler(localGrid));
 
 		/* After creating the screen, start the game. */
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+		TwentyFourtyGame.setState(RunningState.getInstance());
 	}
 
 	/**

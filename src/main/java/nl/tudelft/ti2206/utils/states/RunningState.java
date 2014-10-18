@@ -11,6 +11,9 @@ import nl.tudelft.ti2206.utils.log.Logger;
  */
 
 public class RunningState implements GameState {
+	
+	/** The singleton reference to the Logger instance. */
+	private static RunningState instance = new RunningState();
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
@@ -21,19 +24,26 @@ public class RunningState implements GameState {
 	/** The singleton reference to the ScreenHandler class. */
 	private ScreenHandler screenHandler = ScreenHandler.getInstance();
 
-	public RunningState() {}
+	/** Overrides the default constructor. */
+	private RunningState() {}
+	
 	/** Constructor for mock insertion only. */
 	public RunningState(ScreenHandler h) {
 		this.screenHandler = h;
 	}
 	
+	/** @return The singleton instance of the state*/
+	public static RunningState getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void update(Grid grid) {
 		if (grid.getCurrentHighestTile() == 11) {
-			TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+			TwentyFourtyGame.setState(WonState.getInstance());
 			screenHandler.getScreen().addLWOverlay(false, true, grid);
 		} else if (grid.getPossibleMoves() == 0) {
-			TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+			TwentyFourtyGame.setState(LostState.getInstance());
 			screenHandler.getScreen().addLWOverlay(false, false, grid);
 		}
 	}
@@ -82,7 +92,7 @@ public class RunningState implements GameState {
 				"Local player won the multiplayer game. The score of the local player: "
 						+ Integer.toString(localGrid.getScore()));
 
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		TwentyFourtyGame.setState(WonState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, true, null);
 	}
 	
@@ -92,7 +102,7 @@ public class RunningState implements GameState {
 						+ Integer.toString(localGrid.getScore()));
 		
 		screenHandler.getScreen().addMultiWaitScreenOverlay(true);
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
+		TwentyFourtyGame.setState(WaitingState.getInstance());
 	}
 	
 	private void remoteWon(Grid remoteGrid) {
@@ -100,7 +110,7 @@ public class RunningState implements GameState {
 				"Local player lost the multiplayer game. The score of the remote player: "
 						+ Integer.toString(remoteGrid.getScore()));
 
-		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		TwentyFourtyGame.setState(LostState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, false, null);
 	}
 	
@@ -109,7 +119,7 @@ public class RunningState implements GameState {
 				"Local player lost the multiplayer game. The score of the remote player: "
 						+ Integer.toString(remoteGrid.getScore()));
 
-		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		TwentyFourtyGame.setState(LostState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, false, null);
 	}
 	
@@ -118,7 +128,7 @@ public class RunningState implements GameState {
 				"Local player won the multiplayer game. The score of the local player: "
 						+ Integer.toString(localGrid.getScore()));
 
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		TwentyFourtyGame.setState(WonState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, true, null);
 	}
 }

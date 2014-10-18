@@ -13,6 +13,7 @@ import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.input.InputHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.states.RunningState;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -131,7 +132,7 @@ public class UserComputerScreen extends Screen {
 		gridSolver.start();
 
 		/* After creating the screen, start the game. */
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+		TwentyFourtyGame.setState(RunningState.getInstance());
 	}
 
 	/** Create our local groups and actors. */

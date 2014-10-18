@@ -35,13 +35,6 @@ public class TwentyFourtyGame extends Game {
 
 	/** The current state of the game. */
 	private static GameState curState;
-	
-	/** List of possible States*/
-	private static GameState runningState = new RunningState();
-	private static GameState wonState = new WonState();
-	private static GameState lostState = new LostState();
-	private static GameState continuingState = new ContinuingState();
-	private static GameState waitingState = new WaitingState();
 
 	/** The AssetHandler instance. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
@@ -145,41 +138,6 @@ public class TwentyFourtyGame extends Game {
 		return (curState instanceof WaitingState);
 	}
 	
-
-	/**
-	 * @return GameState The running game state.
-	 */
-	public static GameState getRunningState() {
-		return runningState;
-	}
-
-	/**
-	 * @return GameState The won game state.
-	 */
-	public static GameState getWonState() {
-		return wonState;
-	}
-
-	/**
-	 * @return GameState The lost game state.
-	 */
-	public static GameState getLostState() {
-		return lostState;
-	}
-
-	/**
-	 * @return GameState The continuing game state.
-	 */
-	public static GameState getContinuingState() {
-		return continuingState;
-	}
-
-	/**
-	 * @return GameState The waiting game state.
-	 */
-	public static GameState getWaitingState() {
-		return waitingState;
-	}
 
 	/** Mock insertion method. Used for testing only. */
 	public void setMockObjects(ScreenHandler screenHandlerMock,

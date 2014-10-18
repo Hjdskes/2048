@@ -6,6 +6,10 @@ import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.states.ContinuingState;
+import nl.tudelft.ti2206.utils.states.LostState;
+import nl.tudelft.ti2206.utils.states.RunningState;
+import nl.tudelft.ti2206.utils.states.WonState;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,8 +87,8 @@ public class TwentyFourtyLauncherTest {
 	 */
 	@Test
 	public void testGetState() {
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
-		assertEquals(TwentyFourtyGame.getWonState(),
+		TwentyFourtyGame.setState(WonState.getInstance());
+		assertEquals(WonState.getInstance(),
 				TwentyFourtyGame.getState());
 	}
 
@@ -93,7 +97,7 @@ public class TwentyFourtyLauncherTest {
 	 */
 	@Test
 	public void testIsRunning() {
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+		TwentyFourtyGame.setState(RunningState.getInstance());
 		assertTrue(TwentyFourtyGame.isRunning());
 	}
 
@@ -102,7 +106,7 @@ public class TwentyFourtyLauncherTest {
 	 */
 	@Test
 	public void testIsWon() {
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		TwentyFourtyGame.setState(WonState.getInstance());
 		assertTrue(TwentyFourtyGame.isWon());
 	}
 
@@ -111,7 +115,7 @@ public class TwentyFourtyLauncherTest {
 	 */
 	@Test
 	public void testIsLost() {
-		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		TwentyFourtyGame.setState(LostState.getInstance());
 		assertTrue(TwentyFourtyGame.isLost());
 	}
 
@@ -120,7 +124,7 @@ public class TwentyFourtyLauncherTest {
 	 */
 	@Test
 	public void testIsContinuing() {
-		TwentyFourtyGame.setState(TwentyFourtyGame.getContinuingState());
+		TwentyFourtyGame.setState(ContinuingState.getInstance());
 		assertTrue(TwentyFourtyGame.isContinuing());
 	}
 }
