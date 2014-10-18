@@ -53,6 +53,16 @@ public class ScoresTest {
 
 		scores = new Scores(label);
 	}
+	
+	@Test
+	public void testInit() {
+		verify(label, times(3)).setHeight(anyInt());
+		verify(label, times(3)).setWidth(anyInt());
+		
+		verify(label, times(3)).setX(anyInt());
+		verify(label, times(3)).setY(anyInt());
+		verify(label, times(3)).setAlignment(anyInt(), anyInt());
+	}
 
 	@Test
 	public void testGetSetHighScore() {
@@ -70,16 +80,6 @@ public class ScoresTest {
 		scores.setHighestTile(1);
 		assertEquals(Integer.MAX_VALUE, scores.getHighestTile());
 		Gdx.app.getPreferences("2048").putInteger("highscore", curScore);
-	}
-
-	@Test
-	public void testGetX() {
-		assertEquals(100, (int) scores.getX());
-	}
-
-	@Test
-	public void testGetY() {
-		assertEquals(520, (int) scores.getY());
 	}
 
 	@Test

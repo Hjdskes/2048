@@ -48,7 +48,15 @@ public class Scores extends Group implements Observer {
 	public Scores() {
 		highestTile = (int) Math.pow(2, prefsHandler.getHighestTile());
 		highScore = prefsHandler.getHighscore();
-		initLabels();
+		
+		scoreLabel = new Label(Integer.toString(prefsHandler.getScore()),
+				assetHandler.getSkin(), "score");
+		highScoreLabel = new Label(Integer.toString(highScore),
+				assetHandler.getSkin(), "highscore");
+		highestTileLabel = new Label(Integer.toString(highestTile),
+				assetHandler.getSkin(), "highest");
+		
+		setLabelMetrics();
 
 		addLabelsToGroup();
 		setLabelLocations();
@@ -56,32 +64,26 @@ public class Scores extends Group implements Observer {
 
 	/** Constructor for testing purposes only */
 	public Scores(Label mockLabel) {
+		highestTile = (int) Math.pow(2, prefsHandler.getHighestTile());
 		this.scoreLabel = mockLabel;
 		this.highScoreLabel = mockLabel;
 		this.highestTileLabel = mockLabel;
 
+		setLabelMetrics();
 		addLabelsToGroup();
 		setLabelLocations();
-		highestTile = (int) Math.pow(2, prefsHandler.getHighestTile());
 	}
 
 	/**
-	 * Initializes all Labels for the scores. It creates the label and sets its
-	 * style and location.
+	 * Sets the Label width and height
 	 */
-	private void initLabels() {
-		scoreLabel = new Label(Integer.toString(prefsHandler.getScore()),
-				assetHandler.getSkin(), "score");
+	private void setLabelMetrics() {
 		scoreLabel.setHeight(HEIGHT);
 		scoreLabel.setWidth(SCORE_WIDTH);
 
-		highScoreLabel = new Label(Integer.toString(highScore),
-				assetHandler.getSkin(), "highscore");
 		highScoreLabel.setHeight(HEIGHT);
 		highScoreLabel.setWidth(SCORE_WIDTH);
 
-		highestTileLabel = new Label(Integer.toString(highestTile),
-				assetHandler.getSkin(), "highest");
 		highestTileLabel.setHeight(HEIGHT);
 		highestTileLabel.setWidth(HIGHEST_WIDTH);
 	}
@@ -113,23 +115,7 @@ public class Scores extends Group implements Observer {
 	}
 
 	/**
-	 * @return The x-coordinate of the score tile.
-	 */
-	@Override
-	public float getX() {
-		return LABEL_X;
-	}
-
-	/**
-	 * @return The y-coordinate for all score tiles.
-	 */
-	@Override
-	public float getY() {
-		return LABEL_Y;
-	}
-
-	/**
-	 * @return The current high score. Is not necessarily higher than the saved
+	 * @return The current high score. It is not necessarily higher than the saved
 	 *         high score. This is checked when saving the game.
 	 */
 	public int getHighScore() {
