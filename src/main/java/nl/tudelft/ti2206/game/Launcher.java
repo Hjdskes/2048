@@ -1,8 +1,5 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.log.Logger.LogLevel;
-
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -18,9 +15,6 @@ public class Launcher {
 	/** The configuration for the game window. */
 	LwjglApplicationConfiguration config;
 
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
-
 	/**
 	 * Main entry point for the game.
 	 * 
@@ -30,33 +24,6 @@ public class Launcher {
 	 *            debug, all. Log to a file: file.
 	 */
 	public static void main(String[] args) {
-		/* Default log level. */
-		LogLevel logLevel = LogLevel.ALL;
-
-		if (args.length > 0 && !args[0].isEmpty()) {
-			if (args[0].equalsIgnoreCase("all")) {
-				logLevel = LogLevel.ALL;
-			} else if (args[0].equalsIgnoreCase("info")) {
-				logLevel = LogLevel.INFO;
-			} else if (args[0].equalsIgnoreCase("error")) {
-				logLevel = LogLevel.ERROR;
-			} else if (args[0].equalsIgnoreCase("debug")) {
-				logLevel = LogLevel.DEBUG;
-			} else if (args[0].equalsIgnoreCase("none")) {
-				logLevel = LogLevel.NONE;
-			}
-		}
-
-		logger.setLevel(logLevel);
-		logger.info("Launcher", "Set log level to: " + logLevel);
-
-		if (logLevel.ordinal() > LogLevel.NONE.ordinal() && args.length > 1
-				&& !args[1].isEmpty()) {
-			if (args[1].equalsIgnoreCase("file")) {
-				logger.setLogFile("2048");
-			}
-		}
-
 		Launcher launcher = new Launcher();
 		launcher.launch();
 	}
