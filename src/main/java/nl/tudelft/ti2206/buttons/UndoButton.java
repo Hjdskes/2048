@@ -13,7 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to undo a move.
+ * A button that calls the execute method of the UndoCommand class when pressed.
+ * Extends the TextButton class from the GDX library.
  */
 public class UndoButton extends TextButton {
 	/** Constructs a new UndoButton. */
@@ -21,7 +22,9 @@ public class UndoButton extends TextButton {
 		super("Undo", AssetHandler.getInstance().getSkin(), "small");
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
-		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2 - TwentyFourtyGame.GAP / 2 + 3 * (DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP));
+		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2
+				- TwentyFourtyGame.GAP / 2 + 3
+				* (DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP));
 		this.setY(DrawableGrid.GRID_Y / 2 - this.getHeight() / 2);
 
 		this.addListener(new ClickListener() {

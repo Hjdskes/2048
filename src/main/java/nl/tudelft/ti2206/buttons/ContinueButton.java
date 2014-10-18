@@ -9,7 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to continue playing after having won.
+ * A button to continue playing after having made a 2048 value tile. Extends the
+ * TextButton class from the GDX library.
  */
 public class ContinueButton extends TextButton {
 

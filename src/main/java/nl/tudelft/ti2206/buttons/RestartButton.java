@@ -15,7 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to restart the current game.
+ * A button that calls the restart method of the Grid and ScreenHandler classes.
+ * Extends the TextButton class from the GDX library.
  */
 public class RestartButton extends TextButton {
 
