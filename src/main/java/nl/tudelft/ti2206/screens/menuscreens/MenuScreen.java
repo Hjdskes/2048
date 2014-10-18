@@ -3,13 +3,14 @@ package nl.tudelft.ti2206.screens.menuscreens;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.screens.gamescreens.GameScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -30,6 +31,9 @@ public class MenuScreen extends Screen {
 
 	/** The button to launch a player versus computer game. */
 	private TextButton versusComputer;
+	
+	/** The button to go to the settings menu. */
+	private ImageButton settings;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
@@ -51,16 +55,18 @@ public class MenuScreen extends Screen {
 		multiPlayer = new TextButton("Multiplayer", assetHandler.getSkin());
 		versusComputer = new TextButton("Challenge me!",
 				assetHandler.getSkin());
+		settings = new ImageButton(assetHandler.getSkin().getDrawable("settings"));
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only. */
-	public MenuScreen(Stage stage, Label label, TextButton button) {
+	public MenuScreen(Stage stage, Label label, TextButton button, ImageButton settings) {
 		this.stage = stage;
 		this.label = label;
 		this.singlePlayer = button;
 		this.versusComputer = button;
 		this.multiPlayer = button;
+		this.settings = settings;
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
@@ -89,12 +95,23 @@ public class MenuScreen extends Screen {
 				- versusComputer.getWidth() / 2);
 		versusComputer.setY(multiPlayer.getY() - multiPlayer.getHeight() - 4
 				* TwentyFourtyGame.GAP);
+		
+		settings.setX(10);
+		settings.setY(10);
 
+		addActors();
+		setupListeners();
+	}
+	
+	private void addActors() {
 		stage.addActor(label);
 		stage.addActor(singlePlayer);
 		stage.addActor(multiPlayer);
 		stage.addActor(versusComputer);
-
+		stage.addActor(settings);
+	}
+	
+	private void setupListeners() {
 		singlePlayer.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -113,6 +130,13 @@ public class MenuScreen extends Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				screenHandler.set(new DifficultyScreen());
+			}
+		});
+		
+		settings.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				screenHandler.set(new SettingsScreen());
 			}
 		});
 	}
