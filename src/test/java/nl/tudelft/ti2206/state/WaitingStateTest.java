@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.graphics.screens.Screen;
+import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
+import nl.tudelft.ti2206.utils.states.WaitingState;
 
 import org.junit.Before;
 import org.junit.Test;

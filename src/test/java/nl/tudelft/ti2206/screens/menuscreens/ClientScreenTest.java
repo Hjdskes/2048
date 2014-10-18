@@ -5,9 +5,9 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.screens.menuscreens.ClientScreen;
+import nl.tudelft.ti2206.graphics.buttons.MenuButton;
+import nl.tudelft.ti2206.graphics.screens.menuscreens.ClientScreen;
 
 import org.junit.Before;
 import org.junit.Test;

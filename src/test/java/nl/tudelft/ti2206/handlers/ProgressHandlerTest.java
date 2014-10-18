@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.handlers;
 import static org.junit.Assert.*;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
+import nl.tudelft.ti2206.utils.handlers.ProgressHandler;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

@@ -13,7 +13,7 @@ import java.util.Stack;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.handlers.TileHandler;
+import nl.tudelft.ti2206.utils.handlers.TileHandler;
 
 import org.junit.Before;
 import org.junit.Test;

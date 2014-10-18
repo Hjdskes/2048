@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.screens.overlays;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
+import nl.tudelft.ti2206.graphics.screens.overlays.CountDownScreen;
 
 import org.junit.Before;
 import org.junit.Test;

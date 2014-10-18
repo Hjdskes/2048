@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.solver.GridSolver.Strategy;
+import nl.tudelft.ti2206.utils.ai.GridSolver;
+import nl.tudelft.ti2206.utils.ai.HumanSolver;
+import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
+import nl.tudelft.ti2206.utils.log.Logger;
 
 import org.junit.Before;
 import org.junit.Test;

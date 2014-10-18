@@ -6,7 +6,12 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.utils.commands.MoveDownCommand;
+import nl.tudelft.ti2206.utils.commands.MoveLeftCommand;
+import nl.tudelft.ti2206.utils.commands.MoveRightCommand;
+import nl.tudelft.ti2206.utils.commands.MoveUpCommand;
+import nl.tudelft.ti2206.utils.input.RemoteInputHandler;
+import nl.tudelft.ti2206.utils.log.Logger;
 
 import org.junit.Before;
 import org.junit.Test;

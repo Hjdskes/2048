@@ -10,7 +10,9 @@ import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.graphics.drawables.DrawableGrid;
+import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import org.junit.Before;
 import org.junit.Test;

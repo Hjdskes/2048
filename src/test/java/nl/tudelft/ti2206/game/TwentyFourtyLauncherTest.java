@@ -3,9 +3,9 @@ package nl.tudelft.ti2206.game;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
-import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.log.Logger;
 
 import org.junit.Before;
 import org.junit.Test;

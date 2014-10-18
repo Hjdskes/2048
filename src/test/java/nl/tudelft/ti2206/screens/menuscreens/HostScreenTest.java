@@ -6,10 +6,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.MenuButton;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.screens.menuscreens.HostScreen;
+import nl.tudelft.ti2206.graphics.buttons.MenuButton;
+import nl.tudelft.ti2206.graphics.screens.menuscreens.HostScreen;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import org.junit.Before;
 import org.junit.Test;

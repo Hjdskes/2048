@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.utils.ai.HumanSolver;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#lowerRowFull(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#lowerRowFull(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -41,7 +42,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#lowerRowFull(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#lowerRowFull(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -55,7 +56,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#isMergePossibleLowerRow(nl.tudelft.ti2206.gameobjects.Tile[])}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#isMergePossibleLowerRow(nl.tudelft.ti2206.gameobjects.Tile[])}
 	 * .
 	 */
 	@Test
@@ -79,7 +80,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#nextMove(nl.tudelft.ti2206.gameobjects.Grid, int)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#nextMove(nl.tudelft.ti2206.gameobjects.Grid, int)}
 	 * .
 	 */
 	@Test
@@ -90,7 +91,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionComplex(nl.tudelft.ti2206.gameobjects.Grid, int)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#selectDirectionComplex(nl.tudelft.ti2206.gameobjects.Grid, int)}
 	 * .
 	 */
 	@Test
@@ -109,7 +110,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionComplex(nl.tudelft.ti2206.gameobjects.Grid, int)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#selectDirectionComplex(nl.tudelft.ti2206.gameobjects.Grid, int)}
 	 * .
 	 */
 	@Test
@@ -127,7 +128,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -146,7 +147,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -162,7 +163,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -180,7 +181,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#selectDirectionSimple(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -197,7 +198,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#emptyLowerLeft(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#emptyLowerLeft(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -207,7 +208,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#maxLowerLeft(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#maxLowerLeft(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -223,7 +224,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#maxLowerLeft(nl.tudelft.ti2206.gameobjects.Grid)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#maxLowerLeft(nl.tudelft.ti2206.gameobjects.Grid)}
 	 * .
 	 */
 	@Test
@@ -241,7 +242,7 @@ public class HumanSolverTest {
 
 	/**
 	 * Test method for
-	 * {@link nl.tudelft.ti2206.solver.HumanSolver#selectMove(nl.tudelft.ti2206.gameobjects.Grid, int)}
+	 * {@link nl.tudelft.ti2206.utils.ai.HumanSolver#selectMove(nl.tudelft.ti2206.gameobjects.Grid, int)}
 	 * .
 	 */
 	@Test

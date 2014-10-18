@@ -7,8 +7,9 @@ import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.log.Logger.LogLevel;
+import nl.tudelft.ti2206.utils.ai.Solver;
+import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import org.junit.Before;
 import org.junit.Test;

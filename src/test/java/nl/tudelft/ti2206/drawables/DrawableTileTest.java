@@ -6,6 +6,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.gameobjects.Tile;
+import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
 
 import org.junit.Before;
 import org.junit.Test;

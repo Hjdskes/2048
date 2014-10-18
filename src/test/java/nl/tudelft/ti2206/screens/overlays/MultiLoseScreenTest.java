@@ -2,7 +2,8 @@ package nl.tudelft.ti2206.screens.overlays;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
-import nl.tudelft.ti2206.buttons.MenuButton;
+import nl.tudelft.ti2206.graphics.buttons.MenuButton;
+import nl.tudelft.ti2206.graphics.screens.overlays.MultiLoseScreen;
 
 import org.junit.Before;
 import org.junit.Test;

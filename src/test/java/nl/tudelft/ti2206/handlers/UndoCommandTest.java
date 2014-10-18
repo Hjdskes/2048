@@ -6,6 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.utils.commands.Command;
+import nl.tudelft.ti2206.utils.commands.MoveDownCommand;
+import nl.tudelft.ti2206.utils.commands.MoveLeftCommand;
+import nl.tudelft.ti2206.utils.commands.MoveUpCommand;
+import nl.tudelft.ti2206.utils.commands.UndoCommand;
 
 public class UndoCommandTest {
 

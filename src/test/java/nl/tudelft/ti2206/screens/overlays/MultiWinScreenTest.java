@@ -3,8 +3,9 @@ package nl.tudelft.ti2206.screens.overlays;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.screens.gamescreens.MultiGameScreen;
+import nl.tudelft.ti2206.graphics.buttons.MenuButton;
+import nl.tudelft.ti2206.graphics.screens.gamescreens.MultiGameScreen;
+import nl.tudelft.ti2206.graphics.screens.overlays.MultiWinScreen;
 
 import org.junit.Before;
 import org.junit.Test;

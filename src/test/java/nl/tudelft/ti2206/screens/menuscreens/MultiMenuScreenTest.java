@@ -6,11 +6,12 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.buttons.MenuButton;
-import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.graphics.buttons.MenuButton;
+import nl.tudelft.ti2206.graphics.drawables.Scores;
+import nl.tudelft.ti2206.graphics.screens.menuscreens.MultiMenuScreen;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import org.junit.Before;
 import org.junit.Test;

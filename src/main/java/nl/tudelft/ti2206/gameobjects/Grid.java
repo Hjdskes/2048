@@ -6,8 +6,8 @@ import java.util.Observable;
 import java.util.Stack;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
-import nl.tudelft.ti2206.handlers.TileHandler;
-import nl.tudelft.ti2206.log.Logger;
+import nl.tudelft.ti2206.utils.handlers.TileHandler;
+import nl.tudelft.ti2206.utils.log.Logger;
 
 /**
  * This class represents the 4x4 grid you see when playing 2048.

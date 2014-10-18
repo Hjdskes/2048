@@ -4,6 +4,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
+import nl.tudelft.ti2206.utils.commands.MoveDownCommand;
+import nl.tudelft.ti2206.utils.commands.MoveLeftCommand;
+import nl.tudelft.ti2206.utils.commands.MoveRightCommand;
+import nl.tudelft.ti2206.utils.commands.MoveUpCommand;
+import nl.tudelft.ti2206.utils.input.LocalInputHandler;
 
 import org.junit.Before;
 import org.junit.Test;

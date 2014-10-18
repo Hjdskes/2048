@@ -8,7 +8,8 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.handlers.TileHandler;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.handlers.TileHandler;
 
 import org.junit.Before;
 import org.junit.Test;

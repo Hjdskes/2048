@@ -8,7 +8,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import org.junit.Before;
 import org.junit.Test;

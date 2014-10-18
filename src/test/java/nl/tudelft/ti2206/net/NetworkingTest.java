@@ -13,7 +13,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 
 import nl.tudelft.ti2206.game.HeadlessLauncher;
-import nl.tudelft.ti2206.net.Networking.Mode;
+import nl.tudelft.ti2206.utils.net.Networking;
+import nl.tudelft.ti2206.utils.net.Networking.Mode;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

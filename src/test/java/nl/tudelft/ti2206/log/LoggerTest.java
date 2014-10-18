@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.log;
 
 import static org.junit.Assert.*;
+import nl.tudelft.ti2206.utils.log.Logger;
 
 import org.junit.Before;
 import org.junit.Test;

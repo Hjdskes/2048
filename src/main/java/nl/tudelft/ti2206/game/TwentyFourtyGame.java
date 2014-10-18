@@ -1,16 +1,16 @@
 package nl.tudelft.ti2206.game;
 
-import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.log.Logger;
-import nl.tudelft.ti2206.net.Networking;
-import nl.tudelft.ti2206.screens.menuscreens.MenuScreen;
-import nl.tudelft.ti2206.state.ContinuingState;
-import nl.tudelft.ti2206.state.GameState;
-import nl.tudelft.ti2206.state.LostState;
-import nl.tudelft.ti2206.state.RunningState;
-import nl.tudelft.ti2206.state.WaitingState;
-import nl.tudelft.ti2206.state.WonState;
+import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
+import nl.tudelft.ti2206.graphics.screens.menuscreens.MenuScreen;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.net.Networking;
+import nl.tudelft.ti2206.utils.states.ContinuingState;
+import nl.tudelft.ti2206.utils.states.GameState;
+import nl.tudelft.ti2206.utils.states.LostState;
+import nl.tudelft.ti2206.utils.states.RunningState;
+import nl.tudelft.ti2206.utils.states.WaitingState;
+import nl.tudelft.ti2206.utils.states.WonState;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

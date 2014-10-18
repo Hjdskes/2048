@@ -12,14 +12,15 @@ import static org.mockito.Mockito.when;
 
 import java.util.Observer;
 
-import nl.tudelft.ti2206.drawables.Scores;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.handlers.AssetHandler;
-import nl.tudelft.ti2206.handlers.ScreenHandler;
-import nl.tudelft.ti2206.net.Networking;
-import nl.tudelft.ti2206.screens.Screen;
+import nl.tudelft.ti2206.graphics.drawables.Scores;
+import nl.tudelft.ti2206.graphics.screens.Screen;
+import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
+import nl.tudelft.ti2206.graphics.screens.gamescreens.MultiGameScreen;
+import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.net.Networking;
 
 import org.junit.Before;
 import org.junit.Test;
