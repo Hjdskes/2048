@@ -57,30 +57,6 @@ public abstract class Screen implements Disposable {
 	}
 
 	/**
-	 * Pauses the screen.
-	 */
-	public void pause() {
-	}
-
-	/**
-	 * Called when the screen is resized.
-	 * 
-	 * @param width
-	 *            The new game window width (in pixels).
-	 * @param height
-	 *            The new game window height (in pixels).
-	 */
-	public void resize(int width, int height) {
-	}
-
-	/**
-	 * Resumes the screen after a pause.
-	 */
-	public void resume() {
-		Gdx.input.setInputProcessor(stage);
-	}
-
-	/**
 	 * Updates the screen.
 	 */
 	public void update() {

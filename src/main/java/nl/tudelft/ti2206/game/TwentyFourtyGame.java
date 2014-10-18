@@ -79,11 +79,6 @@ public class TwentyFourtyGame extends Game {
 		logger.dispose();
 	}
 
-	@Override
-	public void resize(int width, int height) {
-		screenHandler.resize(width, height);
-	}
-
 	/**
 	 * Sets the new state of the game.
 	 * 

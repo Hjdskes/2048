@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.graphics.screens;
 
-import com.badlogic.gdx.Gdx;
 
 /**
  * The ScreenHandler is responsible for managing all the screens.
@@ -38,7 +37,6 @@ public class ScreenHandler {
 		}
 		this.screen = screen;
 		screen.create();
-		screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	/**
@@ -53,32 +51,6 @@ public class ScreenHandler {
 	 */
 	public void draw() {
 		screen.draw();
-	}
-
-	/**
-	 * Pauses the screen.
-	 */
-	public void pause() {
-		screen.pause();
-	}
-
-	/**
-	 * Resizes the screen.
-	 *
-	 * @param width
-	 *            The new game window width (in pixels).
-	 * @param height
-	 *            The new game window height (in pixels).
-	 */
-	public void resize(int width, int height) {
-		screen.resize(width, height);
-	}
-
-	/**
-	 * Resumes the screen.
-	 */
-	public void resume() {
-		screen.resume();
 	}
 
 	/**

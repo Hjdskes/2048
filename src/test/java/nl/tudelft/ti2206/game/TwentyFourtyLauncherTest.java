@@ -73,16 +73,6 @@ public class TwentyFourtyLauncherTest {
 	}
 
 	/**
-	 * Tests if the render method invokes the correct methods in the
-	 * screenHandler.
-	 */
-	@Test
-	public void testResize() {
-		game.resize(0, 0);
-		verify(screenHandler).resize(0, 0);
-	}
-
-	/**
 	 * Tests if the getter of the state returns the current state.
 	 */
 	@Test
