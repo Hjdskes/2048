@@ -26,6 +26,7 @@ public class InputHandler extends InputListener {
 	/** Get current class name, used for logging output. */
 	private final String className = this.getClass().getSimpleName();
 
+	/** The current command that can be executed. */
 	private Command command;
 
 	/**
