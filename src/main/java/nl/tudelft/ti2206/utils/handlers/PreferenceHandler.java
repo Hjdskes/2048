@@ -128,8 +128,11 @@ public class PreferenceHandler {
 
 	/** @return Returns the saved LogLevel, null if no level is saved. */
 	public LogLevel getLogLevel() {
+		if (!prefs.contains("loglevel")) {
+			return LogLevel.ALL;
+		}
 		String level = prefs.getString("loglevel");
-		return level.equals("") ? LogLevel.ALL : LogLevel.valueOf(level);
+		return LogLevel.valueOf(level);
 	}
 
 	/** Sets the LogLevel as specified by the user. */

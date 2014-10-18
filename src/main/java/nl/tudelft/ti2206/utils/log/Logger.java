@@ -23,7 +23,7 @@ public class Logger implements Disposable {
 	private PrintWriter file;
 
 	/** Current logging level verbosity. */
-	private LogLevel level;
+	private LogLevel level = LogLevel.ALL;
 
 	public enum LogLevel {
 		NONE, INFO, ERROR, DEBUG, ALL
