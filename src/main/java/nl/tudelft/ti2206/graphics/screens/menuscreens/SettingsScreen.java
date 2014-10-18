@@ -37,7 +37,7 @@ public class SettingsScreen extends Screen {
 	 */
 	public SettingsScreen() {
 		stage = new Stage();
-		
+
 		slider = new Slider(0, 400, 100, false, AssetHandler.getInstance()
 				.getSkin());
 		setupSlider();
@@ -45,11 +45,11 @@ public class SettingsScreen extends Screen {
 		levelLabel = new Label("Log Level: " + updateLevel(), AssetHandler
 				.getInstance().getSkin());
 		setupLevelLabel();
-		
+
 		checkBox = new CheckBox("    Enable logging to file", AssetHandler
 				.getInstance().getSkin());
 		setupCheckBox();
-		
+
 		menuButton = new MenuButton();
 		setListeners();
 		addActors();
@@ -58,14 +58,16 @@ public class SettingsScreen extends Screen {
 	}
 
 	/** Constructor for testing purposes only. */
-	public SettingsScreen(MenuButton button, Slider slider, Label label,
-			CheckBox checkBox) {
+	public SettingsScreen(Stage stage, MenuButton button, Slider slider,
+			Label label, CheckBox checkBox) {
+		this.stage = stage;
 		this.slider = slider;
 		this.levelLabel = label;
 		this.checkBox = checkBox;
 		this.menuButton = button;
 		setupMenuButton();
 		setupLevelLabel();
+		setupSlider();
 		setupCheckBox();
 		setListeners();
 		addActors();
@@ -142,7 +144,7 @@ public class SettingsScreen extends Screen {
 	}
 
 	/** Updates the loglevel and returns the loglevel string. */
-	private String updateLevel() {
+	public String updateLevel() {
 		switch ((int) slider.getValue()) {
 		case 0:
 			logger.setLevel(LogLevel.NONE);
@@ -163,7 +165,8 @@ public class SettingsScreen extends Screen {
 		return null;
 	}
 
-	private int getSliderValue() {
+	/** @return The value of the slider, depending on the current loglevel. */
+	public int getSliderValue() {
 		switch (logger.getLevel()) {
 		case NONE:
 			return 0;
@@ -184,6 +187,5 @@ public class SettingsScreen extends Screen {
 		super.dispose();
 		PreferenceHandler.getInstance().setLogLevel(logger.getLevel().name());
 		PreferenceHandler.getInstance().setLogFileEnabled(checkBox.isChecked());
-		System.out.println(logger.getLevel().name());
 	}
 }
