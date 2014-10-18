@@ -19,9 +19,6 @@ public class Launcher {
 	 * Main entry point for the game.
 	 * 
 	 * @param args
-	 *            The command line arguments. These are case-insensitive.
-	 *            Supported arguments are: Set the log level: none, info, error,
-	 *            debug, all. Log to a file: file.
 	 */
 	public static void main(String[] args) {
 		Launcher launcher = new Launcher();

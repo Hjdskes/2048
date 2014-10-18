@@ -24,6 +24,10 @@ import com.badlogic.gdx.Gdx;
  * actors.
  */
 public class TwentyFourtyGame extends Game {
+	/** Get current class name, used for logging output. */
+	private static final String CLASSNAME = TwentyFourtyGame.class
+			.getSimpleName();
+
 	/** The width of the game */
 	public static final int GAME_WIDTH = 600;
 
@@ -35,8 +39,8 @@ public class TwentyFourtyGame extends Game {
 
 	/** The current state of the game. */
 	private static GameState curState;
-	
-	/** List of possible States*/
+
+	/** List of possible States */
 	private static GameState runningState = new RunningState();
 	private static GameState wonState = new WonState();
 	private static GameState lostState = new LostState();
@@ -44,7 +48,7 @@ public class TwentyFourtyGame extends Game {
 	private static GameState waitingState = new WaitingState();
 
 	/** The AssetHandler instance. */
-	private AssetHandler assetHandler = AssetHandler.getInstance();
+	private static AssetHandler assetHandler = AssetHandler.getInstance();
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
@@ -52,21 +56,17 @@ public class TwentyFourtyGame extends Game {
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
-
 	@Override
 	public void create() {
 		logger.setLevel(PreferenceHandler.getInstance().getLogLevel());
-		logger.info(className, "Launching game...");
-		logger.debug(className, "Skin is loaded and menu screen is launched.");
+		logger.info(CLASSNAME, "Launching game...");
+		logger.debug(CLASSNAME, "Skin is loaded and menu screen is launched.");
 
 		/* Load all our assets. */
 		assetHandler.load();
-		assetHandler.loadSkinFile(Gdx.files
-				.internal("skin.json"));
+		assetHandler.loadSkinFile(Gdx.files.internal("skin.json"));
 
-		/* Push a menu screen onto the screen stack. */
+		/* Show a menu screen. */
 		screenHandler.set(new MenuScreen());
 	}
 
@@ -79,7 +79,7 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void dispose() {
-		logger.info(className, "Closing game...");
+		logger.info(CLASSNAME, "Closing game...");
 		Networking.getInstance().disconnect();
 		screenHandler.dispose();
 		assetHandler.dispose();
@@ -89,13 +89,6 @@ public class TwentyFourtyGame extends Game {
 	@Override
 	public void resize(int width, int height) {
 		screenHandler.resize(width, height);
-	}
-
-	/**
-	 * @return The current game state.
-	 */
-	public static GameState getState() {
-		return curState;
 	}
 
 	/**
@@ -110,41 +103,48 @@ public class TwentyFourtyGame extends Game {
 		curState = state;
 	}
 
+
+	/**
+	 * @return The current game state.
+	 */
+	public static GameState getState() {
+		return curState;
+	}
+	
 	/**
 	 * @return True if the game is currently running.
 	 */
 	public static boolean isRunning() {
-		return (curState instanceof RunningState);
+		return curState instanceof RunningState;
 	}
 
 	/**
 	 * @return True if the current game is lost.
 	 */
 	public static boolean isLost() {
-		return (curState instanceof LostState);
+		return curState instanceof LostState;
 	}
 
 	/**
 	 * @return True if the current game is won.
 	 */
 	public static boolean isWon() {
-		return (curState instanceof WonState);
+		return curState instanceof WonState;
 	}
 
 	/**
 	 * @return True if game is in continuing state.
 	 */
 	public static boolean isContinuing() {
-		return 	(curState instanceof ContinuingState);
+		return curState instanceof ContinuingState;
 	}
-	
+
 	/**
 	 * @return True if game is in waiting state.
 	 */
 	public static boolean isWaiting() {
-		return (curState instanceof WaitingState);
+		return curState instanceof WaitingState;
 	}
-	
 
 	/**
 	 * @return GameState The running game state.
