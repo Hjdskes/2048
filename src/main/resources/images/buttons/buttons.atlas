@@ -1,9 +1,23 @@
 
 buttons.png
-size: 284,72
+size: 487,89
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+check-off
+  rotate: false
+  xy: 348, 12
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+check-on
+  rotate: false
+  xy: 410, 29
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
 continue
   rotate: false
   xy: 2, 2
@@ -16,5 +30,26 @@ newgame
   xy: 144, 2
   size: 140, 70
   orig: 140, 70
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 286, 10
+  size: 60, 62
+  orig: 60, 62
+  offset: 0, 0
+  index: -1
+slider
+  rotate: false
+  xy: 2, 74
+  size: 400, 15
+  orig: 400, 15
+  offset: 0, 0
+  index: -1
+sliderButton
+  rotate: false
+  xy: 472, 44
+  size: 15, 45
+  orig: 15, 45
   offset: 0, 0
   index: -1
