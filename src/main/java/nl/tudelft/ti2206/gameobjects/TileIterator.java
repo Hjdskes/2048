@@ -43,4 +43,9 @@ public class TileIterator implements Iterator<Tile> {
 	public int getIndex() {
 		return this.index;
 	}
+	
+	/* Needed on Windows machines*/
+	@Override
+	public void remove() {		
+	}	
 }
