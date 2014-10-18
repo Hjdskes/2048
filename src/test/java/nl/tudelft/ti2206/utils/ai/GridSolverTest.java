@@ -1,11 +1,10 @@
 package nl.tudelft.ti2206.utils.ai;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.utils.ai.GridSolver;
-import nl.tudelft.ti2206.utils.ai.HumanSolver;
 import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.log.Logger;
 
@@ -87,25 +86,5 @@ public class GridSolverTest {
 		assertFalse(solver.isRunning());
 		verify(logger).info(solver.getClass().getSimpleName(),
 				"Solver stopped.");
-	}
-
-	@Test
-	public void testMakeMoveNoDirection() {
-		int movesMade = GridSolver.getSuccesfulMoves();
-		GridSolver.makeMove(grid, null);
-		// verify no moves have been made
-		assertEquals(movesMade, GridSolver.getSuccesfulMoves());
-	}
-
-	@Test
-	public void testMakeMoveValidDirection() {
-		int movesMade = GridSolver.getSuccesfulMoves();
-		GridSolver.makeMove(grid, Direction.DOWN);
-		// verify moves have been made
-		assertTrue(movesMade < GridSolver.getSuccesfulMoves());
-
-		movesMade = GridSolver.getSuccesfulMoves();
-		GridSolver.makeMove(emptyGrid, Direction.DOWN);
-		assertEquals(movesMade, GridSolver.getSuccesfulMoves());
 	}
 }
