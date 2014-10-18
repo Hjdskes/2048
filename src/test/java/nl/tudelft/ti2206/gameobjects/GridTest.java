@@ -242,8 +242,8 @@ public class GridTest {
 	@Test
 	public void testObjectName() {
 		String objectName = "GridTest";
-		grid.setObjectName(objectName);
-		assertEquals(objectName, grid.getObjectName());
+		grid.setGridName(objectName);
+		assertEquals(objectName, grid.getGridName());
 	}
 
 	/**
@@ -265,17 +265,6 @@ public class GridTest {
 			}
 		}
 		assertEquals(count2, count + 1);
-	}
-
-	/**
-	 * Tests if the score is updated when the updateScore() method is called.
-	 */
-	@Test
-	public void testUpdateScore() {
-		int score = grid.getScore();
-		when(tileHandler.getScoreIncrement()).thenReturn(20);
-		grid.updateScore(tileHandler.getScoreIncrement());
-		assertEquals(grid.getScore(), score + 20);
 	}
 
 	/**

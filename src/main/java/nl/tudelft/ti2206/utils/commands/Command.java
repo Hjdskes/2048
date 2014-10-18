@@ -48,7 +48,7 @@ public abstract class Command {
 	 * Calls grid to update everything after a move and resets the TileHandler.
 	 */
 	public void updateAndSpawn() {
-		grid.updateMove();
+		grid.updateAfterMove();
 		if (tileHandler.isMoveMade()) {
 			logger.info(objectName, "Move succesfully made.");
 			tileHandler.reset();

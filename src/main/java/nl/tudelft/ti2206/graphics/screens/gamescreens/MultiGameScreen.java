@@ -77,8 +77,8 @@ public class MultiGameScreen extends Screen {
 		remoteGrid = new Grid(false);
 
 		/* Sets the name of the objects. Used for logging */
-		localGrid.setObjectName("LocalGrid");
-		remoteGrid.setObjectName("RemoteGrid");
+		localGrid.setGridName("LocalGrid");
+		remoteGrid.setGridName("RemoteGrid");
 
 		localDrawableGrid = new DrawableGrid(localGrid.getTiles());
 		remoteDrawableGrid = new DrawableGrid(remoteGrid.getTiles());

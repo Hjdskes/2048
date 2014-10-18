@@ -83,8 +83,8 @@ public class UserComputerScreen extends Screen {
 		computerGridDraw = new DrawableGrid(computerGrid.getTiles());
 
 		/* Sets the name of the objects. Used for logging */
-		localGrid.setObjectName("LocalGrid");
-		computerGrid.setObjectName("ComputerGrid");
+		localGrid.setGridName("LocalGrid");
+		computerGrid.setGridName("ComputerGrid");
 
 		you = new Label("You", assetHandler.getSkin());
 		opponent = new Label("Computer", assetHandler.getSkin());

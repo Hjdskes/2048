@@ -18,14 +18,8 @@ import nl.tudelft.ti2206.utils.log.Logger;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+
- * | 0 | 1 | 2 | 3 |
- * +---+---+---+---+
- * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+
- * | 12| 13| 14| 15|
+ * +---+---+---+---+ | 0 | 1 | 2 | 3 | +---+---+---+---+ | 4 | 5 | 6 | 7 |
+ * +---+---+---+---+ | 8 | 9 | 10| 11| +---+---+---+---+ | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
  * Now, a square on field 10 can move left or right by adding or subtracting 1
@@ -41,8 +35,11 @@ public class Grid extends Observable implements Cloneable {
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
-	/** The name of the instance, initialized to the name of the class. */
-	private String objectName = this.getClass().getSimpleName();
+	/**
+	 * The name of the instance, initialized to the name of the class. This can
+	 * be either Grid, LocalGrid or RemoteGrid.
+	 */
+	private String gridName = Grid.class.getSimpleName();
 
 	/** The grid contains sixteen tiles. */
 	public static final int NTILES = 16;
@@ -67,9 +64,9 @@ public class Grid extends Observable implements Cloneable {
 
 	/** The highest tile value present in the Grid. */
 	private int highestTile;
-	
+
+	/** The stacks for undo/redo, keeping track of the moves made. */
 	private Stack<String> undo;
-	
 	private Stack<String> redo;
 
 	/**
@@ -94,8 +91,8 @@ public class Grid extends Observable implements Cloneable {
 	}
 
 	/**
-	 * Initializes the grid, creating two tiles with a value of 2 or 4 and
-	 * setting the rest empty.
+	 * Initializes the grid, creating two tiles with real values of 2 or 4 (1
+	 * and 2 internally) and setting the rest empty.
 	 */
 	private void initGrid() {
 		int loc1 = getRandomEmptyLocation();
@@ -112,21 +109,21 @@ public class Grid extends Observable implements Cloneable {
 	 * Tile. This new location is always valid, i.e. there is not already an
 	 * Tile there.
 	 * 
-	 * @return A new valid location.
+	 * @return A random empty location.
 	 */
 	private int getRandomEmptyLocation() {
-		int index = (int)(Math.random() * tiles.length);
+		int index = (int) (Math.random() * tiles.length);
 		while (!tiles[index].isEmpty() && getPossibleMoves() > 0) {
-			index = (int)(Math.random() * tiles.length);
+			index = (int) (Math.random() * tiles.length);
 		}
 		return index;
 	}
 
 	/**
 	 * Returns a random value, which is either 2 or 4. The chances of getting 4
-	 * is significantly lower than the change of getting 2.
+	 * is significantly lower than the chance of getting 2.
 	 * 
-	 * @return A random value, being either 2 or 4.
+	 * @return A random value, being either 2 or 4 (real, 1 and 2 internally).
 	 */
 	private int initialValue() {
 		return Math.random() < 0.9 ? TWO : FOUR;
@@ -148,7 +145,9 @@ public class Grid extends Observable implements Cloneable {
 
 	/**
 	 * Sets this Grid's tiles to the provided array.
-	 * @param tiles The tiles to set.
+	 * 
+	 * @param tiles
+	 *            The tiles to set.
 	 */
 	public void setTiles(Tile[] tiles) {
 		this.tiles = tiles;
@@ -156,13 +155,15 @@ public class Grid extends Observable implements Cloneable {
 		updateHighestTile();
 		changed();
 	}
-	
+
 	/**
 	 * Resets the grid, by calling reset on all the Tiles it contains,
-	 * reinitializing itself and checking for the new highest value.
+	 * reinitializing itself, clearing the undo/redo stacks and checking for the
+	 * new highest value. It also sets the game state to running. Finally, it
+	 * notifies the observers.
 	 */
 	public void restart() {
-		logger.info(objectName, "Restarting grid.");
+		logger.info(gridName, "Restarting grid.");
 
 		while (iterator.hasNext()) {
 			iterator.next().reset();
@@ -170,14 +171,10 @@ public class Grid extends Observable implements Cloneable {
 		iterator.reset();
 		initGrid();
 
-		/*if (highestTile > PreferenceHandler.getInstance().getHighestTile()) {
-			PreferenceHandler.getInstance().setHighest(highestTile);
-			ScoreDisplay.updateAllTimeHighestTile();
-		}*/
-
 		score = 0;
 		highestTile = 0;
 		updateHighestTile();
+
 		undo.clear();
 		redo.clear();
 
@@ -188,17 +185,15 @@ public class Grid extends Observable implements Cloneable {
 	/**
 	 * This method is the one method used for moving tiles.
 	 * 
-	 * Its parameter shall indicate which direction is to be moved in. The
-	 * actual moving will be delegated to TileHandler. If a move has been made,
-	 * it will update the score and create a new Tile.
+	 * Its parameter indicates which direction is to be moved in. The actual
+	 * moving will be delegated to TileHandler. If a move has been made, it
+	 * updates the score and creates a new Tile.
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
-	 * @return The increment in score of this move, or -1 if no move was made.
+	 * @return 1 iff a move has been made, -1 otherwise.
 	 */
 	public int move(Direction direction) {
-		int increment = -1;
-
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -212,38 +207,42 @@ public class Grid extends Observable implements Cloneable {
 		case DOWN:
 			tileHandler.moveDown();
 			break;
-		default:
-			break;
 		}
 
 		if (tileHandler.isMoveMade()) {
-			logger.info(objectName, "Move " + direction + " succesfully made.");
+			logger.info(gridName, "Move " + direction + " succesfully made.");
+			updateAfterMove();
+			return 1;
+		} else {
+			logger.debug(gridName, "Move " + direction + " ignored.");
+			tileHandler.reset();
+			return -1;
+		}
+	}
 
-			increment = tileHandler.getScoreIncrement();
-			updateScore(increment);
+	/**
+	 * Updates the grid and its observers iff a move has been made.
+	 */
+	public void updateAfterMove() {
+		if (tileHandler.isMoveMade()) {
+			updateScore();
 			spawnNewTile();
 			updateHighestTile();
 			changed();
-		} else {
-			logger.debug(objectName, "Move " + direction + " ignored.");
+			tileHandler.reset();
 		}
-
-		tileHandler.reset();
-		return increment;
 	}
 
 	/**
 	 * Updates the score with the score increment from the TileHandler class.
 	 */
-	public void updateScore(int increment) {
-		int newScore = score + increment;
-		setScore(newScore);
-
-		logger.info(objectName, "Score value set to " + newScore + ".");
+	private void updateScore() {
+		score += tileHandler.getScoreIncrement();
+		logger.info(gridName, "Score value set to " + score + ".");
 	}
 
 	/**
-	 * Gets a new random empty location and spawn a new tile there.
+	 * Spawns a Tile at a random empty location.
 	 */
 	public void spawnNewTile() {
 		int location = getRandomEmptyLocation();
@@ -251,18 +250,8 @@ public class Grid extends Observable implements Cloneable {
 		setTile(location, value);
 		tiles[location].spawn();
 
-		logger.debug(objectName, "New tile set at location " + location
+		logger.debug(gridName, "New tile set at location " + location
 				+ " (value = " + value + ").");
-	}
-
-	/**
-	 * This method is called after the TileHandler has been given a direction.
-	 */
-	public void updateMove() {
-		if (tileHandler.isMoveMade()) {
-			this.updateScore(tileHandler.getScoreIncrement());
-			this.spawnNewTile();
-		}
 	}
 
 	/**
@@ -290,18 +279,17 @@ public class Grid extends Observable implements Cloneable {
 		while (iterator.hasNext()) {
 			t = iterator.next();
 			/* An empty Tile cannot move. */
-			if (!t.isEmpty()) {
-				/* Get current Tile value. */
-				value = t.getValue();
-				/* Get all Tile's neighbors. */
-				List<Tile> neighbors = getTileNeighbors(iterator.getIndex() - 1);
+			if (t.isEmpty()) {
+				continue;
+			}
 
-				/* For all neighboring tiles, compare the values. */
-				for (Tile neighbor : neighbors) {
-					if (neighbor.getValue() == value
-							|| neighbor.getValue() == 0) {
-						moves++;
-					}
+			value = t.getValue();
+			List<Tile> neighbors = getTileNeighbors(t.getIndex());
+
+			/* For all neighboring tiles, compare the values. */
+			for (Tile neighbor : neighbors) {
+				if (neighbor.getValue() == value || neighbor.isEmpty()) {
+					moves++;
 				}
 			}
 		}
@@ -311,7 +299,7 @@ public class Grid extends Observable implements Cloneable {
 	}
 
 	/**
-	 * Get a list of neighboring Tiles by index.
+	 * Forms a list of neighboring Tiles by index.
 	 * 
 	 * @param index
 	 *            The Tile index.
@@ -356,6 +344,7 @@ public class Grid extends Observable implements Cloneable {
 		return neighbors;
 	}
 
+	/** Notifies the observers iff the grid has changed. */
 	private void changed() {
 		if (!hasChanged()) {
 			setChanged();
@@ -392,18 +381,18 @@ public class Grid extends Observable implements Cloneable {
 	}
 
 	/**
-	 * @return The name of this instance.
+	 * @return The name of this instance, one of Grid, LocalGrid and RemoteGrid.
 	 */
-	public String getObjectName() {
-		return objectName;
+	public String getGridName() {
+		return gridName;
 	}
 
 	public Stack<String> getUndoStack() {
 		return undo;
 	}
-		
+
 	public Stack<String> getRedoStack() {
-		return redo; 
+		return redo;
 	}
 
 	/**
@@ -432,8 +421,8 @@ public class Grid extends Observable implements Cloneable {
 	 * @param name
 	 *            The name for this instance.
 	 */
-	public void setObjectName(String name) {
-		this.objectName = name;
+	public void setGridName(String name) {
+		this.gridName = name;
 	}
 
 	@Override
@@ -448,7 +437,7 @@ public class Grid extends Observable implements Cloneable {
 		res = res.substring(0, res.length() - 1);
 		return res;
 	}
-	
+
 	@Override
 	public Grid clone() {
 		Grid newGrid = new Grid(true);
