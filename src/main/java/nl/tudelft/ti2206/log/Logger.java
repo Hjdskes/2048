@@ -20,7 +20,7 @@ public class Logger implements Disposable {
 	/** The logging message format. */
 	private String msgFormat = "%s %s: %s";
 
-	PrintWriter file;
+	private PrintWriter file;
 
 	/** Current logging level verbosity. */
 	private LogLevel level;
@@ -40,6 +40,11 @@ public class Logger implements Disposable {
 	 * @param prefix the filename prefix
 	 */
 	public void setLogFile(String prefix) {
+		if (prefix == null) {
+			file = null;
+			message(LogLevel.DEBUG, "Logger", "Closed log file");
+			return;
+		}
 		
 		SimpleDateFormat format = new SimpleDateFormat("YYYYMMdd_HHmmss");
 		Date now = new Date();
@@ -70,6 +75,10 @@ public class Logger implements Disposable {
 
 	public LogLevel getLevel() {
 		return level;
+	}
+	
+	public PrintWriter getFile() {
+		return file;
 	}
 
 //	public void setTimeFormat(String newFormat) {
