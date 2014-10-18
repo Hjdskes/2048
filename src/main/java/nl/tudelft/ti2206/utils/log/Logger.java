@@ -30,9 +30,7 @@ public class Logger implements Disposable {
 	}
 	
 	/** Private constructor for singleton. */
-	private Logger() {
-		setLevel(LogLevel.ALL);
-	}
+	private Logger() {}
 	
 	/**
 	 * Set log filename prefix, such as application name. Timestamp and 

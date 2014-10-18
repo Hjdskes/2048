@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
@@ -36,27 +37,30 @@ public class SettingsScreen extends Screen {
 	 */
 	public SettingsScreen() {
 		stage = new Stage();
+		
 		slider = new Slider(0, 400, 100, false, AssetHandler.getInstance()
 				.getSkin());
+		setupSlider();
 
 		levelLabel = new Label("Log Level: " + updateLevel(), AssetHandler
 				.getInstance().getSkin());
+		setupLevelLabel();
+		
 		checkBox = new CheckBox("    Enable logging to file", AssetHandler
 				.getInstance().getSkin());
-		menuButton = new MenuButton();
-
-		setupSlider();
-		setupLevelLabel();
 		setupCheckBox();
+		
+		menuButton = new MenuButton();
 		setListeners();
 		addActors();
-		
+
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
-	
+
 	/** Constructor for testing purposes only. */
-	public SettingsScreen(MenuButton button, Slider slider, Label label, CheckBox checkBox) {
-		this.slider =  slider;
+	public SettingsScreen(MenuButton button, Slider slider, Label label,
+			CheckBox checkBox) {
+		this.slider = slider;
 		this.levelLabel = label;
 		this.checkBox = checkBox;
 		this.menuButton = button;
@@ -71,8 +75,9 @@ public class SettingsScreen extends Screen {
 		menuButton.setX(10);
 		menuButton.setY(10);
 	}
-	
+
 	private void setupSlider() {
+		slider.setValue(getSliderValue());
 		slider.setX(100);
 		slider.setY(350);
 		slider.setWidth(400);
@@ -85,6 +90,7 @@ public class SettingsScreen extends Screen {
 	}
 
 	private void setupCheckBox() {
+		checkBox.setChecked(PreferenceHandler.getInstance().isLogFileEnabled());
 		checkBox.setX(100);
 		checkBox.setY(200);
 	}
@@ -108,7 +114,7 @@ public class SettingsScreen extends Screen {
 				}
 			}
 		});
-		
+
 		// Return to main menu on escape
 		stage.addListener(new InputListener() {
 			@Override
@@ -155,5 +161,29 @@ public class SettingsScreen extends Screen {
 			return "ALL";
 		}
 		return null;
+	}
+
+	private int getSliderValue() {
+		switch (logger.getLevel()) {
+		case NONE:
+			return 0;
+		case ERROR:
+			return 100;
+		case DEBUG:
+			return 200;
+		case INFO:
+			return 300;
+		case ALL:
+			return 400;
+		}
+		return 400;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		PreferenceHandler.getInstance().setLogLevel(logger.getLevel().name());
+		PreferenceHandler.getInstance().setLogFileEnabled(checkBox.isChecked());
+		System.out.println(logger.getLevel().name());
 	}
 }

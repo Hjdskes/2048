@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.game;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.graphics.screens.menuscreens.MenuScreen;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.net.Networking;
 import nl.tudelft.ti2206.utils.states.ContinuingState;
@@ -56,6 +57,7 @@ public class TwentyFourtyGame extends Game {
 
 	@Override
 	public void create() {
+		logger.setLevel(PreferenceHandler.getInstance().getLogLevel());
 		logger.info(className, "Launching game...");
 		logger.debug(className, "Skin is loaded and menu screen is launched.");
 

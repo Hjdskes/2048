@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.utils.handlers;
 
+import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
@@ -16,7 +18,8 @@ public class PreferenceHandler {
 	private static Preferences prefs = Gdx.app.getPreferences("2048");
 
 	/** Overrides the default constructor. */
-	private PreferenceHandler() { }
+	private PreferenceHandler() {
+	}
 
 	/**
 	 * @return The singleton instance of the PreferenceHandler
@@ -120,6 +123,35 @@ public class PreferenceHandler {
 	 */
 	public void setGrid(String grid) {
 		prefs.putString("grid", grid);
+		prefs.flush();
+	}
+
+	/** @return Returns the saved LogLevel, null if no level is saved. */
+	public LogLevel getLogLevel() {
+		String level = prefs.getString("loglevel");
+		return level.equals("") ? LogLevel.ALL : LogLevel.valueOf(level);
+	}
+
+	/** Sets the LogLevel as specified by the user. */
+	public void setLogLevel(String level) {
+		prefs.putString("loglevel", level);
+		prefs.flush();
+	}
+
+	/**
+	 * @return True if the user has enabled logging to file, false otherwise.
+	 */
+	public boolean isLogFileEnabled() {
+		return !prefs.getString("logfile").equals("");
+	}
+
+	/** Enables or disables logging to file, as specified by the user. */
+	public void setLogFileEnabled(boolean isEnabled) {
+		if (isEnabled) {
+			prefs.putString("logfile", "2048");
+		} else {
+			prefs.remove("logfile");
+		}
 		prefs.flush();
 	}
 }
