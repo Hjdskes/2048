@@ -31,6 +31,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class UserComputerScreenTest {
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -50,6 +55,7 @@ public class UserComputerScreenTest {
 	@Mock
 	private Networking networking;
 
+	/** Gamescreen that we are going to test. */
 	private UserComputerScreen screen;
 
 	/** Sets up all mock objects and the object under test */

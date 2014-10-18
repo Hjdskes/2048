@@ -14,8 +14,13 @@ import org.mockito.MockitoAnnotations;
 
 public class RunningStateTest {
 
+	/** State that we are going to test. */
 	private RunningState state;
-	
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Grid grid;
 	@Mock
@@ -24,7 +29,10 @@ public class RunningStateTest {
 	private ScreenHandler screenHandler;
 	@Mock
 	private Screen screen;
-	
+
+	/**
+	 * Sets up the necessary mocking of objects and creates the RunningState.
+	 */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -32,6 +40,9 @@ public class RunningStateTest {
 		when(screenHandler.getScreen()).thenReturn(screen);
 	}
 
+	/**
+	 * Checks if the game is won and the won overlay is created.
+	 */
 	@Test
 	public void testSigleHighest2048() {
 		when(grid.getCurrentHighestTile()).thenReturn(11);
@@ -39,7 +50,10 @@ public class RunningStateTest {
 		assertTrue(TwentyFourtyGame.isWon());
 		verify(screen).addLWOverlay(false, true, grid);
 	}
-	
+
+	/**
+	 * Checks if the game is lost and the lost overlay is created.
+	 */
 	@Test
 	public void testSingleFull() {
 		when(grid.getPossibleMoves()).thenReturn(0);
@@ -48,6 +62,9 @@ public class RunningStateTest {
 		verify(screen).addLWOverlay(false, false, grid);
 	}
 
+	/**
+	 * Checks if the multiplayer game is won and the won overlay is created.
+	 */
 	@Test
 	public void testMultiLocal2048() {
 		when(grid.getCurrentHighestTile()).thenReturn(11);
@@ -55,7 +72,10 @@ public class RunningStateTest {
 		assertTrue(TwentyFourtyGame.isWon());
 		verify(screen).addLWOverlay(true, true, null);
 	}
-	
+
+	/**
+	 * Checks if the multiplayer game is lost and the lost overlay is created.
+	 */
 	@Test
 	public void testMultiRemote2048() {
 		when(remote.getCurrentHighestTile()).thenReturn(11);
@@ -64,6 +84,9 @@ public class RunningStateTest {
 		verify(screen).addLWOverlay(true, false, null);
 	}
 
+	/**
+	 * Checks if the state is set to waiting when the local grid is full.
+	 */
 	@Test
 	public void testMultiLocalFull() {
 		when(grid.getPossibleMoves()).thenReturn(0);
@@ -71,7 +94,11 @@ public class RunningStateTest {
 		state.update(grid, remote);
 		assertTrue(TwentyFourtyGame.isWaiting());
 	}
-	
+
+	/**
+	 * Checks if the game is lost when the score is equal and both player are
+	 * out of moves.
+	 */
 	@Test
 	public void testMultiLocalRemoteFull() {
 		when(grid.getPossibleMoves()).thenReturn(0);
@@ -81,7 +108,10 @@ public class RunningStateTest {
 		state.update(grid, remote);
 		assertTrue(TwentyFourtyGame.isLost());
 	}
-	
+
+	/**
+	 * Checks if the multiplayer game is lost and the lost overlay is created.
+	 */
 	@Test
 	public void testMultiRemoteScoreHigher() {
 		when(grid.getPossibleMoves()).thenReturn(0);
@@ -91,7 +121,10 @@ public class RunningStateTest {
 		assertTrue(TwentyFourtyGame.isLost());
 		verify(screen).addLWOverlay(true, false, null);
 	}
-	
+
+	/**
+	 * Checks if the multiplayer game is won and the won overlay is created.
+	 */
 	@Test
 	public void testMultiLocalScoreHigher() {
 		when(grid.getPossibleMoves()).thenReturn(0);

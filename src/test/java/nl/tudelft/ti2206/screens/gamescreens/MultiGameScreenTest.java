@@ -38,18 +38,35 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class MultiGameScreenTest {
-	@Mock private Skin skin;
-	@Mock private Stage stage;
-	@Mock private Grid grid;
-	@Mock private Group group;
-	@Mock private Label label;
-	@Mock private Scores scores;
-	@Mock private Texture texture;
-	@Mock private Input input;
-	@Mock private Networking networking;
-	@Mock private ScreenHandler handler;
-	@Mock private Screen screen;
-	
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
+	@Mock
+	private Skin skin;
+	@Mock
+	private Stage stage;
+	@Mock
+	private Grid grid;
+	@Mock
+	private Group group;
+	@Mock
+	private Label label;
+	@Mock
+	private Scores scores;
+	@Mock
+	private Texture texture;
+	@Mock
+	private Input input;
+	@Mock
+	private Networking networking;
+	@Mock
+	private ScreenHandler handler;
+	@Mock
+	private Screen screen;
+
+	/** Gamescreen that we are going to test. */
 	private MultiGameScreen gameScreen;
 
 	/** Sets up all mock objects and the object under test */
@@ -60,14 +77,15 @@ public class MultiGameScreenTest {
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 
-		gameScreen = new MultiGameScreen(handler, stage, grid, label, group, scores, networking);
+		gameScreen = new MultiGameScreen(handler, stage, grid, label, group,
+				scores, networking);
 
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 		doNothing().when(group).addActor(any(Actor.class));
 
 		doNothing().when(networking).deleteObserver(any(Observer.class));
-		
+
 		when(label.getPrefWidth()).thenReturn(0f);
 		when(handler.getScreen()).thenReturn(screen);
 	}
@@ -82,18 +100,24 @@ public class MultiGameScreenTest {
 		verify(label, times(2)).setX(anyInt());
 		verify(label, times(2)).setY(anyInt());
 		verify(group, times(2)).addActor(scores);
-		//verify(group, times(2)).addActor(grid);
+		// verify(group, times(2)).addActor(grid);
 		verify(group, times(2)).addActor(label);
 		verify(stage).addListener(any(EventListener.class));
 		verify(stage, times(2)).addActor(group);
 	}
 
+	/**
+	 * Tests if all required methods are called on screen.dispose().
+	 */
 	@Test
 	public void testDispose() {
 		gameScreen.dispose();
 		verify(networking).deleteObserver(any(Observer.class));
 	}
-	
+
+	/**
+	 * Tests if all required methods are called on screen.setYouLabel().
+	 */
 	@Test
 	public void testSetYouLabel() {
 		gameScreen.setYouLabel("String", Color.RED);
@@ -101,7 +125,10 @@ public class MultiGameScreenTest {
 		verify(label).setColor(Color.RED);
 		verify(label).setX(anyFloat());
 	}
-	
+
+	/**
+	 * Tests if all required methods are called on screen.setOppenentLabel().
+	 */
 	@Test
 	public void testSetOpponentLabel() {
 		gameScreen.setOpponentLabel("OString", Color.BLACK);
@@ -109,7 +136,11 @@ public class MultiGameScreenTest {
 		verify(label).setColor(Color.BLACK);
 		verify(label).setX(anyFloat());
 	}
-	
+
+	/**
+	 * Tests if all required methods are called on screen.update() and the
+	 * connection is lost.
+	 */
 	@Test
 	public void testUpdateConnectionLost() {
 		TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
@@ -119,21 +150,21 @@ public class MultiGameScreenTest {
 		verify(stage).act();
 		verify(screen).addConnectionLostOverlay();
 	}
-	
-//	@Test
-//	public void testUpdateWaiting() {
-//		TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
-//		gameScreen.update();
-//		verify(stage).act();
-//		verify(label).setText("WAITING");
-//	}
-	
-//	@Test
-//	public void testUpdateRemoteLost() {
-//		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
-//		when(grid.getPossibleMoves()).thenReturn(0);
-//		gameScreen.update();
-//		verify(stage).act();
-//		verify(label).setText("WAITING");
-//	}
+
+	// @Test
+	// public void testUpdateWaiting() {
+	// TwentyFourtyGame.setState(TwentyFourtyGame.getWaitingState());
+	// gameScreen.update();
+	// verify(stage).act();
+	// verify(label).setText("WAITING");
+	// }
+
+	// @Test
+	// public void testUpdateRemoteLost() {
+	// TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+	// when(grid.getPossibleMoves()).thenReturn(0);
+	// gameScreen.update();
+	// verify(stage).act();
+	// verify(label).setText("WAITING");
+	// }
 }
