@@ -4,7 +4,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
@@ -14,8 +18,8 @@ import nl.tudelft.ti2206.graphics.buttons.RestartButton;
 import nl.tudelft.ti2206.graphics.buttons.SolveButton;
 import nl.tudelft.ti2206.graphics.buttons.UndoButton;
 import nl.tudelft.ti2206.graphics.drawables.Scores;
-import nl.tudelft.ti2206.graphics.screens.gamescreens.GameScreen;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.states.WonState;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -130,7 +134,7 @@ public class GameScreenTest {
 	 */
 	@Test
 	public void testUpdate() {
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		TwentyFourtyGame.setState(WonState.getInstance());
 		reset(grid);
 		screen.update();
 		verifyNoMoreInteractions(grid);

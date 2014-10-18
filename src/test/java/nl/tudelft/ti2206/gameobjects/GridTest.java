@@ -14,6 +14,7 @@ import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.utils.handlers.TileHandler;
+import nl.tudelft.ti2206.utils.states.RunningState;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +47,7 @@ public class GridTest {
 
 		grid = new Grid(false);
 		grid.setTileHandler(tileHandler);
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+		TwentyFourtyGame.setState(RunningState.getInstance());
 	}
 
 	/**

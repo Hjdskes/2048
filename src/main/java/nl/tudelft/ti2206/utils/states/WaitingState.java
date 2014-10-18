@@ -12,6 +12,10 @@ import nl.tudelft.ti2206.utils.log.Logger;
  */
 
 public class WaitingState implements GameState {
+	
+	/** The unique singleton instance of this class. */
+	private static WaitingState instance = new WaitingState();
+	
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
@@ -21,7 +25,12 @@ public class WaitingState implements GameState {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
-	public WaitingState() {
+	/** Overrides the default constructor. */
+	private WaitingState() {}
+	
+	/** @return The singleton instance of the state*/
+	public static WaitingState getInstance() {
+		return instance;
 	}
 
 	/** Constructor for testing only. */
@@ -65,7 +74,7 @@ public class WaitingState implements GameState {
 				"Local player lost the multiplayer game. The score of the remote player: "
 						+ Integer.toString(remoteGrid.getScore()));
 
-		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		TwentyFourtyGame.setState(LostState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, false, null);
 	}
 
@@ -74,7 +83,7 @@ public class WaitingState implements GameState {
 				"Local player won the multiplayer game. The score of the local player: "
 						+ Integer.toString(localGrid.getScore()));
 
-		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
+		TwentyFourtyGame.setState(WonState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, true, null);
 	}
 }

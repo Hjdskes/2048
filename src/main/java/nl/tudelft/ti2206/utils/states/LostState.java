@@ -8,6 +8,18 @@ import nl.tudelft.ti2206.gameobjects.Grid;
  */
 
 public class LostState implements GameState{
+	
+	/** The unique singleton instance of this class. */
+	private static LostState instance = new LostState();
+	
+	/** Overrides the default constructor. */
+	private LostState() {}
+	
+	/** @return The singleton instance of the state*/
+	public static LostState getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void update(Grid grid) {	
 	}

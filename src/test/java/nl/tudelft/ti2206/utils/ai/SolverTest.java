@@ -7,9 +7,10 @@ import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
-import nl.tudelft.ti2206.utils.ai.Solver;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
+import nl.tudelft.ti2206.utils.states.LostState;
+import nl.tudelft.ti2206.utils.states.RunningState;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class SolverTest {
 		grid.setTile(0, 1);
 		grid.setTile(1, 2);
 		solver = new Solver(grid, 1);
-		TwentyFourtyGame.setState(TwentyFourtyGame.getRunningState());
+		TwentyFourtyGame.setState(RunningState.getInstance());
 	}
 
 	@Test
@@ -45,7 +46,7 @@ public class SolverTest {
 	@Test
 	public void testRunDone() {
 		// make sure the grid is empty
-		TwentyFourtyGame.setState(TwentyFourtyGame.getLostState());
+		TwentyFourtyGame.setState(LostState.getInstance());
 		grid = new Grid(true);
 		String old = grid.toString();
 		solver.run();
