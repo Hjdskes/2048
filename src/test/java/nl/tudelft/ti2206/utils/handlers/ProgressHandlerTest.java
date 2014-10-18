@@ -45,6 +45,7 @@ public class ProgressHandlerTest {
 		 * score, etc.
 		 */
 		prefsHandler.getPrefs().clear();
+		prefsHandler.getPrefs().flush();
 		grid = new Grid(true);
 	}
 
