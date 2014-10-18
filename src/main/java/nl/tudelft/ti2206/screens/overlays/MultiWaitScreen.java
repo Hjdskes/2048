@@ -1,7 +1,9 @@
 package nl.tudelft.ti2206.screens.overlays;
 
 import nl.tudelft.ti2206.buttons.MenuButton;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.handlers.AssetHandler;
+import nl.tudelft.ti2206.screens.Screen;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -21,11 +23,15 @@ public class MultiWaitScreen {
 	private Stage stage;
 
 	/** Constructs a new MultiWaitScreen. */
-	public MultiWaitScreen() {
-		stage = new Stage();
+	public MultiWaitScreen(Screen parent, boolean localWaiting) {
+		stage = parent.getStage();
 		image = new Image(AssetHandler.getInstance().getSkin(), "multiwaitoverlay");
 		menuButton = new MenuButton();
 		addActors();
+		
+		//Set the overlay on the other side of the screen if its the opponent.
+		if(!localWaiting)
+			image.setX(TwentyFourtyGame.GAME_WIDTH);
 	}
 
 	/** Constructor used for mock insertion */

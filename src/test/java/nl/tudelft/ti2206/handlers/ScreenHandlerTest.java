@@ -18,9 +18,12 @@ public class ScreenHandlerTest {
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
+	/** Screen needed for testing, we are going to mock this. */
 	private static Screen screen;
 
-	
+	/**
+	 * Set up before the tests. We mock all the graphics and the screen.
+	 */
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		Gdx.graphics = mock(Graphics.class);
@@ -31,6 +34,10 @@ public class ScreenHandlerTest {
 		screenHandler.set(screen);
 	}
 
+	/**
+	 * Checks if the ScreenHandler correctly sets the screen by verifying that
+	 * the proper methods of screen are called.
+	 */
 	@Test
 	public void testSet() {
 		// Reset screen to remove any interaction counters already present.
@@ -40,6 +47,10 @@ public class ScreenHandlerTest {
 		verify(screen).resize(anyInt(), anyInt());
 	}
 
+	/**
+	 * Checks if the ScreenHandler correctly disposes the screen by verifying
+	 * that the proper methods of screen are called.
+	 */
 	@Test
 	public void testDispose() {
 		// Reset screen to remove any interaction counters already present.
@@ -47,43 +58,70 @@ public class ScreenHandlerTest {
 		screenHandler.dispose();
 		verify(screen).dispose();
 	}
-	
+
+	/**
+	 * Checks if the ScreenHandler correctly draws the screen by verifying that
+	 * the proper methods of screen are called.
+	 */
 	@Test
 	public void testDraw() {
 		screenHandler.draw();
 		verify(screen).draw();
 	}
 
+	/**
+	 * Checks if the ScreenHandler correctly pauses the screen by verifying that
+	 * the proper methods of screen are called.
+	 */
 	@Test
-	public void testPause() {		
+	public void testPause() {
 		screenHandler.pause();
 		verify(screen).pause();
 	}
 
+	/**
+	 * Checks if the ScreenHandler correctly resizes the screen by verifying
+	 * that the proper methods of screen are called.
+	 */
 	@Test
 	public void testResize() {
 		screenHandler.resize(0, 0);
 		verify(screen).resize(0, 0);
 	}
 
+	/**
+	 * Checks if the ScreenHandler correctly resumes the screen by verifying
+	 * that the proper methods of screen are called.
+	 */
 	@Test
 	public void testResume() {
 		screenHandler.resume();
 		verify(screen).resume();
 	}
-	
+
+	/**
+	 * Checks if the ScreenHandler correctly updates the screen by verifying
+	 * that the proper methods of screen are called.
+	 */
 	@Test
 	public void testUpdate() {
 		screenHandler.update();
 		verify(screen).update();
 	}
-	
+
+	/**
+	 * Checks if the ScreenHandler correctly restarts the screen by verifying
+	 * that the proper methods of screen are called.
+	 */
 	@Test
 	public void testRestart() {
 		screenHandler.restart();
 		verify(screen).restart();
 	}
-	
+
+	/**
+	 * Checks if the getter of screen does indeed return the current screen.
+	 */
 	@Test
 	public void testGetScreen() {
 		assertEquals(screen, screenHandler.getScreen());

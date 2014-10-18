@@ -13,7 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to Redo a move.
+ * A button that calls the execute method of the RedoCommand class when pressed.
+ * Extends the TextButton class from the GDX library.
  */
 public class RedoButton extends TextButton {
 	/** Constructs a new RedoButton. */
@@ -21,7 +22,9 @@ public class RedoButton extends TextButton {
 		super("Redo", AssetHandler.getInstance().getSkin(), "small");
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
-		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2 - TwentyFourtyGame.GAP / 2 + 4 * (DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP));
+		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2
+				- TwentyFourtyGame.GAP / 2 + 4
+				* (DrawableTile.TILE_WIDTH + TwentyFourtyGame.GAP));
 		this.setY(DrawableGrid.GRID_Y / 2 - this.getHeight() / 2);
 
 		this.addListener(new ClickListener() {

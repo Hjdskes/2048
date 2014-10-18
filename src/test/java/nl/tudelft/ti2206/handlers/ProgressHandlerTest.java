@@ -88,6 +88,10 @@ public class ProgressHandlerTest {
 		assertEquals("2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0", testGrid.toString());
 	}
 
+	/**
+	 * Tests if a game is saved and loaded correctly after the setting of new
+	 * tiles;
+	 */
 	@Test
 	public void testLoadGameFilled() {
 		grid.setTile(0, 2);
@@ -98,6 +102,9 @@ public class ProgressHandlerTest {
 		assertEquals(this.grid.toString(), grid.toString());
 	}
 
+	/**
+	 * Tests if a empty game is saved and loaded correctly.
+	 */
 	@Test
 	public void testLoadGameEmpty() {
 		prefsHandler.getPrefs().clear();
@@ -106,6 +113,9 @@ public class ProgressHandlerTest {
 		assertNotEquals(this.grid.toString(), grid.toString());
 	}
 
+	/**
+	 * Tests if a game isn't loaded if the string in Preferences is corrupted.
+	 */
 	@Test
 	public void testLoadGameCorruptGridString() {
 		prefsHandler.setGrid("0,4");

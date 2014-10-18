@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.screens.drawbehaviour.DrawBehavior;
 import nl.tudelft.ti2206.screens.overlays.ConnectionLostScreen;
 import nl.tudelft.ti2206.screens.overlays.LoseScreen;
 import nl.tudelft.ti2206.screens.overlays.MultiLoseScreen;
+import nl.tudelft.ti2206.screens.overlays.MultiWaitScreen;
 import nl.tudelft.ti2206.screens.overlays.MultiWinScreen;
 import nl.tudelft.ti2206.screens.overlays.WinScreen;
 
@@ -115,6 +116,16 @@ public abstract class Screen implements Disposable {
 	 */
 	public void addConnectionLostOverlay() {
 		new ConnectionLostScreen(this);
+		hasOverlay = true;
+	}
+	
+	/**
+	 * Adds a MultiWaitScreen to the current screen.
+	 * @param localWaiting
+	 * 			True if the local player is in the waiting state.
+	 */
+	public void addMultiWaitScreenOverlay(boolean localWaiting) {
+		new MultiWaitScreen(this, localWaiting);
 		hasOverlay = true;
 	}
 

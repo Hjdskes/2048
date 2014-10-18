@@ -24,8 +24,13 @@ import org.mockito.MockitoAnnotations;
  * Test suite for the Grid class.
  */
 public class GridTest {
-	@Mock private TileHandler tileHandler;
-	
+	/**
+	 * Mocked TileHandler so we can access certain methods that check if a move
+	 * is made.
+	 */
+	@Mock
+	private TileHandler tileHandler;
+
 	/** The object under test. */
 	private Grid grid;
 
@@ -71,6 +76,9 @@ public class GridTest {
 		assertEquals(0, wrongTiles);
 	}
 
+	/**
+	 * Tests the getter and setter of the score.
+	 */
 	@Test
 	public void testSetGetScore() {
 		grid.setScore(200);
@@ -88,6 +96,10 @@ public class GridTest {
 		assertEquals(12, grid.getCurrentHighestTile());
 	}
 
+	/**
+	 * Test if a new tile is spawned and two tiles are merged. Giving the same
+	 * amount of tiles in the grid.
+	 */
 	@Test
 	public void testTileAddedOnMove() {
 		when(tileHandler.isMoveMade()).thenReturn(true);
@@ -118,9 +130,8 @@ public class GridTest {
 	@Test
 	public void testGetPossibleMovesFalse() {
 		int[] grid_noMoves = { Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
-							   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO,
-							   Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
-							   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
+				Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO, Grid.TWO, Grid.FOUR,
+				Grid.TWO, Grid.FOUR, Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
 
 		for (int i = 0; i < grid_noMoves.length; i++) {
 			grid.setTile(i, grid_noMoves[i]);
@@ -139,12 +150,15 @@ public class GridTest {
 		assertTrue(grid.getPossibleMoves() > 0);
 	}
 
+	/**
+	 * Tests the getTileNeighbours() method. It checks if the integer correspond
+	 * to the number of neighbours.
+	 */
 	@Test
 	public void testGetTileNeighbours() {
 		int[] grid_noMoves = { Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
-				   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO,
-				   Grid.TWO, Grid.FOUR, Grid.TWO, Grid.FOUR,
-				   Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
+				Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO, Grid.TWO, Grid.FOUR,
+				Grid.TWO, Grid.FOUR, Grid.FOUR, Grid.TWO, Grid.FOUR, Grid.TWO };
 
 		// initialize grid:
 		for (int i = 0; i < grid_noMoves.length; i++) {
@@ -176,7 +190,7 @@ public class GridTest {
 		Stack<String> redoStack = new Stack<>();
 		assertEquals(redoStack, grid.getRedoStack());
 	}
-	
+
 	/**
 	 * Tests if restart() correctly resets all tiles and the current highest
 	 * tile.
@@ -210,6 +224,10 @@ public class GridTest {
 		assertEquals(2, tiles);
 	}
 
+	/**
+	 * Tests if the toString() method does return the correct representation of
+	 * the grid.
+	 */
 	@Test
 	public void testToString() {
 		grid = new Grid(true);
@@ -218,6 +236,9 @@ public class GridTest {
 		assertEquals("2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", grid.toString());
 	}
 
+	/**
+	 * Tests the getter of the object name.
+	 */
 	@Test
 	public void testObjectName() {
 		String objectName = "GridTest";
@@ -225,6 +246,9 @@ public class GridTest {
 		assertEquals(objectName, grid.getObjectName());
 	}
 
+	/**
+	 * Tests if a new tile is spawned when te spawnNewTile() method is called.
+	 */
 	@Test
 	public void testSpawnTile() {
 		int count = 0;
@@ -242,7 +266,10 @@ public class GridTest {
 		}
 		assertEquals(count2, count + 1);
 	}
-	
+
+	/**
+	 * Tests if the score is updated when the updateScore() method is called.
+	 */
 	@Test
 	public void testUpdateScore() {
 		int score = grid.getScore();
@@ -250,7 +277,10 @@ public class GridTest {
 		grid.updateScore(tileHandler.getScoreIncrement());
 		assertEquals(grid.getScore(), score + 20);
 	}
-	
+
+	/**
+	 * Tests of the clone() method gives a clone object of the current grid.
+	 */
 	@Test
 	public void testClone() {
 		String old = grid.toString();

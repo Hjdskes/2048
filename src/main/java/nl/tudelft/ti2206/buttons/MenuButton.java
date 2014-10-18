@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * A button to cancel the current operation and to go back to the main menu.
+ * Extends the TextButton class from the GDX library.
  */
 public class MenuButton extends TextButton {
 

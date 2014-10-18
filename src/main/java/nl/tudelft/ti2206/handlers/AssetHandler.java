@@ -65,8 +65,9 @@ public class AssetHandler {
 		manager.load("images/overlays/wonoverlay.png", Texture.class);
 		manager.load("images/overlays/multilostoverlay.png", Texture.class);
 		manager.load("images/overlays/multiwonoverlay.png", Texture.class);
+		manager.load("images/overlays/multiwaitoverlay.png",Texture.class);
 		manager.load("images/overlays/connectionlostoverlay.png", Texture.class);
-
+		
 		manager.load("images/overlays/getreadyoverlay.png", Texture.class);
 		manager.load("images/overlays/setoverlay.png", Texture.class);
 		manager.load("images/overlays/gooverlay.png", Texture.class);
@@ -111,6 +112,8 @@ public class AssetHandler {
 				"images/overlays/multilostoverlay.png", Texture.class));
 		skin.add("multiwonoverlay", manager.get(
 				"images/overlays/multiwonoverlay.png", Texture.class));
+		skin.add("multiwaitoverlay", manager.get(
+				"images/overlays/multiwaitoverlay.png", Texture.class));
 		skin.add("connectionlostoverlay", manager.get(
 				"images/overlays/connectionlostoverlay.png", Texture.class));
 

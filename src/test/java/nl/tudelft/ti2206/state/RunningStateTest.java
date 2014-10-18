@@ -67,8 +67,19 @@ public class RunningStateTest {
 	@Test
 	public void testMultiLocalFull() {
 		when(grid.getPossibleMoves()).thenReturn(0);
+		when(remote.getPossibleMoves()).thenReturn(1);
 		state.update(grid, remote);
 		assertTrue(TwentyFourtyGame.isWaiting());
+	}
+	
+	@Test
+	public void testMultiLocalRemoteFull() {
+		when(grid.getPossibleMoves()).thenReturn(0);
+		when(remote.getPossibleMoves()).thenReturn(0);
+		when(grid.getScore()).thenReturn(50);
+		when(remote.getScore()).thenReturn(50);
+		state.update(grid, remote);
+		assertTrue(TwentyFourtyGame.isLost());
 	}
 	
 	@Test

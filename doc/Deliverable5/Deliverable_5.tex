@@ -1,0 +1,269 @@
+\documentclass[a4paper,11pt,report]{scrartcl}
+\usepackage[dutch]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\newcommand{\tab}{\hspace*{2em}}
+
+\title{\huge\textbf{Deliverable 5}}
+\subtitle{\textbf{TI2206 Software Engineering Methods\\
+Delft University of Technology\\
+The Netherlands}}
+\author{Piet van Agtmaal 4321278\\
+	    Jochem Heijltjes 1534041\\
+		Arthur Hovanesyan 4322711\\
+		Paul Bakker 4326091\\
+		Jente Hidskes 4335732
+	   }
+
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\thispagestyle{empty} %geen page numbering op opening pagina
+\end{titlepage}
+
+\newpage\section{Preamble}
+
+The document you are currently reading is the report for deliverable four of group 21.\\
+
+Group 21 consists of the members 
+Piet van Agtmaal, Jochem Heijltjes, Arthur Hovanesyan, Paul Bakker and Jente Hidskes.\\
+We are five Computer Science students at the Delft University of Technology,
+The Netherlands. We created a clone of the original 2048 game for the course
+Software Engineering Methods.\\
+
+The goal of this course is to teach us how to develop software by applying the most appropriate software engineering practices, given the context of development.\\
+We were asked to make a clone of the game 2048, then apply several design strategies to it and add a few extra features. This report covers what we have done, why and how.\\
+
+We would like to thank our teacher Dr. Bachelli and our Teaching Assistants Moritz Beller and Aimee Ferouge for guiding us through this project.\\
+
+Thank you for taking interest in this report. We hope you will enjoy reading our report and playing 2048!
+
+\newpage\section{Introduction}
+
+2048 is a very popular game created by by Gabriele Cirulli, based on 1024 by
+Veewo Studio and conceptually similar to Threes by Asher Vollmer.\\
+For this project we were asked to create a clone of the game 2048 in the Object-Oriented programming language Java, so that's what we did!\\
+
+We didn't just make a clone of the original 2048 game, we also added
+multiplayer functionality, automatic solvers allowing you to play against the computer and 
+undo/redo functionality. 
+Now you can challenge your computer, your neighbours, your
+coworkers, your kids or even the Queen of England to play a game of 2048!\\
+
+The purpose of this report is to present how we implemented several features/techniques and explain why they were implemented.\\
+This document tells you everything you need to know about our project and to get you started playing 2048. Technical aspects of the game are covered in here as well.\\
+
+ The structure of this report is as follows. Chapter three describes how to play 2048 and all the functionalities that have been implemented. The next chapter explains how the application is tested and how quality is being ensured. Chapter five explains which extra features were added. Chapter six covers the design patterns we have newly implemented including the corresponding class and sequence diagrams. The next chapter will explain the extra design pattern we have chosen and why and how we implemented it.\\
+Finally, chapter eight will conclude this report. \\
+
+\newpage\section{How to play 2048}
+
+This section briefly describes how to play 2048 and provides information on
+the functionality it has, such as playing the game alone, or with friends and how
+to use the logging features.
+
+\subsection{Singleplayer game}
+After starting the application you will see the main menu. In the main menu,
+click the \texttt{Singleplayer} button to start your singleplayer game.\\
+
+Using the arrow keys you can move the tiles on the grid. Each time two tiles with the same
+number collide, the numbers are added and the two tiles merge. Your goal is to
+reach the 2048 tile!\\
+
+To return to the menu, press \texttt{Escape} any time. Don't worry,
+your current game will be saved for you! (This also applies to closing the
+game!).
+
+\subsection{Multiplayer game}
+The multiplayer version is identical to the singleplayer, except here you will
+compete against a friend, colleague, coworker or your worst enemy over LAN or
+the internet. Your opponent does not have to be in the same room with you; they
+can even be on the other side of the planet and you can still kick their
+asses!\\
+
+Your goal is to reach the 2048 tile and to get more points than your opponent.  In case you
+are unable to reach the 2048 tile (e.g., because you lost), your opponent will either win or lose if they have more points. 
+
+In case your grid is full, you will need to wait for your opponent to make the last move on their grid.
+
+We will now briefly explain how to connect to eachother. Please refer to the
+documentation of your networking equipment or software in case you experience
+networking problems.
+
+\subsubsection{Joining a game}
+To connect to another player, choose the \texttt{Join a game} option in the
+\texttt{Multiplayer} menu. The application will try to connect to the remote address you
+entered, on port 2048, using TCP.
+
+\subsubsection{Hosting a game}
+To have another player connect to you, choose the \texttt{Host a game} option
+in the \texttt{Multiplayer} menu. The application will bind to port 2048/TCP on all the
+system's network interfaces. In case you wish to play over the internet,
+please make sure connections on this port are forwarded to your local address
+on your NAT device. Consult the manual of your network products for more 
+information.
+
+
+\subsection{Challenging your computer}
+
+You can now challenge and play against your computer. After starting the game, you will see the main menu. In the main menu, pick the option \texttt{Challenge me!}. In the next menu you can select the difficulty you want to play on.\\
+
+Depending on your selection, the computer will make moves at a timed interval. The higher the difficulty you select, the shorter the computer will wait between moves and the better calculated its movements are.\\
+
+The solver algorithm behind the \texttt{Easy} option is able to win about 15\%, but only one move is made every after 1.6 second. The same algorithm is used for the other options, but it will be more accurate when trying to make a new move. The solver will solve at least 35\% of the grids with 650 milliseconds between each move with the \texttt{Extreme} option.
+
+If either player (you or the computer) ends up with a full grid, the game will wait for the other to complete the game before finally announcing either of you winner or loser.\\
+
+Whoever has the highest amount of points in the end wins the game.
+
+\subsection{Logging}
+The game supports several commandline arguments for logging.\\
+
+By default, the application will log to the standard output, using the
+\texttt{ALL} logging level. If enabled, however, errors will be logged to
+\texttt{stderr}. The logging level can also be adjusted.\\
+
+The supported arguments are:
+\begin{verbatim}
+$ jarfile.jar [logLevel] [file]
+\end{verbatim}
+or, otherwise:
+\begin{verbatim}
+$ Launcher.java [logLevel] [file]
+\end{verbatim}
+Both of these fields are parsed case-insensitively.\\
+
+Two examples:
+\begin{verbatim}
+$ Launcher.java debug
+\end{verbatim}
+will run the game and log all debug and info messages. 
+\begin{verbatim}
+$ Launcher.java error file
+\end{verbatim}
+will run the game and log all debug, error and info messages to the system's
+output streams (\texttt{stdout} and \texttt{stderr}) and will write them to a
+new file as well.\\
+
+Please see the corresponding section below for more information on the possible
+arguments:\\
+
+\textbf{logLevel} can be one of the following:
+\begin{description}
+	\item[all] logs all messages;
+	\item[info] logs info messages only;
+	\item[error] log error messages and info messages;
+	\item[debug] log debug, error and info messages;
+	\item[none] disables logging.
+\end{description}
+
+\textbf{file}
+
+Setting the \texttt{file} flag will write all messages of the previously set
+logging level to a file. By default, a new file with the format
+\texttt{2048\_YYYYMMDD\_HHmmss.log} will be created, where
+\texttt{YYYMMMDDD\_HHmmss} is the time of application start.
+
+\newpage\section{Test report}
+
+In this section we will explain how we tested our game. We will start by
+explaining how often we tested our game. Afterwards, we will explain what
+kinds of testing we have done. Lastly, we will present the results of the
+testing procedure.
+
+\subsection{Test frequency}
+In this section we will discuss how frequently we tested our game. This is the
+first iteration where we really made use of our tests. During the MVC
+refactoring, our tests game in handy for regression testing. As such, the test
+frequency was higher than it normally was. The only area in which we didn't test
+much are the solvers, because they are hard to predict with their random
+factors. (They are covered now, but not during their development).
+
+\subsection{Testing methods}
+Visual tests involved actually playing the game and analyzing logging output
+manually. Unit tests simply check object properties with certain input.
+
+Visual testing was used a lot this sprint when developing the solvers. This is
+partly because of their randomness, but also because visual testing is just
+plain easier here: when the static evaluation function changed, it's just easier
+to run the game and look at the output than having to change the unit test and
+then discovering the random factor is causing your test to fail. Also, a complex
+piece of code such as the solver is not really testable with unit testing and
+therefore, we mostly resorted to visual testing.
+
+\subsection{Test results}
+EclEmma is the tool we used for analyzing and measuring our test coverage.
+As before, we analyzed our entire project using three different metrics: line,
+branch and instruction coverage.\\
+
+The results are as follows:
+\begin{description}
+	\item Line coverage: 77.7\%
+	\item Branch coverage: 71.7\%
+	\item Instruction coverage: 75.4\%
+\end{description}
+As with previous deliverables, we faced the same issues with code that requires
+graphically rendering our game. 
+
+\subsection{Conclusion}
+The Model View Controller actually allowed us to test some code that was
+previously untestable, so our coverage has again increased.
+
+As always, we are confident our code is sufficiently tested.
+
+\newpage\section{Exercise 1 - 20-Time}
+In this section we will describe the extra features we have implemented.
+
+We implemented the following extra features:
+\begin{description}
+	\item An AI that automatically solves the grid;
+\end{description}
+
+
+\newpage\section{Exercise 2 - Software Metrics}
+
+\subsection{The Feature Envy Design Flaw}
+
+This design flaw describes when there is a method or object that gets at the attributes of another object class to preform a certain action or uses it to evaluate what to do next. It’s better in this circumstance to let the other object class in which the data is stored do the certain action. Feature envy can be detected as follows: A method uses far more attributes from other classes than it’s own.\\
+
+We have luckily avoided the feature envy design flaw in our project. The design flaw could have probably affected our system in the \texttt{Command} class and all the classes that extend the \texttt{Command} class. The \texttt{Command} class is an abstract class with only two methods: one for setting a string as the current grid and one for updating the grid. The design flaw feature envy could be easily slipped into this class. 
+By not letting the \texttt{Grid} class do all the actions on the grid but instead letting a method in the \texttt{Command} class do most of the actions. This causes the method to use far more attributes from other classes than it’s own. 
+This could also happen with the \texttt{Command} classes that perform a move on the grid and the \texttt{TileHandler} class. By not letting the \texttt{TileHandler} class do all the move actions on the grid but instead letting a method in the \texttt{Command} class do most of the move actions. 
+In both cases it most probably creates the feature envy design flaw.\\
+
+But the feature envy design flaw could exist most easily between the \texttt{Grid} class and \texttt{TileHandler} class. The \texttt{TileHandler} class preforms a move on the grid and is therefore very dependent on the \texttt{Grid} class. We could have made the Grid class only a data container and let the \texttt{TileHandler} class have all the methods needed to preform a move. The Grid class has for example the methods: \texttt{getPossibleMoves()} and \texttt{getTileNeighbors()}.  The \texttt{getPossiblemoves()} method checks how many moves can be made in the grid. This method does only need the grid to check for possible moves, so keeping this method inside the Grid class was the most logical decision. This same principle also applies on the \texttt{getTileNeighbors()} method.
+When we had moved these methods to the \texttt{TileHandler} class there would be a possible feature envy design flaw. \\
+
+This could also happen the other way around; when you move some methods from the \texttt{TileHandler} class to the \texttt{Grid} class. The \texttt{TileHandler} class has for example the \texttt{move()} method that checks for each tile if it can be moved or merged. Because it is only used when a move needs to be conducted it was decided to have this method in the \texttt{TileHandler} class. 
+When we had moved this method to the \texttt{Grid} class it would most definitely use more attributes from the \texttt{TileHandler} class than it’s own class and create the feature envy design flaw.
+
+\newpage\subsection{Some other Design Flaw}
+
+\newpage\subsection{Some other Design Flaw}
+
+
+\newpage\section{Conclusion}
+
+The goal of this report was to explain how we developed our 2048 clone and how
+and why we implemented several features. 
+The development of the game was shown to have been undertaken in several consecutive steps. First of all we created just a fully working clone of the original 2048 game. Then, we implemented a multiplayer mode where the player can play against others over the network. After that we refactored our entire game and implemented several design patterns and added several extra features we thought of ourselves. \\
+
+The two extra features we implemented were:
+\begin{description}
+	\item An improved artificial intelligence that can solve games by itself;
+	\item Improved readability of the code
+\end{description}
+
+We have also tested our project on design flaws using inCode. But since there were no design flaw in our project we had to look in older commits to find design flaws so we can explain how we fixed those. But even then there where not three design flaws to be found, so we have described how we avoided the remaining design flaw all together.
+
+We hope you enjoyed reading this report. Have fun playing 2048!
+
+\end{document}
+

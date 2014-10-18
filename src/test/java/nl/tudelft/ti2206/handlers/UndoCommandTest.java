@@ -9,11 +9,17 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 
 public class UndoCommandTest {
 
-	Grid grid;
-	UndoCommand undoCommand;
-	Command moveUpCommand;
-	Command moveDownCommand;
-	Command moveLeftCommand;
+	/** The grid on which we are going to perform different commands. */
+	private Grid grid;
+	
+	/** The undo command we are going to test. */
+	private UndoCommand undoCommand;
+	/** MoveUpCommand so we can test the undo command. */
+	private Command moveUpCommand;
+	/** MoveDownCommand so we can test the undo command. */
+	private Command moveDownCommand;
+	/** MoveLeftCommand so we can test the undo command. */
+	private Command moveLeftCommand;
 
 	/**
 	 * Creates a grid and the necessary commands for the tests.
