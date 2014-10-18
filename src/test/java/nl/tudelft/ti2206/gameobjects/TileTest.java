@@ -19,7 +19,7 @@ public class TileTest {
 	 * Initializes the test object.
 	 */
 	@Before
-	public void setup() {	
+	public void setup() {
 		tile = new Tile(4, 0);
 	}
 
@@ -104,7 +104,7 @@ public class TileTest {
 		assertEquals(0, tile.getValue());
 		assertFalse(tile.isMerged());
 	}
-	
+
 	/**
 	 * Tests if doubleValue() correctly doubles the value of the tile.
 	 */
@@ -114,7 +114,11 @@ public class TileTest {
 		tile.doubleValue();
 		assertEquals(2, tile.getValue());
 	}
-	
+
+	/**
+	 * Tests if toString() correctly return the string representation of the
+	 * value of the tile.
+	 */
 	@Test
 	public void testToString() {
 		tile.setValue(2048);
