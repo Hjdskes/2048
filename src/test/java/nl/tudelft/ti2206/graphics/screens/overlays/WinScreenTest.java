@@ -15,6 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class WinScreenTest {
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Stage stage;
 	@Mock
@@ -25,13 +30,16 @@ public class WinScreenTest {
 	private ContinueButton continueButton;
 
 	/**
-	 * Initialize all mock objects and the object under test
+	 * Initialize all mock objects.
 	 */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
 
+	/**
+	 * Tests if all the required methods are called when show() is called.
+	 */
 	@Test
 	public void testCreate() {
 		WinScreen screen = new WinScreen(stage, image, restartButton,

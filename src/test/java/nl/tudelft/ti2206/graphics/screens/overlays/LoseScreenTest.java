@@ -15,6 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class LoseScreenTest {
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -24,10 +29,11 @@ public class LoseScreenTest {
 	@Mock
 	private RestartButton restartButton;
 
+	/** The screen that we are going to test */
 	private LoseScreen screen;
 
 	/**
-	 * Initialize all mock objects and the object under test
+	 * Initialize all mock objects and the object under test.
 	 */
 	@Before
 	public void setUp() {

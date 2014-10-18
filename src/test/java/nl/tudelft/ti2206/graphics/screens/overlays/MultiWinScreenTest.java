@@ -18,6 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class MultiWinScreenTest {
 
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -28,13 +32,19 @@ public class MultiWinScreenTest {
 	private Image image;
 	@Mock
 	private MenuButton button;
-	
+
+	/**
+	 * Initialize all mock objects.
+	 */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		when(screen.getStage()).thenReturn(stage);
 	}
 
+	/**
+	 * Tests if all the required methods are called when show() is called.
+	 */
 	@Test
 	public void testCreate() {
 		MultiWinScreen screen = new MultiWinScreen(stage, image, button);

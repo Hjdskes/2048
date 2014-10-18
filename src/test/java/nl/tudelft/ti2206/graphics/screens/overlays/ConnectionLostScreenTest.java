@@ -16,6 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class ConnectionLostScreenTest {
 
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -24,15 +28,20 @@ public class ConnectionLostScreenTest {
 	private Image image;
 	@Mock
 	private MenuButton button;
-	
+
+	/** The screen that we are going to test. */
 	private ConnectionLostScreen screen;
-	
+
+	/** Sets up all mock objects and the object under test. */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		screen = new ConnectionLostScreen(stage, image, button);
 	}
 
+	/**
+	 * Tests if all the required methods are called when show() is called.
+	 */
 	@Test
 	public void testCreate() {
 		assertNotNull(screen);

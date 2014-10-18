@@ -16,6 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class MultiWaitScreenTest {
 
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -24,17 +28,23 @@ public class MultiWaitScreenTest {
 	private Image image;
 	@Mock
 	private MenuButton button;
-	
+
+	/**
+	 * Initialize all mock objects.
+	 */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
 
+	/**
+	 * Tests if all the required methods are called when show() is called.
+	 */
 	@Test
 	public void testCreate() {
 		MultiWaitScreen screen = new MultiWaitScreen(stage, image, button);
 		assertNotNull(screen);
 		verify(stage).addActor(image);
 		verify(stage).addActor(button);
- 	}
+	}
 }
