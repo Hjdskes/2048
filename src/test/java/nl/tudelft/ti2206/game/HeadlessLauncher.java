@@ -33,6 +33,9 @@ public class HeadlessLauncher extends Launcher {
 		config = new HeadlessApplicationConfiguration();
 	}
 
+	/**
+	 * Launches the launcher.
+	 */
 	@Override
 	public void launch() {
 		new HeadlessApplication(new HeadlessTwentyFourtyGame(), config);

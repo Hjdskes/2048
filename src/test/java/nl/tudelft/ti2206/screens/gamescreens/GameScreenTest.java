@@ -32,21 +32,41 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreenTest {
-	@Mock private Skin skin;
-	@Mock private Stage stage;
-	@Mock private Grid grid;
-	@Mock private Texture texture;
-	@Mock private GL20 gl;
-	@Mock private Input input;
-	@Mock private Preferences prefs;
-	@Mock private Viewport viewPort;
-	@Mock private Scores scores;
-	@Mock private HintButton hintButton;
-	@Mock private RestartButton restartButton;
-	@Mock private SolveButton solveButton;
-	@Mock private UndoButton undoButton;
-	@Mock private RedoButton redoButton;
-	
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
+	@Mock
+	private Skin skin;
+	@Mock
+	private Stage stage;
+	@Mock
+	private Grid grid;
+	@Mock
+	private Texture texture;
+	@Mock
+	private GL20 gl;
+	@Mock
+	private Input input;
+	@Mock
+	private Preferences prefs;
+	@Mock
+	private Viewport viewPort;
+	@Mock
+	private Scores scores;
+	@Mock
+	private HintButton hintButton;
+	@Mock
+	private RestartButton restartButton;
+	@Mock
+	private SolveButton solveButton;
+	@Mock
+	private UndoButton undoButton;
+	@Mock
+	private RedoButton redoButton;
+
+	/** Gamescreen that we are going to test */
 	private GameScreen screen;
 
 	/** Sets up all mock objects and the object under test */
@@ -56,7 +76,8 @@ public class GameScreenTest {
 		new HeadlessLauncher().launch();
 		AssetHandler.getInstance().setSkin(skin);
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
-		screen = new GameScreen(stage, grid, restartButton, hintButton, solveButton, undoButton, redoButton, scores);
+		screen = new GameScreen(stage, grid, restartButton, hintButton,
+				solveButton, undoButton, redoButton, scores);
 
 		Gdx.gl = gl;
 		Gdx.input = input;
@@ -64,7 +85,7 @@ public class GameScreenTest {
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-		
+
 		when(stage.getViewport()).thenReturn(viewPort);
 	}
 
@@ -91,7 +112,7 @@ public class GameScreenTest {
 		verify(stage).addActor(undoButton);
 		verify(stage).addActor(redoButton);
 	}
-	
+
 	/**
 	 * Tests if all required methods are called on screen.draw().
 	 */
@@ -102,7 +123,10 @@ public class GameScreenTest {
 		verify(gl).glClear(anyInt());
 		verify(stage).draw();
 	}
-	
+
+	/**
+	 * Tests if all required methods are called on screen.update().
+	 */
 	@Test
 	public void testUpdate() {
 		TwentyFourtyGame.setState(TwentyFourtyGame.getWonState());
@@ -110,6 +134,6 @@ public class GameScreenTest {
 		screen.update();
 		verifyNoMoreInteractions(grid);
 		verify(stage).act();
-		
+
 	}
 }
