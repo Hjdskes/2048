@@ -28,6 +28,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class MenuScreenTest {
 
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -51,8 +55,10 @@ public class MenuScreenTest {
 	@Mock
 	private Input input;
 
+	/** MenuScreen that we are going to test. */
 	private MenuScreen screen;
 
+	/** Sets up all mock objects and the object under test. */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -73,12 +79,20 @@ public class MenuScreenTest {
 		when(buttonCell.row()).thenReturn(buttonCell);
 	}
 
+	/**
+	 * Tests if all the necessary methods are called when the dispose method is
+	 * called.
+	 */
 	@Test
 	public void testDispose() {
 		screen.dispose();
 		verify(stage).dispose();
 	}
 
+	/**
+	 * Tests if all the necessary methods are called when the create method is
+	 * called.
+	 */
 	@Test
 	public void testCreate() {
 		screen.create();

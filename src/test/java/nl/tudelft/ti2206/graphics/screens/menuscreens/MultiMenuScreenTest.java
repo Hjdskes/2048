@@ -30,20 +30,37 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MultiMenuScreenTest {
-	@Mock private Skin skin;
-	@Mock private Stage stage;
-	@Mock private Grid grid;
-	@Mock private Texture texture;
-	@Mock private GL20 gl;
-	@Mock private Input input;
-	@Mock private Preferences prefs;
-	@Mock private Viewport viewPort;
-	@Mock private Scores scores;
-	@Mock private MenuButton menuButton;
-	@Mock private TextButton button;
-	@Mock private Label label;
-	
-	
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
+	@Mock
+	private Skin skin;
+	@Mock
+	private Stage stage;
+	@Mock
+	private Grid grid;
+	@Mock
+	private Texture texture;
+	@Mock
+	private GL20 gl;
+	@Mock
+	private Input input;
+	@Mock
+	private Preferences prefs;
+	@Mock
+	private Viewport viewPort;
+	@Mock
+	private Scores scores;
+	@Mock
+	private MenuButton menuButton;
+	@Mock
+	private TextButton button;
+	@Mock
+	private Label label;
+
+	/** MenuScreen that we are going to test. */
 	private MultiMenuScreen screen;
 
 	/** Sets up all mock objects and the object under test */
@@ -61,7 +78,7 @@ public class MultiMenuScreenTest {
 		doNothing().when(Gdx.gl).glClearColor(anyInt(), anyInt(), anyInt(),
 				anyInt());
 		doNothing().when(Gdx.gl).glClear(anyInt());
-		
+
 		when(stage.getViewport()).thenReturn(viewPort);
 	}
 
@@ -81,10 +98,10 @@ public class MultiMenuScreenTest {
 	public void testCreate() {
 		screen.create();
 		verify(input).setInputProcessor(stage);
-	//	verify(stage).addListener(any(EventListener.class));
-	//	verify(stage).addActor(grid);
-	//	verify(stage).addActor(scores);
-	//	verify(stage).addActor(button);
+		// verify(stage).addListener(any(EventListener.class));
+		// verify(stage).addActor(grid);
+		// verify(stage).addActor(scores);
+		// verify(stage).addActor(button);
 		verify(stage).addActor(label);
 	}
 
@@ -94,8 +111,8 @@ public class MultiMenuScreenTest {
 	@Test
 	public void testDraw() {
 		screen.draw();
-	//	verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
-	//	verify(gl).glClear(anyInt());
+		// verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
+		// verify(gl).glClear(anyInt());
 		verify(stage).draw();
 	}
 }

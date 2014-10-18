@@ -27,19 +27,34 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class DifficultyScreenTest {
-	@Mock private Skin skin;
-	@Mock private Stage stage;
-	@Mock private Grid grid;
-	@Mock private Texture texture;
-	@Mock private Input input;
-	@Mock private Preferences prefs;
-	@Mock private MenuButton menuButton;
-	@Mock private TextButton button;
-	@Mock private Label label;
-	
+
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
+	@Mock
+	private Skin skin;
+	@Mock
+	private Stage stage;
+	@Mock
+	private Grid grid;
+	@Mock
+	private Texture texture;
+	@Mock
+	private Input input;
+	@Mock
+	private Preferences prefs;
+	@Mock
+	private MenuButton menuButton;
+	@Mock
+	private TextButton button;
+	@Mock
+	private Label label;
+
+	/** MenuScreen that we are going to test. */
 	private DifficultyScreen screen;
 
-	/** Sets up all mock objects and the object under test */
+	/** Sets up all mock objects and the object under test. */
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);

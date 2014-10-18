@@ -27,6 +27,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class ClientScreenTest {
 
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -46,6 +50,7 @@ public class ClientScreenTest {
 	@Mock
 	private Input input;
 
+	/** MenuScreen that we are going to test. */
 	private ClientScreen screen;
 
 	/**
@@ -72,7 +77,10 @@ public class ClientScreenTest {
 		screen.draw();
 		verify(stage).draw();
 	}
-	
+
+	/**
+	 * Tests if all the required methods are called when updating.
+	 */
 	@Test
 	public void testUpdate() {
 		when(field.getText()).thenReturn("");
@@ -104,7 +112,7 @@ public class ClientScreenTest {
 		verify(stage).addActor(menuButton);
 		verify(stage).addActor(playButton);
 	}
-	
+
 	/**
 	 * Tests if the stage is disposed when the screen is disposed.
 	 */

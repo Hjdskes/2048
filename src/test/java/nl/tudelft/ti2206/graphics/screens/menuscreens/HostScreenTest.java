@@ -29,6 +29,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class HostScreenTest {
 
+	/**
+	 * Mocked objects needed to create the necessary objects and verify if the
+	 * correct methods are called.
+	 */
 	@Mock
 	private Skin skin;
 	@Mock
@@ -50,8 +54,10 @@ public class HostScreenTest {
 	@Mock
 	private Input input;
 
+	/** MenuScreen that we are going to test. */
 	private HostScreen screen;
 
+	/** Sets up all mock objects and the object under test. */
 	@Before
 	public void setUp() {
 		new HeadlessLauncher().launch();
@@ -70,16 +76,24 @@ public class HostScreenTest {
 		when(cell.padTop(anyInt())).thenReturn(cell);
 		when(cell.padBottom(anyInt())).thenReturn(cell);
 		when(cell.row()).thenReturn(cell);
-		
+
 		when(table.getCell(label)).thenReturn(cell);
 	}
 
+	/**
+	 * Tests if all the necessary methods are called when the dispose method is
+	 * called.
+	 */
 	@Test
 	public void testDispose() {
 		screen.dispose();
 		verify(stage).dispose();
 	}
 
+	/**
+	 * Tests if all the necessary methods are called when the create method is
+	 * called.
+	 */
 	@Test
 	public void testCreate() {
 		screen.create();
@@ -89,21 +103,29 @@ public class HostScreenTest {
 		verify(cell, times(4)).padBottom(anyInt());
 		verify(cell, times(4)).row();
 
-		verify(stage).addActor(table); 
+		verify(stage).addActor(table);
 		verify(stage).addActor(menuButton);
 
 		verify(input).setInputProcessor(stage);
 	}
 
+	/**
+	 * Tests if all the necessary methods are called when the create method is
+	 * called.
+	 */
 	@Test
 	public void testDraw() {
 		screen.draw();
 		verify(gl).glClearColor(anyInt(), anyInt(), anyInt(), anyInt());
 		verify(gl).glClear(anyInt());
-		
+
 		verify(stage).draw();
 	}
 
+	/**
+	 * Tests if all the necessary methods are called when the update method is
+	 * called.
+	 */
 	@Test
 	public void testUpdate() {
 		screen.update();
