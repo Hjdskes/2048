@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.handlers.AssetHandler;
 import nl.tudelft.ti2206.handlers.InputHandler;
+import nl.tudelft.ti2206.handlers.ScreenHandler;
 import nl.tudelft.ti2206.log.Logger;
 import nl.tudelft.ti2206.screens.Screen;
 import nl.tudelft.ti2206.screens.drawbehaviour.DrawBeige;
@@ -51,6 +52,9 @@ public class UserComputerScreen extends Screen {
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
+	
+	/** The singleton reference to the ScreenHandler class. */
+	private ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
@@ -202,13 +206,13 @@ public class UserComputerScreen extends Screen {
 		super.update();
 
 		if (TwentyFourtyGame.isWaiting()) {
-			logger.info(className,
-					"Player is out of moves! Waiting for the computer...");
 			this.setYouLabel("WAITING", Color.RED);
-		} else if(computerGrid.getPossibleMoves() == 0) {
+		} else if(computerGrid.getPossibleMoves() == 0 &&
+				!screenHandler.getScreen().hasOverlay()) {
 			logger.info(className,
 					"Computer is out of moves! Waiting for the player...");
 			this.setOpponentLabel("WAITING", Color.RED);
+			screenHandler.getScreen().addMultiWaitScreenOverlay(false);
 			gridSolver.stop();
 		}
 
