@@ -6,7 +6,6 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.screens.menuscreens.MenuScreen;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +19,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -42,6 +42,8 @@ public class MenuScreenTest {
 	@Mock
 	private TextField field;
 	@Mock
+	private ImageButton imageButton;
+	@Mock
 	private TextButton button;
 	@Mock
 	private GL20 gl;
@@ -53,7 +55,7 @@ public class MenuScreenTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		screen = new MenuScreen(stage, label, button);
+		screen = new MenuScreen(stage, label, button, imageButton);
 		Gdx.gl = gl;
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
