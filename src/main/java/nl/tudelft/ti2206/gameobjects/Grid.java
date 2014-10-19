@@ -39,22 +39,6 @@ public class Grid extends Observable implements Cloneable {
 		LEFT, RIGHT, UP, DOWN;
 	}
 
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
-
-	/**
-	 * The name of the instance, initialized to the name of the class. This can
-	 * be either Grid, LocalGrid or RemoteGrid.
-	 */
-	private String gridName = Grid.class.getSimpleName();
-
-	private static final int PRIMES[] = {
-		 22189,  28813,  37633,  43201, 
-		 47629,  60493,  63949,  65713, 
-		 69313,  73009,  76801,  84673, 
-		106033, 108301, 112909, 115249,
-	};
-
 	/** The grid contains sixteen tiles. */
 	public static final int NTILES = 16;
 
@@ -63,6 +47,18 @@ public class Grid extends Observable implements Cloneable {
 
 	/** The highest value to start with. */
 	public static final int FOUR = 2;
+
+	/** The tile that will make you win. */
+	public static final int WIN = 11;
+
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
+
+	/**
+	 * The name of the instance, initialized to the name of the class. This can
+	 * be either Grid, LocalGrid or RemoteGrid.
+	 */
+	private String gridName = Grid.class.getSimpleName();
 
 	/** The array containing all sixteen tiles. */
 	private Tile[] tiles;
@@ -287,6 +283,20 @@ public class Grid extends Observable implements Cloneable {
 	}
 
 	/**
+	 * @return The number of empty tiles.
+	 */
+	public int getEmptyTiles() {
+		int empty = 0;
+		while (iterator.hasNext()) {
+			if (iterator.next().isEmpty()) {
+				empty++;
+			}
+		}
+		iterator.reset();
+		return empty;
+	}
+
+	/**
 	 * @return The amount of possible moves.
 	 */
 	public int getPossibleMoves() {
@@ -466,23 +476,5 @@ public class Grid extends Observable implements Cloneable {
 		newGrid.setScore(score);
 		newGrid.highestTile = highestTile;
 		return newGrid;
-	}
-
-	public int zobristHash() {
-		int hash = 0;
-		for (int i = 0; i < NTILES; i++) {
-			hash += tiles[i].getValue() * PRIMES[i];
-		}
-		return hash;
-	}
-
-	public int getEmptyTiles() {
-		int empty = 0;
-		for (Tile tile : tiles) {
-			if (tile.isEmpty()) {
-				empty++;
-			}
-		}
-		return empty;
 	}
 }

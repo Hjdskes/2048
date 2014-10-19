@@ -179,6 +179,15 @@ public class GridTest {
 	}
 
 	/**
+	 * Tests if getEmptyTiles() correctly returns the amount
+	 * of empty tiles.
+	 */
+	@Test
+	public void testGetEmptyTiles() {
+		assertEquals(14, grid.getEmptyTiles());
+	}
+
+	/**
 	 * Tests if getTileHandler() correctly returns the tileHandler.
 	 */
 	@Test
