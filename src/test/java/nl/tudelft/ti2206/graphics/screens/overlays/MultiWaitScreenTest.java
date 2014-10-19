@@ -1,7 +1,8 @@
 package nl.tudelft.ti2206.graphics.screens.overlays;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.graphics.buttons.MenuButton;
 import nl.tudelft.ti2206.graphics.screens.overlays.MultiWaitScreen;
 
@@ -42,9 +43,13 @@ public class MultiWaitScreenTest {
 	 */
 	@Test
 	public void testCreate() {
-		MultiWaitScreen screen = new MultiWaitScreen(stage, image, button);
+		MultiWaitScreen screen = new MultiWaitScreen(stage, image, button, true);
 		assertNotNull(screen);
 		verify(stage).addActor(image);
 		verify(stage).addActor(button);
+		verifyNoMoreInteractions(image);
+		
+		screen = new MultiWaitScreen(stage, image, button, false);
+		verify(image).setX(TwentyFourtyGame.GAME_WIDTH);
 	}
 }

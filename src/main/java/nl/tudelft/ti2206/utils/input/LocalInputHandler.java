@@ -19,14 +19,14 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
  */
 public class LocalInputHandler extends InputListener {
 
+	/** Get current class name, used for logging output. */
+	private static final String CLASSNAME = LocalInputHandler.class.getSimpleName();
+	
 	/** The singleton reference to the Networking instance. */
 	private static Networking networking = Networking.getInstance();
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
-
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
 
 	/**
 	 * A reference to the local Grid, so the called objects can interact with
@@ -52,30 +52,26 @@ public class LocalInputHandler extends InputListener {
 	public boolean keyDown(InputEvent event, int keycode) {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
-			logger.info(className, "Move is made in the direction DOWN");
-			setCommand(new MoveDownCommand(grid));
-			command.execute();
+			logger.info(CLASSNAME, "Move is made in the direction DOWN");
+			executeCommand(new MoveDownCommand(grid));
 			networking.sendString("MOVE[D]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_UP:
-			logger.info(className, "Move is made in the direction UP");
-			setCommand(new MoveUpCommand(grid));
-			command.execute();
+			logger.info(CLASSNAME, "Move is made in the direction UP");
+			executeCommand(new MoveUpCommand(grid));
 			networking.sendString("MOVE[U]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_LEFT:
-			logger.info(className, "Move is made in the direction LEFT");
-			setCommand(new MoveLeftCommand(grid));
-			command.execute();
+			logger.info(CLASSNAME, "Move is made in the direction LEFT");
+			executeCommand(new MoveLeftCommand(grid));
 			networking.sendString("MOVE[L]");
 			sendGrid();
 			return true;
 		case Keys.DPAD_RIGHT:
-			logger.info(className, "Move is made in the direction RIGHT");
-			setCommand(new MoveRightCommand(grid));
-			command.execute();
+			logger.info(CLASSNAME, "Move is made in the direction RIGHT");
+			executeCommand(new MoveRightCommand(grid));
 			networking.sendString("MOVE[R]");
 			sendGrid();
 			return true;
@@ -90,10 +86,13 @@ public class LocalInputHandler extends InputListener {
 		networking.sendString("GRID[" + grid.toString() + "]");
 	}
 	
-	public void setCommand(Command command) {
+	/** Sets and executes the provided command. */
+	public void executeCommand(Command command) {
 		this.command = command;
+		this.command.execute();
 	}
-	
+
+	/** Returns the current command. */
 	public Command getCommand() {
 		return command;
 	}

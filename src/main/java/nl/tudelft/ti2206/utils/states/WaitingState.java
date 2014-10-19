@@ -12,23 +12,24 @@ import nl.tudelft.ti2206.utils.log.Logger;
  */
 
 public class WaitingState implements GameState {
-	
-	/** The unique singleton instance of this class. */
-	private static WaitingState instance = new WaitingState();
-	
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
 
 	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
+	private static final String CLASSNAME = WaitingState.class.getSimpleName();
+
+	/** The unique singleton instance of this class. */
+	private static WaitingState instance = new WaitingState();
+
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
 
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Overrides the default constructor. */
-	private WaitingState() {}
-	
-	/** @return The singleton instance of the state*/
+	private WaitingState() {
+	}
+
+	/** @return The singleton instance of the state */
 	public static WaitingState getInstance() {
 		return instance;
 	}
@@ -55,17 +56,18 @@ public class WaitingState implements GameState {
 				&& (remoteGrid.getPossibleMoves() == 0)) {
 			win(localGrid);
 		}
-		
+
 		/* Win condition: Both ran out of moves, same score but i was first. */
-		else if ((localGrid.getPossibleMoves() == 0) && 
-				(remoteGrid.getPossibleMoves() == 0)
+		else if ((localGrid.getPossibleMoves() == 0)
+				&& (remoteGrid.getPossibleMoves() == 0)
 				&& (localGrid.getScore() == remoteGrid.getScore())) {
 			win(localGrid);
 		}
 	}
 
+	/** Handles the state if the local player should lose. */
 	private void lose(Grid remoteGrid) {
-		logger.info(className,
+		logger.info(CLASSNAME,
 				"Local player lost the multiplayer game. The score of the remote player: "
 						+ Integer.toString(remoteGrid.getScore()));
 
@@ -73,15 +75,16 @@ public class WaitingState implements GameState {
 		screenHandler.getScreen().addLWOverlay(true, false, null);
 	}
 
+	/** Handles the state if the local player should win. */
 	private void win(Grid localGrid) {
-		logger.info(className,
+		logger.info(CLASSNAME,
 				"Local player won the multiplayer game. The score of the local player: "
 						+ Integer.toString(localGrid.getScore()));
 
 		TwentyFourtyGame.setState(WonState.getInstance());
 		screenHandler.getScreen().addLWOverlay(true, true, null);
 	}
-	
+
 	/** For testing purposes only */
 	public void setScreenHandler(ScreenHandler handler) {
 		screenHandler = handler;

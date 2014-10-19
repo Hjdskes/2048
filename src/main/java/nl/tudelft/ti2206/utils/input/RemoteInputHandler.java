@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.utils.input;
 
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,11 +17,10 @@ import nl.tudelft.ti2206.utils.net.Networking;
  * network.
  */
 public class RemoteInputHandler implements Observer {
-	/**
-	 * A reference to the remote Grid, so the called objects can interact with
-	 * it.
-	 */
-	private Grid grid;
+
+	/** Get current class name, used for logging output. */
+	private static final String CLASSNAME = RemoteInputHandler.class
+			.getSimpleName();
 
 	/** The singleton reference to the Networking instance. */
 	private static Networking networking = Networking.getInstance();
@@ -30,9 +28,12 @@ public class RemoteInputHandler implements Observer {
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
-	
+	/**
+	 * A reference to the remote Grid, so the called objects can interact with
+	 * it.
+	 */
+	private Grid grid;
+
 	/** The recent command of the remote player */
 	private Command command;
 
@@ -44,7 +45,6 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public RemoteInputHandler(Grid grid) {
 		this.grid = grid;
-
 		networking.addObserver(this);
 	}
 
@@ -67,7 +67,7 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public void moveUp() {
 		logger.info(this.getClass().getSimpleName(), "Remote player moves UP");
-		setCommand(new MoveUpCommand(grid));
+		executeCommand(new MoveUpCommand(grid));
 		command.execute();
 	}
 
@@ -76,7 +76,7 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public void moveDown() {
 		logger.info(this.getClass().getSimpleName(), "Remote player moves DOWN");
-		setCommand(new MoveDownCommand(grid));
+		executeCommand(new MoveDownCommand(grid));
 		command.execute();
 	}
 
@@ -86,7 +86,7 @@ public class RemoteInputHandler implements Observer {
 	public void moveRight() {
 		logger.info(this.getClass().getSimpleName(),
 				"Remote player moves RIGHT");
-		setCommand(new MoveRightCommand(grid));
+		executeCommand(new MoveRightCommand(grid));
 		command.execute();
 	}
 
@@ -95,7 +95,7 @@ public class RemoteInputHandler implements Observer {
 	 */
 	public void moveLeft() {
 		logger.info(this.getClass().getSimpleName(), "Remote player moves LEFT");
-		setCommand(new MoveLeftCommand(grid));
+		executeCommand(new MoveLeftCommand(grid));
 		command.execute();
 	}
 
@@ -103,7 +103,7 @@ public class RemoteInputHandler implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg instanceof String) {
 			String input = (String) arg;
-			logger.debug(className, "update received: " + input);
+			logger.debug(CLASSNAME, "update received: " + input);
 			handleRemoteInput(input);
 		}
 	}
@@ -129,60 +129,66 @@ public class RemoteInputHandler implements Observer {
 		int closing = str.indexOf(']');
 
 		if (closing == -1) {
-			logger.error(className,
+			logger.error(CLASSNAME,
 					"Protocol parsing failed, no closing bracket found (-1).");
 		} else if (str.startsWith("GRID[")) {
 			String strGrid = str.substring(5, closing);
 
 			if (validateGrid(strGrid)) {
 				fillGrid(strGrid);
-				logger.debug(className, "New remote grid set.");
+				logger.debug(CLASSNAME, "New remote grid set.");
 			} else {
-				logger.error(className,
+				logger.error(CLASSNAME,
 						"Protocol parsing failed, malformed remote grid string: "
 								+ strGrid);
 			}
 		} else if (str.startsWith("MOVE[") && closing == 6) {
-			char direction = str.charAt(5);
-
-			logger.debug(className,
-					"Processing remote user's move to"
-							+ direction);
-			
-			switch (direction) {
-			case 'U':
-				moveUp();
-				break;
-			case 'D':
-				moveDown();
-				break;
-			case 'R':
-				moveRight();
-				break;
-			case 'L':
-				moveLeft();
-				break;
-			default:
-				logger.error(className,
-						"Unknown remote direction parameter in protocol: "
-								+ direction);
-				break;
-			}
+			handleMove(str);
 		} else {
-			logger.error(className, "Unrecognised remote string in protocol: "
+			logger.error(CLASSNAME, "Unrecognised remote string in protocol: "
 					+ str + ", closing tag is at position " + closing);
 		}
 	}
-	
+
+	/** Executes the move. */
+	private void handleMove(String move) {
+		char direction = move.charAt(5);
+
+		logger.debug(CLASSNAME, "Processing remote user's move to" + direction);
+
+		switch (direction) {
+		case 'U':
+			moveUp();
+			break;
+		case 'D':
+			moveDown();
+			break;
+		case 'R':
+			moveRight();
+			break;
+		case 'L':
+			moveLeft();
+			break;
+		default:
+			logger.error(CLASSNAME,
+					"Unknown remote direction parameter in protocol: "
+							+ direction);
+			break;
+		}
+	}
+
 	/** Used to insert a Mock for Logger. */
 	public void setLogger(Logger loggerMock) {
 		logger = loggerMock;
 	}
-	
-	public void setCommand(Command command) {
+
+	/** Sets and executes the provided command. */
+	public void executeCommand(Command command) {
 		this.command = command;
+		this.command.execute();
 	}
-	
+
+	/** Returns the current command. */
 	public Command getCommand() {
 		return command;
 	}
