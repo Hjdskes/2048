@@ -42,6 +42,7 @@ public class MultiWaitScreen {
 		addActors();
 	}
 
+	/** Adds all required actors to stage. */ 
 	private void addActors() {
 		stage.addActor(image);
 		stage.addActor(menuButton);

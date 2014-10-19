@@ -37,7 +37,8 @@ public class MultiWinScreen {
 		addActors();
 	}
 
-	public void addActors() {
+	/** Adds all required actors to stage. */ 
+	private void addActors() {
 		stage.addActor(image);
 		stage.addActor(menuButton);
 	}
