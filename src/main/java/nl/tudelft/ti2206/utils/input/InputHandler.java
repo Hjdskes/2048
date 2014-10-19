@@ -21,6 +21,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
  * mice. Currently, only the keyboard is needed.
  */
 public class InputHandler extends InputListener {
+
+	/** Get current class name, used for logging output. */
+	private static final String CLASSNAME = InputHandler.class.getSimpleName();
+
 	/**
 	 * A reference to the current Grid, so the called objects can interact with
 	 * it.
@@ -29,9 +33,6 @@ public class InputHandler extends InputListener {
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
-
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
 
 	/** The current command that can be executed. */
 	private Command command;
@@ -45,32 +46,28 @@ public class InputHandler extends InputListener {
 	public InputHandler(Grid grid) {
 		this.grid = grid;
 	}
-	
+
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
 		switch (keycode) {
 		case Keys.DPAD_DOWN:
-			logger.debug(className, "User pressed key: DOWN");
-			setCommand(new MoveDownCommand(grid));
-			command.execute();
+			logger.debug(CLASSNAME, "User pressed key: DOWN");
+			executeCommand(new MoveDownCommand(grid));		
 			return true;
 		case Keys.DPAD_UP:
-			logger.debug(className, "User pressed key: UP");
-			setCommand(new MoveUpCommand(grid));
-			command.execute();
+			logger.debug(CLASSNAME, "User pressed key: UP");
+			executeCommand(new MoveUpCommand(grid));	
 			return true;
 		case Keys.DPAD_LEFT:
-			logger.debug(className, "User pressed key: LEFT");
-			setCommand(new MoveLeftCommand(grid));
-			command.execute();
+			logger.debug(CLASSNAME, "User pressed key: LEFT");
+			executeCommand(new MoveLeftCommand(grid));	
 			return true;
 		case Keys.DPAD_RIGHT:
-			logger.debug(className, "User pressed key: RIGHT");
-			setCommand(new MoveRightCommand(grid));
-			command.execute();
+			logger.debug(CLASSNAME, "User pressed key: RIGHT");
+			executeCommand(new MoveRightCommand(grid));		
 			return true;
 		case Keys.ESCAPE:
-			logger.debug(className, "User pressed key: ESCAPE");
+			logger.debug(CLASSNAME, "User pressed key: ESCAPE");
 			ProgressHandler.getInstance().saveGame(grid);
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
@@ -82,11 +79,14 @@ public class InputHandler extends InputListener {
 		}
 		return false;
 	}
-	
-	public void setCommand(Command command) {
+
+	/** Sets and executes the provided command. */
+	public void executeCommand(Command command) {
 		this.command = command;
+		this.command.execute();
 	}
-	
+
+	/** Returns the current command. */
 	public Command getCommand() {
 		return command;
 	}
