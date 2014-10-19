@@ -17,29 +17,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * The DifficultyScreen is used to select a difficulty for the computer
- * to play against.
+ * The DifficultyScreen is used to select a difficulty for the computer to play
+ * against.
  */
 public class DifficultyScreen extends Screen {
 	/** The main label. */
-	private Label label;
+	private Label difficultyLabel;
 
 	/** The buttons to choose the difficulty. */
 	private TextButton easyButton, mediumButton, hardButton, extremeButton;
-
 	/** The button to go back to the main menu. */
 	private MenuButton menuButton;
 
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
-
 	/** The singleton reference to the ScreenHandler class. */
 	private static ScreenHandler screenHandler = ScreenHandler.getInstance();
 
 	/** Constructs a new DifficultyScreen. */
 	public DifficultyScreen() {
 		stage = new Stage();
-		label = new Label("Select your difficulty!", assetHandler.getSkin());
+		difficultyLabel = new Label("Select your difficulty!",
+				assetHandler.getSkin());
 
 		easyButton = new TextButton("Easy", assetHandler.getSkin());
 		mediumButton = new TextButton("Medium", assetHandler.getSkin());
@@ -51,9 +50,10 @@ public class DifficultyScreen extends Screen {
 	}
 
 	/** Constructor for testing purposes only. */
-	public DifficultyScreen(Stage stage, Label label, MenuButton menuButton, TextButton button) {
+	public DifficultyScreen(Stage stage, Label label, MenuButton menuButton,
+			TextButton button) {
 		this.stage = stage;
-		this.label = label;
+		this.difficultyLabel = label;
 
 		this.easyButton = button;
 		this.mediumButton = button;
@@ -63,48 +63,67 @@ public class DifficultyScreen extends Screen {
 
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
-
+	
 	@Override
 	public void create() {
 		super.create();
 
-		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getWidth() / 2);
-		label.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + label.getHeight() + 10
-				* TwentyFourtyGame.GAP);
+		positionDifficultyLabel();
+		positionEasyButton();
+		positionMediumButton();
+		positionHardButton();
+		positionExtremeButton();
 
-		// position buttons:
+		setListeners();
+		addActors();
+	}
+	
+	/** Positions the difficulty label. */
+	private void positionDifficultyLabel() {
+		difficultyLabel.setX(TwentyFourtyGame.GAME_WIDTH / 2
+				- difficultyLabel.getWidth() / 2);
+		difficultyLabel.setY(TwentyFourtyGame.GAME_HEIGHT / 2
+				+ difficultyLabel.getHeight() + 10 * TwentyFourtyGame.GAP);
+	}
+	
+	/** Positions the easy difficulty button. */
+	private void positionEasyButton() {
 		easyButton.setWidth(200);
 		easyButton.setX(TwentyFourtyGame.GAME_WIDTH / 2 - easyButton.getWidth()
 				/ 2);
-		easyButton.setY(label.getY() - label.getHeight() - 6
-				* TwentyFourtyGame.GAP);
-
+		easyButton.setY(difficultyLabel.getY() - difficultyLabel.getHeight()
+				- 6 * TwentyFourtyGame.GAP);
+	}
+	
+	/** Positions the medium difficulty button. */
+	private void positionMediumButton() {
 		mediumButton.setWidth(200);
 		mediumButton.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- mediumButton.getWidth() / 2);
 		mediumButton.setY(easyButton.getY() - easyButton.getHeight() - 2
 				* TwentyFourtyGame.GAP);
-
+	}
+	
+	/** Positions the hard difficulty button. */
+	private void positionHardButton() {
 		hardButton.setWidth(200);
 		hardButton.setX(TwentyFourtyGame.GAME_WIDTH / 2 - hardButton.getWidth()
 				/ 2);
 		hardButton.setY(mediumButton.getY() - easyButton.getHeight() - 2
 				* TwentyFourtyGame.GAP);
-
+	}
+	
+	/** Positions the extreme difficulty button. */
+	private void positionExtremeButton() {
 		extremeButton.setWidth(200);
 		extremeButton.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- extremeButton.getWidth() / 2);
 		extremeButton.setY(hardButton.getY() - mediumButton.getHeight() - 2
 				* TwentyFourtyGame.GAP);
-
-		// add buttons to stage:
-		stage.addActor(label);
-		stage.addActor(easyButton);
-		stage.addActor(mediumButton);
-		stage.addActor(hardButton);
-		stage.addActor(extremeButton);
-		stage.addActor(menuButton);
-
+	}
+	
+	/** Sets the listeners of all buttons. */
+	private void setListeners() {
 		easyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -132,5 +151,15 @@ public class DifficultyScreen extends Screen {
 				screenHandler.set(new CountDownScreen(Difficulty.EXTREME));
 			}
 		});
+	}
+	
+	/** Adds all required actors to stage. */
+	private void addActors() {
+		stage.addActor(difficultyLabel);
+		stage.addActor(easyButton);
+		stage.addActor(mediumButton);
+		stage.addActor(hardButton);
+		stage.addActor(extremeButton);
+		stage.addActor(menuButton);
 	}
 }
