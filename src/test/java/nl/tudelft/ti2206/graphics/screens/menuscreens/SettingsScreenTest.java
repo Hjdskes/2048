@@ -122,6 +122,7 @@ public class SettingsScreenTest {
 
 	@Test
 	public void testDispose() {
+		logger.setLogFile(null);
 		screen.dispose();
 		verify(stage).dispose();
 		assertEquals(logger.getLevel(), PreferenceHandler.getInstance()

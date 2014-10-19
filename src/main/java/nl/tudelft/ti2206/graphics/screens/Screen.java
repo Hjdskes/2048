@@ -16,10 +16,6 @@ import com.badlogic.gdx.utils.Disposable;
 
 /**
  * An abstract class for screens.
- * 
- * Code based on:
- * http://gamedev.stackexchange.com/questions/75902/how-to-design-
- * transparent-screen-in-libgdx
  */
 public abstract class Screen implements Disposable {
 	/** The singleton reference to the Logger instance. */
