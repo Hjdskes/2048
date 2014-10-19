@@ -10,22 +10,10 @@ import nl.tudelft.ti2206.gameobjects.Tile;
 public class Expectimax implements Solver {
 	/** This matrix gives a weight to every tile. */
 	private static final int[] WEIGHTMATRIX = {
-		17, 13, 12, 11,
-		13,  9,  9, 10,
-		12,  9,  8,  8,
-		11, 10,  8,  8
-	// 17, 13, 12, 11,
-	// 13, 8, 8, 10,
-	// 12, 8, 6, 6,
-	// 11, 10, 6, 6
-	// 17, 13, 11, 10,
-	// 13, 10, 9, 9,
-	// 11, 9, 8, 8,
-	// 10, 9, 8, 8
-	// 20, 18, 15, 12,
-	// 18, 9, 9, 10,
-	// 15, 9, 8, 5,
-	// 12, 10, 5, 0
+		17, 15, 13, 11,
+		15,  9, 10, 11,
+		13, 10,  8,  8,
+		11, 11,  8,  8
 	};
 
 	/**
