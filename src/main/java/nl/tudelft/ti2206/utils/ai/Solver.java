@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.utils.ai;
 
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,100 +7,82 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.gameobjects.Tile;
-import nl.tudelft.ti2206.utils.log.Logger;
 
 public class Solver extends TimerTask {
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
+	private static final int[] WEIGHTMATRIX = {
+//		17, 13, 12, 11,
+//		13,  9,  9, 10,
+//		12,  9,  8,  8,
+//		11, 10,  8,  8
+//		17, 13, 12, 11,
+//		13,  8,  8, 10,
+//		12,  8,  6,  6,
+//		11, 10,  6,  6
+//		17, 13, 11, 10,
+//		13, 10,  9,  9,
+//		11,  9,  8,  8,
+//		10,  9,  8,  8
+		20, 18, 15, 12,
+		18, 10,  9,  8,
+		15,  9,  8,  5,
+		12,  8,  5,  0
+	};
 
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
-
-	private static final int[][] weightMatrices = {
-			{ 8, 7, 6, 5, 1, 2, 3, 4, -4, -3, -2, -1, -5, -6, -7, -8 },
-			{ -5, -4, 1, 8, -6, -3, 2, 7, -7, -2, 3, 6, -8, -1, 4, 5 },
-	// { 8, 4, 1, 0,
-	// 4, 1, 0, -1,
-	// 1, 0, -1, -4,
-	// 0, -1, -4, -8
-	// },
-	// { 0, 1, 4, 8,
-	// -1, 0, 1, 4,
-	// -4, -1, 0, 1,
-	// -8, -4, -1, 0
-	// }
+	private static final int DEPTHMAP[] = {
+		6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4
 	};
 
 	private Grid original;
-	private int depth;
+	private int[] valueWeight;
 	private boolean calculating;
 
-	public Solver(Grid grid, int depth) {
+	public Solver(Grid grid) {
 		this.original = grid;
-		this.depth = depth;
 		this.calculating = false;
+		this.valueWeight = new int[grid.getTiles().length];
+		initValueWeights();
+	}
+
+	private void initValueWeights() {
+		int curWeight = 1;
+		for (int i = 1; i < valueWeight.length; i++) {
+			valueWeight[i] = curWeight;
+			curWeight *= 3;
+		}
 	}
 
 	@Override
 	public void run() {
-		if (original.getPossibleMoves() == 0
-				|| (!TwentyFourtyGame.isRunning() && !TwentyFourtyGame
-						.isContinuing())) {
+		if (original.getPossibleMoves() == 0 || (!TwentyFourtyGame.isRunning() && !TwentyFourtyGame.isContinuing())) {
 			this.cancel();
 		} else if (!calculating) {
-			Direction dir = findMove(original, depth);
-
+			Direction dir = findMove(original);
 			if (dir != null) {
-				logger.info(className, "Direction chosen: " + dir);
 				original.move(dir);
-			} else {
-				logger.info(className, "Failed to pick a direction");
 			}
 			calculating = false;
 		}
 	}
 
 	public void solve() {
-		new Timer().schedule(this, 0, 100);
+		new Timer().schedule(this, 0, 50);
 	}
 
-	public Direction findMove(Grid grid, int depth) {
-		logger.info(className, "Calculating next move...");
+	public Direction findMove(Grid grid) {
 		this.calculating = true;
-		return expectimax(grid, depth);
-	}
 
-	private double evaluate(Grid grid) {
-		double empty = getEmptyTilesNumber(grid.getTiles());
-		// double max = Math.pow(2, grid.getCurrentHighestTile());
-		// double monotonicity = getMonotonicity(grid.getTiles());
-		double gradient = getGradient(grid.getTiles());
-		// double smoothness = getSmoothness(grid.getTiles());
-		// return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 *
-		// monotonicity;
-		// return 0.3 * gradient + 0.1 * smoothness + 0.6 * empty;
-		// return 0.4 * gradient + 0.1 * smoothness + 0.4 * empty + 0.1 * max;
-		// return 0.8 * gradient + 0.2 * smoothness;
-		// return 0.4 * gradient + 0.6 * empty; //GOOD
-		// return 0.4 * gradient + Math.log(grid.getScore()) * empty +
-		// grid.getScore(); // GOOD
-		return 0.6 * gradient + 0.4 * empty; // BETTER?
-		// return 0.6 * empty + 0.4 * gradient + 0.1 * smoothness ;
-		// return gradient + grid.getScore();
-	}
-
-	private Direction expectimax(Grid grid, int depth) {
 		double bestValue = 0;
 		Direction bestDirection = null;
 
 		for (Direction dir : Direction.values()) {
 			Grid clone = grid.clone();
-			if (clone.move(dir) < 0) {
+			if (clone.move(dir) == false) {
 				continue;
 			}
 
-			double value = computerMove(clone, depth);
-			if (value >= bestValue) {
+			int empty = clone.getEmptyTiles();
+			double value = computerMove(clone, DEPTHMAP[empty], bestValue);
+			if (value > bestValue) { //FIXME: >= versus >
 				bestValue = value;
 				bestDirection = dir;
 			}
@@ -109,93 +90,76 @@ public class Solver extends TimerTask {
 		return bestDirection;
 	}
 
-	private double playerMove(Grid grid, HashMap<Long, Double> cache, int depth) {
-		if (grid.getCurrentHighestTile() == 11) {
-			return Double.MAX_VALUE;
-		} else if (grid.getPossibleMoves() == 0) {
-			return 0;
-		} else if (depth == 0) {
-			return evaluate(grid);
+	private int evaluate(Tile[] tiles) {
+		int value = 0;
+		for (int i = 0; i < tiles.length; i++) {
+			value += WEIGHTMATRIX[i] * valueWeight[tiles[i].getValue()];
 		}
-		double bestValue = 0;
+		return value;
+	}
 
+	private double playerMove(Grid grid, int depth, double max) {
+		int estimate = evaluate(grid.getTiles());
+
+		if (estimate < 0.7 * max) {
+			depth--;
+		}
+
+		if (depth <= 0) {
+			return estimate;
+		}
+
+		/* Adjust next depth according to depth map. */
+		int nextDepth = depth - 1;
+		if (depth > 3) {
+			int empty = grid.getEmptyTiles();
+			if (nextDepth > DEPTHMAP[empty]) {
+				nextDepth--;
+			}
+		}
+
+		double bestValue = 0;
 		for (Direction dir : Direction.values()) {
 			Grid clone = grid.clone();
-			if (clone.move(dir) < 0) {
+			if (clone.move(dir) == false) {
 				continue;
 			}
 
-			double value = 0;
-			if (cache.containsKey(zobrist(clone.getTiles()))) {
-				value = cache.get(zobrist(clone.getTiles()));
-			} else {
-				value = computerMove(clone, depth - 1);
-				cache.put(zobrist(clone.getTiles()), value);
-			}
+			double value = computerMove(clone, nextDepth, bestValue);
 
-			if (value > bestValue) {
+			if (value >= bestValue) { //FIXME: >= versus >
 				bestValue = value;
 			}
 		}
 		return bestValue;
 	}
 
-	private double computerMove(Grid grid, int depth) {
-		HashMap<Long, Double> cache = new HashMap<Long, Double>();
-		if (depth == 0) {
-			return playerMove(grid, cache, depth);
-		}
-		int[] possibleMoves = { 1, 2 };
-		double[] probabilities = { 0.9, 0.1 };
-		double totalScore = 0;
-		double totalWeight = 0;
+	private double computerMove(Grid grid, int depth, double bestValue) {
+		int weight = 0;
+		double score = 0;
 
 		for (Tile tile : grid.getTiles()) {
-			if (tile.isEmpty()) {
-				for (int i = 0; i < possibleMoves.length; i++) {
-					Grid clone = grid.clone();
-					clone.setTile(tile.getIndex(), possibleMoves[i]);
-
-					double value = playerMove(clone, cache, depth - 1);
-					totalScore += probabilities[i] * value;
-					totalWeight += probabilities[i];
-				}
+			if (!tile.isEmpty()) {
+				continue;
 			}
-		}
-		return totalWeight == 0 ? 0 : totalScore / totalWeight;
-	}
 
-	private long zobrist(Tile[] tiles) {
-		long hash = 3485734985L;
-		for (Tile tile : tiles) {
-			hash ^= 46527859L * tile.getValue();
-		}
-		return hash;
-	}
+			/* FIXME: to optimize, we can only check tiles with value 4
+			 * when we have a certain depth (e.g. >= 5). We should decide
+			 * whether we want this (accuracy versus speed). If not, revert to
+			 * old behavior with array. */
 
-	private double getGradient(Tile[] tiles) {
-		double best = 0;
+			/* Try a new tile with value 2. */
+			tile.setValue(1);
+			score += 9 * playerMove(grid, depth - 1, bestValue);
+			weight += 9;
 
-		for (int i = 0; i < weightMatrices.length; i++) {
-			double s = 0;
-			for (int j = 0; j < tiles.length; j++) {
-				s += weightMatrices[i][j] * Math.pow(2, tiles[j].getValue());
-			}
-			s = Math.abs(s);
-			if (s > best) {
-				best = s;
-			}
-		}
-		return best;
-	}
+			/* Try a new tile with value 4. */
+			tile.setValue(2);
+			score += playerMove(grid, depth - 1, bestValue);
+			weight += 1;
 
-	private double getEmptyTilesNumber(Tile[] tiles) {
-		double res = 0;
-		for (Tile tile : tiles) {
-			if (tile.isEmpty()) {
-				res++;
-			}
+			tile.setValue(0);
 		}
-		return res;
+		return weight == 0 ? 0 : score / weight;
 	}
 }

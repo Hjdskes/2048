@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * A test class for the progressHandler.
  * 
@@ -43,7 +45,8 @@ public class ProgressHandlerTest {
 		 * Clear the saved data to make sure the test case can use its own grid,
 		 * score, etc.
 		 */
-		prefsHandler.getPrefs().clear();
+		Gdx.app.getPreferences("2048").clear();
+		Gdx.app.getPreferences("2048").flush();
 		grid = new Grid(true);
 	}
 
@@ -108,7 +111,7 @@ public class ProgressHandlerTest {
 	 */
 	@Test
 	public void testLoadGameEmpty() {
-		prefsHandler.getPrefs().clear();
+		Gdx.app.getPreferences("2048").clear();
 		Grid grid = progressHandler.loadGame();
 		assertEquals("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", this.grid.toString());
 		assertNotEquals(this.grid.toString(), grid.toString());
@@ -119,7 +122,7 @@ public class ProgressHandlerTest {
 	 */
 	@Test
 	public void testLoadGameCorruptGridString() {
-		prefsHandler.setGrid("0,4");
+		prefsHandler.setGrid("0,2");
 		Grid grid = progressHandler.loadGame();
 		assertNotEquals(grid.toString(), prefsHandler.getGrid().toString());
 	}

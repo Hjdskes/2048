@@ -59,7 +59,7 @@ public class GridSolverTest {
 		initSolver(false, "HUMAN");
 		solver.run();
 		verify(logger).debug(solver.getClass().getSimpleName(),
-				"Direction selected: " + "DOWN");
+				"Direction selected: " + "LEFT");
 
 		initSolver(false, null);
 		solver.run();

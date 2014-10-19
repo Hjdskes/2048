@@ -29,17 +29,18 @@ public class HintButton extends TextButton {
 				- TwentyFourtyGame.GAP / 2 + DrawableTile.TILE_WIDTH
 				+ TwentyFourtyGame.GAP);
 		this.setY(DrawableGrid.GRID_Y / 2 - this.getHeight() / 2);
-		solver = new Solver(grid, 7);
+		solver = new Solver(grid);
 
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Direction direction = solver.findMove(grid, 7);
-				if (direction != null)
+				Direction direction = solver.findMove(grid);
+				if (direction != null) {
 					grid.move(direction);
-				else
+				} else {
 					Logger.getInstance().error(this.getClass().getSimpleName(),
 							"direction == null (ignored");
+				}
 			}
 		});
 	}

@@ -27,7 +27,7 @@ public class SolverTest {
 		grid = new Grid(true);
 		grid.setTile(0, 1);
 		grid.setTile(1, 2);
-		solver = new Solver(grid, 1);
+		solver = new Solver(grid);
 		TwentyFourtyGame.setState(RunningState.getInstance());
 	}
 
@@ -66,7 +66,7 @@ public class SolverTest {
 	public void testFindMoveHorizontal() {
 		grid.setTile(0, 10);
 		grid.setTile(1, 10);
-		Direction moveMade = solver.findMove(grid, 3);
+		Direction moveMade = solver.findMove(grid);
 		boolean rightMoveMade = moveMade == Direction.LEFT
 				|| moveMade == Direction.RIGHT;
 		assertTrue(rightMoveMade);
@@ -77,7 +77,7 @@ public class SolverTest {
 	public void testFindMoveVertical() {
 		grid.setTile(0, 10);
 		grid.setTile(4, 10);
-		Direction moveMade = solver.findMove(grid, 1);
+		Direction moveMade = solver.findMove(grid);
 		boolean rightMoveMade = moveMade == Direction.UP
 				|| moveMade == Direction.DOWN;
 		assertTrue(rightMoveMade);
@@ -87,7 +87,7 @@ public class SolverTest {
 	@Test 
 	public void testDepth0() {
 		grid = new Grid(true);
-		solver = new Solver(grid, 0);
-		assertEquals(null, solver.findMove(grid, 0));
+		solver = new Solver(grid);
+		assertEquals(null, solver.findMove(grid));
 	}
 }

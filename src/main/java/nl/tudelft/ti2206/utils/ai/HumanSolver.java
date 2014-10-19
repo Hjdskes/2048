@@ -142,7 +142,7 @@ public class HumanSolver {
 				continue;
 
 			// if move actually is possible
-			if (cloned.move(direction) != -1) {
+			if (cloned.move(direction) == true) {
 
 				int pointsAfter = cloned.getScore() + nextMove(cloned, depth - 1);
 
@@ -169,11 +169,11 @@ public class HumanSolver {
 	public static Direction selectDirectionSimple(Grid grid) {
 		Direction direction = Direction.LEFT;
 
-		if (grid.clone().move(Direction.LEFT) != -1) {
+		if (grid.clone().move(Direction.LEFT) == true) {
 			direction = Direction.LEFT;
-		} else if (grid.clone().move(Direction.DOWN) != -1) {
+		} else if (grid.clone().move(Direction.DOWN) == true) {
 			direction = Direction.DOWN;
-		} else if (grid.clone().move(Direction.RIGHT) != -1) {
+		} else if (grid.clone().move(Direction.RIGHT) == true) {
 			direction = Direction.RIGHT;
 			wasRightMove = true;
 		} else {

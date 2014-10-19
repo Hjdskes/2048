@@ -36,7 +36,7 @@ import nl.tudelft.ti2206.utils.states.RunningState;
 public class Grid extends Observable implements Cloneable {
 	/** This enumeration is used to indicate the direction of a movement. */
 	public enum Direction {
-		DOWN, UP, LEFT, RIGHT;
+		LEFT, RIGHT, UP, DOWN;
 	}
 
 	/** The singleton reference to the Logger instance. */
@@ -47,6 +47,13 @@ public class Grid extends Observable implements Cloneable {
 	 * be either Grid, LocalGrid or RemoteGrid.
 	 */
 	private String gridName = Grid.class.getSimpleName();
+
+	private static final int PRIMES[] = {
+		 22189,  28813,  37633,  43201, 
+		 47629,  60493,  63949,  65713, 
+		 69313,  73009,  76801,  84673, 
+		106033, 108301, 112909, 115249,
+	};
 
 	/** The grid contains sixteen tiles. */
 	public static final int NTILES = 16;
@@ -198,9 +205,11 @@ public class Grid extends Observable implements Cloneable {
 	 * 
 	 * @param direction
 	 *            The direction in which is to be moved.
-	 * @return 1 iff a move has been made, -1 otherwise.
+	 * @return true iff a move has been made, false otherwise.
 	 */
-	public int move(Direction direction) {
+	public boolean move(Direction direction) {
+		boolean res = false;
+
 		switch (direction) {
 		case LEFT:
 			tileHandler.moveLeft();
@@ -219,25 +228,27 @@ public class Grid extends Observable implements Cloneable {
 		if (tileHandler.isMoveMade()) {
 			logger.info(gridName, "Move " + direction + " succesfully made.");
 			updateAfterMove();
-			return 1;
+			res = true;
 		} else {
 			logger.debug(gridName, "Move " + direction + " ignored.");
-			tileHandler.reset();
-			return -1;
 		}
+
+		tileHandler.reset();
+		return res;
 	}
 
 	/**
 	 * Updates the grid and its observers iff a move has been made.
 	 */
 	public void updateAfterMove() {
-		if (tileHandler.isMoveMade()) {
-			updateScore();
-			spawnNewTile();
-			updateHighestTile();
-			changed();
-			tileHandler.reset();
+		if (!tileHandler.isMoveMade()) {
+			return;
 		}
+
+		updateScore();
+		spawnNewTile();
+		updateHighestTile();
+		changed();
 	}
 
 	/**
@@ -455,5 +466,23 @@ public class Grid extends Observable implements Cloneable {
 		newGrid.setScore(score);
 		newGrid.highestTile = highestTile;
 		return newGrid;
+	}
+
+	public int zobristHash() {
+		int hash = 0;
+		for (int i = 0; i < NTILES; i++) {
+			hash += tiles[i].getValue() * PRIMES[i];
+		}
+		return hash;
+	}
+
+	public int getEmptyTiles() {
+		int empty = 0;
+		for (Tile tile : tiles) {
+			if (tile.isEmpty()) {
+				empty++;
+			}
+		}
+		return empty;
 	}
 }
