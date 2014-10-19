@@ -9,20 +9,25 @@ import nl.tudelft.ti2206.utils.log.Logger;
  * saved game.
  */
 public class ProgressHandler {
+	/** The classname, used for logging output. */
+	private static final String CLASSNAME = ProgressHandler.class
+			.getSimpleName();
+
 	/** A singleton reference to the this class. */
 	private static ProgressHandler instance = new ProgressHandler();
 
 	/** A PrefenceHanlder singleton instance. */
-	private PreferenceHandler prefsHandler = PreferenceHandler.getInstance();
+	private static PreferenceHandler prefsHandler = PreferenceHandler
+			.getInstance();
 
-	private String className = this.getClass().getSimpleName();
-
-	private Logger logger = Logger.getInstance();
+	/** A singleton reference to the logger. */
+	private static Logger logger = Logger.getInstance();
 
 	/** Overrides the default constructor. */
 	private ProgressHandler() {
 	}
 
+	/** Returns the singleton reference to this class. */
 	public static ProgressHandler getInstance() {
 		return instance;
 	}
@@ -35,7 +40,7 @@ public class ProgressHandler {
 	 *            The Grid to save its' current state.
 	 */
 	public void saveGame(Grid grid) {
-		logger.info(className, "Saving game to preference file...");
+		logger.info(CLASSNAME, "Saving game to preference file...");
 
 		int highest = grid.getCurrentHighestTile();
 		int score = grid.getScore();
@@ -53,8 +58,8 @@ public class ProgressHandler {
 		}
 
 		logger.info(
-				className,
-				"Saved the game with the grid: " + grid.toString()
+				CLASSNAME,
+				"Saved the games with the grid: " + grid.toString()
 						+ ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
 						+ ". Highest tile: "
@@ -82,13 +87,13 @@ public class ProgressHandler {
 	 * @return The loaded Grid.
 	 */
 	public Grid loadGame(Grid grid) {
-		logger.info(className, "Loading game from preference file...");
+		logger.info(CLASSNAME, "Loading game from preference file...");
 
 		grid.setScore(prefsHandler.getScore());
 		grid.updateHighestTile();
 
 		logger.info(
-				className,
+				CLASSNAME,
 				"Game has been loaded: " + grid.toString() + ". Highscore: "
 						+ Integer.toString(prefsHandler.getHighscore())
 						+ ". Highest tile: "
@@ -103,7 +108,7 @@ public class ProgressHandler {
 	 * Loads the saved grid. If no grid is saved, returns a default grid.
 	 */
 	private Grid loadGrid() {
-		logger.info(className, "Loading saved grid...");
+		logger.info(CLASSNAME, "Loading saved grid...");
 		String filledTiles = prefsHandler.getGrid();
 		/*
 		 * If no grid is saved, return a default one. Else, fill the grid with
@@ -116,7 +121,7 @@ public class ProgressHandler {
 			if (split.length != 16) {
 				return new Grid(false);
 			}
-			
+
 			Grid grid = new Grid(true);
 			for (int i = 0; i < split.length; i++) {
 				int value = Integer.parseInt(split[i]);
