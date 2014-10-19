@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>110</y>
+      <w>430</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.graphics.screens.menuscreens::MenuScreen
+--
+-settings: ImageButton
+-screenHandler = ScreenHandler.getInstance(): ScreenHandler
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>100</y>
+      <w>450</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>nl.tudelft.ti2206.graphics.screens.menuscreens::SettingsScreen
+--
+-slider: Slider
+-levelLabel: Label
+-checkBox: CheckBox
+-menuButton: MenuButton
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>440</x>
+      <y>100</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+opens &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>440</x>
+      <y>150</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+&lt; opens</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+</diagram>
