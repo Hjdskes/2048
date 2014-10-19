@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
- * The MultiWaitScreen is displayed when the local player is 
- * waiting for the opponent to finish his moves.
+ * The MultiWaitScreen is displayed when the local player is waiting for the
+ * opponent to finish his moves.
  */
 public class MultiWaitScreen {
 	/** The background image. */
@@ -25,26 +25,33 @@ public class MultiWaitScreen {
 	/** Constructs a new MultiWaitScreen. */
 	public MultiWaitScreen(Screen parent, boolean localWaiting) {
 		stage = parent.getStage();
-		image = new Image(AssetHandler.getInstance().getSkin(), "multiwaitoverlay");
+		image = new Image(AssetHandler.getInstance().getSkin(),
+				"multiwaitoverlay");
 		menuButton = new MenuButton();
 		addActors();
-		
-		//Set the overlay on the other side of the screen if its the opponent.
-		if(!localWaiting)
-			image.setX(TwentyFourtyGame.GAME_WIDTH);
+
+		setImageX(localWaiting);
 	}
 
 	/** Constructor used for mock insertion */
-	public MultiWaitScreen(Stage stage, Image image, MenuButton menuButton) {
+	public MultiWaitScreen(Stage stage, Image image, MenuButton menuButton,
+			boolean isLocalWaiting) {
 		this.stage = stage;
 		this.image = image;
 		this.menuButton = menuButton;
 		addActors();
+		setImageX(isLocalWaiting);
 	}
 
-	/** Adds all required actors to stage. */ 
+	/** Adds all required actors to stage. */
 	private void addActors() {
 		stage.addActor(image);
 		stage.addActor(menuButton);
+	}
+
+	/** Sets the overlay on the other side of the screen if its the opponent. */
+	private void setImageX(boolean isLocalWaiting) {
+		if (!isLocalWaiting)
+			image.setX(TwentyFourtyGame.GAME_WIDTH);
 	}
 }
