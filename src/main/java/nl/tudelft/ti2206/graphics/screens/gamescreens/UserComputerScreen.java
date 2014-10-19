@@ -65,7 +65,7 @@ public class UserComputerScreen extends Screen {
 
 	/** The reference to the class handling the AI. */
 	private GridSolver gridSolver;
-	
+
 	/** The difficulty level of the CPU. */
 	private Difficulty difficulty;
 
@@ -105,7 +105,7 @@ public class UserComputerScreen extends Screen {
 
 	/** Constructor for testing purposes only */
 	public UserComputerScreen(Stage stage, Grid grid, Label label, Group group,
-			Scores scores, Difficulty difficulty) {
+			Scores scores, Difficulty difficulty, GridSolver solver, ScreenHandler handler) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.computerGrid = grid;
@@ -115,6 +115,8 @@ public class UserComputerScreen extends Screen {
 		this.computerGroup = group;
 		this.localScores = scores;
 		this.computerScores = scores;
+		this.gridSolver = solver;
+		this.screenHandler = handler;
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
@@ -232,6 +234,7 @@ public class UserComputerScreen extends Screen {
 
 	@Override
 	public void dispose() {
+		super.dispose();
 		gridSolver.stop();
 	}
 }
