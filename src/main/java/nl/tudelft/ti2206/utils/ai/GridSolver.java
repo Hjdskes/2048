@@ -7,25 +7,38 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.utils.log.Logger;
 
+/**
+ * The GridSolver starts a AI session that will attempt to solve the
+ * Grid it is called on. 
+ */
 public class GridSolver extends TimerTask {
+	/** An enumeration indicating which solver will be used. */
 	public enum Strategy {
 		HUMAN, EXPECTIMAX
 	}
 
-	/** Get current class name, used for logging output. */
-	private static final String CLASSNAME = GridSolver.class.getSimpleName();
-
-	private Timer timer;
-	private int delay = 20;
-
-	private Grid original;
-	private boolean running;
-	private int depth;
-	private Solver solver;
-
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
+	/** Get current class name, used for logging output. */
+	private static final String CLASSNAME = GridSolver.class.getSimpleName();
+
+	/** The timer used to schedule this task. */
+	private Timer timer;
+	/** The delay between consecutive task executions. */
+	private int delay = 20;
+
+	/** The original Grid to calculate for and make a move on. */
+	private Grid original;
+	/** An indication on whether this solver is running. */
+	private boolean running;
+	/** The recursion depth to use. Depending on the used solver, this
+	 * may be ignored. */
+	private int depth;
+	/** The solver used to solve the Grid. */
+	private Solver solver;
+
+	/** Constructs a new GridSolver. */
 	public GridSolver(Grid grid, Strategy strategy, int delay, int depth) {
 		logger.debug(CLASSNAME, "Initializing GridSolver...");
 
@@ -41,7 +54,7 @@ public class GridSolver extends TimerTask {
 		}
 	}
 
-	/** Benchmark start. */
+	/** Starts the TimerTask. */
 	public void start() {
 		if (!isRunning()) {
 			logger.info(CLASSNAME, "Starting solver...");
@@ -54,7 +67,7 @@ public class GridSolver extends TimerTask {
 		}
 	}
 
-	/** Stop benchmark. */
+	/** Stop the TimerTask. */
 	public void stop() {
 		if (isRunning()) {
 			timer.cancel();
@@ -65,6 +78,9 @@ public class GridSolver extends TimerTask {
 		}
 	}
 
+	/**
+	 * @return True iff this solver is running, false otherwise.
+	 */
 	public boolean isRunning() {
 		return running;
 	}
