@@ -13,23 +13,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * the game requires.
  */
 public class AssetHandler {
+	/** Get current class name, used for logging output. */
+	private static final String CLASSNAME = AssetHandler.class.getSimpleName();
+	
 	/** The unique singleton instance of this class. */
 	private static AssetHandler instance = new AssetHandler();
-
-	/** The AssetManager is used to load and get all our textures and font. */
-	private AssetManager manager = new AssetManager();
-
-	/** The Skin contains all our textures and fonts. */
-	private Skin skin = new Skin();
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
+	
+	/** The AssetManager is used to load and get all our textures and font. */
+	private AssetManager manager;
 
+	/** The Skin contains all our textures and fonts. */
+	private Skin skin;
+	
 	/** Overrides the default constructor. */
 	private AssetHandler() {
+		manager = new AssetManager();
+		skin = new Skin();
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class AssetHandler {
 	 */
 	public void load() {
 
-		logger.debug(className, "Loading assets...");
+		logger.debug(CLASSNAME, "Loading assets...");
 
 		/*
 		 * Queue all of these items for loading, order does not really matter I
