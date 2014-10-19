@@ -18,8 +18,9 @@ public class TileHandler {
 	/** The array holding all the tiles. */
 	private Tile[] tiles;
 
+	/** The reference to the current grid. */
 	private Grid grid;
-	
+
 	/** Indicates whether a move has been made. */
 	private boolean isMoveMade;
 
@@ -121,7 +122,7 @@ public class TileHandler {
 	}
 
 	/**
-	 * Handles the move except for merging, which is done handled in
+	 * Handles the move except for merging, which is handled in
 	 * {@link #handleMerge(Tile) handleMerge}.
 	 * 
 	 * @param collider
@@ -155,8 +156,8 @@ public class TileHandler {
 
 	/**
 	 * Rotates the grid. Taken from:
-	 * https://github.com/bulenkov/2048/blob/master
-	 * /src/com/bulenkov/game2048/Game2048.java#L184
+	 * {@link https://github.com/bulenkov/2048/blob/master
+	 * /src/com/bulenkov/game2048/Game2048.java#L184}
 	 * 
 	 * @param angle
 	 *            The angle by which to rotate.
