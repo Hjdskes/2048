@@ -24,8 +24,8 @@ public class ContinueButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				TwentyFourtyGame.setState(ContinuingState.getInstance());
 				ScreenHandler.getInstance().restart();
+				TwentyFourtyGame.setState(ContinuingState.getInstance());
 			}
 		});
 	}
