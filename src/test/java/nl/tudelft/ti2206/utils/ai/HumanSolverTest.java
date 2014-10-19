@@ -15,6 +15,7 @@ import org.junit.Test;
 public class HumanSolverTest {
 
 	private Grid grid;
+	private HumanSolver solver;
 
 	/**
 	 * @throws java.lang.Exception
@@ -22,6 +23,7 @@ public class HumanSolverTest {
 	@Before
 	public void setUp() throws Exception {
 		grid = new Grid(true);
+		solver = new HumanSolver();
 	}
 
 	/**
@@ -37,7 +39,7 @@ public class HumanSolverTest {
 		tiles[14].setValue(4);
 		tiles[15].setValue(8);
 
-		assertTrue(HumanSolver.lowerRowFull(grid));
+		assertTrue(solver.lowerRowFull(grid));
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class HumanSolverTest {
 		for (int i = 12; i < tiles.length; i++)
 			tiles[i].setValue(4);
 
-		assertFalse(HumanSolver.lowerRowFull(grid));
+		assertFalse(solver.lowerRowFull(grid));
 	}
 
 	/**
@@ -65,7 +67,7 @@ public class HumanSolverTest {
 		for (int i = 12; i < tiles.length; i++)
 			tiles[i].setValue(4);
 
-		assertTrue(HumanSolver.isMergePossibleLowerRow(grid));
+		assertTrue(solver.isMergePossibleLowerRow(grid));
 	}
 
 	@Test
@@ -75,7 +77,7 @@ public class HumanSolverTest {
 		tiles[13].setValue(8);
 		tiles[14].setValue(4);
 		tiles[15].setValue(8);
-		assertFalse(HumanSolver.isMergePossibleLowerRow(grid));
+		assertFalse(solver.isMergePossibleLowerRow(grid));
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class HumanSolverTest {
 	@Test
 	public void testNextMove() {
 		// On an empty grid, nextMove() should not give us any points.
-		assertEquals(0, HumanSolver.nextMove(grid, 3));
+		assertEquals(0, solver.nextMove(grid, 3));
 	}
 
 	/**
@@ -103,7 +105,7 @@ public class HumanSolverTest {
 		tiles[2].setValue(32);
 		tiles[3].setValue(32);
 
-		Direction direction = HumanSolver.selectDirectionComplex(grid, 1);
+		Direction direction = solver.selectDirectionComplex(grid, 1);
 
 		assertEquals(Direction.DOWN, direction);
 	}
@@ -121,7 +123,7 @@ public class HumanSolverTest {
 		grid.setTile(14, 2);
 		grid.setTile(15, 2);
 
-		Direction direction = HumanSolver.selectDirectionComplex(grid, 1);
+		Direction direction = solver.selectDirectionComplex(grid, 1);
 
 		assertEquals(Direction.LEFT, direction);
 	}
@@ -140,7 +142,7 @@ public class HumanSolverTest {
 		tiles[12].setValue(16);
 		tiles[13].setValue(16);
 
-		Direction direction = HumanSolver.selectDirectionSimple(grid);
+		Direction direction = solver.selectDirectionSimple(grid);
 
 		assertEquals(Direction.LEFT, direction);
 	}
@@ -156,7 +158,7 @@ public class HumanSolverTest {
 
 		tiles[12].setValue(16);
 
-		Direction direction = HumanSolver.selectDirectionSimple(grid);
+		Direction direction = solver.selectDirectionSimple(grid);
 
 		assertEquals(Direction.RIGHT, direction);
 	}
@@ -174,7 +176,7 @@ public class HumanSolverTest {
 		tiles[1].setValue(4);
 		tiles[4].setValue(2);
 
-		Direction direction = HumanSolver.selectDirectionSimple(grid);
+		Direction direction = solver.selectDirectionSimple(grid);
 
 		assertEquals(Direction.DOWN, direction);
 	}
@@ -191,7 +193,7 @@ public class HumanSolverTest {
 		for (int i = 8; i < tiles.length; i++)
 			grid.setTile(i, (int) Math.pow(2, i));
 
-		Direction direction = HumanSolver.selectDirectionSimple(grid);
+		Direction direction = solver.selectDirectionSimple(grid);
 
 		assertEquals(Direction.UP, direction);
 	}
@@ -203,7 +205,7 @@ public class HumanSolverTest {
 	 */
 	@Test
 	public void testEmptyLowerLeft() {
-		assertTrue(HumanSolver.emptyLowerLeft(grid));
+		assertTrue(solver.emptyLowerLeft(grid));
 	}
 
 	/**
@@ -219,7 +221,7 @@ public class HumanSolverTest {
 		tiles[14].setValue(4);
 		tiles[15].setValue(8);
 
-		assertFalse(HumanSolver.maxLowerLeft(grid));
+		assertFalse(solver.maxLowerLeft(grid));
 	}
 
 	/**
@@ -237,7 +239,7 @@ public class HumanSolverTest {
 
 		grid.setTile(12, 4);
 
-		assertTrue(HumanSolver.maxLowerLeft(grid));
+		assertTrue(solver.maxLowerLeft(grid));
 	}
 
 	/**
@@ -249,7 +251,7 @@ public class HumanSolverTest {
 	public void testSelectMove() {
 
 		grid.restart();
-		Direction direction = HumanSolver.selectMove(grid, 1);
+		Direction direction = solver.findMove(grid, 1);
 
 		// since our grid is empty, the only direction
 		// selectMove should return is LEFT

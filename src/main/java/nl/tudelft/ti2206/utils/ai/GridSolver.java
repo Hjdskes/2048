@@ -9,7 +9,7 @@ import nl.tudelft.ti2206.utils.log.Logger;
 
 public class GridSolver extends TimerTask {
 	public enum Strategy {
-		HUMAN
+		HUMAN, EXPECTIMAX
 	}
 
 	/** Get current class name, used for logging output. */
@@ -19,9 +19,9 @@ public class GridSolver extends TimerTask {
 	private int delay = 20;
 
 	private Grid original;
-	private Strategy strategy;
 	private boolean running;
 	private int depth;
+	private Solver solver;
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
@@ -32,8 +32,13 @@ public class GridSolver extends TimerTask {
 		this.running = false;
 		this.original = grid;
 		this.delay = delay;
-		this.strategy = strategy;
 		this.depth = depth;
+
+		if (strategy == Strategy.HUMAN) {
+			this.solver = new HumanSolver();
+		} else if (strategy == Strategy.EXPECTIMAX) {
+			this.solver = new Expectimax();
+		}
 	}
 
 	/** Benchmark start. */
@@ -66,18 +71,13 @@ public class GridSolver extends TimerTask {
 
 	@Override
 	public void run() {
-		// keep playing until we run out of moves
 		if (original.getPossibleMoves() == 0) {
 			logger.info(CLASSNAME, "Solver cannot make any more moves.");
 			stop();
 		} else {
-			Direction direction = null;
-			if (strategy == Strategy.HUMAN) {
-				direction = HumanSolver.selectMove(original, depth);
-			}
+			Direction direction = solver.findMove(original, depth);
 
 			logger.debug(CLASSNAME, "Direction selected: " + direction);
-			// make the selected move
 			if (direction != null) {
 				original.move(direction);
 			}

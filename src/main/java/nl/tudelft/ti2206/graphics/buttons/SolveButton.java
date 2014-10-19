@@ -3,7 +3,8 @@ package nl.tudelft.ti2206.graphics.buttons;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
-import nl.tudelft.ti2206.utils.ai.Solver;
+import nl.tudelft.ti2206.utils.ai.GridSolver;
+import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,7 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * TextButton class from the GDX library.
  */
 public class SolveButton extends TextButton {
-	private Solver solver;
+	/** The AI that will try to solve this game. */
+	private GridSolver solver;
 
 	/** Constructs a new SolveButton. */
 	public SolveButton(final Grid grid) {
@@ -29,13 +31,27 @@ public class SolveButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (solver == null) {
-					solver = new Solver(grid);
-					solver.solve();
-				} else {
-					solver.cancel();
+				boolean wasRunning = false;
+				/* If it was previously running and if we don't make a new
+				 * GridSolver object, we won't be able to reschedule the task
+				 * and we'll get an IllegalStateException. */
+				if (solver != null) {
+					if (solver.isRunning()) {
+						solver.stop();
+						wasRunning = true;
+					}
 					solver = null;
-				};
+				}
+				/* In case it wasn't previously running, create a new GridSolver instance
+				 * and simply start it. */
+				if (!wasRunning) {
+					/* Set up a new GridSolver with the chosen strategy to make
+					 * one move every 350 milliseconds. This should allow the user
+					 * to see what is going on without completely boring him/her to
+					 * death. */
+					solver = new GridSolver(grid, Strategy.EXPECTIMAX, 50, 6);
+					solver.start();
+				}
 			}
 		});
 	}

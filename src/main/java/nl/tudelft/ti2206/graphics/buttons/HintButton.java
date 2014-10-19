@@ -5,7 +5,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.graphics.drawables.DrawableGrid;
 import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
-import nl.tudelft.ti2206.utils.ai.Solver;
+import nl.tudelft.ti2206.utils.ai.Expectimax;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 
@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * TextButton class from the GDX library.
  */
 public class HintButton extends TextButton {
-	private Solver solver;
+	private Expectimax solver;
 
 	/** Constructs a new HintButton. */
 	public HintButton(final Grid grid) {
@@ -29,12 +29,12 @@ public class HintButton extends TextButton {
 				- TwentyFourtyGame.GAP / 2 + DrawableTile.TILE_WIDTH
 				+ TwentyFourtyGame.GAP);
 		this.setY(DrawableGrid.GRID_Y / 2 - this.getHeight() / 2);
-		solver = new Solver(grid);
+		solver = new Expectimax();
 
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Direction direction = solver.findMove(grid);
+				Direction direction = solver.findMove(grid, 0); // Depth is ignored by Expectimax.
 				if (direction != null) {
 					grid.move(direction);
 				} else {
