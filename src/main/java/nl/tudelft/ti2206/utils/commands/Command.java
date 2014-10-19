@@ -6,14 +6,14 @@ import nl.tudelft.ti2206.utils.log.Logger;
 
 public abstract class Command {
 
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
-
 	/**
 	 * The name of the instance, initialized to the name of the class. Used for
 	 * logging.
 	 */
-	private String objectName = this.getClass().getSimpleName();
+	private static final String CLASSNAME = Command.class.getSimpleName();
+	
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
 
 	/** The current grid on which the move has to take place. */
 	protected Grid grid;
@@ -22,7 +22,7 @@ public abstract class Command {
 	protected TileHandler tileHandler;
 
 	/**
-	 * The subclasses have to implement a execute class.
+	 * The subclasses have to implement an execute method.
 	 */
 	public abstract void execute();
 
@@ -50,7 +50,7 @@ public abstract class Command {
 	public void updateAndSpawn() {
 		grid.updateAfterMove();
 		if (tileHandler.isMoveMade()) {
-			logger.info(objectName, "Move succesfully made.");
+			logger.info(CLASSNAME, "Move succesfully made.");
 			tileHandler.reset();
 		}
 	}

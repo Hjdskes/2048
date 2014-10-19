@@ -5,7 +5,9 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 public class MoveDownCommand extends Command {
 
 	/**
-	 * Creates a MoveDownCommand object that executes the moveDown command of the tileHanlder.
+	 * Creates a MoveDownCommand object that executes the moveDown command of
+	 * the tileHandler.
+	 * 
 	 * @param grid
 	 */
 	public MoveDownCommand(Grid grid) {

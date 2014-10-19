@@ -5,7 +5,9 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 public class MoveRightCommand extends Command {
 
 	/**
-	 * Creates a MoveRightCommand object that executes the moveRight command of the tileHanlder.
+	 * Creates a MoveRightCommand object that executes the moveRight command of
+	 * the tileHandler.
+	 * 
 	 * @param grid
 	 */
 	public MoveRightCommand(Grid grid) {
