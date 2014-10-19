@@ -24,20 +24,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * the IP address to which a connection should be made.
  */
 public class ClientScreen extends Screen {
-	/** The text for the main label. */
-	public static final String OPPONENT_HOSTADDR = "  Enter your opponent's\r\nhostname or IP address: ";
-
-	/** Error message for an invalid address. */
-	public static final String HOST_INVALID = "Invalid host!";
 
 	/** The maximum length allowed for an IP address. */
 	private static final int MAX_LENGTH = 20;
 
 	/** The main label. */
-	private Label label;
+	private Label ipLabel;
 
 	/** The TextField for the IP address. */
-	private TextField textField;
+	private TextField ipField;
 
 	/** The button to cancel and go back to the main menu. */
 	private MenuButton menu;
@@ -54,50 +49,68 @@ public class ClientScreen extends Screen {
 	/** Constructs a new ClientScreen. */
 	public ClientScreen() {
 		stage = new Stage();
-		label = new Label(OPPONENT_HOSTADDR, assetHandler.getSkin());
+		String opponentAddress = "  Enter your opponent's\r\nhostname or IP address: ";
+		ipLabel = new Label(opponentAddress, assetHandler.getSkin());
 		List<String> addresses = networking.initLocalAddresses();
-		textField = new TextField(addresses.get(0), assetHandler.getSkin());
+		ipField = new TextField(addresses.get(0), assetHandler.getSkin());
 		menu = new MenuButton();
 		play = new TextButton("Play!", assetHandler.getSkin());
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor used for mock insertion */
 	public ClientScreen(Stage stage, Label label, TextField field,
 			MenuButton menuButton, TextButton playButton) {
 		this.stage = stage;
-		this.label = label;
-		this.textField = field;
+		this.ipLabel = label;
+		this.ipField = field;
 		this.menu = menuButton;
 		this.play = playButton;
-		this.setDrawBehavior( new DrawBeige(stage));
+		this.setDrawBehavior(new DrawBeige(stage));
 	}
 
 	@Override
 	public void create() {
 		super.create();
+		initPlayButton();
+		initIpLabel();
+		initIpField();
+		addActors();
+		stage.setKeyboardFocus(ipField);
+	}
 
-		play.setX(TwentyFourtyGame.GAME_WIDTH - 2 * TwentyFourtyGame.GAP - play.getWidth()); 
-		play.setY(2 * TwentyFourtyGame.GAP);
-		addPlayButtonListener();
-
-		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getPrefWidth() / 2);
-		label.setY(TwentyFourtyGame.GAME_HEIGHT - label.getPrefHeight() - 6
-				* TwentyFourtyGame.GAP);
-		stage.addActor(label);
-
-		textField.setWidth(TwentyFourtyGame.GAME_WIDTH / 2);
-		textField.setMaxLength(MAX_LENGTH);
-		textField.setX(TwentyFourtyGame.GAME_WIDTH / 2 - textField.getWidth()
-				/ 2);
-		textField.setY(label.getY() - 12 * TwentyFourtyGame.GAP);
-		textField.setCursorPosition(Align.right);
-		stage.setKeyboardFocus(textField);
-		stage.addActor(textField);
-
+	/** Adds all required actors to the stage. */
+	private void addActors() {
+		stage.addActor(ipLabel);
+		stage.addActor(ipField);
 		stage.addActor(menu);
 		stage.addActor(play);
+	}
+
+	/** Positions the playbutton and initializes it to be invisible. */
+	private void initPlayButton() {
+		play.setX(TwentyFourtyGame.GAME_WIDTH - 2 * TwentyFourtyGame.GAP
+				- play.getWidth());
+		play.setY(2 * TwentyFourtyGame.GAP);
+		addPlayButtonListener();
 		play.setVisible(false);
+	}
+
+	/** Initializes the label above the ip input field. */
+	private void initIpLabel() {
+		ipLabel.setX(TwentyFourtyGame.GAME_WIDTH / 2 - ipLabel.getPrefWidth()
+				/ 2);
+		ipLabel.setY(TwentyFourtyGame.GAME_HEIGHT - ipLabel.getPrefHeight() - 6
+				* TwentyFourtyGame.GAP);
+	}
+
+	/** Positions the cursor and the ip field itself. */
+	private void initIpField() {
+		ipField.setWidth(TwentyFourtyGame.GAME_WIDTH / 2);
+		ipField.setMaxLength(MAX_LENGTH);
+		ipField.setX(TwentyFourtyGame.GAME_WIDTH / 2 - ipField.getWidth() / 2);
+		ipField.setY(ipLabel.getY() - 12 * TwentyFourtyGame.GAP);
+		ipField.setCursorPosition(Align.right);
 	}
 
 	/** Sets the listener for the playButton */
@@ -105,12 +118,12 @@ public class ClientScreen extends Screen {
 		play.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				String text = textField.getText();
+				String text = ipField.getText();
 
 				if (networking.isValidHost(text)) {
 					networking.startClient(text);
 				} else {
-					label.setText(HOST_INVALID);
+					ipLabel.setText("Invalid host!");
 				}
 			}
 		});
@@ -123,13 +136,11 @@ public class ClientScreen extends Screen {
 		if (networking.isConnected()) {
 			ScreenHandler.getInstance().set(new MultiGameScreen());
 		} else {
-
 			if (networking.errorOccured()) {
-				label.setText(networking.getLastError());
+				ipLabel.setText(networking.getLastError());
 			} else {
 				play.setVisible(true);
 			}
 		}
-
 	}
 }
