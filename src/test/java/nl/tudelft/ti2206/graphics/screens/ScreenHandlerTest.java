@@ -1,13 +1,10 @@
 package nl.tudelft.ti2206.graphics.screens;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.graphics.screens.Screen;
-import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
