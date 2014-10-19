@@ -34,11 +34,7 @@ public class GridSolverTest {
 		}
 	}
 
-	private void initSolver(boolean isEmpty, String strategy) {
-		Strategy strat = null;
-		if (strategy != null) {
-			strat = Strategy.valueOf(strategy);
-		}
+	private void initSolver(boolean isEmpty, Strategy strat) {
 		if (isEmpty) {
 			solver = new GridSolver(emptyGrid, strat, 1, 1);
 		} else {
@@ -51,25 +47,25 @@ public class GridSolverTest {
 
 	@Test
 	public void testRun() {
-		initSolver(true, "HUMAN");
+		initSolver(true, Strategy.HUMAN);
 		solver.run();
 		verify(logger).info(solver.getClass().getSimpleName(),
 				"Solver cannot make any more moves.");
 
-		initSolver(false, "HUMAN");
+		initSolver(false, Strategy.HUMAN);
 		solver.run();
 		verify(logger).debug(solver.getClass().getSimpleName(),
 				"Direction selected: " + "LEFT");
 
-		initSolver(false, null);
+		initSolver(false, Strategy.EXPECTIMAX);
 		solver.run();
 		verify(logger).debug(solver.getClass().getSimpleName(),
-				"Direction selected: " + null);
+				"Direction selected: " + "LEFT");
 	}
 
 	@Test
 	public void testStart() {
-		initSolver(false, "HUMAN");
+		initSolver(false, Strategy.HUMAN);
 		solver.start();
 		verify(logger).info(solver.getClass().getSimpleName(),
 				"Starting solver...");
@@ -78,7 +74,7 @@ public class GridSolverTest {
 
 	@Test
 	public void testStopWhileRunning() {
-		initSolver(false, "HUMAN");
+		initSolver(false, Strategy.HUMAN);
 		solver.start();
 		assertTrue(solver.isRunning());
 		reset(logger);
