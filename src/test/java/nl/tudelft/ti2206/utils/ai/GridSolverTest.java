@@ -60,7 +60,7 @@ public class GridSolverTest {
 
 		initSolver(false, Strategy.EXPECTIMAX);
 		solver.run();
-		verify(logger).debug(solver.getClass().getSimpleName(),
+		verify(logger, atLeastOnce()).debug(solver.getClass().getSimpleName(),
 				"Direction selected: " + "LEFT");
 	}
 
