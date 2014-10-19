@@ -287,11 +287,12 @@ public class Grid extends Observable implements Cloneable {
 	 */
 	public int getEmptyTiles() {
 		int empty = 0;
-		for (Tile tile : tiles) {
-			if (tile.isEmpty()) {
+		while (iterator.hasNext()) {
+			if (iterator.next().isEmpty()) {
 				empty++;
 			}
 		}
+		iterator.reset();
 		return empty;
 	}
 
