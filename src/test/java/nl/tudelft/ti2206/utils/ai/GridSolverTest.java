@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.atLeastOnce;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.log.Logger;
@@ -54,7 +55,7 @@ public class GridSolverTest {
 
 		initSolver(false, Strategy.HUMAN);
 		solver.run();
-		verify(logger).debug(solver.getClass().getSimpleName(),
+		verify(logger, atLeastOnce()).debug(solver.getClass().getSimpleName(),
 				"Direction selected: " + "LEFT");
 
 		initSolver(false, Strategy.EXPECTIMAX);
