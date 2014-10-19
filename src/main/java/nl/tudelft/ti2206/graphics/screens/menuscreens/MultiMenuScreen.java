@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class MultiMenuScreen extends Screen {
 	/** The main label. */
-	private Label label;
+	private Label hosterLabel;
 
 	/** The button to go to the client menu. */
 	private TextButton connect;
@@ -40,7 +40,7 @@ public class MultiMenuScreen extends Screen {
 	/** Constructs a new MenuScreen. */
 	public MultiMenuScreen() {
 		stage = new Stage();
-		label = new Label("Who's hosting?", assetHandler.getSkin());
+		hosterLabel = new Label("Who's hosting?", assetHandler.getSkin());
 
 		connect = new TextButton("Join a game", assetHandler.getSkin());
 		host = new TextButton("Host a game", assetHandler.getSkin());
@@ -52,7 +52,7 @@ public class MultiMenuScreen extends Screen {
 	/** Constructor for testing purposes only. */
 	public MultiMenuScreen(Stage stage, Label label, MenuButton menuButton, TextButton button) {
 		this.stage = stage;
-		this.label = label;
+		this.hosterLabel = label;
 		this.connect = button;
 		this.host = button;
 		this.menuButton = menuButton;
@@ -63,27 +63,50 @@ public class MultiMenuScreen extends Screen {
 	public void create() {
 		super.create();
 
-		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getWidth() / 2);
-		label.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + label.getHeight() + 8
+		setHostPlayerLocation();
+		setConnectLocation();
+		setHostLocation();
+		
+		setListeners();
+		addActors();
+	}
+	
+	/** Sets the location of the hosting player label. */
+	private void setHostPlayerLocation() {
+		hosterLabel.setX(TwentyFourtyGame.GAME_WIDTH / 2 - hosterLabel.getWidth() / 2);
+		hosterLabel.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + hosterLabel.getHeight() + 8
 				* TwentyFourtyGame.GAP);
+	}
 
+	/** Sets the location of the connect button. */
+	private void setConnectLocation() {
 		connect.setWidth(220);
 		connect.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- connect.getWidth() / 2);
-		connect.setY(label.getY() - label.getHeight() - 6
+		connect.setY(hosterLabel.getY() - hosterLabel.getHeight() - 6
 				* TwentyFourtyGame.GAP);
-
+	}
+	
+	/** Sets the location of the host button. */
+	private void setHostLocation() {
 		host.setWidth(220);
 		host.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- host.getWidth() / 2);
 		host.setY(connect.getY() - host.getHeight() - 2
 				* TwentyFourtyGame.GAP);
-
-		stage.addActor(label);
+	}
+	
+	/** Adds all required actors to stage. */
+	private void addActors() {
+		stage.addActor(hosterLabel);
 		stage.addActor(connect);
 		stage.addActor(host);
 		stage.addActor(menuButton);
 
+	}
+	
+	/** Sets the listeners for all buttons. */
+	private void setListeners() {
 		connect.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

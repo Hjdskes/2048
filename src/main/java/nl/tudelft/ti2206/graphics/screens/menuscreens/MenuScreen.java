@@ -21,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class MenuScreen extends Screen {
 	/** The main label. */
-	private Label label;
+	private Label destinyLabel;
 
 	/** The button to launch a singleplayer game. */
 	private TextButton singlePlayer;
@@ -50,7 +50,7 @@ public class MenuScreen extends Screen {
 		Gdx.graphics.setDisplayMode(TwentyFourtyGame.GAME_WIDTH,
 				TwentyFourtyGame.GAME_HEIGHT, false);
 		stage = new Stage();
-		label = new Label("Choose your destiny!", assetHandler.getSkin());
+		destinyLabel = new Label("Choose your destiny!", assetHandler.getSkin());
 		singlePlayer = new TextButton("Singleplayer", assetHandler.getSkin());
 		multiPlayer = new TextButton("Multiplayer", assetHandler.getSkin());
 		versusComputer = new TextButton("Challenge me!",
@@ -62,7 +62,7 @@ public class MenuScreen extends Screen {
 	/** Constructor for testing purposes only. */
 	public MenuScreen(Stage stage, Label label, TextButton button, ImageButton settings) {
 		this.stage = stage;
-		this.label = label;
+		this.destinyLabel = label;
 		this.singlePlayer = button;
 		this.versusComputer = button;
 		this.multiPlayer = button;
@@ -74,43 +74,66 @@ public class MenuScreen extends Screen {
 	public void create() {
 		super.create();
 
-		label.setX(TwentyFourtyGame.GAME_WIDTH / 2 - label.getWidth() / 2);
-		label.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + label.getHeight() + 8
+		setDestinyLabelLocation();
+		setSinglePlayerLocation();
+		setMultiPlayerLocation();
+		setVSComputerLocation();
+		setSettingsLocation();
+		
+		addActors();
+		setupListeners();
+	}
+	
+	/** Sets the location of the destinyLabel. */
+	private void setDestinyLabelLocation() {
+		destinyLabel.setX(TwentyFourtyGame.GAME_WIDTH / 2 - destinyLabel.getWidth() / 2);
+		destinyLabel.setY(TwentyFourtyGame.GAME_HEIGHT / 2 + destinyLabel.getHeight() + 8
 				* TwentyFourtyGame.GAP);
-
+	}
+	
+	/** Sets the location of the singleplayer button. */
+	private void setSinglePlayerLocation() {
 		singlePlayer.setWidth(220);
 		singlePlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- singlePlayer.getWidth() / 2);
-		singlePlayer.setY(label.getY() - label.getHeight() - 6
+		singlePlayer.setY(destinyLabel.getY() - destinyLabel.getHeight() - 6
 				* TwentyFourtyGame.GAP);
-
+	}
+	
+	/** Sets the location of the multiplayer button. */
+	private void setMultiPlayerLocation() {
 		multiPlayer.setWidth(220);
 		multiPlayer.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- multiPlayer.getWidth() / 2);
 		multiPlayer.setY(singlePlayer.getY() - singlePlayer.getHeight() - 2
 				* TwentyFourtyGame.GAP);
-
+	}
+	
+	/** Sets the location of the versus computer button. */
+	private void setVSComputerLocation() {
 		versusComputer.setWidth(220);
 		versusComputer.setX(TwentyFourtyGame.GAME_WIDTH / 2
 				- versusComputer.getWidth() / 2);
 		versusComputer.setY(multiPlayer.getY() - multiPlayer.getHeight() - 4
 				* TwentyFourtyGame.GAP);
-		
-		settings.setX(10);
-		settings.setY(10);
-
-		addActors();
-		setupListeners();
 	}
 	
+	/** Sets the location of the settings button. */
+	private void setSettingsLocation() {
+		settings.setX(10);
+		settings.setY(10);
+	}
+	
+	/** Adds all required actors to stage. */
 	private void addActors() {
-		stage.addActor(label);
+		stage.addActor(destinyLabel);
 		stage.addActor(singlePlayer);
 		stage.addActor(multiPlayer);
 		stage.addActor(versusComputer);
 		stage.addActor(settings);
 	}
 	
+	/** Sets the listeners for all buttons. */
 	private void setupListeners() {
 		singlePlayer.addListener(new ClickListener() {
 			@Override
