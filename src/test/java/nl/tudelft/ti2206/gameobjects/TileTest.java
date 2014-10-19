@@ -114,7 +114,7 @@ public class TileTest {
 		tile.doubleValue();
 		assertEquals(2, tile.getValue());
 	}
-
+	
 	/**
 	 * Tests if toString() correctly return the string representation of the
 	 * value of the tile.

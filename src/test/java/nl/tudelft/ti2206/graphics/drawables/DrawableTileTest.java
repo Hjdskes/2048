@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import nl.tudelft.ti2206.gameobjects.Tile;
 import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
@@ -61,7 +61,7 @@ public class DrawableTileTest {
 	}
 	
 	@Test
-	public void testFinishActions() {
+	public void testFinishActionsWithActions() {
 		Tile normal = new Tile(0, 4);
 		normal.addObserver(tile);
 		normal.merge();
@@ -71,6 +71,25 @@ public class DrawableTileTest {
 		normal.setValue(0);
 		tile.act(.15f);
 		assertEquals(0, tile.getActions().size);	
+	}
+	
+	@Test
+	public void testFinishActionsWithoutActions() {
+		Tile normal = new Tile(0, 4);
+		normal.addObserver(tile);
+		normal.merge();
+		normal.setValue(0);
+		tile.act(.15f);
+		assertEquals(0, tile.getActions().size);
+		
+		normal.setValue(10);
+		normal.spawn();
+		tile.act(0);
+		assertEquals(1, tile.getActions().size);
+		normal.setValue(0);
+		tile.act(0);
+		assertEquals(0, tile.getActions().size);
+		
 	}
 	
 	/**
