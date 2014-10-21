@@ -1,55 +1,76 @@
 
 buttons.png
-size: 487,89
+size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 check-off
   rotate: false
-  xy: 348, 12
+  xy: 546, 2
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 410, 29
+  xy: 608, 66
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 continue
   rotate: false
-  xy: 2, 2
+  xy: 204, 39
   size: 140, 70
   orig: 140, 70
   offset: 0, 0
   index: -1
+downScroll
+  rotate: false
+  xy: 346, 97
+  size: 15, 12
+  orig: 15, 12
+  offset: 0, 0
+  index: -1
+dropdown
+  rotate: false
+  xy: 2, 59
+  size: 200, 50
+  orig: 200, 50
+  offset: 0, 0
+  index: -1
 newgame
   rotate: false
-  xy: 144, 2
+  xy: 404, 56
   size: 140, 70
   orig: 140, 70
   offset: 0, 0
   index: -1
 settings
   rotate: false
-  xy: 286, 10
+  xy: 546, 64
   size: 60, 62
   orig: 60, 62
   offset: 0, 0
   index: -1
 slider
   rotate: false
-  xy: 2, 74
+  xy: 2, 111
   size: 400, 15
   orig: 400, 15
   offset: 0, 0
   index: -1
 sliderButton
   rotate: false
-  xy: 472, 44
+  xy: 2, 12
   size: 15, 45
   orig: 15, 45
+  offset: 0, 0
+  index: -1
+upScroll
+  rotate: false
+  xy: 608, 52
+  size: 15, 12
+  orig: 15, 12
   offset: 0, 0
   index: -1
