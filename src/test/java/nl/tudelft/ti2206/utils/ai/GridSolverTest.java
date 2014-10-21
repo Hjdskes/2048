@@ -37,9 +37,9 @@ public class GridSolverTest {
 
 	private void initSolver(boolean isEmpty, Strategy strat) {
 		if (isEmpty) {
-			solver = new GridSolver(emptyGrid, strat, 1, 1);
+			solver = new GridSolver(emptyGrid, 1, 1);
 		} else {
-			solver = new GridSolver(grid, strat, 1, 1);
+			solver = new GridSolver(grid, 1, 1);
 		}
 
 		reset(logger);

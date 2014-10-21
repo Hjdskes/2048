@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 
 public class SettingsScreenTest {
@@ -34,6 +36,8 @@ public class SettingsScreenTest {
 	@Mock
 	private CheckBox checkBox;
 	@Mock
+	private SelectBox<String> select;
+	@Mock
 	private Stage stage;
 
 	private SettingsScreen screen;
@@ -43,34 +47,34 @@ public class SettingsScreenTest {
 	public void setUp() {
 		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
-		screen = new SettingsScreen(stage, menuButton, slider, label, checkBox);
+		screen = new SettingsScreen(stage, menuButton, slider, label, checkBox, select);
 	}
 
 	@Test
 	public void testInit() {
-		verify(menuButton).setX(10);
-		verify(menuButton).setY(10);
+		verify(slider, times(2)).setValue(anyInt());
+		verify(slider, times(2)).setX(100);
+		verify(slider).setY(460);
+		verify(slider).setY(130);
+		verify(slider, times(2)).setWidth(400);
 
-		verify(slider).setValue(anyInt());
-		verify(slider).setX(100);
-		verify(slider).setY(350);
-		verify(slider).setWidth(400);
-
-		verify(label).setX(300);
-		verify(label).setY(400);
+		verify(label, times(3)).setX(100);
+		verify(label).setY(520);	
+		verify(label).setY(310);
+		verify(label).setY(190);
 
 		verify(checkBox).setChecked(anyBoolean());
 		verify(checkBox).setX(100);
-		verify(checkBox).setY(200);
+		verify(checkBox).setY(370);
 
-		verify(slider).addListener(any(EventListener.class));
+		verify(slider, times(2)).addListener(any(EventListener.class));
 		verify(checkBox).addListener(any(EventListener.class));
 		verify(stage).addListener(any(EventListener.class));
 
 		verify(stage).addActor(checkBox);
-		verify(stage).addActor(label);
+		verify(stage, times(3)).addActor(label);
 		verify(stage).addActor(menuButton);
-		verify(stage).addActor(slider);
+		verify(stage, times(2)).addActor(slider);
 	}
 
 	@Test
@@ -123,6 +127,9 @@ public class SettingsScreenTest {
 	@Test
 	public void testDispose() {
 		logger.setLogFile(null);
+		
+		when(select.getSelected()).thenReturn("");
+		
 		screen.dispose();
 		verify(stage).dispose();
 		assertEquals(logger.getLevel(), PreferenceHandler.getInstance()

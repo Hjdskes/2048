@@ -80,15 +80,23 @@ public class SettingsScreen extends Screen {
 
 	/** Constructor for testing purposes only. */
 	public SettingsScreen(Stage stage, MenuButton button, Slider slider,
-			Label label, CheckBox checkBox) {
+			Label label, CheckBox checkBox, SelectBox<String> select) {
 		this.stage = stage;
 		this.levelSlider = slider;
 		this.levelLabel = label;
 		this.checkBox = checkBox;
 		this.menuButton = button;
+		this.delaySlider = slider;
+		this.delayLabel = label;
+		this.solverSelect = select;
+		this.solverLabel = label;
 		setupLevelLabel();
 		setupLevelSlider();
 		setupCheckBox();
+		setupSolverLabel();
+		setupSolverSelect();
+		setupDelayLabel();
+		setupDelaySlider();
 		setStageListeners();
 		addActors();
 	}
