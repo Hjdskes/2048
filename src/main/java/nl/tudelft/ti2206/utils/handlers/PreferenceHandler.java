@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.utils.handlers;
 
+import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import com.badlogic.gdx.Gdx;
@@ -155,6 +156,36 @@ public class PreferenceHandler {
 		} else {
 			prefs.remove("logfile");
 		}
+		prefs.flush();
+	}
+
+	/**
+	 * @return The Strategy saved, or HUMAN if no strategy is saved.
+	 */
+	public Strategy getSolverStrategy() {
+		String type = prefs.getString("solver");
+		if (type == null || type.equals("") || type.contains("Human")) {
+			return Strategy.HUMAN;
+		} else {
+			return Strategy.EXPECTIMAX;
+		}
+	}
+
+	/** Sets the solver strategy to the type specified. */
+	public void setSolver(String type) {
+		prefs.putString("solver", type);
+		prefs.flush();
+	}
+
+	/** @return The delay the solver should have between its moves.s */
+	public int getSolverDelay() {
+		int type = prefs.getInteger("solverDelay");
+		return type <= 0 ? 300 : type;
+	}
+
+	/** Sets the delay between the moves of the solver. */
+	public void setSolverDelay(int delay) {
+		prefs.putInteger("solverDelay", delay);
 		prefs.flush();
 	}
 }

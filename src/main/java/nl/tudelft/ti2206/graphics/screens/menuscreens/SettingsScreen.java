@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.graphics.screens.menuscreens;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.graphics.buttons.MenuButton;
 import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
@@ -18,18 +17,31 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 
 public class SettingsScreen extends Screen {
 
 	/** The Singleton reference to the logger. */
 	private static Logger logger = Logger.getInstance();
 
-	private Slider slider;
+	/** The Singleton reference to the PreferenceHandler. */
+	private static PreferenceHandler prefsHandler = PreferenceHandler
+			.getInstance();
+
+	/** The singleton reference to the AssetHandler. */
+	private static AssetHandler assetHandler = AssetHandler.getInstance();
+
+	private Slider levelSlider;
 	private Label levelLabel;
 	private CheckBox checkBox;
 	private MenuButton menuButton;
+	private SelectBox<String> solverSelect;
+	private Label solverLabel;
+	private Slider delaySlider;
+	private Label delayLabel;
 
 	/**
 	 * Creates a new SettingsScreen, setting up and adding all required actors
@@ -37,75 +49,74 @@ public class SettingsScreen extends Screen {
 	 */
 	public SettingsScreen() {
 		stage = new Stage();
+		setStageListeners();
 
-		slider = new Slider(0, 400, 100, false, AssetHandler.getInstance()
-				.getSkin());
-		setupSlider();
-
-		levelLabel = new Label("Log Level: " + updateLevel(), AssetHandler
-				.getInstance().getSkin());
+		levelSlider = new Slider(0, 400, 100, false, assetHandler.getSkin());
+		levelLabel = new Label("Log Level: " + updateLevel(),
+				assetHandler.getSkin());
 		setupLevelLabel();
+		setupLevelSlider();
 
-		checkBox = new CheckBox("    Enable logging to file", AssetHandler
-				.getInstance().getSkin());
+		checkBox = new CheckBox("    Enable logging to file",
+				assetHandler.getSkin());
 		setupCheckBox();
 
 		menuButton = new MenuButton();
-		setListeners();
-		addActors();
 
-		this.setDrawBehavior(new DrawBeige(stage));
+		solverSelect = new SelectBox<>(assetHandler.getSkin());
+		solverLabel = new Label("Solver Type: ", assetHandler.getSkin());
+		setupSolverSelect();
+		setupSolverLabel();
+
+		delaySlider = new Slider(25, 1000, 5, false, assetHandler.getSkin());
+		setupDelaySlider();
+		delayLabel = new Label("Delay: " + delaySlider.getValue(),
+				assetHandler.getSkin());
+		setupDelayLabel();
+	
+		addActors();
+		setDrawBehavior(new DrawBeige(stage));
 	}
 
 	/** Constructor for testing purposes only. */
 	public SettingsScreen(Stage stage, MenuButton button, Slider slider,
 			Label label, CheckBox checkBox) {
 		this.stage = stage;
-		this.slider = slider;
+		this.levelSlider = slider;
 		this.levelLabel = label;
 		this.checkBox = checkBox;
 		this.menuButton = button;
-		setupMenuButton();
 		setupLevelLabel();
-		setupSlider();
+		setupLevelSlider();
 		setupCheckBox();
-		setListeners();
+		setStageListeners();
 		addActors();
 	}
 
-	private void setupMenuButton() {
-		menuButton.setX(10);
-		menuButton.setY(10);
-	}
-
-	private void setupSlider() {
-		slider.setValue(getSliderValue());
-		slider.setX(100);
-		slider.setY(350);
-		slider.setWidth(400);
-	}
-
-	private void setupLevelLabel() {
-		levelLabel.setX(TwentyFourtyGame.GAME_WIDTH / 2 - levelLabel.getWidth()
-				/ 2);
-		levelLabel.setY(400);
-	}
-
-	private void setupCheckBox() {
-		checkBox.setChecked(PreferenceHandler.getInstance().isLogFileEnabled());
-		checkBox.setX(100);
-		checkBox.setY(200);
-	}
-
-	/** Sets the listeners of the actors belonging to this screen. */
-	private void setListeners() {
-		slider.addListener(new ChangeListener() {
+	private void setupLevelSlider() {
+		levelSlider.setValue(getSliderValue());
+		levelSlider.setX(100);
+		levelSlider.setY(460);
+		levelSlider.setWidth(400);
+		
+		levelSlider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				levelLabel.setText("Log Level: " + updateLevel());
 			}
 		});
+	}
 
+	private void setupLevelLabel() {
+		levelLabel.setX(100);
+		levelLabel.setY(520);
+	}
+
+	private void setupCheckBox() {
+		checkBox.setChecked(prefsHandler.isLogFileEnabled());
+		checkBox.setX(100);
+		checkBox.setY(370);
+		
 		checkBox.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -116,7 +127,46 @@ public class SettingsScreen extends Screen {
 				}
 			}
 		});
+	}
 
+	private void setupSolverSelect() {
+		Array<String> items = new Array<>();
+		items.add(" Human");
+		items.add(" Expectimax");
+		solverSelect.setItems(items);
+
+		solverSelect.setSelected(" " + prefsHandler.getSolverStrategy().name());
+		solverSelect.setX(100);
+		solverSelect.setY(250);
+		solverSelect.setWidth(200);
+	}
+
+	private void setupSolverLabel() {
+		solverLabel.setX(100);
+		solverLabel.setY(310);
+	}
+
+	private void setupDelaySlider() {
+		delaySlider.setValue(prefsHandler.getSolverDelay());
+		delaySlider.setX(100);
+		delaySlider.setY(130);
+		delaySlider.setWidth(400);
+		
+		delaySlider.addListener(new ChangeListener() {		
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				delayLabel.setText("Delay: " + delaySlider.getValue());
+			}
+		});
+	}
+
+	private void setupDelayLabel() {
+		delayLabel.setX(100);
+		delayLabel.setY(190);
+	}
+
+	/** Sets the listeners of the actors belonging to this screen. */
+	private void setStageListeners() {
 		// Return to main menu on escape
 		stage.addListener(new InputListener() {
 			@Override
@@ -137,15 +187,19 @@ public class SettingsScreen extends Screen {
 
 	/** Adds the actors to the stage. */
 	private void addActors() {
-		stage.addActor(slider);
+		stage.addActor(levelSlider);
 		stage.addActor(levelLabel);
 		stage.addActor(checkBox);
 		stage.addActor(menuButton);
+		stage.addActor(solverSelect);
+		stage.addActor(solverLabel);
+		stage.addActor(delaySlider);
+		stage.addActor(delayLabel);
 	}
 
 	/** Updates the loglevel and returns the loglevel string. */
 	public String updateLevel() {
-		switch ((int) slider.getValue()) {
+		switch ((int) levelSlider.getValue()) {
 		case 0:
 			logger.setLevel(LogLevel.NONE);
 			return "NONE";
@@ -185,7 +239,9 @@ public class SettingsScreen extends Screen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		PreferenceHandler.getInstance().setLogLevel(logger.getLevel().name());
-		PreferenceHandler.getInstance().setLogFileEnabled(checkBox.isChecked());
+		prefsHandler.setLogLevel(logger.getLevel().name());
+		prefsHandler.setLogFileEnabled(checkBox.isChecked());
+		prefsHandler.setSolver(solverSelect.getSelected());
+		prefsHandler.setSolverDelay((int) delaySlider.getValue());
 	}
 }
