@@ -4,7 +4,6 @@ import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
 import nl.tudelft.ti2206.utils.ai.GridSolver;
-import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * A button to call a solver to solve the game. Extends the
- * TextButton class from the GDX library.
+ * A button to call a solver to solve the game. Extends the TextButton class
+ * from the GDX library.
  */
 public class SolveButton extends TextButton {
 	/** The AI that will try to solve this game. */
@@ -32,9 +31,11 @@ public class SolveButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				boolean wasRunning = false;
-				/* If it was previously running and if we don't make a new
+				/*
+				 * If it was previously running and if we don't make a new
 				 * GridSolver object, we won't be able to reschedule the task
-				 * and we'll get an IllegalStateException. */
+				 * and we'll get an IllegalStateException.
+				 */
 				if (solver != null) {
 					if (solver.isRunning()) {
 						solver.stop();
@@ -42,14 +43,16 @@ public class SolveButton extends TextButton {
 					}
 					solver = null;
 				}
-				/* In case it wasn't previously running, create a new GridSolver instance
-				 * and simply start it. */
+				/*
+				 * In case it wasn't previously running, create a new GridSolver
+				 * instance and simply start it.
+				 */
 				if (!wasRunning) {
-					/* Set up a new GridSolver with the chosen strategy to make
-					 * one move every 350 milliseconds. This should allow the user
-					 * to see what is going on without completely boring him/her to
-					 * death. */
-					solver = new GridSolver(grid, Strategy.EXPECTIMAX, 50, 6);
+					/*
+					 * Set up a new GridSolver with the saved delay and strategy
+					 * and depth 6. This provides great flexibility.
+					 */
+					solver = new GridSolver(grid, -1, 6);
 					solver.start();
 				}
 			}

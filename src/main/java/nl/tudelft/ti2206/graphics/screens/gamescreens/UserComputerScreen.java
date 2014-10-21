@@ -9,7 +9,6 @@ import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawSimple;
 import nl.tudelft.ti2206.utils.ai.GridSolver;
-import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.input.InputHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
@@ -166,8 +165,6 @@ public class UserComputerScreen extends Screen {
 		int delay = 1900; // 1.9 seconds
 		int depth = 1;
 
-		Strategy strategy = Strategy.HUMAN;
-
 		if (difficulty == Difficulty.EASY) {
 			delay = 1600;
 			depth = 1;
@@ -181,7 +178,7 @@ public class UserComputerScreen extends Screen {
 			delay = 650;
 			depth = 6;
 		}
-		gridSolver = new GridSolver(computerGrid, strategy, delay, depth);
+		gridSolver = new GridSolver(computerGrid, delay, depth);
 	}
 
 	/**

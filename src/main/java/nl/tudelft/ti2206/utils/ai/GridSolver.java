@@ -5,11 +5,12 @@ import java.util.TimerTask;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 
 /**
- * The GridSolver starts a AI session that will attempt to solve the
- * Grid it is called on. 
+ * The GridSolver starts a AI session that will attempt to solve the Grid it is
+ * called on.
  */
 public class GridSolver extends TimerTask {
 	/** An enumeration indicating which solver will be used. */
@@ -32,19 +33,22 @@ public class GridSolver extends TimerTask {
 	private Grid original;
 	/** An indication on whether this solver is running. */
 	private boolean running;
-	/** The recursion depth to use. Depending on the used solver, this
-	 * may be ignored. */
+	/**
+	 * The recursion depth to use. Depending on the used solver, this may be
+	 * ignored.
+	 */
 	private int depth;
 	/** The solver used to solve the Grid. */
 	private Solver solver;
 
 	/** Constructs a new GridSolver. */
-	public GridSolver(Grid grid, Strategy strategy, int delay, int depth) {
+	public GridSolver(Grid grid, int delay, int depth) {
 		logger.debug(CLASSNAME, "Initializing GridSolver...");
 
 		this.running = false;
 		this.original = grid;
-		this.delay = delay;
+		this.delay = PreferenceHandler.getInstance().getSolverDelay();
+		Strategy strategy = PreferenceHandler.getInstance().getSolverStrategy();
 		this.depth = depth;
 
 		if (strategy == Strategy.HUMAN) {
