@@ -32,6 +32,8 @@ public class AssetHandler {
 	/** The Skin contains all our textures and fonts. */
 	private Skin skin;
 
+	private FreeTypeFontGenerator generator;
+
 	/** Overrides the default constructor. */
 	private AssetHandler() {
 		manager = new AssetManager();
@@ -52,10 +54,10 @@ public class AssetHandler {
 	 * Blocks until the AssetManager is done.
 	 */
 	public void load() {
-		logger.debug(CLASSNAME, "Loading assets...");	
-		
+		logger.debug(CLASSNAME, "Loading assets...");
+
 		generateFonts();
-		
+
 		/* Queue all of these items for loading. */
 		manager.load("images/icons/icons.atlas", TextureAtlas.class);
 		manager.load("images/tiles/tiles.atlas", TextureAtlas.class);
@@ -83,10 +85,14 @@ public class AssetHandler {
 		/* Load all the textures into the Skin object. */
 		setupSkin();
 	}
-	
-	/** Generates all required bitmapfonts on the fly and adds them to the skinfile. */
+
+	/**
+	 * Generates all required bitmapfonts on the fly and adds them to the
+	 * skinfile.
+	 */
 	private void generateFonts() {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/tahoma.ttf"));
+		generator = new FreeTypeFontGenerator(
+				Gdx.files.internal("fonts/tahoma.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = 30;
 		parameter.minFilter = Texture.TextureFilter.Linear;
@@ -100,8 +106,9 @@ public class AssetHandler {
 		skin.add("small", small);
 		skin.add("medium", medium);
 		skin.add("large", large);
-		
-		generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/tahomaBold.ttf"));
+
+		generator = new FreeTypeFontGenerator(
+				Gdx.files.internal("fonts/tahomaBold.ttf"));
 		parameter.size = 25;
 		BitmapFont bold = generator.generateFont(parameter);
 		skin.add("bold", bold);
@@ -159,16 +166,19 @@ public class AssetHandler {
 	}
 
 	/**
-	 * Sets the AssetManager to be used by the AssetHandler. Needed for the
-	 * headless application which is used for DevHub. Since DevHub cannot make
-	 * use of GL related classes, it is necessary to test the AssetHandler in a
-	 * very specific way. See {@link AssetHandlerTest}.
+	 * Sets the AssetManager and the Font generator to be used by the
+	 * AssetHandler. Needed for the headless application which is used for
+	 * DevHub. Since DevHub cannot make use of GL related classes, it is
+	 * necessary to test the AssetHandler in a very specific way. See
+	 * {@link AssetHandlerTest}.
 	 * 
 	 * @param assetManager
 	 *            The AssetManager to be used by the AssetHandler.
 	 */
-	public void setAssetManager(AssetManager assetManager) {
+	public void setAssetMocks(AssetManager assetManager,
+			FreeTypeFontGenerator generator) {
 		manager = assetManager;
+		this.generator = generator;
 	}
 
 	/**

@@ -128,7 +128,7 @@ public class SettingsScreenTest {
 	public void testDispose() {
 		logger.setLogFile(null);
 		
-		when(select.getSelected()).thenReturn("");
+		when(select.getSelected()).thenReturn(" EXPECTIMAX");
 		
 		screen.dispose();
 		verify(stage).dispose();
