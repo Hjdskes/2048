@@ -1,40 +1,37 @@
 {  
-  com.badlogic.gdx.graphics.g2d.BitmapFont: {  
-   brownText: { file: fonts/brown.fnt },  
-   whiteSmall: { file: fonts/white.fnt },
-   whiteLarge: { file: fonts/whiteLarge.fnt },
-  },  
   com.badlogic.gdx.graphics.Color: {  
-   beige: { r: 0.976, g: 0.969, b: 0.933, a: 1 },  
+   beige: { r: 0.976, g: 0.969, b: 0.933, a: 1 },
+   brown: { r: 0.467, g: 0.431, b: 0.396, a: 1 },
+   white: { r: 1, g: 1, b: 1, a: 1 },
   },  
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {  
-   default: { font: brownText },  
-   white-text: { font: whiteLarge }, 
-   score: { font: whiteLarge, background: score },
-   highscore: { font: whiteLarge, background: highscore },
-   highest: { font: whiteLarge, background: highest },  
+   default: { font: bold, fontColor: brown }, 
+   large: { font: large, fontColor: brown },
+   regularBrown: { font: medium, fontColor: brown }, 
+   score: { font: medium, background: score },
+   highscore: { font: medium, background: highscore },
+   highest: { font: medium, background: highest },  
   },  
   com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {  
-   default: { font: whiteLarge, up: button, down: button, pressedOffsetY: -4 },
-   small: { font: whiteSmall, up: button, down: button, pressedOffsetY: -2 },  
+   default: { font: medium, fontColor: white, up: button, down: button, pressedOffsetY: -4 },
+   small: { font: small, fontColor: white, up: button, down: button, pressedOffsetY: -4 },
   }, 
   com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: { 
-   default: { font: whiteLarge, fontColor: { r: 1, g: 1, b: 1, a: 1 }, background: button, cursor: cursor },
+   default: { font: medium, fontColor: white, background: button, cursor: cursor },
   },
   com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
   	default-horizontal: { background: slider, knob: sliderButton }
   }, 
   com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-    default: { checkboxOn: check-on, checkboxOff: check-off, font: brownText }
+    default: { checkboxOn: check-on, checkboxOff: check-off, font: bold, fontColor: brown }
   }, 
     com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
   	default: { vScroll: upScroll, vScrollKnob: downScroll }
   },
   com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
   	default: {
-  		font: brownText, background: dropdown,
-  		scrollStyle: default,
-  		listStyle: { font: brownText, selection: sliderButton }
+  		font: small, fontColor: brown, background: dropdown, scrollStyle: default,
+  		listStyle: { font: medium, fontColorSelected: white, fontColorUnselected: brown, selection: sliderButton }
   	}
   }
 } 

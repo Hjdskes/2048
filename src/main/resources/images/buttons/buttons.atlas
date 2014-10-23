@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 check-off
   rotate: false
-  xy: 546, 2
+  xy: 546, 66
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
@@ -27,7 +27,7 @@ continue
   index: -1
 downScroll
   rotate: false
-  xy: 346, 97
+  xy: 2, 2
   size: 15, 12
   orig: 15, 12
   offset: 0, 0
@@ -48,9 +48,9 @@ newgame
   index: -1
 settings
   rotate: false
-  xy: 546, 64
-  size: 60, 62
-  orig: 60, 62
+  xy: 2, 16
+  size: 40, 41
+  orig: 40, 41
   offset: 0, 0
   index: -1
 slider
@@ -62,14 +62,14 @@ slider
   index: -1
 sliderButton
   rotate: false
-  xy: 2, 12
+  xy: 346, 64
   size: 15, 45
   orig: 15, 45
   offset: 0, 0
   index: -1
 upScroll
   rotate: false
-  xy: 608, 52
+  xy: 19, 2
   size: 15, 12
   orig: 15, 12
   offset: 0, 0
