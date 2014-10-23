@@ -2,10 +2,14 @@ package nl.tudelft.ti2206.utils.handlers;
 
 import nl.tudelft.ti2206.utils.log.Logger;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -15,20 +19,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class AssetHandler {
 	/** Get current class name, used for logging output. */
 	private static final String CLASSNAME = AssetHandler.class.getSimpleName();
-	
+
 	/** The unique singleton instance of this class. */
 	private static AssetHandler instance = new AssetHandler();
 
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
-	
 	/** The AssetManager is used to load and get all our textures and font. */
 	private AssetManager manager;
 
 	/** The Skin contains all our textures and fonts. */
 	private Skin skin;
-	
+
 	/** Overrides the default constructor. */
 	private AssetHandler() {
 		manager = new AssetManager();
@@ -49,14 +52,11 @@ public class AssetHandler {
 	 * Blocks until the AssetManager is done.
 	 */
 	public void load() {
-
-		logger.debug(CLASSNAME, "Loading assets...");
-
-		/*
-		 * Queue all of these items for loading, order does not really matter I
-		 * think, since we wait for everything to be done anyway.
-		 */
-		manager.load("fonts/fonts.atlas", TextureAtlas.class);
+		logger.debug(CLASSNAME, "Loading assets...");	
+		
+		generateFonts();
+		
+		/* Queue all of these items for loading. */
 		manager.load("images/icons/icons.atlas", TextureAtlas.class);
 		manager.load("images/tiles/tiles.atlas", TextureAtlas.class);
 		manager.load("images/scoretiles/scoretiles.atlas", TextureAtlas.class);
@@ -68,9 +68,9 @@ public class AssetHandler {
 		manager.load("images/overlays/wonoverlay.png", Texture.class);
 		manager.load("images/overlays/multilostoverlay.png", Texture.class);
 		manager.load("images/overlays/multiwonoverlay.png", Texture.class);
-		manager.load("images/overlays/multiwaitoverlay.png",Texture.class);
+		manager.load("images/overlays/multiwaitoverlay.png", Texture.class);
 		manager.load("images/overlays/connectionlostoverlay.png", Texture.class);
-		
+
 		manager.load("images/overlays/getreadyoverlay.png", Texture.class);
 		manager.load("images/overlays/setoverlay.png", Texture.class);
 		manager.load("images/overlays/gooverlay.png", Texture.class);
@@ -83,13 +83,35 @@ public class AssetHandler {
 		/* Load all the textures into the Skin object. */
 		setupSkin();
 	}
+	
+	/** Generates all required bitmapfonts on the fly and adds them to the skinfile. */
+	private void generateFonts() {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/tahoma.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 30;
+		parameter.minFilter = Texture.TextureFilter.Linear;
+		parameter.magFilter = Texture.TextureFilter.Linear;
+		BitmapFont medium = generator.generateFont(parameter);
+		parameter.size = 20;
+		BitmapFont small = generator.generateFont(parameter);
+		parameter.size = 40;
+		BitmapFont large = generator.generateFont(parameter);
+		generator.dispose();
+		skin.add("small", small);
+		skin.add("medium", medium);
+		skin.add("large", large);
+		
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/tahomaBold.ttf"));
+		parameter.size = 25;
+		BitmapFont bold = generator.generateFont(parameter);
+		skin.add("bold", bold);
+		generator.dispose();
+	}
 
 	/**
 	 * Uses the AssetManager to get all the textures and fonts into the Skin.
 	 */
 	private void setupSkin() {
-		TextureAtlas fonts = manager.get("fonts/fonts.atlas",
-				TextureAtlas.class);
 		TextureAtlas icons = manager.get("images/icons/icons.atlas",
 				TextureAtlas.class);
 		TextureAtlas tiles = manager.get("images/tiles/tiles.atlas",
@@ -99,7 +121,6 @@ public class AssetHandler {
 		TextureAtlas buttons = manager.get("images/buttons/buttons.atlas",
 				TextureAtlas.class);
 
-		skin.addRegions(fonts);
 		skin.addRegions(icons);
 		skin.addRegions(tiles);
 		skin.addRegions(scoretiles);
