@@ -139,8 +139,8 @@ public class SettingsScreen extends Screen {
 
 	private void setupSolverSelect() {
 		Array<String> items = new Array<>();
-		items.add(" Human");
-		items.add(" Expectimax");
+		items.add(" HUMAN");
+		items.add(" EXPECTIMAX");
 		solverSelect.setItems(items);
 
 		solverSelect.setSelected(" " + prefsHandler.getSolverStrategy().name());
@@ -249,7 +249,7 @@ public class SettingsScreen extends Screen {
 		super.dispose();
 		prefsHandler.setLogLevel(logger.getLevel().name());
 		prefsHandler.setLogFileEnabled(checkBox.isChecked());
-		prefsHandler.setSolver(solverSelect.getSelected());
+		prefsHandler.setSolver(solverSelect.getSelected().substring(1));
 		prefsHandler.setSolverDelay((int) delaySlider.getValue());
 	}
 }
