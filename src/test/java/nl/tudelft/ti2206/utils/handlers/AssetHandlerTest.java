@@ -5,16 +5,19 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -28,37 +31,40 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class AssetHandlerTest {
 	/** A mock for the AssetManager object. */
-	private static AssetManager manager;
+	@Mock
+	private AssetManager manager;
 	/** A mock for the Skin object. */
-	private static Skin skin;
+	@Mock
+	private Skin skin;
 	/** A mock for the TextureAtlas object. */
-	private static TextureAtlas textureAtlas;
-
+	@Mock
+	private TextureAtlas textureAtlas;
+	@Mock
+	private FreeTypeFontGenerator generator;
+	@Mock
+	private BitmapFont font;
+	@Mock
+	private static GL20 gl;
+	
 	/** The singleton AssetHandler instance used to access our assets. */
 	private static AssetHandler assetHandler = AssetHandler.getInstance();
-	
-	private static FreeTypeFontGenerator generator;
-	private static BitmapFont font;
 
 	/**
 	 * Sets up the test environment. Mockito is used extensively to prevent GL
 	 * related classes and methods from throwing NullPointerExceptions when
 	 * running the HeadlessLauncher.
 	 */
-	@BeforeClass
-	public static void setUpBeforeClass() {
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
 		new HeadlessLauncher().launch();
 
-		manager = mock(AssetManager.class);
-		generator = mock(FreeTypeFontGenerator.class);
-		font = mock(BitmapFont.class);
+		Gdx.gl = gl;
+		
 		doReturn(font).when(generator).generateFont(any(FreeTypeFontParameter.class));
 		assetHandler.setAssetMocks(manager, generator);
-
-		skin = mock(Skin.class);
 		assetHandler.setSkin(skin);
 
-		textureAtlas = mock(TextureAtlas.class);
 		when(manager.get(anyString(), eq(TextureAtlas.class))).thenReturn(
 				textureAtlas);
 	}
@@ -68,12 +74,12 @@ public class AssetHandlerTest {
 	 * time a Texture or Font is loaded. In other words, it makes sure that all
 	 * Textures and BitmapFonts needed for the application are loaded.
 	 */
-//	@Test
-//	public void testLoad() {
-//		assetHandler.load();
-//		verify(manager, times(5)).load(anyString(), eq(TextureAtlas.class));
-//		verify(skin, times(5)).addRegions(textureAtlas);
-//	}
+	@Test
+	public void testLoad() {
+		assetHandler.load();
+		verify(manager, times(4)).load(anyString(), eq(TextureAtlas.class));
+		verify(skin, times(4)).addRegions(textureAtlas);
+	}
 
 	/**
 	 * Tests if the getter of the skin does return the correct skin.
