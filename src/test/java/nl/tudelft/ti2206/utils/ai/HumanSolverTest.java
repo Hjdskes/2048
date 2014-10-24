@@ -23,7 +23,7 @@ public class HumanSolverTest {
 	@Before
 	public void setUp() throws Exception {
 		grid = new Grid(true);
-		solver = new HumanSolver();
+		solver = (HumanSolver) HumanSolver.getInstance();
 	}
 
 	/**
