@@ -164,7 +164,7 @@ public class PreferenceHandler {
 	 */
 	public Strategy getSolverStrategy() {
 		String type = prefs.getString("solver");
-		if (type == null || type.equals("") || type.contains("Human")) {
+		if (type == null || type.equals("") || type.contains("HUMAN")) {
 			return Strategy.HUMAN;
 		} else {
 			return Strategy.EXPECTIMAX;
