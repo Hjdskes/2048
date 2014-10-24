@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
 public class SettingsScreen extends Screen {
@@ -147,6 +148,24 @@ public class SettingsScreen extends Screen {
 		solverSelect.setX(100);
 		solverSelect.setY(250);
 		solverSelect.setWidth(200);
+
+		solverSelect.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				delayLabel.setVisible(false);
+			}
+		});
+		
+		solverSelect.getList().addListener(new ClickListener() {
+			@Override
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor toActor) {
+				super.exit(event, x, y, pointer, toActor);
+				delayLabel.setVisible(true);
+			}
+		});
+
 	}
 
 	private void setupSolverLabel() {
