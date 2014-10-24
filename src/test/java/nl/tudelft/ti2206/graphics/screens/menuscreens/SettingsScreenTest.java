@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 
@@ -39,6 +40,8 @@ public class SettingsScreenTest {
 	private SelectBox<String> select;
 	@Mock
 	private Stage stage;
+	@Mock
+	private List<String> list;
 
 	private SettingsScreen screen;
 	private Logger logger = Logger.getInstance();
@@ -47,7 +50,10 @@ public class SettingsScreenTest {
 	public void setUp() {
 		new HeadlessLauncher().launch();
 		MockitoAnnotations.initMocks(this);
-		screen = new SettingsScreen(stage, menuButton, slider, label, checkBox, select);
+		when(select.getList()).thenReturn(list);
+		
+		screen = new SettingsScreen(stage, menuButton, slider, label, checkBox,
+				select);
 	}
 
 	@Test
@@ -59,7 +65,7 @@ public class SettingsScreenTest {
 		verify(slider, times(2)).setWidth(400);
 
 		verify(label, times(3)).setX(100);
-		verify(label).setY(520);	
+		verify(label).setY(520);
 		verify(label).setY(310);
 		verify(label).setY(190);
 
@@ -79,7 +85,7 @@ public class SettingsScreenTest {
 
 	@Test
 	public void testUpdateLevel() {
-		
+
 		when(slider.getValue()).thenReturn(300f);
 		String level = screen.updateLevel();
 		assertEquals("INFO", level);
@@ -127,9 +133,9 @@ public class SettingsScreenTest {
 	@Test
 	public void testDispose() {
 		logger.setLogFile(null);
-		
+
 		when(select.getSelected()).thenReturn(" EXPECTIMAX");
-		
+
 		screen.dispose();
 		verify(stage).dispose();
 		assertEquals(logger.getLevel(), PreferenceHandler.getInstance()
