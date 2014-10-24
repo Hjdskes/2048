@@ -2,9 +2,12 @@ package nl.tudelft.ti2206.utils.ai;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.AdditionalMatchers.find;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.atLeastOnce;
+import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.log.Logger;
@@ -28,6 +31,7 @@ public class GridSolverTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+		new HeadlessLauncher().launch();
 		emptyGrid = new Grid(true);
 		grid = new Grid(true);
 		for (int i = 0; i < 16; i++) {
@@ -55,13 +59,13 @@ public class GridSolverTest {
 
 		initSolver(false, Strategy.HUMAN);
 		solver.run();
-		verify(logger, atLeastOnce()).debug(solver.getClass().getSimpleName(),
-				"Direction selected: " + "LEFT");
+		verify(logger, atLeastOnce()).debug(eq(solver.getClass().getSimpleName()),
+				find("Direction selected: "));
 
 		initSolver(false, Strategy.EXPECTIMAX);
 		solver.run();
-		verify(logger, atLeastOnce()).debug(solver.getClass().getSimpleName(),
-				"Direction selected: " + "LEFT");
+		verify(logger, atLeastOnce()).debug(eq(solver.getClass().getSimpleName()),
+				find("Direction selected: "));
 	}
 
 	@Test
