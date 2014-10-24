@@ -15,12 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * from the GDX library.
  */
 public class SolveButton extends TextButton {
-	/** The AI that will try to solve this game. */
-	private GridSolver solver;
+	/** The singleton reference to the GridSolver instance. */
+	private static GridSolver solver = GridSolver.getInstance();
 
 	/** Constructs a new SolveButton. */
 	public SolveButton(final Grid grid) {
 		super("Solve", AssetHandler.getInstance().getSkin(), "small");
+		
 		this.setHeight(50);
 		this.setWidth(DrawableTile.TILE_WIDTH);
 		this.setX(DrawableTile.TILE_X - DrawableTile.TILE_WIDTH / 2
@@ -30,30 +31,10 @@ public class SolveButton extends TextButton {
 		this.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				boolean wasRunning = false;
-				/*
-				 * If it was previously running and if we don't make a new
-				 * GridSolver object, we won't be able to reschedule the task
-				 * and we'll get an IllegalStateException.
-				 */
-				if (solver != null) {
-					if (solver.isRunning()) {
-						solver.stop();
-						wasRunning = true;
-					}
-					solver = null;
-				}
-				/*
-				 * In case it wasn't previously running, create a new GridSolver
-				 * instance and simply start it.
-				 */
-				if (!wasRunning) {
-					/*
-					 * Set up a new GridSolver with the saved delay and strategy
-					 * and depth 6. This provides great flexibility.
-					 */
-					solver = new GridSolver(grid, -1, 6);
-					solver.start();
+				if (!solver.isRunning()) {
+					solver.start(grid);
+				} else {
+					solver.stop();
 				}
 			}
 		});
