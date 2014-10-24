@@ -164,10 +164,10 @@ public class PreferenceHandler {
 	 */
 	public Strategy getSolverStrategy() {
 		String type = prefs.getString("solver");
-		if (type == null || type.equals("") || type.contains("Human")) {
-			return Strategy.HUMAN;
-		} else {
+		if (type.contains("Expecti")) {
 			return Strategy.EXPECTIMAX;
+		} else {
+			return Strategy.HUMAN;
 		}
 	}
 
@@ -177,7 +177,7 @@ public class PreferenceHandler {
 		prefs.flush();
 	}
 
-	/** @return The delay the solver should have between its moves.s */
+	/** @return The delay the solver should have between its moves. */
 	public int getSolverDelay() {
 		int type = prefs.getInteger("solverDelay");
 		return type <= 0 ? 300 : type;
