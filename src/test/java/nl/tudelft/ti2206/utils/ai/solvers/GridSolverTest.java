@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.utils.ai;
+package nl.tudelft.ti2206.utils.ai.solvers;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,7 +9,9 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.gameobjects.Grid;
-import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
+import nl.tudelft.ti2206.utils.ai.solvers.GridSolver;
+import nl.tudelft.ti2206.utils.ai.solvers.HumanSolver;
+import nl.tudelft.ti2206.utils.ai.solvers.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.log.Logger;
 
 import org.junit.Before;

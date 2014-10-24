@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.utils.ai;
+package nl.tudelft.ti2206.utils.ai.solvers;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;

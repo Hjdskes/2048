@@ -5,7 +5,7 @@ import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
 import nl.tudelft.ti2206.graphics.drawables.DrawableGrid;
 import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
-import nl.tudelft.ti2206.utils.ai.Expectimax;
+import nl.tudelft.ti2206.utils.ai.solvers.Expectimax;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 

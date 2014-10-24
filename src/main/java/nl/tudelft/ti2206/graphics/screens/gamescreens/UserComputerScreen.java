@@ -8,7 +8,7 @@ import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawSimple;
-import nl.tudelft.ti2206.utils.ai.GridSolver;
+import nl.tudelft.ti2206.utils.ai.solvers.GridSolver;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.input.InputHandler;
 import nl.tudelft.ti2206.utils.log.Logger;

@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.graphics.buttons;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.graphics.drawables.DrawableTile;
-import nl.tudelft.ti2206.utils.ai.GridSolver;
+import nl.tudelft.ti2206.utils.ai.solvers.GridSolver;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

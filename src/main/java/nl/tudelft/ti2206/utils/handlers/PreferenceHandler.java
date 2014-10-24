@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.utils.handlers;
 
-import nl.tudelft.ti2206.utils.ai.GridSolver.Strategy;
+import nl.tudelft.ti2206.utils.ai.solvers.GridSolver.Strategy;
 import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import com.badlogic.gdx.Gdx;

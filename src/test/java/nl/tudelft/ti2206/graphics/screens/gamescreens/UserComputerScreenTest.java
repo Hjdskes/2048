@@ -15,7 +15,7 @@ import nl.tudelft.ti2206.graphics.drawables.Scores;
 import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.graphics.screens.gamescreens.UserComputerScreen.Difficulty;
-import nl.tudelft.ti2206.utils.ai.GridSolver;
+import nl.tudelft.ti2206.utils.ai.solvers.GridSolver;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.net.Networking;
 import nl.tudelft.ti2206.utils.states.LostState;

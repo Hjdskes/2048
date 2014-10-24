@@ -1,10 +1,11 @@
-package nl.tudelft.ti2206.utils.ai;
+package nl.tudelft.ti2206.utils.ai.solvers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.gameobjects.Grid.Direction;
+import nl.tudelft.ti2206.utils.ai.solvers.Expectimax;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 import nl.tudelft.ti2206.utils.states.LostState;

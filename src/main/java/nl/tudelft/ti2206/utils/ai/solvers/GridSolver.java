@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.utils.ai;
+package nl.tudelft.ti2206.utils.ai.solvers;
 
 import java.util.Timer;
 import java.util.TimerTask;
