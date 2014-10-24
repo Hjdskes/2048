@@ -26,45 +26,39 @@ public class UserComputerScreen extends Screen {
 		EASY, MEDIUM, HARD, EXTREME
 	}
 
+	/** Get current class name, used for logging output. */
+	private static final String CLASSNAME = UserComputerScreen.class
+			.getSimpleName();
+	
+	/** The singleton AssetHandler instance used to access our assets. */
+	private AssetHandler assetHandler = AssetHandler.getInstance();
+	/** The singleton reference to the ScreenHandler class. */
+	private ScreenHandler screenHandler = ScreenHandler.getInstance();
+	/** The singleton reference to the Logger instance. */
+	private static Logger logger = Logger.getInstance();
+	/** The reference to the class handling the AI. */
+	private static GridSolver gridSolver = GridSolver.getInstance();
+
 	/** The local grid holding all the local Tiles. */
 	private Grid localGrid;
-
 	/** The computer grid holding all the computer Tiles. */
 	private Grid computerGrid;
 
 	/** The ScoreDisplay for the local Grid. */
 	private Scores localScores;
-
 	/** The ScoreDisplay for the computer Grid. */
 	private Scores computerScores;
 
 	/** The label indicating which Grid is yours. */
 	private Label you;
-
 	/** The label indicating which Grid is your opponent's. */
 	private Label opponent;
 
 	/** The Group packing all local elements. */
 	private Group localGroup;
-
 	/** The Group packing all computer elements. */
 	private Group computerGroup;
-
-	/** The singleton AssetHandler instance used to access our assets. */
-	private AssetHandler assetHandler = AssetHandler.getInstance();
-
-	/** The singleton reference to the ScreenHandler class. */
-	private ScreenHandler screenHandler = ScreenHandler.getInstance();
-
-	/** The singleton reference to the Logger instance. */
-	private static Logger logger = Logger.getInstance();
-
-	/** Get current class name, used for logging output. */
-	private final String className = this.getClass().getSimpleName();
-
-	/** The reference to the class handling the AI. */
-	private GridSolver gridSolver;
-
+	
 	/** The difficulty level of the CPU. */
 	private Difficulty difficulty;
 
@@ -104,7 +98,8 @@ public class UserComputerScreen extends Screen {
 
 	/** Constructor for testing purposes only */
 	public UserComputerScreen(Stage stage, Grid grid, Label label, Group group,
-			Scores scores, Difficulty difficulty, GridSolver solver, ScreenHandler handler) {
+			Scores scores, Difficulty difficulty, GridSolver solver,
+			ScreenHandler handler) {
 		this.stage = stage;
 		this.localGrid = grid;
 		this.computerGrid = grid;
@@ -114,7 +109,7 @@ public class UserComputerScreen extends Screen {
 		this.computerGroup = group;
 		this.localScores = scores;
 		this.computerScores = scores;
-		this.gridSolver = solver;
+		gridSolver = solver;
 		this.screenHandler = handler;
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
@@ -131,7 +126,7 @@ public class UserComputerScreen extends Screen {
 		stage.addListener(new InputHandler(localGrid));
 
 		adjustToDifficulty();
-		gridSolver.start();
+		gridSolver.start(computerGrid);
 
 		/* After creating the screen, start the game. */
 		TwentyFourtyGame.setState(RunningState.getInstance());
@@ -178,7 +173,9 @@ public class UserComputerScreen extends Screen {
 			delay = 650;
 			depth = 6;
 		}
-		gridSolver = new GridSolver(computerGrid, delay, depth);
+
+		gridSolver.setDepth(depth);
+		gridSolver.setDelay(delay);
 	}
 
 	/**
@@ -219,7 +216,7 @@ public class UserComputerScreen extends Screen {
 			this.setYouLabel("WAITING", Color.RED);
 		} else if (computerGrid.getPossibleMoves() == 0
 				&& !screenHandler.getScreen().hasOverlay()) {
-			logger.info(className,
+			logger.info(CLASSNAME,
 					"Computer is out of moves! Waiting for the player...");
 			this.setOpponentLabel("WAITING", Color.RED);
 			screenHandler.getScreen().addMultiWaitScreenOverlay(false);
