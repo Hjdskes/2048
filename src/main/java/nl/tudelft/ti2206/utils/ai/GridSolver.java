@@ -24,6 +24,9 @@ public class GridSolver implements Runnable {
 	/** Get current class name, used for logging output. */
 	private static final String CLASSNAME = GridSolver.class.getSimpleName();
 
+	/** The singleton reference to this class. */
+	private static GridSolver instance = new GridSolver();
+
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
@@ -40,8 +43,9 @@ public class GridSolver implements Runnable {
 	/** An indication on whether this solver is running. */
 	private boolean running;
 
+	/** The strategy to be used by the GridSolver. */
 	private Strategy strategy;
-	
+
 	/**
 	 * The recursion depth to use. Depending on the used solver, this may be
 	 * ignored.
@@ -50,8 +54,6 @@ public class GridSolver implements Runnable {
 
 	/** The solver used to solve the Grid. */
 	private Solver solver;
-
-	private static GridSolver instance = new GridSolver();
 
 	/** Constructs a new GridSolver. */
 	private GridSolver() {
@@ -69,6 +71,7 @@ public class GridSolver implements Runnable {
 		}
 	}
 
+	/** @return The Singleton instance of this class. */
 	public static GridSolver getInstance() {
 		return instance;
 	}
