@@ -1,9 +1,7 @@
 package nl.tudelft.ti2206.utils.handlers;
 
+import nl.tudelft.ti2206.gameobjects.Grid.Difficulty;
 import nl.tudelft.ti2206.utils.ai.solvers.GridSolver.Strategy;
-import nl.tudelft.ti2206.utils.ai.spawners.AnnoyingSpawner;
-import nl.tudelft.ti2206.utils.ai.spawners.RandomSpawner;
-import nl.tudelft.ti2206.utils.ai.spawners.Spawner;
 import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import com.badlogic.gdx.Gdx;
@@ -162,21 +160,18 @@ public class PreferenceHandler {
 		prefs.flush();
 	}
 
-	/**
-	 * @return The spawner saved, or the RandomSpawner if no spawner is saved.
-	 */
-	public Spawner getSpawner() {
-		String type = prefs.getString("spawner");
-		if (type.contains("AnnoyingSpawner")) {
-			return AnnoyingSpawner.getInstance();
-		} else {
-			return RandomSpawner.getInstance();
+	/** @return The difficulty with which tiles will be spawned. */
+	public Difficulty getDifficulty() {
+		if (!prefs.contains("difficulty")) {
+			return Difficulty.RANDOM;
 		}
+		String difficulty = prefs.getString("difficulty");
+		return Difficulty.valueOf(difficulty);
 	}
 
-	/** Sets the spawner to the type specified. */
-	public void setSpawner(String type) {
-		prefs.putString("spawner", type);
+	/** Sets the difficulty with which tiles will be spawned. */
+	public void setDifficulty(String difficulty) {
+		prefs.putString("difficulty", difficulty);
 		prefs.flush();
 	}
 

@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Stack;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.utils.ai.spawners.AnnoyingSpawner;
 import nl.tudelft.ti2206.utils.ai.spawners.RandomSpawner;
 import nl.tudelft.ti2206.utils.ai.spawners.Spawner;
 import nl.tudelft.ti2206.utils.handlers.TileHandler;
@@ -41,6 +42,12 @@ public class Grid extends Observable implements Cloneable {
 		LEFT, RIGHT, UP, DOWN;
 	}
 
+	/** This enumeration is used to indicate with which difficulty a new
+	 * tile will be spawned. */
+	public enum Difficulty {
+		RANDOM, EASY, MEDIUM, HARD;
+	}
+
 	/** The grid contains sixteen tiles. */
 	public static final int NTILES = 16;
 
@@ -71,8 +78,8 @@ public class Grid extends Observable implements Cloneable {
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
 
-	/** The spawner is used to spawn new tiles. */
-	private Spawner spawner;
+	/** The difficulty with which new tiles will be spawned. */
+	private Difficulty difficulty;
 
 	/** The current score of the Grid. */
 	private int score;
@@ -96,7 +103,7 @@ public class Grid extends Observable implements Cloneable {
 		this.tileHandler = new TileHandler(this);
 		this.undo = new Stack<String>();
 		this.redo = new Stack<String>();
-		this.spawner = RandomSpawner.getInstance();
+		this.difficulty = Difficulty.RANDOM;
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
@@ -239,6 +246,13 @@ public class Grid extends Observable implements Cloneable {
 	 * Spawns a Tile at a random empty location.
 	 */
 	public void spawnNewTile() {
+		Spawner spawner;
+
+		if (Math.random() < difficulty.ordinal() * 0.33) {
+			spawner = AnnoyingSpawner.getInstance();
+		} else {
+			spawner = RandomSpawner.getInstance();
+		}
 		Tile tile = spawner.findTile(this);
 		int location = tile.getIndex();
 		int value = tile.getValue();
@@ -415,13 +429,13 @@ public class Grid extends Observable implements Cloneable {
 	}
 
 	/**
-	 * Sets the spawner used to spawn new tiles.
+	 * Sets the difficulty with which new tiles will be spawned.
 	 * 
-	 * @param spawner
-	 *            The new spawner to use.
+	 * @param difficulty
+	 *            The difficulty with which new tiles will be spawned.
 	 */
-	public void setSpawner(Spawner spawner) {
-		this.spawner = spawner;
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
 	}
 
 	/**

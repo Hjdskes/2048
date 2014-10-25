@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
-import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -20,11 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
 public class SettingsScreen extends Screen {
-
 	/** The Singleton reference to the logger. */
 	private static Logger logger = Logger.getInstance();
 
@@ -41,6 +38,8 @@ public class SettingsScreen extends Screen {
 	private MenuButton menuButton;
 	private SelectBox<String> solverSelect;
 	private Label solverLabel;
+	private Slider difficultySlider;
+	private Label difficultyLabel;
 	private Slider delaySlider;
 	private Label delayLabel;
 
@@ -53,10 +52,10 @@ public class SettingsScreen extends Screen {
 		setStageListeners();
 
 		levelSlider = new Slider(0, 400, 100, false, assetHandler.getSkin());
+		setupLevelSlider();
 		levelLabel = new Label("Log Level: " + updateLevel(),
 				assetHandler.getSkin());
 		setupLevelLabel();
-		setupLevelSlider();
 
 		checkBox = new CheckBox("    Enable logging to file",
 				assetHandler.getSkin());
@@ -66,15 +65,22 @@ public class SettingsScreen extends Screen {
 
 		solverSelect = new SelectBox<>(assetHandler.getSkin());
 		solverLabel = new Label("Solver Type: ", assetHandler.getSkin());
-		setupSolverSelect();
 		setupSolverLabel();
+		setupSolverSelect();
 
 		delaySlider = new Slider(25, 1000, 5, false, assetHandler.getSkin());
 		setupDelaySlider();
 		delayLabel = new Label("Delay: " + delaySlider.getValue(),
 				assetHandler.getSkin());
 		setupDelayLabel();
-	
+
+		difficultySlider = new Slider(0, 3, 1, false, assetHandler.getSkin());
+		setupDifficultySlider();
+		difficultyLabel = new Label("Difficulty: " + updateDifficulty(),
+				assetHandler.getSkin());
+		setupDifficultyLabel();
+
+
 		addActors();
 		setDrawBehavior(new DrawBeige(stage));
 	}
@@ -98,6 +104,8 @@ public class SettingsScreen extends Screen {
 		setupSolverSelect();
 		setupDelayLabel();
 		setupDelaySlider();
+		setupDifficultyLabel();
+		setupDifficultySlider();
 		setStageListeners();
 		addActors();
 	}
@@ -145,27 +153,9 @@ public class SettingsScreen extends Screen {
 		solverSelect.setItems(items);
 
 		solverSelect.setSelected(" " + prefsHandler.getSolverStrategy().name());
-		solverSelect.setX(100);
-		solverSelect.setY(250);
+		solverSelect.setX(solverLabel.getX() + solverLabel.getPrefWidth() + 50);
+		solverSelect.setY(300);
 		solverSelect.setWidth(200);
-
-		solverSelect.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				delayLabel.setVisible(false);
-			}
-		});
-		
-		solverSelect.getList().addListener(new ClickListener() {
-			@Override
-			public void exit(InputEvent event, float x, float y, int pointer,
-					Actor toActor) {
-				super.exit(event, x, y, pointer, toActor);
-				delayLabel.setVisible(true);
-			}
-		});
-
 	}
 
 	private void setupSolverLabel() {
@@ -173,10 +163,29 @@ public class SettingsScreen extends Screen {
 		solverLabel.setY(310);
 	}
 
+	private void setupDifficultySlider() {
+		difficultySlider.setValue(prefsHandler.getSolverDelay());
+		difficultySlider.setX(100);
+		difficultySlider.setY(130);
+		difficultySlider.setWidth(400);
+		
+		difficultySlider.addListener(new ChangeListener() {		
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				difficultyLabel.setText("Difficulty: " + updateDifficulty());
+			}
+		});
+	}
+
+	private void setupDifficultyLabel() {
+		difficultyLabel.setX(100);
+		difficultyLabel.setY(190);
+	}
+
 	private void setupDelaySlider() {
 		delaySlider.setValue(prefsHandler.getSolverDelay());
 		delaySlider.setX(100);
-		delaySlider.setY(130);
+		delaySlider.setY(190);
 		delaySlider.setWidth(400);
 		
 		delaySlider.addListener(new ChangeListener() {		
@@ -189,7 +198,7 @@ public class SettingsScreen extends Screen {
 
 	private void setupDelayLabel() {
 		delayLabel.setX(100);
-		delayLabel.setY(190);
+		delayLabel.setY(250);
 	}
 
 	/** Sets the listeners of the actors belonging to this screen. */
@@ -222,32 +231,43 @@ public class SettingsScreen extends Screen {
 		stage.addActor(solverLabel);
 		stage.addActor(delaySlider);
 		stage.addActor(delayLabel);
+		stage.addActor(difficultyLabel);
+		stage.addActor(difficultySlider);
 	}
 
 	/** Updates the loglevel and returns the loglevel string. */
-	public String updateLevel() {
+	private String updateLevel() {
 		switch ((int) levelSlider.getValue()) {
 		case 0:
-			logger.setLevel(LogLevel.NONE);
 			return "NONE";
 		case 100:
-			logger.setLevel(LogLevel.ERROR);
 			return "ERROR";
 		case 200:
-			logger.setLevel(LogLevel.DEBUG);
 			return "DEBUG";
 		case 300:
-			logger.setLevel(LogLevel.INFO);
 			return "INFO";
 		case 400:
-			logger.setLevel(LogLevel.ALL);
 			return "ALL";
 		}
 		return null;
 	}
 
+	private String updateDifficulty() {
+		switch ((int) difficultySlider.getValue()) {
+		case 0:
+			return "RANDOM";
+		case 1:
+			return "EASY";
+		case 2:
+			return "MEDIUM";
+		case 3:
+			return "HARD";
+		}
+		return null;
+	}
+
 	/** @return The value of the slider, depending on the current loglevel. */
-	public int getSliderValue() {
+	private int getSliderValue() {
 		switch (logger.getLevel()) {
 		case NONE:
 			return 0;
@@ -270,5 +290,6 @@ public class SettingsScreen extends Screen {
 		prefsHandler.setLogFileEnabled(checkBox.isChecked());
 		prefsHandler.setSolver(solverSelect.getSelected().substring(1));
 		prefsHandler.setSolverDelay((int) delaySlider.getValue());
+		prefsHandler.setDifficulty(updateDifficulty());
 	}
 }
