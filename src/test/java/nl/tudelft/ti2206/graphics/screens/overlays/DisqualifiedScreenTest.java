@@ -1,10 +1,10 @@
 package nl.tudelft.ti2206.graphics.screens.overlays;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.graphics.buttons.MenuButton;
-import nl.tudelft.ti2206.graphics.screens.overlays.MultiWaitScreen;
 
 import org.junit.Before;
 import org.junit.Test;
