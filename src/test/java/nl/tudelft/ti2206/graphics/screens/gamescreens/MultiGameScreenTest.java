@@ -88,9 +88,7 @@ public class MultiGameScreenTest {
 
 		gameScreen = new MultiGameScreen(handler, stage, grid, label, group,
 				scores, remoteInput, networking);
-		
-		
-		
+
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
 		doNothing().when(group).addActor(any(Actor.class));
@@ -166,40 +164,40 @@ public class MultiGameScreenTest {
 		verify(screen).addConnectionLostOverlay();
 	}
 
-	 @Test
-	 public void testUpdateWaiting() {
-	 TwentyFourtyGame.setState(WaitingState.getInstance());
-	 gameScreen.update();
-	 verify(stage).act();
-	 verify(label).setText("WAITING");
-	 }
+	@Test
+	public void testUpdateWaiting() {
+		TwentyFourtyGame.setState(WaitingState.getInstance());
+		gameScreen.update();
+		verify(stage).act();
+		verify(label).setText("WAITING");
+	}
 
-	 @Test
-	 public void testUpdateRemoteLost() {
-	 TwentyFourtyGame.setState(RunningState.getInstance());
-	 when(grid.getPossibleMoves()).thenReturn(0);
-	 gameScreen.update();
-	 verify(stage).act();
-	 verify(label).setText("WAITING");
-	 }
-	 
-	 @Test
-	 public void testRemoteCheater() {
-	 TwentyFourtyGame.setState(RunningState.getInstance());
-	 when(validator.getIrregularity()).thenReturn(true);
-	 gameScreen.update();
-	 verify(stage).act();
-	 verify(screen).addBoardOverlay(false,false);
-	 verify(screen).addLWOverlay(false,true, grid);
-	 verify(label).setText("CHEATER");
-	 }
-	 
-	 @Test
-	 public void testLocalCheater() {
-	 TwentyFourtyGame.setState(DisqualifiedState.getInstance());
-	 gameScreen.update();
-	 verify(stage).act();
-	 verify(screen).addBoardOverlay(false,true);
-	 verify(label).setText("CHEATER");
-	 }
+	@Test
+	public void testUpdateRemoteLost() {
+		TwentyFourtyGame.setState(RunningState.getInstance());
+		when(grid.getPossibleMoves()).thenReturn(0);
+		gameScreen.update();
+		verify(stage).act();
+		verify(label).setText("WAITING");
+	}
+
+	@Test
+	public void testRemoteCheater() {
+		TwentyFourtyGame.setState(RunningState.getInstance());
+		when(validator.getIrregularity()).thenReturn(true);
+		gameScreen.update();
+		verify(stage).act();
+		verify(screen).addBoardOverlay(false, false);
+		verify(screen).addLWOverlay(false, true, grid);
+		verify(label).setText("CHEATER");
+	}
+
+	@Test
+	public void testLocalCheater() {
+		TwentyFourtyGame.setState(DisqualifiedState.getInstance());
+		gameScreen.update();
+		verify(stage).act();
+		verify(screen).addBoardOverlay(false, true);
+		verify(label).setText("CHEATER");
+	}
 }
