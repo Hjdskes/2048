@@ -167,7 +167,7 @@ public class SettingsScreen extends Screen {
 	}
 
 	private void setupDifficultySlider() {
-		difficultySlider.setValue(prefsHandler.getSolverDelay());
+		difficultySlider.setValue(prefsHandler.getDifficulty().ordinal());
 		difficultySlider.setX(100);
 		difficultySlider.setY(130);
 		difficultySlider.setWidth(400);
@@ -260,6 +260,7 @@ public class SettingsScreen extends Screen {
 		return null;
 	}
 
+	/** @return The text indicating the value in the slider. */
 	private String updateDifficulty() {
 		switch ((int) difficultySlider.getValue()) {
 		case 0:
