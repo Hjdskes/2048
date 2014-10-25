@@ -59,18 +59,18 @@ public class SettingsScreenTest {
 	public void testInit() {
 		verify(slider, times(3)).setValue(anyInt());
 		verify(slider, times(3)).setX(100);
-		verify(slider).setY(460);
-		verify(slider).setY(130);
+		verify(slider).setY(500);
+		verify(slider).setY(180);
 		verify(slider, times(3)).setWidth(400);
 
 		verify(label, times(4)).setX(100);
-		verify(label).setY(520);
-		verify(label).setY(310);
-		verify(label).setY(190);
+		verify(label).setY(550);
+		verify(label).setY(360);
+		verify(label).setY(290);
 
 		verify(checkBox).setChecked(anyBoolean());
 		verify(checkBox).setX(100);
-		verify(checkBox).setY(370);
+		verify(checkBox).setY(420);
 
 		verify(slider, times(3)).addListener(any(EventListener.class));
 		verify(checkBox).addListener(any(EventListener.class));

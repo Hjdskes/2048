@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.graphics.screens.menuscreens;
 
+import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.graphics.buttons.MenuButton;
 import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
@@ -116,7 +117,7 @@ public class SettingsScreen extends Screen {
 	private void setupLevelSlider() {
 		levelSlider.setValue(getSliderValue());
 		levelSlider.setX(100);
-		levelSlider.setY(460);
+		levelSlider.setY(500);
 		levelSlider.setWidth(400);
 		
 		levelSlider.addListener(new ChangeListener() {
@@ -129,13 +130,13 @@ public class SettingsScreen extends Screen {
 
 	private void setupLevelLabel() {
 		levelLabel.setX(100);
-		levelLabel.setY(520);
+		levelLabel.setY(550);
 	}
 
 	private void setupCheckBox() {
 		checkBox.setChecked(prefsHandler.isLogFileEnabled());
 		checkBox.setX(100);
-		checkBox.setY(370);
+		checkBox.setY(420);
 		
 		checkBox.addListener(new ChangeListener() {
 			@Override
@@ -156,14 +157,14 @@ public class SettingsScreen extends Screen {
 		solverSelect.setItems(items);
 
 		solverSelect.setSelected(" " + prefsHandler.getSolverStrategy().name());
-		solverSelect.setX(solverLabel.getX() + solverLabel.getPrefWidth() + 50);
-		solverSelect.setY(300);
-		solverSelect.setWidth(200);
+		solverSelect.setWidth(220);
+		solverSelect.setX(TwentyFourtyGame.GAME_WIDTH - 100 - solverSelect.getWidth());
+		solverSelect.setY(350);
 	}
 
 	private void setupSolverLabel() {
 		solverLabel.setX(100);
-		solverLabel.setY(310);
+		solverLabel.setY(360);
 	}
 
 	private void setupDifficultySlider() {
@@ -182,13 +183,13 @@ public class SettingsScreen extends Screen {
 
 	private void setupDifficultyLabel() {
 		difficultyLabel.setX(100);
-		difficultyLabel.setY(190);
+		difficultyLabel.setY(180);
 	}
 
 	private void setupDelaySlider() {
 		delaySlider.setValue(prefsHandler.getSolverDelay());
 		delaySlider.setX(100);
-		delaySlider.setY(190);
+		delaySlider.setY(180);
 		delaySlider.setWidth(400);
 		
 		delaySlider.addListener(new ChangeListener() {		
@@ -201,7 +202,7 @@ public class SettingsScreen extends Screen {
 
 	private void setupDelayLabel() {
 		delayLabel.setX(100);
-		delayLabel.setY(250);
+		delayLabel.setY(290);
 	}
 
 	/** Sets the listeners of the actors belonging to this screen. */
