@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.graphics.screens;
 
+import nl.tudelft.ti2206.utils.ai.solvers.GridSolver;
+
 
 /**
  * The ScreenHandler is responsible for managing all the screens.
@@ -44,6 +46,9 @@ public class ScreenHandler {
 	 * Disposes cleanly of the screen.
 	 * */
 	public void dispose() {
+		if (GridSolver.getInstance().isRunning()) {
+			GridSolver.getInstance().stop();
+		}
 		screen.dispose();
 	}
 
