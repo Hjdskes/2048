@@ -47,7 +47,6 @@ public class TileHandler {
 		TileIterator iterator = null;
 		/* For each row in the grid, check if moves can be made. */
 		for (int index = 0; index < tiles.length; index += ROW_LENGTH) {
-
 			for (int i = 0; i < ROW_LENGTH; i++) {
 				/*
 				 * FIXME: quite some iterators are created, try to reduce this.

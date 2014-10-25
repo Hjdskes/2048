@@ -89,6 +89,7 @@ public class ProgressHandler {
 	public Grid loadGame(Grid grid) {
 		logger.info(CLASSNAME, "Loading game from preference file...");
 
+		grid.setSpawner(prefsHandler.getSpawner());
 		grid.setScore(prefsHandler.getScore());
 		grid.updateHighestTile();
 

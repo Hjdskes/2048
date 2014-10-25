@@ -6,6 +6,8 @@ import java.util.Observable;
 import java.util.Stack;
 
 import nl.tudelft.ti2206.game.TwentyFourtyGame;
+import nl.tudelft.ti2206.utils.ai.spawners.RandomSpawner;
+import nl.tudelft.ti2206.utils.ai.spawners.Spawner;
 import nl.tudelft.ti2206.utils.handlers.TileHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.states.RunningState;
@@ -19,13 +21,13 @@ import nl.tudelft.ti2206.utils.states.RunningState;
  * 
  * For example, imagine the grid being laid out like this:
  * 
- * +---+---+---+---+ 
- * | 0 | 1 | 2 | 3 | 
- * +---+---+---+---+ 
+ * +---+---+---+---+
+ * | 0 | 1 | 2 | 3 |
+ * +---+---+---+---+
  * | 4 | 5 | 6 | 7 |
- * +---+---+---+---+ 
- * | 8 | 9 | 10| 11| 
- * +---+---+---+---+ 
+ * +---+---+---+---+
+ * | 8 | 9 | 10| 11|
+ * +---+---+---+---+
  * | 12| 13| 14| 15|
  * +---+---+---+---+
  * 
@@ -69,6 +71,9 @@ public class Grid extends Observable implements Cloneable {
 	/** The TileHandler is used to move the tiles. */
 	private TileHandler tileHandler;
 
+	/** The spawner is used to spawn new tiles. */
+	private Spawner spawner;
+
 	/** The current score of the Grid. */
 	private int score;
 
@@ -91,6 +96,7 @@ public class Grid extends Observable implements Cloneable {
 		this.tileHandler = new TileHandler(this);
 		this.undo = new Stack<String>();
 		this.redo = new Stack<String>();
+		this.spawner = RandomSpawner.getInstance();
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile(i, 0);
@@ -101,42 +107,16 @@ public class Grid extends Observable implements Cloneable {
 	}
 
 	/**
-	 * Initializes the grid, creating two tiles with real values of 2 or 4 (1
-	 * and 2 internally) and setting the rest empty.
+	 * Initializes the grid, creating two tiles with real values of 2 or 4 and
+	 * leaving the rest empty.
 	 */
 	private void initGrid() {
-		int loc1 = getRandomEmptyLocation();
-		int loc2 = getRandomEmptyLocation();
-		while (loc2 == loc1) {
-			loc2 = getRandomEmptyLocation();
-		}
-		tiles[loc1].setValue(initialValue());
-		tiles[loc2].setValue(initialValue());
-	}
+		Spawner randomSpawner = RandomSpawner.getInstance();
 
-	/**
-	 * Returns a random value, smaller than 16, indicating a location for a new
-	 * Tile. This new location is always valid, i.e. there is not already an
-	 * Tile there.
-	 * 
-	 * @return A random empty location.
-	 */
-	private int getRandomEmptyLocation() {
-		int index = (int) (Math.random() * tiles.length);
-		while (!tiles[index].isEmpty() && getPossibleMoves() > 0) {
-			index = (int) (Math.random() * tiles.length);
-		}
-		return index;
-	}
-
-	/**
-	 * Returns a random value, which is either 2 or 4. The chances of getting 4
-	 * is significantly lower than the chance of getting 2.
-	 * 
-	 * @return A random value, being either 2 or 4 (real, 1 and 2 internally).
-	 */
-	private int initialValue() {
-		return Math.random() < 0.9 ? TWO : FOUR;
+		Tile random = randomSpawner.findTile(this);
+		tiles[random.getIndex()].setValue(random.getValue());
+		random = randomSpawner.findTile(this);
+		tiles[random.getIndex()].setValue(random.getValue());
 	}
 
 	/**
@@ -259,8 +239,9 @@ public class Grid extends Observable implements Cloneable {
 	 * Spawns a Tile at a random empty location.
 	 */
 	public void spawnNewTile() {
-		int location = getRandomEmptyLocation();
-		int value = initialValue();
+		Tile tile = spawner.findTile(this);
+		int location = tile.getIndex();
+		int value = tile.getValue();
 		setTile(location, value);
 		tiles[location].spawn();
 
@@ -431,6 +412,16 @@ public class Grid extends Observable implements Cloneable {
 	 */
 	public void setTileHandler(TileHandler tileHandler) {
 		this.tileHandler = tileHandler;
+	}
+
+	/**
+	 * Sets the spawner used to spawn new tiles.
+	 * 
+	 * @param spawner
+	 *            The new spawner to use.
+	 */
+	public void setSpawner(Spawner spawner) {
+		this.spawner = spawner;
 	}
 
 	/**

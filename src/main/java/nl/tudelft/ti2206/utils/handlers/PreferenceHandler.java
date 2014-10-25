@@ -1,6 +1,9 @@
 package nl.tudelft.ti2206.utils.handlers;
 
 import nl.tudelft.ti2206.utils.ai.solvers.GridSolver.Strategy;
+import nl.tudelft.ti2206.utils.ai.spawners.AnnoyingSpawner;
+import nl.tudelft.ti2206.utils.ai.spawners.RandomSpawner;
+import nl.tudelft.ti2206.utils.ai.spawners.Spawner;
 import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import com.badlogic.gdx.Gdx;
@@ -160,11 +163,29 @@ public class PreferenceHandler {
 	}
 
 	/**
+	 * @return The spawner saved, or the RandomSpawner if no spawner is saved.
+	 */
+	public Spawner getSpawner() {
+		String type = prefs.getString("spawner");
+		if (type.contains("AnnoyingSpawner")) {
+			return AnnoyingSpawner.getInstance();
+		} else {
+			return RandomSpawner.getInstance();
+		}
+	}
+
+	/** Sets the spawner to the type specified. */
+	public void setSpawner(String type) {
+		prefs.putString("spawner", type);
+		prefs.flush();
+	}
+
+	/**
 	 * @return The Strategy saved, or HUMAN if no strategy is saved.
 	 */
 	public Strategy getSolverStrategy() {
 		String type = prefs.getString("solver");
-		if (type.contains("Expecti")) {
+		if (type.contains("EXPECTI")) {
 			return Strategy.EXPECTIMAX;
 		} else {
 			return Strategy.HUMAN;
