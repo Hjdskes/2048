@@ -82,7 +82,6 @@ public class SettingsScreen extends Screen {
 				assetHandler.getSkin());
 		setupDifficultyLabel();
 
-
 		addActors();
 		setDrawBehavior(new DrawBeige(stage));
 	}
@@ -119,7 +118,7 @@ public class SettingsScreen extends Screen {
 		levelSlider.setX(100);
 		levelSlider.setY(500);
 		levelSlider.setWidth(400);
-		
+
 		levelSlider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -137,7 +136,7 @@ public class SettingsScreen extends Screen {
 		checkBox.setChecked(prefsHandler.isLogFileEnabled());
 		checkBox.setX(100);
 		checkBox.setY(420);
-		
+
 		checkBox.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -158,7 +157,8 @@ public class SettingsScreen extends Screen {
 
 		solverSelect.setSelected(" " + prefsHandler.getSolverStrategy().name());
 		solverSelect.setWidth(220);
-		solverSelect.setX(TwentyFourtyGame.GAME_WIDTH - 100 - solverSelect.getWidth());
+		solverSelect.setX(TwentyFourtyGame.GAME_WIDTH - 100
+				- solverSelect.getWidth());
 		solverSelect.setY(350);
 	}
 
@@ -172,8 +172,8 @@ public class SettingsScreen extends Screen {
 		difficultySlider.setX(100);
 		difficultySlider.setY(130);
 		difficultySlider.setWidth(400);
-		
-		difficultySlider.addListener(new ChangeListener() {		
+
+		difficultySlider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				difficultyLabel.setText("Difficulty: " + updateDifficulty());
@@ -189,10 +189,10 @@ public class SettingsScreen extends Screen {
 	private void setupDelaySlider() {
 		delaySlider.setValue(prefsHandler.getSolverDelay());
 		delaySlider.setX(100);
-		delaySlider.setY(180);
+		delaySlider.setY(240);
 		delaySlider.setWidth(400);
-		
-		delaySlider.addListener(new ChangeListener() {		
+
+		delaySlider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				delayLabel.setText("Delay: " + delaySlider.getValue());
@@ -240,7 +240,7 @@ public class SettingsScreen extends Screen {
 	}
 
 	/** Updates the loglevel and returns the loglevel string. */
-	private String updateLevel() {
+	protected String updateLevel() {
 		switch ((int) levelSlider.getValue()) {
 		case 0:
 			logger.setLevel(LogLevel.NONE);
@@ -255,15 +255,16 @@ public class SettingsScreen extends Screen {
 			logger.setLevel(LogLevel.INFO);
 			return "INFO";
 		case 400:
+		default:
 			logger.setLevel(LogLevel.ALL);
 			return "ALL";
 		}
-		return null;
 	}
 
 	/** @return The text indicating the value in the slider. */
-	private String updateDifficulty() {
+	protected String updateDifficulty() {
 		switch ((int) difficultySlider.getValue()) {
+		default:
 		case 0:
 			return "RANDOM";
 		case 1:
@@ -273,11 +274,10 @@ public class SettingsScreen extends Screen {
 		case 3:
 			return "HARD";
 		}
-		return null;
 	}
 
 	/** @return The value of the slider, depending on the current loglevel. */
-	private int getSliderValue() {
+	protected int getSliderValue() {
 		switch (logger.getLevel()) {
 		case NONE:
 			return 0;
@@ -288,9 +288,9 @@ public class SettingsScreen extends Screen {
 		case INFO:
 			return 300;
 		case ALL:
+		default:
 			return 400;
 		}
-		return 400;
 	}
 
 	@Override

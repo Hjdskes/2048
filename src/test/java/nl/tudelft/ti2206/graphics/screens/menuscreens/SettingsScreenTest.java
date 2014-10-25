@@ -11,6 +11,7 @@ import nl.tudelft.ti2206.game.HeadlessLauncher;
 import nl.tudelft.ti2206.graphics.buttons.MenuButton;
 import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +61,7 @@ public class SettingsScreenTest {
 		verify(slider, times(3)).setValue(anyInt());
 		verify(slider, times(3)).setX(100);
 		verify(slider).setY(500);
-		verify(slider).setY(180);
+		verify(slider).setY(240);
 		verify(slider, times(3)).setWidth(400);
 
 		verify(label, times(4)).setX(100);
@@ -80,6 +81,62 @@ public class SettingsScreenTest {
 		verify(stage, times(4)).addActor(label);
 		verify(stage).addActor(menuButton);
 		verify(stage, times(3)).addActor(slider);
+	}
+	
+	@Test
+	public void testUpdateLevel() {
+		
+		when(slider.getValue()).thenReturn(300f);
+		String level = screen.updateLevel();
+		assertEquals("INFO", level);
+		assertEquals(LogLevel.INFO, logger.getLevel());
+
+		when(slider.getValue()).thenReturn(200f);
+		level = screen.updateLevel();
+		assertEquals("DEBUG", level);
+		assertEquals(LogLevel.DEBUG, logger.getLevel());
+
+		when(slider.getValue()).thenReturn(400f);
+		level = screen.updateLevel();
+		assertEquals("ALL", level);
+		assertEquals(LogLevel.ALL, logger.getLevel());
+
+		when(slider.getValue()).thenReturn(100f);
+		level = screen.updateLevel();
+		assertEquals("ERROR", level);
+		assertEquals(LogLevel.ERROR, logger.getLevel());
+
+		when(slider.getValue()).thenReturn(0f);
+		level = screen.updateLevel();
+		assertEquals("NONE", level);
+		assertEquals(LogLevel.NONE, logger.getLevel());
+	}
+
+	@Test
+	public void testGetSliderValue() {
+		logger.setLevel(LogLevel.INFO);
+		assertEquals(300, screen.getSliderValue());
+
+		logger.setLevel(LogLevel.DEBUG);
+		assertEquals(200, screen.getSliderValue());
+
+		logger.setLevel(LogLevel.ALL);
+		assertEquals(400, screen.getSliderValue());
+
+		logger.setLevel(LogLevel.ERROR);
+		assertEquals(100, screen.getSliderValue());
+
+		logger.setLevel(LogLevel.NONE);
+		assertEquals(0, screen.getSliderValue());
+	}
+	
+	@Test
+	public void testUpdateDifficulty() {
+		when(slider.getValue()).thenReturn(0f, 1f, 2f, 3f);
+		assertEquals("RANDOM", screen.updateDifficulty());
+		assertEquals("EASY", screen.updateDifficulty());
+		assertEquals("MEDIUM", screen.updateDifficulty());
+		assertEquals("HARD", screen.updateDifficulty());
 	}
 
 	@Test
