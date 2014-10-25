@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 /**
  * The DisqualifyScreen is displayed when the local player or remote player is disqualified.
  */
-public class DisqualifyScreen {
+public class DisqualifiedScreen {
 	/** The background image. */
 	private Image image;
 
@@ -22,7 +22,7 @@ public class DisqualifyScreen {
 	private Stage stage;
 
 	/** Constructs a new DisqualifyScreen. */
-	public DisqualifyScreen(Screen parent, boolean localDisq) {
+	public DisqualifiedScreen(Screen parent, boolean localDisq) {
 		stage = parent.getStage();
 		image = new Image(AssetHandler.getInstance().getSkin(),
 				"disqualifiedoverlay");
@@ -33,7 +33,7 @@ public class DisqualifyScreen {
 	}
 
 	/** Constructor used for mock insertion */
-	public DisqualifyScreen(Stage stage, Image image, MenuButton menuButton,
+	public DisqualifiedScreen(Stage stage, Image image, MenuButton menuButton,
 			boolean isLocalWaiting) {
 		this.stage = stage;
 		this.image = image;

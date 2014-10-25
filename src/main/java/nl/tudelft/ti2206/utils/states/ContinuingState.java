@@ -43,4 +43,9 @@ public class ContinuingState implements GameState {
 
 	}
 
+	/** For testing purposes only */
+	public void setScreenHandler(ScreenHandler handler) {
+		screenHandler = handler;
+	}
+
 }

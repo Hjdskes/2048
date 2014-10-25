@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>80</y>
+      <w>310</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>MoveValidator
+--
+-grid: Grid
+-possibleMoves: String[]
+-irregularity: boolean
+-isLocal: boolean
+-savedBoard: String
+--
++MoveValidator(Grid grid, boolean islocal): ctor
++validate(): void
+-validateByLastMove(): void
+-irregularityFound(boolean isLocal): void
+-compare(String str1, String str2): boolean
+-setPossibleMoves(): void
++getIrregularity(): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>440</y>
+      <w>280</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>RemoteInputHandler
+--
+-grid: Grid
+-validator: MoveValidator
+--
++RemoteInputHandler(Grid grid): ctor
++getMoveValidator(): MoveValidator
+-handleMove(String move): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>440</y>
+      <w>330</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>LocalInputHandler
+--
+-grid: Grid
+-validator: MoveValidator
+--
++LocalInputHandler(Grid grid): ctor
++getMoveValidator(): MoveValidator
++keyDown(InputEvent event, int keycode): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>330</y>
+      <w>140</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+  1..0   </panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>330</y>
+      <w>140</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+       0..1</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+</diagram>

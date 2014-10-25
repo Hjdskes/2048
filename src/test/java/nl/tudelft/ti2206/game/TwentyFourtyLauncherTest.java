@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.states.ContinuingState;
+import nl.tudelft.ti2206.utils.states.DisqualifiedState;
 import nl.tudelft.ti2206.utils.states.LostState;
 import nl.tudelft.ti2206.utils.states.RunningState;
 import nl.tudelft.ti2206.utils.states.WonState;
@@ -116,5 +117,14 @@ public class TwentyFourtyLauncherTest {
 	public void testIsContinuing() {
 		TwentyFourtyGame.setState(ContinuingState.getInstance());
 		assertTrue(TwentyFourtyGame.isContinuing());
+	}
+	
+	/**
+	 * Tests if the current state is correctly set.
+	 */
+	@Test
+	public void testIsDisqualified() {
+		TwentyFourtyGame.setState(DisqualifiedState.getInstance());
+		assertTrue(TwentyFourtyGame.isDisqualified());
 	}
 }

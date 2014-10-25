@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.graphics.screens;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBehavior;
 import nl.tudelft.ti2206.graphics.screens.overlays.ConnectionLostScreen;
-import nl.tudelft.ti2206.graphics.screens.overlays.DisqualifyScreen;
+import nl.tudelft.ti2206.graphics.screens.overlays.DisqualifiedScreen;
 import nl.tudelft.ti2206.graphics.screens.overlays.LoseScreen;
 import nl.tudelft.ti2206.graphics.screens.overlays.MultiLoseScreen;
 import nl.tudelft.ti2206.graphics.screens.overlays.MultiWaitScreen;
@@ -27,7 +27,7 @@ public abstract class Screen implements Disposable {
 
 	/** True if the stage of the screen contains actors of an overlay. */
 	private boolean hasOverlay;
-	
+
 	/** The scene graph. */
 	protected Stage stage;
 
@@ -91,7 +91,7 @@ public abstract class Screen implements Disposable {
 		new ConnectionLostScreen(this);
 		hasOverlay = true;
 	}
-	
+
 	/**
 	 * Adds a MultiWaitScreen or DisqualifyScreen, depending on whether the 
 	 * player is disqualified or waiting.
@@ -105,7 +105,7 @@ public abstract class Screen implements Disposable {
 		if(isWaiting)
 			new MultiWaitScreen(this, local);
 		else
-			new DisqualifyScreen(this, local);
+			new DisqualifiedScreen(this, local);
 		hasOverlay = true;
 	}
 
@@ -131,7 +131,7 @@ public abstract class Screen implements Disposable {
 	public Stage getStage() {
 		return stage;
 	}
-	
+
 	public boolean hasOverlay() {
 		return hasOverlay;
 	}

@@ -187,19 +187,19 @@ public class MultiGameScreen extends Screen {
 		}
 
 		if (remoteInput.getMoveValidator().getIrregularity() &&
-			!screenHandler.getScreen().hasOverlay() &&
-			!TwentyFourtyGame.isContinuing()) {
+				!screenHandler.getScreen().hasOverlay() &&
+				!TwentyFourtyGame.isContinuing()) {
 			screenHandler.getScreen().addBoardOverlay(false,false);
 			screenHandler.getScreen().addLWOverlay(false, true, localGrid);
 			this.setOpponentLabel("CHEATER", Color.RED);
 		}
-		
+
 		if (TwentyFourtyGame.isDisqualified() &&
 				!screenHandler.getScreen().hasOverlay()) {
-				screenHandler.getScreen().addBoardOverlay(false, true);
-				this.setYouLabel("CHEATER", Color.RED);
-			}
-		
+			screenHandler.getScreen().addBoardOverlay(false, true);
+			this.setYouLabel("CHEATER", Color.RED);
+		}
+
 		if (TwentyFourtyGame.isWaiting()) {
 			this.setYouLabel("WAITING", Color.RED);
 		}

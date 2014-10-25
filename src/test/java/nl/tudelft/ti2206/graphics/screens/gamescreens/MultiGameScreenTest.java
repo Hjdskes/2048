@@ -22,6 +22,7 @@ import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.input.RemoteInputHandler;
 import nl.tudelft.ti2206.utils.net.Networking;
 import nl.tudelft.ti2206.utils.security.MoveValidator;
+import nl.tudelft.ti2206.utils.states.DisqualifiedState;
 import nl.tudelft.ti2206.utils.states.RunningState;
 import nl.tudelft.ti2206.utils.states.WaitingState;
 
@@ -180,5 +181,25 @@ public class MultiGameScreenTest {
 	 gameScreen.update();
 	 verify(stage).act();
 	 verify(label).setText("WAITING");
+	 }
+	 
+	 @Test
+	 public void testRemoteCheater() {
+	 TwentyFourtyGame.setState(RunningState.getInstance());
+	 when(validator.getIrregularity()).thenReturn(true);
+	 gameScreen.update();
+	 verify(stage).act();
+	 verify(screen).addBoardOverlay(false,false);
+	 verify(screen).addLWOverlay(false,true, grid);
+	 verify(label).setText("CHEATER");
+	 }
+	 
+	 @Test
+	 public void testLocalCheater() {
+	 TwentyFourtyGame.setState(DisqualifiedState.getInstance());
+	 gameScreen.update();
+	 verify(stage).act();
+	 verify(screen).addBoardOverlay(false,true);
+	 verify(label).setText("CHEATER");
 	 }
 }

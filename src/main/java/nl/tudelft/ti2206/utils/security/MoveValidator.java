@@ -8,16 +8,16 @@ import nl.tudelft.ti2206.utils.commands.UndoCommand;
 import nl.tudelft.ti2206.utils.states.DisqualifiedState;
 
 public class MoveValidator {
-	
+
 	/** The grid holding all the Tiles. */
 	private Grid grid;
 
 	/** An array of string representation for possible moves */
 	private String[] possibleMoves;
-	
+
 	/** Boolean that is true if an irregularity is found */
 	private boolean irregularity;
-	
+
 	/** Boolean that is true if a local grid is being validated */
 	private boolean isLocal;
 
@@ -39,17 +39,16 @@ public class MoveValidator {
 	public void validate() {		
 		if (!savedBoard.equals(grid.toString())) {
 			if (possibleMoves[0] != null) {
-				//validateByPoints();
 				validateByLastMove();
 			}
 			setPossibleMoves();
 		}
 	}
-	
+
 	/**
 	 * Validate the grid by comparing it to a set of possible moves.
 	 */
-	public void validateByLastMove() {
+	private void validateByLastMove() {
 		boolean similarFound = false;
 		int i = 0;
 		while (!similarFound && (i < 4)) {
@@ -60,28 +59,17 @@ public class MoveValidator {
 			irregularityFound(isLocal);
 
 	}
-	
+
 	/**
 	 * Sets irregularity to try and calls a state change if needed.
 	 * 		@param isLocal is true if the local grid is being validated
 	 */
-	public void irregularityFound(boolean isLocal){
+	private void irregularityFound(boolean isLocal){
 		irregularity = true;
 		if(isLocal){
 			TwentyFourtyGame.setState(DisqualifiedState.getInstance());
 		}		
 	}
-
-//	public void validateByPoints() {
-//		if (!grid.getUndoStack().isEmpty()) {
-//			String curBoard = grid.toString().replace(",", "");
-//			String prevBoard = grid.getUndoStack().peek().replace(",", "");
-//			int curPoints = Integer.parseInt(curBoard);
-//			int prevPoints = Integer.parseInt(prevBoard);
-//			if (!(curPoints > prevPoints) && (prevPoints < curPoints + 5))
-//				irregularity = true;
-//		}
-//	}
 
 	/**
 	 * Compares two grids in string representation and looks if they are similar
@@ -91,7 +79,7 @@ public class MoveValidator {
 	 * 		
 	 * 		@return true if the two grids are similar.
 	 */
-	public boolean compare(String str1, String str2) {
+	private boolean compare(String str1, String str2) {
 		String t1 = str1.replace(",", "");
 		String t2 = str2.replace(",", "");
 		int errorCount = 0;
@@ -102,7 +90,7 @@ public class MoveValidator {
 
 			if (!(a == b)) {
 				if (((a != 0) && (b != 0)) || errorCount > 1) {
-					
+
 					// The tiles are not just different randomly generated tiles
 					if (!(((a == 1) && (b == 2)) || ((a == 2) && (b == 1)))) {
 						return false;
@@ -122,7 +110,7 @@ public class MoveValidator {
 	 * Save all possible moves for the current grid.
 	 * Used to validate the next move after it is made.
 	 */
-	public void setPossibleMoves() {
+	private void setPossibleMoves() {
 		Grid ctrlGrid = grid.clone();
 		savedBoard = ctrlGrid.toString();
 		int i = 0;

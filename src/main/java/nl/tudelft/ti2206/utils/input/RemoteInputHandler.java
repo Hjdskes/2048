@@ -54,7 +54,7 @@ public class RemoteInputHandler implements Observer {
 	public MoveValidator getMoveValidator() {
 		return validator;
 	}
-	
+
 	/**
 	 * Fills the remote Grid with the tiles provided in the string.
 	 * 
@@ -112,7 +112,7 @@ public class RemoteInputHandler implements Observer {
 			String input = (String) arg;
 			logger.debug(CLASSNAME, "update received: " + input);
 			handleRemoteInput(input);
-		
+
 		}
 	}
 
@@ -125,7 +125,7 @@ public class RemoteInputHandler implements Observer {
 	public boolean validateGrid(String str) {
 		return (str
 				.matches("\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+") && (str
-				.length() - str.replace(",", "").length()) == 15);
+						.length() - str.replace(",", "").length()) == 15);
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class RemoteInputHandler implements Observer {
 					"Protocol parsing failed, no closing bracket found (-1).");
 		} else if (str.startsWith("GRID[")) {
 			String strGrid = str.substring(5, closing);
-			
+
 
 			if (validateGrid(strGrid)) {
 				fillGrid(strGrid);

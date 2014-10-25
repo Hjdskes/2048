@@ -40,7 +40,7 @@ public class LocalInputHandler extends InputListener {
 	private Command command;
 
 	private MoveValidator validator;
-	
+
 	/**
 	 * Creates a new LocalInputHandler instance.
 	 * 
@@ -52,40 +52,40 @@ public class LocalInputHandler extends InputListener {
 		sendGrid();
 		validator = new MoveValidator(grid,true);
 	}
-	
+
 	public MoveValidator getMoveValidator() {
 		return validator;
 	}	
 
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
-			validator.validate();
-			switch (keycode) {
-			case Keys.DPAD_DOWN:
-				logger.info(CLASSNAME, "Move is made in the direction DOWN");
-				executeCommand(new MoveDownCommand(grid));
-				networking.sendString("MOVE[D]");
-				sendGrid();
-				return true;
-			case Keys.DPAD_UP:
-				logger.info(CLASSNAME, "Move is made in the direction UP");
-				executeCommand(new MoveUpCommand(grid));
-				networking.sendString("MOVE[U]");
-				sendGrid();;
-				return true;
-			case Keys.DPAD_LEFT:
-				logger.info(CLASSNAME, "Move is made in the direction LEFT");
-				executeCommand(new MoveLeftCommand(grid));
-				networking.sendString("MOVE[L]");
-				sendGrid();
-				return true;
-			case Keys.DPAD_RIGHT:
-				logger.info(CLASSNAME, "Move is made in the direction RIGHT");
-				executeCommand(new MoveRightCommand(grid));
-				networking.sendString("MOVE[R]");
-				sendGrid();
-				return true;
-			}
+		validator.validate();
+		switch (keycode) {
+		case Keys.DPAD_DOWN:
+			logger.info(CLASSNAME, "Move is made in the direction DOWN");
+			executeCommand(new MoveDownCommand(grid));
+			networking.sendString("MOVE[D]");
+			sendGrid();
+			return true;
+		case Keys.DPAD_UP:
+			logger.info(CLASSNAME, "Move is made in the direction UP");
+			executeCommand(new MoveUpCommand(grid));
+			networking.sendString("MOVE[U]");
+			sendGrid();;
+			return true;
+		case Keys.DPAD_LEFT:
+			logger.info(CLASSNAME, "Move is made in the direction LEFT");
+			executeCommand(new MoveLeftCommand(grid));
+			networking.sendString("MOVE[L]");
+			sendGrid();
+			return true;
+		case Keys.DPAD_RIGHT:
+			logger.info(CLASSNAME, "Move is made in the direction RIGHT");
+			executeCommand(new MoveRightCommand(grid));
+			networking.sendString("MOVE[R]");
+			sendGrid();
+			return true;
+		}
 		return false;
 	}
 
