@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
  * mice. Currently, only the keyboard is needed.
  */
 public class InputHandler extends InputListener {
-
 	/** Get current class name, used for logging output. */
 	private static final String CLASSNAME = InputHandler.class.getSimpleName();
 

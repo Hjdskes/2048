@@ -410,10 +410,16 @@ public class Grid extends Observable implements Cloneable {
 		return gridName;
 	}
 
+	/**
+	 * @return The stack containing string representations of all past grids.
+	 */
 	public Stack<String> getUndoStack() {
 		return undo;
 	}
 
+	/**
+	 * @return The stack containing string representations of all undone grids.
+	 */
 	public Stack<String> getRedoStack() {
 		return redo;
 	}

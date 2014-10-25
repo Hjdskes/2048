@@ -17,7 +17,7 @@ public class ConnectionLostScreen {
 	/** The button to go back to the menu. */
 	private MenuButton menuButton;
 
-	/** The stage of the parent screen */
+	/** The stage of the parent screen. */
 	private Stage stage;
 	
 	/** Constructs a new ConnectionLostScreen. */

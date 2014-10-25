@@ -20,8 +20,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+/**
+ * The UserComputerScreen is the screen for a user versus the computer game.
+ */
 public class UserComputerScreen extends Screen {
-
+	/** This enumeration indicates the speed with which the solver shall play. */
 	public enum Difficulty {
 		EASY, MEDIUM, HARD, EXTREME
 	}

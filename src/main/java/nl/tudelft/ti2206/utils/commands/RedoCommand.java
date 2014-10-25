@@ -3,8 +3,10 @@ package nl.tudelft.ti2206.utils.commands;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.utils.log.Logger;
 
+/**
+ * The RedoCommand enables the redo-posibility in the singleplayer game.
+ */
 public class RedoCommand extends Command {
-
 	/**
 	 * The name of the instance, initialized to the name of the class. Used for
 	 * logging.

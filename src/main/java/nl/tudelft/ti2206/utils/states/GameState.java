@@ -11,7 +11,7 @@ public interface GameState {
 	* The update(grid) method is used to update singleplayer states.
 	*/
 	public void update(Grid grid);
-	
+
 	/**
 	 * The update(grid,grid) method is used to update multiplayer states.
 	 */

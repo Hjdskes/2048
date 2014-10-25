@@ -2,13 +2,14 @@ package nl.tudelft.ti2206.utils.commands;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 
+/**
+ * The MoveLeftCommand executes the moveLeft command of the TileHandler.
+ */
 public class MoveLeftCommand extends Command {
-
 	/**
-	 * Creates a MoveLeftCommand object that executes the moveLeft command of
-	 * the tileHandler.
+	 * Creates a MoveLeftCommand.
 	 * 
-	 * @param grid
+	 * @param grid The grid to move on.
 	 */
 	public MoveLeftCommand(Grid grid) {
 		super(grid);

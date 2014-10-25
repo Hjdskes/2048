@@ -10,6 +10,8 @@ public class ScreenHandler {
 	/** The unique singleton instance of this class. */
 	private static ScreenHandler instance = new ScreenHandler();
 
+	/** The screen currently being managed, which is also the
+	 * screen currently on display. */
 	private Screen screen;
 
 	/** Overrides the default constructor. */
@@ -17,7 +19,6 @@ public class ScreenHandler {
 	}
 
 	/**
-	 * 
 	 * @return The singleton instance of the ScreenHandler.
 	 */
 	public static ScreenHandler getInstance() {

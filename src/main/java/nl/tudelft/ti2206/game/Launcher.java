@@ -13,7 +13,7 @@ public class Launcher {
 	private static final int HEIGHT = 600;
 
 	/** The configuration for the game window. */
-	LwjglApplicationConfiguration config;
+	private LwjglApplicationConfiguration config;
 
 	/**
 	 * Main entry point for the game.

@@ -24,7 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * the IP address to which a connection should be made.
  */
 public class ClientScreen extends Screen {
-
 	/** The maximum length allowed for an IP address. */
 	private static final int MAX_LENGTH = 20;
 

@@ -15,7 +15,6 @@ import nl.tudelft.ti2206.utils.log.Logger;
  * called on.
  */
 public class GridSolver implements Runnable {
-
 	/** An enumeration indicating which solver will be used. */
 	public enum Strategy {
 		HUMAN, EXPECTIMAX
@@ -71,12 +70,16 @@ public class GridSolver implements Runnable {
 		}
 	}
 
-	/** @return The Singleton instance of this class. */
+	/**
+	 * @return The Singleton instance of this class.
+	 */
 	public static GridSolver getInstance() {
 		return instance;
 	}
 
-	/** Starts the scheduler. */
+	/**
+	 * Starts the scheduler.
+	 */
 	public void start(Grid grid) {
 		original = grid;
 		if (!isRunning()) {
@@ -87,7 +90,9 @@ public class GridSolver implements Runnable {
 		}
 	}
 
-	/** Stop the scheduler. */
+	/**
+	 * Stops the scheduler.
+	 */
 	public void stop() {
 		if (isRunning()) {
 			future.cancel(true);
@@ -117,15 +122,26 @@ public class GridSolver implements Runnable {
 		}
 	}
 
+	/**
+	 * Sets the recursion depth. This may be ignored, depending on the
+	 * implementation of the solver being used.
+	 * @param depth The new recursion depth.
+	 */
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
 
+	/**
+	 * Sets the delay between consecutive calls to the solver.
+	 * @param delay The new delay in milliseconds.
+	 */
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
 
-	/** Setter for testing purposes only */
+	/**
+	 * Setter for testing purposes only.
+	 */
 	public void setTestObjects(Logger logger, Strategy strategy, Grid grid) {
 		GridSolver.logger = logger;
 		this.strategy = strategy;

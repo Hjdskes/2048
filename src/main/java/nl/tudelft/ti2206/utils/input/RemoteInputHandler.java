@@ -17,7 +17,6 @@ import nl.tudelft.ti2206.utils.net.Networking;
  * network.
  */
 public class RemoteInputHandler implements Observer {
-
 	/** Get current class name, used for logging output. */
 	private static final String CLASSNAME = RemoteInputHandler.class
 			.getSimpleName();

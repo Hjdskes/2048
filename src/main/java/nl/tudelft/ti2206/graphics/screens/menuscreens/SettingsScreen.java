@@ -23,6 +23,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * The SettingsScreen contains several options that can be used
+ * to tweak certain behavior to your likings.
+ * 
+ * A short summary: which log level to use, whether to enable logging
+ * to a file, which solver to use, what delay the solvers should have
+ * and what difficulty to spawn new tiles with.
+ */
 public class SettingsScreen extends Screen {
 	/** The Singleton reference to the logger. */
 	private static Logger logger = Logger.getInstance();
@@ -34,16 +42,30 @@ public class SettingsScreen extends Screen {
 	/** The singleton reference to the AssetHandler. */
 	private static AssetHandler assetHandler = AssetHandler.getInstance();
 
+	/** The slider indicating which LogLevel to set. */
 	private Slider levelSlider;
+	/** The label indicating which LogLevel is currently set. */
 	private Label levelLabel;
+	/** The checkbox indicating if logging to file is enabled. */
 	private CheckBox checkBox;
-	private MenuButton menuButton;
+
+	/** The drop down menu containing all possible solvers. */
 	private SelectBox<String> solverSelect;
+	/** The label indicating what solver is currently selected. */
 	private Label solverLabel;
-	private Slider difficultySlider;
-	private Label difficultyLabel;
+
+	/** The slider indicating which delay to set. */
 	private Slider delaySlider;
+	/** The label indicating which delay is currently set. */
 	private Label delayLabel;
+
+	/** The slider indicating which difficulty to set. */
+	private Slider difficultySlider;
+	/** The label indicating which difficulty is currently set. */
+	private Label difficultyLabel;
+
+	/** The button to return to the menu. */
+	private MenuButton menuButton;
 
 	/**
 	 * Creates a new SettingsScreen, setting up and adding all required actors
@@ -113,6 +135,7 @@ public class SettingsScreen extends Screen {
 		addActors();
 	}
 
+	/** Initializes and positions the LevelSlider. */
 	private void setupLevelSlider() {
 		levelSlider.setValue(getSliderValue());
 		levelSlider.setX(100);
@@ -127,11 +150,13 @@ public class SettingsScreen extends Screen {
 		});
 	}
 
+	/** Positions the LevelLabel. */
 	private void setupLevelLabel() {
 		levelLabel.setX(100);
 		levelLabel.setY(550);
 	}
 
+	/** Initializes and positions the CheckBox. */
 	private void setupCheckBox() {
 		checkBox.setChecked(prefsHandler.isLogFileEnabled());
 		checkBox.setX(100);
@@ -149,6 +174,7 @@ public class SettingsScreen extends Screen {
 		});
 	}
 
+	/** Initializes and positions the SolverSelect SelectBox. */
 	private void setupSolverSelect() {
 		Array<String> items = new Array<>();
 		items.add(" HUMAN");
@@ -162,30 +188,13 @@ public class SettingsScreen extends Screen {
 		solverSelect.setY(350);
 	}
 
+	/** Positions the SolverLabel. */
 	private void setupSolverLabel() {
 		solverLabel.setX(100);
 		solverLabel.setY(360);
 	}
 
-	private void setupDifficultySlider() {
-		difficultySlider.setValue(prefsHandler.getDifficulty().ordinal());
-		difficultySlider.setX(100);
-		difficultySlider.setY(130);
-		difficultySlider.setWidth(400);
-
-		difficultySlider.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				difficultyLabel.setText("Difficulty: " + updateDifficulty());
-			}
-		});
-	}
-
-	private void setupDifficultyLabel() {
-		difficultyLabel.setX(100);
-		difficultyLabel.setY(180);
-	}
-
+	/** Initializes and positions the DelaySlider. */
 	private void setupDelaySlider() {
 		delaySlider.setValue(prefsHandler.getSolverDelay());
 		delaySlider.setX(100);
@@ -200,9 +209,31 @@ public class SettingsScreen extends Screen {
 		});
 	}
 
+	/** Positions the DelayLabel. */
 	private void setupDelayLabel() {
 		delayLabel.setX(100);
 		delayLabel.setY(290);
+	}
+
+	/** Initializes and positions the DifficultySlider. */
+	private void setupDifficultySlider() {
+		difficultySlider.setValue(prefsHandler.getDifficulty().ordinal());
+		difficultySlider.setX(100);
+		difficultySlider.setY(130);
+		difficultySlider.setWidth(400);
+		
+		difficultySlider.addListener(new ChangeListener() {		
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				difficultyLabel.setText("Difficulty: " + updateDifficulty());
+			}
+		});
+	}
+
+	/** Positions the DifficultyLabel. */
+	private void setupDifficultyLabel() {
+		difficultyLabel.setX(100);
+		difficultyLabel.setY(180);
 	}
 
 	/** Sets the listeners of the actors belonging to this screen. */
@@ -239,7 +270,10 @@ public class SettingsScreen extends Screen {
 		stage.addActor(difficultySlider);
 	}
 
-	/** Updates the loglevel and returns the loglevel string. */
+	/**
+	 * Sets the LogLevel to the value in the slider. 
+	 * @return The text indicating the value in the slider.
+	 */
 	protected String updateLevel() {
 		switch ((int) levelSlider.getValue()) {
 		case 0:
@@ -276,7 +310,7 @@ public class SettingsScreen extends Screen {
 		}
 	}
 
-	/** @return The value of the slider, depending on the current loglevel. */
+	/** @return The value of the slider, depending on the current LogLevel. */
 	protected int getSliderValue() {
 		switch (logger.getLevel()) {
 		case NONE:

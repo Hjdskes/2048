@@ -48,6 +48,7 @@ public class GameScreen extends Screen {
 	/** The singleton reference to the ProgressHandler class. */
 	private ProgressHandler progressHandler = ProgressHandler.getInstance();
 
+	/** The InputHandler receives and processes the received input. */
 	private InputHandler inputHandler;
 	
 	/** Constructs a new GameScreen. */

@@ -19,7 +19,7 @@ public class MultiWaitScreen {
 	/** The button to go back to the menu. */
 	private MenuButton menuButton;
 
-	/** The stage of the parent screen */
+	/** The stage of the parent screen. */
 	private Stage stage;
 
 	/** Constructs a new MultiWaitScreen. */
@@ -51,7 +51,8 @@ public class MultiWaitScreen {
 
 	/** Sets the overlay on the other side of the screen if its the opponent. */
 	private void setImageX(boolean isLocalWaiting) {
-		if (!isLocalWaiting)
+		if (!isLocalWaiting) {
 			image.setX(TwentyFourtyGame.GAME_WIDTH);
+		}
 	}
 }

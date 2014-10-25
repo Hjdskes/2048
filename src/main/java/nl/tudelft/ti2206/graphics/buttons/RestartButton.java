@@ -19,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * Extends the TextButton class from the GDX library.
  */
 public class RestartButton extends TextButton {
-
 	/** Constructs a new RestartButton. */
 	public RestartButton(final Grid grid, boolean ingame) {
 		super("Restart", AssetHandler.getInstance().getSkin());

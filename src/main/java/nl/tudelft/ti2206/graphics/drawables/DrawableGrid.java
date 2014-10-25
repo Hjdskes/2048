@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
+/**
+ * The DrawableGrid gives a visual representation of its underlying Grid. 
+ */
 public class DrawableGrid extends Group {
 	/** Coordinates and offsets used to position the Grid. */
 	private static final int GRID_WIDTH = 400;
