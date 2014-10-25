@@ -7,19 +7,18 @@ import nl.tudelft.ti2206.gameobjects.Grid;
  * It is the state where the player has won according to a win condition .
  */
 public class WonState implements GameState{
-	
 	/** The unique singleton instance of this class. */
 	private static WonState instance = new WonState();
-	
+
 	/** Overrides the default constructor. */
 	private WonState() {		
 	}
-	
+
 	/** @return The singleton instance of the state*/
 	public static WonState getInstance() {
 		return instance;
 	}
-	
+
 	@Override
 	public void update(Grid grid) {
 	}
@@ -27,5 +26,4 @@ public class WonState implements GameState{
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {	
 	}
-
 }

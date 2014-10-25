@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * Extends the TextButton class from the GDX library.
  */
 public class MenuButton extends TextButton {
-
 	/** Constructs a new MenuButton. */
 	public MenuButton() {
 		super("Menu", AssetHandler.getInstance().getSkin());

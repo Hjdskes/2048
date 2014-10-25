@@ -37,8 +37,8 @@ public class HumanSolver implements Solver {
 	 * Check if lower left corner is empty.
 	 * 
 	 * @param grid
-	 *            the grid to check
-	 * @return true if lower left corner is empty
+	 *            The grid to check.
+	 * @return True if lower left corner is empty, false otherwise.
 	 */
 	public boolean emptyLowerLeft(Grid grid) {
 		return grid.getTiles()[LOWER_LEFT].isEmpty();
@@ -48,8 +48,8 @@ public class HumanSolver implements Solver {
 	 * Check if the highest tile is in the lower left corner.
 	 * 
 	 * @param grid
-	 *            the grid to check
-	 * @return true if highest tile is in lower left corner
+	 *            The grid to check.
+	 * @return True if highest tile is in lower left corner, false otherwise.
 	 */
 	public boolean maxLowerLeft(Grid grid) {
 		return grid.getTiles()[LOWER_LEFT].getValue() == grid
@@ -60,8 +60,8 @@ public class HumanSolver implements Solver {
 	 * Check whether the lower row is full.
 	 * 
 	 * @param grid
-	 *            the grid to check
-	 * @return true if the lower row is full
+	 *            The grid to check.
+	 * @return True if the lower row is full, false otherwise.
 	 */
 	public boolean lowerRowFull(Grid grid) {
 		Tile[] tiles = grid.getTiles();
@@ -75,8 +75,8 @@ public class HumanSolver implements Solver {
 	 * Check whether a merge is possible on the lower row of the grid.
 	 * 
 	 * @param grid
-	 *            the grid to check
-	 * @return true if a merge is possible on the lower row
+	 *            The grid to check.
+	 * @return True if a merge is possible on the lower row, false otherwise.
 	 */
 	public boolean isMergePossibleLowerRow(Grid grid) {
 		Tile[] tiles = grid.getTiles();
@@ -93,51 +93,49 @@ public class HumanSolver implements Solver {
 	 * Recursive method to check moves to.
 	 * 
 	 * @param ogrid
-	 *            the grid to check
+	 *            The grid to make a move on.
 	 * @param depth
-	 *            recursion depth
-	 * @return how many points a move will gain
+	 *            The recursion depth to use.
+	 * @return The points a move will make.
 	 */
 	public int nextMove(Grid ogrid, int depth) {
-
-		// System.out.println("tryMoves, depth = " + depth);
-
 		int highest = 0;
 
 		for (Direction direction : Grid.Direction.values()) {
-
-			// never ever move up:
-			if (direction == Direction.UP)// && !leftColFull(ogrid))
+			/* Never ever move up. */
+			if (direction == Direction.UP) {
 				continue;
+			}
 
-			// we shouldn't move to right if the lower row is not full
-			// so ignore moving to the right
-			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
+			/* We shouldn't move to right if the lower row is not full
+			 * so ignore moving to the right. */
+			if (direction == Direction.RIGHT && !lowerRowFull(ogrid)) {
 				continue;
+			}
 
 			Grid cloned = ogrid.clone();
 			cloned.move(direction);
-
 			int score = cloned.getScore();
 
-			if (depth > 0)
-				score += nextMove(cloned, depth - 1); // recursion!
+			if (depth > 0) {
+				score += nextMove(cloned, depth - 1);
+			}
 
-			// get highest score possible
+			/* Get highest score possible. */
 			highest = Math.max(highest, score);
 		}
 		return highest;
 	}
 
 	/**
-	 * Select a direction to move to based on which direction gives us the
+	 * Selects a direction to move to based on which direction gives us the
 	 * highest amount of points.
 	 * 
 	 * @param ogrid
-	 *            the grid
+	 *            The grid to make a move on.
 	 * @param depth
-	 *            the depth to check
-	 * @return direction which gives us the highest amount of points
+	 *            The recursion depth to use.
+	 * @return The direction which gives us the highest amount of points.
 	 */
 	public Direction selectDirectionComplex(Grid ogrid, int depth) {
 		int score = ogrid.getScore();
@@ -145,8 +143,9 @@ public class HumanSolver implements Solver {
 
 		if (wasRightMove) {
 			wasRightMove = false;
-			if (!lowerRowFull(ogrid))
+			if (!lowerRowFull(ogrid)) {
 				return Direction.LEFT;
+			}
 		}
 
 		if (!maxLowerLeft(ogrid) && emptyLowerLeft(ogrid)) {
@@ -156,18 +155,19 @@ public class HumanSolver implements Solver {
 		for (Direction direction : Grid.Direction.values()) {
 			Grid cloned = ogrid.clone();
 
-			// never ever move up:
-			if (direction == Direction.UP)// && !leftColFull(ogrid))
+			/* Never ever move up. */
+			if (direction == Direction.UP) {
 				continue;
+			}
 
-			// we shouldn't move to right if the lower row is not full
-			// so ignore moving to the right
-			if (direction == Direction.RIGHT && !lowerRowFull(ogrid))
+			/* We shouldn't move to right if the lower row is not full
+			 * so ignore moving to the right. */
+			if (direction == Direction.RIGHT && !lowerRowFull(ogrid)) {
 				continue;
+			}
 
-			// if move actually is possible
+			/* If move actually is possible. */
 			if (cloned.move(direction) == true) {
-
 				int pointsAfter = cloned.getScore()
 						+ nextMove(cloned, depth - 1);
 
@@ -178,8 +178,9 @@ public class HumanSolver implements Solver {
 			}
 		}
 
-		if (selected == Direction.RIGHT)
+		if (selected == Direction.RIGHT) {
 			wasRightMove = true;
+		}
 
 		return selected;
 	}

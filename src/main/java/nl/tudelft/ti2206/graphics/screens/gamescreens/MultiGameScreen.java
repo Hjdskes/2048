@@ -187,10 +187,7 @@ public class MultiGameScreen extends Screen {
 
 		if (TwentyFourtyGame.isWaiting()) {
 			this.setYouLabel("WAITING", Color.RED);
-		}
-
-		// add a waiting overlay to the screen to cover the opponents grid.
-		else if (remoteGrid.getPossibleMoves() == 0
+		} else if (remoteGrid.getPossibleMoves() == 0
 				&& !screenHandler.getScreen().hasOverlay()) {
 			logger.info(className,
 					"Opponent is out of moves! Waiting for the player...");

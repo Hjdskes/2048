@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
  * another instance.
  */
 public class LocalInputHandler extends InputListener {
-
 	/** Get current class name, used for logging output. */
 	private static final String CLASSNAME = LocalInputHandler.class.getSimpleName();
 	

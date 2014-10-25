@@ -48,6 +48,10 @@ public abstract class Screen implements Disposable {
 		drawbehavior.draw();
 	}
 
+	/**
+	 * Sets this Screen's drawing behavior.
+	 * @param newDrawBehavior The new drawing behavior.
+	 */
 	public void setDrawBehavior(DrawBehavior newDrawBehavior) {
 		drawbehavior = newDrawBehavior;
 	}
@@ -123,7 +127,10 @@ public abstract class Screen implements Disposable {
 	public Stage getStage() {
 		return stage;
 	}
-	
+
+	/**
+	 * @return True iff this screen has an overlay added to its stage.
+	 */
 	public boolean hasOverlay() {
 		return hasOverlay;
 	}

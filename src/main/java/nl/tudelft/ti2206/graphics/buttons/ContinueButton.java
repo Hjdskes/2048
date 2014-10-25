@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * TextButton class from the GDX library.
  */
 public class ContinueButton extends TextButton {
-
 	/** Constructs a new ContinueButton. */
 	public ContinueButton() {
 		super("Continue!", AssetHandler.getInstance().getSkin());

@@ -10,9 +10,7 @@ import nl.tudelft.ti2206.utils.log.Logger;
  * the state where a player must wait for the opponent to play until he is our
  * of legal moves.
  */
-
 public class WaitingState implements GameState {
-
 	/** Get current class name, used for logging output. */
 	private static final String CLASSNAME = WaitingState.class.getSimpleName();
 

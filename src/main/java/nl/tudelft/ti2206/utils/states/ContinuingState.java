@@ -8,19 +8,18 @@ import nl.tudelft.ti2206.gameobjects.Grid;
  * in a singleplayer game.
  */
 public class ContinuingState implements GameState{
-	
 	/** The unique singleton instance of this class. */
 	private static ContinuingState instance = new ContinuingState();
-	
+
 	/** Overrides the default constructor. */
 	private ContinuingState() {		
 	}
-	
+
 	/** @return The singleton instance of the state*/
 	public static ContinuingState getInstance() {
 		return instance;
 	}
-	
+
 	@Override
 	public void update(Grid grid) {	
 	}
@@ -28,5 +27,4 @@ public class ContinuingState implements GameState{
 	@Override
 	public void update(Grid localgrid, Grid remotegrid) {	
 	}
-
 }

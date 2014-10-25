@@ -19,7 +19,7 @@ public class LoseScreen {
 	/** The button used to restart the game. */
 	private RestartButton restartButton;
 
-	/** The stage of the parent screen */
+	/** The stage of the parent screen. */
 	private Stage stage;
 
 	/** Constructs a new LoseScreen. */

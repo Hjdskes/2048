@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  * he can easily pass those on to the client.
  */
 public class HostScreen extends Screen {
-
 	/** The table used for positioning all Actors. */
 	private Table table;
 

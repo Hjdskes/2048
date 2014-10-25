@@ -9,9 +9,7 @@ import nl.tudelft.ti2206.utils.log.Logger;
  * The RunningState class is used to define a possible state of the game. It is
  * the state where the game is active and the player has not lost yet.
  */
-
 public class RunningState implements GameState {
-
 	/** Get current class name, used for logging output. */
 	private static final String CLASSNAME = RunningState.class.getSimpleName();
 

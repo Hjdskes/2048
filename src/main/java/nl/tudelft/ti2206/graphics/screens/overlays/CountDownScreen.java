@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.graphics.screens.overlays;
 
-import nl.tudelft.ti2206.game.TwentyFourtyGame;
 import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawSimple;
@@ -8,7 +7,6 @@ import nl.tudelft.ti2206.graphics.screens.gamescreens.UserComputerScreen;
 import nl.tudelft.ti2206.graphics.screens.gamescreens.UserComputerScreen.Difficulty;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -23,8 +21,10 @@ public class CountDownScreen extends Screen {
 	/** The singleton AssetHandler instance used to access our assets. */
 	private AssetHandler assetHandler = AssetHandler.getInstance();
 
+	/** The system time at initialization. */
 	private long initTime;
-	
+
+	/** The difficulty the solver should use. */
 	private Difficulty difficulty;
 
 	/** The singleton reference to the ScreenHandler class. */
@@ -32,21 +32,13 @@ public class CountDownScreen extends Screen {
 
 	/** Constructs a new MenuScreen. */
 	public CountDownScreen(Difficulty difficulty) {
-		
-		initTime = System.currentTimeMillis();
-		/*
-		 * To resize the display when we get back to the menu from a multiplayer
-		 * session.
-		 */
-		Gdx.graphics.setDisplayMode(TwentyFourtyGame.GAME_WIDTH,
-				TwentyFourtyGame.GAME_HEIGHT, false);
-		stage = new Stage();
-		getReady = new Image(assetHandler.getSkin(), "getreadyoverlay");
-		set = new Image(assetHandler.getSkin(), "setoverlay");
-		go = new Image(assetHandler.getSkin(), "gooverlay");
+		this.initTime = System.currentTimeMillis();
+		this.stage = new Stage();
+		this.getReady = new Image(assetHandler.getSkin(), "getreadyoverlay");
+		this.set = new Image(assetHandler.getSkin(), "setoverlay");
+		this.go = new Image(assetHandler.getSkin(), "gooverlay");
 
 		this.difficulty = difficulty;
-		
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
@@ -54,7 +46,7 @@ public class CountDownScreen extends Screen {
 	public CountDownScreen(long initTime, Stage stage, Image image) {
 		this.initTime = initTime;
 		this.stage = stage;
-		getReady = set = go = image;
+		this.getReady = this.set = this.go = image;
 		this.setDrawBehavior(new DrawSimple(stage));
 	}
 
@@ -76,12 +68,10 @@ public class CountDownScreen extends Screen {
 		if (seconds >= offset + 2.2) {
 			stage.clear();
 			screenHandler.set(new UserComputerScreen(difficulty));
-		}
-		else if (seconds >= offset + 2) {
+		} else if (seconds >= offset + 2) {
 			stage.clear();
 			stage.addActor(go);
-		} 
-		else if (seconds >= offset) {
+		} else if (seconds >= offset) {
 			stage.clear();
 			stage.addActor(set);
 		}

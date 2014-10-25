@@ -32,6 +32,7 @@ public class AssetHandler {
 	/** The Skin contains all our textures and fonts. */
 	private Skin skin;
 
+	/** Generates a BitmapFont on the fly via a .ttf file. */
 	private FreeTypeFontGenerator generator;
 
 	/** Overrides the default constructor. */

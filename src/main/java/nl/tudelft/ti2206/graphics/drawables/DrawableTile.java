@@ -15,6 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * The DrawableTile gives a visual representation of its underlying Tile.
+ */
 public class DrawableTile extends Actor implements Observer {
 	/** Coordinates and offsets used to position the Tile. */
 	public static final int TILE_WIDTH = 81;
@@ -74,6 +77,7 @@ public class DrawableTile extends Actor implements Observer {
 		setBaseCoordinates();
 	}
 
+	/** Sets the Tile's width and height. */
 	private void setMetrics() {
 		setWidth(TILE_WIDTH);
 		setHeight(TILE_HEIGHT);

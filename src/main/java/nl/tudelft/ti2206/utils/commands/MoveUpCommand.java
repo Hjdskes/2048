@@ -2,13 +2,14 @@ package nl.tudelft.ti2206.utils.commands;
 
 import nl.tudelft.ti2206.gameobjects.Grid;
 
+/**
+ * The MoveUpCommand executes the moveUp command of the TileHandler.
+ */
 public class MoveUpCommand extends Command {
-
 	/**
-	 * Creates a MoveUpCommand object that executes the moveUp command of the
-	 * tileHandler.
+	 * Creates a MoveUpCommand.
 	 * 
-	 * @param grid
+	 * @param grid The grid to move on.
 	 */
 	public MoveUpCommand(Grid grid) {
 		super(grid);
