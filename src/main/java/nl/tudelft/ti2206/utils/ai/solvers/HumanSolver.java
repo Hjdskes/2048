@@ -15,12 +15,23 @@ import nl.tudelft.ti2206.gameobjects.Tile;
  * tryMoves(depth = 1) = look 3 moves ahead
  */
 public class HumanSolver implements Solver {
+	/** The Singleton reference to this class. */
+	private static Solver instance = new HumanSolver();
 
 	/** The index number of the lower left tile. */
 	private static final int LOWER_LEFT = 12;
 
 	/** Boolean variable for keeping if the last selected move was right. */
 	private static boolean wasRightMove = false;
+
+	/** Overrides the default constructor. */
+	private HumanSolver() {
+	}
+
+	/** Returns the singleton reference to this class. */
+	public static Solver getInstance() {
+		return instance;
+	}
 
 	/**
 	 * Check if lower left corner is empty.

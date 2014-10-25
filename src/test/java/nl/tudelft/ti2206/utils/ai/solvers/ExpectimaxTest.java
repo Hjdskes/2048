@@ -17,7 +17,7 @@ import org.junit.Test;
 public class ExpectimaxTest {
 
 	private Grid grid;
-	private Expectimax solver;
+	private Solver solver;
 	private Logger logger = Logger.getInstance();
 
 	@Before
@@ -26,7 +26,7 @@ public class ExpectimaxTest {
 		grid = new Grid(true);
 		grid.setTile(0, 1);
 		grid.setTile(1, 2);
-		solver = new Expectimax();
+		solver = Expectimax.getInstance();
 		TwentyFourtyGame.setState(RunningState.getInstance());
 	}
 
@@ -63,7 +63,7 @@ public class ExpectimaxTest {
 	@Test 
 	public void testDepth0() {
 		grid = new Grid(true);
-		solver = new Expectimax();
+		solver = Expectimax.getInstance();
 		assertEquals(null, solver.findMove(grid, 0));
 	}
 }

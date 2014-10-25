@@ -8,22 +8,24 @@ import nl.tudelft.ti2206.gameobjects.Tile;
  * A solver that will attempt to solve the Grid using the Expectimax algorithm.
  */
 public class Expectimax implements Solver {
+	/** The Singleton reference to this class. */
+	private static Solver instance = new Expectimax();
+
 	/** This matrix gives a weight to every tile. */
-	private static final int[] WEIGHTMATRIX = {
-		17, 15, 13, 11,
-		15,  9, 10, 11,
-		13, 10,  8,  8,
-		11, 11,  8,  8
-	};
+	private static final int[] WEIGHTMATRIX = { 
+			17, 15, 13, 11,
+			15, 9, 10, 11,
+			13, 10, 8, 8, 
+			11, 11, 8, 8 
+		};
 
 	/**
 	 * The depth map indicates the recursion-depth that will be used. A depth is
 	 * chosen by looking at the amount of empty tiles. Example: 5 empty tiles
 	 * results in index 5 being picked: a depth of 5.
 	 */
-	private static final int DEPTHMAP[] = {
-		6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4
-	};
+	private static final int DEPTHMAP[] = { 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 4, 4,
+			4, 4, 4, 4 };
 
 	/**
 	 * Two arrays holding all the possible values that will spawn in one, with
@@ -36,9 +38,14 @@ public class Expectimax implements Solver {
 	private int[] valueWeight;
 
 	/** Constructs a new Expectimax object. */
-	public Expectimax() {
+	private Expectimax() {
 		this.valueWeight = new int[Grid.NTILES];
 		initValueWeights();
+	}
+
+	/** Returns the singleton reference to this class. */
+	public static Solver getInstance() {
+		return instance;
 	}
 
 	/** Initializes the valueWeight array. */
@@ -164,7 +171,8 @@ public class Expectimax implements Solver {
 			 */
 			for (int i = 0; i < POSSIBILITIES.length; i++) {
 				tile.setValue(NEWTILES[i]);
-				score += POSSIBILITIES[i] * playerMove(grid, depth - 1, bestValue);
+				score += POSSIBILITIES[i]
+						* playerMove(grid, depth - 1, bestValue);
 				weight += POSSIBILITIES[i];
 				tile.setValue(0);
 			}

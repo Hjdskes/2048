@@ -39,17 +39,19 @@ public class GridSolverTest {
 		for (int i = 0; i < 16; i++) {
 			grid.getTiles()[i].setValue(11);
 		}
+		
+		solver = GridSolver.getInstance();
+		reset(logger);
 	}
 
 	private void initSolver(boolean isEmpty, Strategy strat) {
 		if (isEmpty) {
-			solver = new GridSolver(emptyGrid, 1, 1);
+			solver.setTestObjects(logger, strat, emptyGrid);
 		} else {
-			solver = new GridSolver(grid, 1, 1);
+			solver.setTestObjects(logger, strat, grid);
 		}
 
-		reset(logger);
-		solver.setLogger(logger);
+
 	}
 
 	@Test
@@ -73,7 +75,7 @@ public class GridSolverTest {
 	@Test
 	public void testStart() {
 		initSolver(false, Strategy.HUMAN);
-		solver.start();
+		solver.start(grid);
 		verify(logger).info(solver.getClass().getSimpleName(),
 				"Starting solver...");
 		assertTrue(solver.isRunning());
@@ -82,7 +84,7 @@ public class GridSolverTest {
 	@Test
 	public void testStopWhileRunning() {
 		initSolver(false, Strategy.HUMAN);
-		solver.start();
+		solver.start(grid);
 		assertTrue(solver.isRunning());
 		reset(logger);
 		solver.stop();
