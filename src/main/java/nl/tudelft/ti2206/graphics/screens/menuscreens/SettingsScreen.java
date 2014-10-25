@@ -97,6 +97,8 @@ public class SettingsScreen extends Screen {
 		this.delayLabel = label;
 		this.solverSelect = select;
 		this.solverLabel = label;
+		this.difficultyLabel = label;
+		this.difficultySlider = slider;
 		setupLevelLabel();
 		setupLevelSlider();
 		setupCheckBox();
