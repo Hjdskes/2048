@@ -12,6 +12,7 @@ import nl.tudelft.ti2206.utils.commands.MoveRightCommand;
 import nl.tudelft.ti2206.utils.commands.MoveUpCommand;
 import nl.tudelft.ti2206.utils.input.RemoteInputHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.security.MoveValidator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -214,5 +215,13 @@ public class RemoteInputHandlerTest {
 		verify(logger)
 				.error("RemoteInputHandler",
 						"Unrecognised remote string in protocol: random], closing tag is at position 6");
+	}
+	
+	/**
+	 * Checks if the right object is returned on getMoveValidator.
+	 */
+	@Test
+	public void testGetMoveValidator() {
+		assertTrue(handler.getMoveValidator() instanceof MoveValidator);
 	}
 }

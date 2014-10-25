@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.graphics.screens;
 import nl.tudelft.ti2206.gameobjects.Grid;
 import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBehavior;
 import nl.tudelft.ti2206.graphics.screens.overlays.ConnectionLostScreen;
+import nl.tudelft.ti2206.graphics.screens.overlays.DisqualifiedScreen;
 import nl.tudelft.ti2206.graphics.screens.overlays.LoseScreen;
 import nl.tudelft.ti2206.graphics.screens.overlays.MultiLoseScreen;
 import nl.tudelft.ti2206.graphics.screens.overlays.MultiWaitScreen;
@@ -26,7 +27,7 @@ public abstract class Screen implements Disposable {
 
 	/** True if the stage of the screen contains actors of an overlay. */
 	private boolean hasOverlay;
-	
+
 	/** The scene graph. */
 	protected Stage stage;
 
@@ -94,14 +95,21 @@ public abstract class Screen implements Disposable {
 		new ConnectionLostScreen(this);
 		hasOverlay = true;
 	}
-	
+
 	/**
-	 * Adds a MultiWaitScreen to the current screen.
-	 * @param localWaiting
-	 * 			True if the local player is in the waiting state.
+	 * Adds a MultiWaitScreen or DisqualifyScreen, depending on whether the 
+	 * player is disqualified or waiting.
+	 * 
+	 * @param local
+	 * 			True if the player is in the waiting state.
+	 * @param local
+	 * 			True if the overlay needs to be drawn on the local player.
 	 */
-	public void addMultiWaitScreenOverlay(boolean localWaiting) {
-		new MultiWaitScreen(this, localWaiting);
+	public void addBoardOverlay(boolean isWaiting, boolean local) {
+		if(isWaiting)
+			new MultiWaitScreen(this, local);
+		else
+			new DisqualifiedScreen(this, local);
 		hasOverlay = true;
 	}
 

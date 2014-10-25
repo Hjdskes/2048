@@ -8,7 +8,7 @@ import nl.tudelft.ti2206.utils.commands.MoveDownCommand;
 import nl.tudelft.ti2206.utils.commands.MoveLeftCommand;
 import nl.tudelft.ti2206.utils.commands.MoveRightCommand;
 import nl.tudelft.ti2206.utils.commands.MoveUpCommand;
-import nl.tudelft.ti2206.utils.input.LocalInputHandler;
+import nl.tudelft.ti2206.utils.security.MoveValidator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,5 +75,13 @@ public class LocalInputHandlerTest {
 	@Test
 	public void testKeyDownNONE() {
 		assertFalse(handler.keyDown(null, Keys.A));
+	}
+	
+	/**
+	 * Checks if the right object is returned on getMoveValidator.
+	 */
+	@Test
+	public void testGetMoveValidator() {
+		assertTrue(handler.getMoveValidator() instanceof MoveValidator);
 	}
 }

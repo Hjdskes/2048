@@ -19,7 +19,10 @@ import nl.tudelft.ti2206.graphics.drawables.Scores;
 import nl.tudelft.ti2206.graphics.screens.Screen;
 import nl.tudelft.ti2206.graphics.screens.ScreenHandler;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
+import nl.tudelft.ti2206.utils.input.RemoteInputHandler;
 import nl.tudelft.ti2206.utils.net.Networking;
+import nl.tudelft.ti2206.utils.security.MoveValidator;
+import nl.tudelft.ti2206.utils.states.DisqualifiedState;
 import nl.tudelft.ti2206.utils.states.RunningState;
 import nl.tudelft.ti2206.utils.states.WaitingState;
 
@@ -67,6 +70,10 @@ public class MultiGameScreenTest {
 	private ScreenHandler handler;
 	@Mock
 	private Screen screen;
+	@Mock
+	private RemoteInputHandler remoteInput;
+	@Mock
+	private MoveValidator validator;
 
 	/** Gamescreen that we are going to test. */
 	private MultiGameScreen gameScreen;
@@ -80,7 +87,7 @@ public class MultiGameScreenTest {
 		when(skin.get(anyString(), eq(Texture.class))).thenReturn(texture);
 
 		gameScreen = new MultiGameScreen(handler, stage, grid, label, group,
-				scores, networking);
+				scores, remoteInput, networking);
 
 		Gdx.input = input;
 		doNothing().when(input).setInputProcessor(stage);
@@ -90,7 +97,8 @@ public class MultiGameScreenTest {
 
 		when(label.getPrefWidth()).thenReturn(0f);
 		when(handler.getScreen()).thenReturn(screen);
-		
+		when(remoteInput.getMoveValidator()).thenReturn(validator);
+		when(validator.getIrregularity()).thenReturn(false);
 		RunningState.getInstance().setScreenHandler(handler);
 		WaitingState.getInstance().setScreenHandler(handler);
 	}
@@ -156,20 +164,40 @@ public class MultiGameScreenTest {
 		verify(screen).addConnectionLostOverlay();
 	}
 
-	 @Test
-	 public void testUpdateWaiting() {
-	 TwentyFourtyGame.setState(WaitingState.getInstance());
-	 gameScreen.update();
-	 verify(stage).act();
-	 verify(label).setText("WAITING");
-	 }
+	@Test
+	public void testUpdateWaiting() {
+		TwentyFourtyGame.setState(WaitingState.getInstance());
+		gameScreen.update();
+		verify(stage).act();
+		verify(label).setText("WAITING");
+	}
 
-	 @Test
-	 public void testUpdateRemoteLost() {
-	 TwentyFourtyGame.setState(RunningState.getInstance());
-	 when(grid.getPossibleMoves()).thenReturn(0);
-	 gameScreen.update();
-	 verify(stage).act();
-	 verify(label).setText("WAITING");
-	 }
+	@Test
+	public void testUpdateRemoteLost() {
+		TwentyFourtyGame.setState(RunningState.getInstance());
+		when(grid.getPossibleMoves()).thenReturn(0);
+		gameScreen.update();
+		verify(stage).act();
+		verify(label).setText("WAITING");
+	}
+
+	@Test
+	public void testRemoteCheater() {
+		TwentyFourtyGame.setState(RunningState.getInstance());
+		when(validator.getIrregularity()).thenReturn(true);
+		gameScreen.update();
+		verify(stage).act();
+		verify(screen).addBoardOverlay(false, false);
+		verify(screen).addLWOverlay(false, true, grid);
+		verify(label).setText("CHEATER");
+	}
+
+	@Test
+	public void testLocalCheater() {
+		TwentyFourtyGame.setState(DisqualifiedState.getInstance());
+		gameScreen.update();
+		verify(stage).act();
+		verify(screen).addBoardOverlay(false, true);
+		verify(label).setText("CHEATER");
+	}
 }
