@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.graphics.screens.drawbehaviour.DrawBeige;
 import nl.tudelft.ti2206.utils.handlers.AssetHandler;
 import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
+import nl.tudelft.ti2206.utils.log.Logger.LogLevel;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -241,14 +242,19 @@ public class SettingsScreen extends Screen {
 	private String updateLevel() {
 		switch ((int) levelSlider.getValue()) {
 		case 0:
+			logger.setLevel(LogLevel.NONE);
 			return "NONE";
 		case 100:
+			logger.setLevel(LogLevel.ERROR);
 			return "ERROR";
 		case 200:
+			logger.setLevel(LogLevel.DEBUG);
 			return "DEBUG";
 		case 300:
+			logger.setLevel(LogLevel.INFO);
 			return "INFO";
 		case 400:
+			logger.setLevel(LogLevel.ALL);
 			return "ALL";
 		}
 		return null;
