@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.utils.handlers.PreferenceHandler;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.net.Networking;
 import nl.tudelft.ti2206.utils.states.ContinuingState;
+import nl.tudelft.ti2206.utils.states.DisqualifiedState;
 import nl.tudelft.ti2206.utils.states.GameState;
 import nl.tudelft.ti2206.utils.states.LostState;
 import nl.tudelft.ti2206.utils.states.RunningState;
@@ -132,6 +133,13 @@ public class TwentyFourtyGame extends Game {
 	 */
 	public static boolean isWaiting() {
 		return curState instanceof WaitingState;
+	}
+	
+	/**
+	 * @return True if game is in a disqualified state.
+	 */
+	public static boolean isDisqualified() {
+		return curState instanceof DisqualifiedState;
 	}
 
 	/** Mock insertion method. Used for testing only. */

@@ -11,6 +11,7 @@ import nl.tudelft.ti2206.utils.commands.MoveRightCommand;
 import nl.tudelft.ti2206.utils.commands.MoveUpCommand;
 import nl.tudelft.ti2206.utils.log.Logger;
 import nl.tudelft.ti2206.utils.net.Networking;
+import nl.tudelft.ti2206.utils.security.MoveValidator;
 
 /**
  * The RemoteInputHandler processes input events that come from over the
@@ -28,6 +29,7 @@ public class RemoteInputHandler implements Observer {
 	/** The singleton reference to the Logger instance. */
 	private static Logger logger = Logger.getInstance();
 
+	private MoveValidator validator;
 	/**
 	 * A reference to the remote Grid, so the called objects can interact with
 	 * it.
@@ -46,8 +48,13 @@ public class RemoteInputHandler implements Observer {
 	public RemoteInputHandler(Grid grid) {
 		this.grid = grid;
 		networking.addObserver(this);
+		validator = new MoveValidator(grid,true);
 	}
 
+	public MoveValidator getMoveValidator() {
+		return validator;
+	}
+	
 	/**
 	 * Fills the remote Grid with the tiles provided in the string.
 	 * 
@@ -105,6 +112,7 @@ public class RemoteInputHandler implements Observer {
 			String input = (String) arg;
 			logger.debug(CLASSNAME, "update received: " + input);
 			handleRemoteInput(input);
+		
 		}
 	}
 
@@ -133,10 +141,12 @@ public class RemoteInputHandler implements Observer {
 					"Protocol parsing failed, no closing bracket found (-1).");
 		} else if (str.startsWith("GRID[")) {
 			String strGrid = str.substring(5, closing);
+			
 
 			if (validateGrid(strGrid)) {
 				fillGrid(strGrid);
 				logger.debug(CLASSNAME, "New remote grid set.");
+				validator.validate();
 			} else {
 				logger.error(CLASSNAME,
 						"Protocol parsing failed, malformed remote grid string: "

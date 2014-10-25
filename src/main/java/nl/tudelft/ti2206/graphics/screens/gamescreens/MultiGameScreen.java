@@ -102,7 +102,7 @@ public class MultiGameScreen extends Screen {
 
 	/** Constructor for testing purposes only */
 	public MultiGameScreen(ScreenHandler handler, Stage stage, Grid grid,
-			Label label, Group group, Scores scores, Networking netMock) {
+			Label label, Group group, Scores scores, RemoteInputHandler remoteInput, Networking netMock) {
 		this.screenHandler = handler;
 		this.stage = stage;
 		this.localGrid = grid;
@@ -113,6 +113,7 @@ public class MultiGameScreen extends Screen {
 		this.remoteGroup = group;
 		this.localScores = scores;
 		this.remoteScores = scores;
+		this.remoteInput = remoteInput;
 		networking = netMock;
 		this.setDrawBehavior(new DrawBeige(stage));
 	}
@@ -185,6 +186,20 @@ public class MultiGameScreen extends Screen {
 			screenHandler.getScreen().addConnectionLostOverlay();
 		}
 
+		if (remoteInput.getMoveValidator().getIrregularity() &&
+			!screenHandler.getScreen().hasOverlay() &&
+			!TwentyFourtyGame.isContinuing()) {
+			screenHandler.getScreen().addBoardOverlay(false,false);
+			screenHandler.getScreen().addLWOverlay(false, true, localGrid);
+			this.setOpponentLabel("CHEATER", Color.RED);
+		}
+		
+		if (TwentyFourtyGame.isDisqualified() &&
+				!screenHandler.getScreen().hasOverlay()) {
+				screenHandler.getScreen().addBoardOverlay(false, true);
+				this.setYouLabel("CHEATER", Color.RED);
+			}
+		
 		if (TwentyFourtyGame.isWaiting()) {
 			this.setYouLabel("WAITING", Color.RED);
 		}
@@ -195,7 +210,7 @@ public class MultiGameScreen extends Screen {
 			logger.info(className,
 					"Opponent is out of moves! Waiting for the player...");
 			this.setOpponentLabel("WAITING", Color.RED);
-			screenHandler.getScreen().addMultiWaitScreenOverlay(false);
+			screenHandler.getScreen().addBoardOverlay(true, false);
 		}
 
 		TwentyFourtyGame.getState().update(localGrid, remoteGrid);

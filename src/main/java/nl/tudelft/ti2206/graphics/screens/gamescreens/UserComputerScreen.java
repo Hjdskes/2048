@@ -219,7 +219,7 @@ public class UserComputerScreen extends Screen {
 			logger.info(CLASSNAME,
 					"Computer is out of moves! Waiting for the player...");
 			this.setOpponentLabel("WAITING", Color.RED);
-			screenHandler.getScreen().addMultiWaitScreenOverlay(false);
+			screenHandler.getScreen().addBoardOverlay(true, false);
 			gridSolver.stop();
 		}
 
