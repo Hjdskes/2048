@@ -41,6 +41,9 @@ public abstract class Command {
 	 */
 	public void updateAndSpawn() {
 		grid.updateAfterMove();
+		if (tileHandler.isMoveMade()) {
+			tileHandler.reset();
+		}
 	}
 
 	/**
