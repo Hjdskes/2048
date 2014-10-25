@@ -257,27 +257,6 @@ public class GridTest {
 	}
 
 	/**
-	 * Tests if a new tile is spawned when te spawnNewTile() method is called.
-	 */
-	@Test
-	public void testSpawnTile() {
-		int count = 0;
-		for (int i = 0; i < grid.getTiles().length; i++) {
-			if (!grid.getTiles()[i].isEmpty()) {
-				count++;
-			}
-		}
-		grid.spawnNewTile();
-		int count2 = 0;
-		for (int i = 0; i < grid.getTiles().length; i++) {
-			if (!grid.getTiles()[i].isEmpty()) {
-				count2++;
-			}
-		}
-		assertEquals(count2, count + 1);
-	}
-
-	/**
 	 * Tests of the clone() method gives a clone object of the current grid.
 	 */
 	@Test
