@@ -26,6 +26,6 @@ It spawns the new tile on difficult places to increase the difficulty of the gam
 
 ***Description:*** Giving the task of implementing TrueType fonts to Piet was not a good idea. Piet
 uses a Macbook with a Retina display, on which even TrueType fonts look aliased.
-As such, he thought they weren't working and almost reverted all his changes.
+As such, he thought they weren't working and almost reverted all his changes.  
 ***Reaction:*** Before throwing everything away, we tested it on another machine on which it
 worked just fine. Next time, we will try to keep such things in mind.
