@@ -33,6 +33,7 @@ public class HintButton extends TextButton {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!solver.isRunning()) {
+					solver.setGrid(grid);
 					solver.run();
 				}
 			}

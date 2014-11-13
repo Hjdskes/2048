@@ -123,6 +123,16 @@ public class GridSolver implements Runnable {
 	}
 
 	/**
+	 * Sets the Grid to calculate for and make a move on.
+	 * @param grid The grid that should be solved.
+	 */
+	public void setGrid(Grid grid) {
+		if (original == null || !original.toString().equals(grid.toString())) {
+			this.original = grid;
+		}
+	}
+
+	/**
 	 * Sets the recursion depth. This may be ignored, depending on the
 	 * implementation of the solver being used.
 	 * @param depth The new recursion depth.
