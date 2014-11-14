@@ -34,3 +34,5 @@ button’s position in the class itself. The result is that we simple have to in
 required button and add it to the screen’s Stage. The button will do the rest and it will
 always be placed on the same coordinates!" This is the real reason for fixing this design flaw. Glad you brought it up. 9/10
 Ex 2.4 Good explanation of feature envy, and good concrete analysis of where it could've occured! 9/10 (for not rounding it up with a finishing sentence)
+
+SCURM evaluation: Good SCRUM use. (9/10)

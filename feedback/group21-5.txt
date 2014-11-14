@@ -1,4 +1,40 @@
-The game crashes when I click hint ... ooops!
+
+ex 1.1: Cool requrirements. I like the AnnoyingSpawner. Nice implementation of the cheat fix :D
+
+29/30
+
+ex 1.2: Really good explanations. 12/12
+
+ex 2) 
+
+"To start off, we have learned how to adequately define requirement specifications for
+a project and how to plan the iterations that go with this. We had to do this for every
+single sprint, so that each sprint it was clear to us what our tasks were and how the
+features had to be implemented. At first we considered this superfluous; for such a small
+project as this it sure was nonsense. However, as the weeks progressed and as our game
+became more feature-rich, we started to see the value of defining requirements and cre-
+ating a proper sprint plan."
+
+Good, I had the same impression! I still believe that you can improve and refine your requirements, and hope you will do this for future projects.
+
+"So much so, that we will never play 2048 again." What a shame! But I can understand that ...
+
+"After our first release (v1.0.0), InCode did not detect any de-
+sign flaws, most likely due to the extensive refactoring we have done after this release."
+
+I think this is more because inCode is such a ... product, but ok :)
+
+Nice reflection. 16/18
+
+
+
+General remarks:
+
+Very good work, but unfortunately, a few obvious bugs somehow made it into the final version. Therefore, I had to deduce some points.
+
+- I can't undo a move made by "hint" ... strange.
+
+- The game crashes when I click hint ... ooops!
 Exception in thread "LWJGL Application" java.lang.NullPointerException
 	at nl.tudelft.ti2206.utils.ai.solvers.GridSolver.run(GridSolver.java:113)
 	at nl.tudelft.ti2206.graphics.buttons.HintButton$1.clicked(HintButton.java:36)
@@ -9,4 +45,21 @@ Exception in thread "LWJGL Application" java.lang.NullPointerException
 	at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop(LwjglApplication.java:199)
 	at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:114)
 
+- Don't you think the highscore is a bit high (cf. screenshot)? I'm not that good in playing 2048.
+
 This behavior is a regression from the previous version.
+
+- Because a new window is created when "challenging me", this always appears on the primary screen, which is not nice in a two monitor setup.
+
+- Solver often makes suggestions that do not lead to any change in the game (like move left when no move left is possible). You could've recognized such a situation and execute a random possible move (cf. screenshot).
+
+
+Code coverage 77%, all relevant classes tested. Excellent!!
+
+No warnings left in code, but 4 TODO tasks. Hm ... this is the final version, when are they going to be fixed, then?
+
+Overall code quality very high.
+
+
+SCURM evaluation: Good SCRUM use. (9/10)
+
