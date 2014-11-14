@@ -1,0 +1,12 @@
+The game crashes when I click hint ... ooops!
+Exception in thread "LWJGL Application" java.lang.NullPointerException
+	at nl.tudelft.ti2206.utils.ai.solvers.GridSolver.run(GridSolver.java:113)
+	at nl.tudelft.ti2206.graphics.buttons.HintButton$1.clicked(HintButton.java:36)
+	at com.badlogic.gdx.scenes.scene2d.utils.ClickListener.touchUp(ClickListener.java:89)
+	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:57)
+	at com.badlogic.gdx.scenes.scene2d.Stage.touchUp(Stage.java:342)
+	at com.badlogic.gdx.backends.lwjgl.LwjglInput.processEvents(LwjglInput.java:320)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop(LwjglApplication.java:199)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:114)
+
+This behavior is a regression from the previous version.

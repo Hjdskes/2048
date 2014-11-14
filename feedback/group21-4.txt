@@ -1,0 +1,36 @@
+Ex 1.1:
+Requirements ok, but could be a tad more verbose and documented. On page 4, instead of An AI that automatically solves the grid; you could've simply referred back to AI1 (at least that's what I think it 
+is) ... after all, that's why we name the RQs.
+
+Implementation of requirements: 
+The AI is awesome.
+
+I think your package utils is far too big and contains 95% code I would not expect under utils at all ... like the ai, the commands, etc.
+
+The way to stop the auto-solver is to click Solve twice? In that case, it'd be nice if the button were automagically renamed to stop once pressed.
+
+I just played against the computer (challenge me extreme), and it did not really challenge me ... see attached screenshot.
+
+The log is flooded with these events:
+
+[2014-11-13 13:05:33]: DEBUG GridSolver: Direction selected: LEFT
+[2014-11-13 13:05:33]: DEBUG ComputerGrid: Move LEFT ignored.
+
+No warnings. 4 left-over TODO tags.
+
+26/30
+
+Ex 1.2
+
+Extremely nice report. What does this mean? "During this sprint we wanted to clean up our code ==,"? Good rework with the states. I'm not so sure about the overhead in boiler plate code. I think you should've introduced the singleton functionality in a base class to avoid this huge code clone among all states.
+
+14/15
+
+Ex 2.1 2/2
+Ex 2.2 Well-explained. 10/10
+Ex 2.3 "The second reason is the fact that the buttons were now being called from several places.
+To have consistent looks and to avoid duplicated code, we decided to "statically"set each
+button’s position in the class itself. The result is that we simple have to instantiate the
+required button and add it to the screen’s Stage. The button will do the rest and it will
+always be placed on the same coordinates!" This is the real reason for fixing this design flaw. Glad you brought it up. 9/10
+Ex 2.4 Good explanation of feature envy, and good concrete analysis of where it could've occured! 9/10 (for not rounding it up with a finishing sentence)
