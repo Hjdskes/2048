@@ -60,6 +60,8 @@ No warnings left in code, but 4 TODO tasks. Hm ... this is the final version, wh
 
 Overall code quality very high.
 
+Quality: 8/10
+
 
 SCURM evaluation: Good SCRUM use. (9/10)
 
