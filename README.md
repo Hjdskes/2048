@@ -1,14 +1,17 @@
-# TI2206 - Group 21 (2048)
+# TI2206 - Software Engineering Methods
+## Course project
+### Group 21 (2048)
+
 
 Group 21 consists of the following students:
 
-| Name                 | Student number |
-|----------------------|----------------|
-| Piet van Agtmaal     | 4321278        |
-| Jochem Heijltjes     | 1534041        |
-| Arthur Hovanesyan    | 4322711		|
-| Paul Bakker          | 4326091		|
-| Jente Hidskes        | 4335732        |
+| Name                 |
+|----------------------|
+| Piet van Agtmaal     |
+| Jochem Heijltjes     |
+| Arthur Hovanesyan    |
+| Paul Bakker          |
+| Jente Hidskes        |
 
 
 ## Sprint backlog
