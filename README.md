@@ -72,7 +72,7 @@ This document briefly describes how to play 2048 and provides information on the
 
 Good luck and have fun!
 
-P.S.: We, the developers, are not reliable in case of frustration. ;)
+P.S.: We, the developers, are not responsible in case of frustration. ;)
 
 
 ## Singleplayer game ##
